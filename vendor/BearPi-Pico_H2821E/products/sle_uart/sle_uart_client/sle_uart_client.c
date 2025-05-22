@@ -58,7 +58,7 @@ void sle_uart_start_scan(void)
     param.own_addr_type = 0;
     param.filter_duplicates = 0;
     param.seek_filter_policy = 0;
-    param.seek_phys = SLE_SEEK_PHY_4M;
+    param.seek_phys = 1;
     param.seek_type[0] = 1;
     param.seek_interval[0] = SLE_SEEK_INTERVAL_DEFAULT;
     param.seek_window[0] = SLE_SEEK_WINDOW_DEFAULT;
