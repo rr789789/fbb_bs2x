@@ -9,9 +9,9 @@
  *
  */
 typedef struct {
-  uint8_t green;
-  uint8_t red;
-  uint8_t blue;
+    uint8_t green;
+    uint8_t red;
+    uint8_t blue;
 } __attribute__((packed)) grb_t, *grb_p;
 
 /**
@@ -25,10 +25,10 @@ typedef struct {
  * @note spi驱动led, 通过SPI总线发送数据到LED驱动器,
  */
 typedef struct {
-  grb_p led_data;
-  uint8_t length;
-  pin_t pin;
-  spi_bus_t bus;
+    grb_p led_data;
+    uint8_t length;
+    pin_t pin;
+    spi_bus_t bus;
 } led_data_t, *led_data_p;
 
 #define LED_DATE_LEN 3 ///< 一个 LED 的数据长度（即3个字节，GRB顺序）

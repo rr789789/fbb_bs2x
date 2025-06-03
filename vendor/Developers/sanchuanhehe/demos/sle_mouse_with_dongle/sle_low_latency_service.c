@@ -35,12 +35,12 @@
 #include "errcode.h"
 #include "usb_porting.h"
 #include "sle_low_latency_service.h"
-#define CONFIG_MOUSE_ADC_VBAT_PIN 0 //TODO: replace with actual pin number
-#define GAFE_SAMPLE_VALUE_SIGN_BIT      17
-#define VBAT_SAMPLE_INTERVAL_US         30000000
-#define ADC_REFERENCE_VOLTAGE_MV        1500
-#define ADC_REF_VOL_DIFFERENCE_MULT     2
-#define ADC_TICK2VOL_REF_VOLTAGE_MV     (ADC_REFERENCE_VOLTAGE_MV * ADC_REF_VOL_DIFFERENCE_MULT)
+#define CONFIG_MOUSE_ADC_VBAT_PIN 0 // TODO: replace with actual pin number
+#define GAFE_SAMPLE_VALUE_SIGN_BIT 17
+#define VBAT_SAMPLE_INTERVAL_US 30000000
+#define ADC_REFERENCE_VOLTAGE_MV 1500
+#define ADC_REF_VOL_DIFFERENCE_MULT 2
+#define ADC_TICK2VOL_REF_VOLTAGE_MV (ADC_REFERENCE_VOLTAGE_MV * ADC_REF_VOL_DIFFERENCE_MULT)
 #define SPI_RECV_DATA_LEN 1
 #define SPI_SEND_DATA_LEN 2
 #define MOUSE_TO_BT_DATA_LEN 5
@@ -91,15 +91,15 @@
 #define SLE_MOUSE_TASK_DELAY_300_MS 300
 #define SLE_MOUSE_TASK_DELAY_1700_MS 1700
 #ifdef CONFIG_SAMPLE_SLE_DONGLE_1K
-#define REPORT_TIME  7
+#define REPORT_TIME 7
 #elif defined(CONFIG_SAMPLE_SLE_DONGLE_2K)
-#define REPORT_TIME  3
+#define REPORT_TIME 3
 #elif defined(CONFIG_SAMPLE_SLE_DONGLE_4K)
-#define REPORT_TIME  1
+#define REPORT_TIME 1
 #elif defined(CONFIG_SAMPLE_SLE_DONGLE_8K)
-#define REPORT_TIME  0
+#define REPORT_TIME 0
 #else
-#define REPORT_TIME  7
+#define REPORT_TIME 7
 #endif
 uint8_t g_report_time = REPORT_TIME;
 
@@ -112,20 +112,19 @@ typedef struct usb_hid_mouse_report {
 } usb_hid_mouse_report_t;
 
 ssap_mouse_key_t g_mouse_notify_data = {0};
-#pragma pack (1)
+#pragma pack(1)
 typedef struct {
     int32_t button_mask : 8;
     int32_t x : 12; /* mouse x */
     int32_t y : 12; /* mouse y */
     int8_t wheel;
 } low_latency_mouse_t;
-#pragma pack ()
+#pragma pack()
 
-static mouse_sensor_oprator_t g_usb_hid_hs_mouse_operator = { 0 };
-static usb_hid_mouse_report_t g_send_mouse_msg = { 0 };
+static mouse_sensor_oprator_t g_usb_hid_hs_mouse_operator = {0};
+static usb_hid_mouse_report_t g_send_mouse_msg = {0};
 static qdec_config_t g_usb_qdec_config = QDEC_DEFAULT_CONFIG;
 static int g_usb_mouse_hid_index;
-
 
 /**
  * @brief 发送鼠标消息到SSAP
@@ -238,7 +237,7 @@ static void mouse_io_init(void)
 static void vbat_sample_cb(uintptr_t data)
 {
     int adc_value = 0;
-    adc_value =  uapi_adc_auto_sample(CONFIG_MOUSE_ADC_VBAT_CH);
+    adc_value = uapi_adc_auto_sample(CONFIG_MOUSE_ADC_VBAT_CH);
     osal_printk("VBAT: %dmv\n", (adc_value * ADC_TICK2VOL_REF_VOLTAGE_MV) >> GAFE_SAMPLE_VALUE_SIGN_BIT);
     osal_irq_clear(TIMER_0_IRQN);
     uapi_timer_start((timer_handle_t)data, VBAT_SAMPLE_INTERVAL_US, vbat_sample_cb, data);
@@ -327,7 +326,7 @@ void sle_low_latency_mouse_app_init(void)
     sle_low_latency_mouse_callbacks_t mouse_cbk;
     mouse_cbk.set_value_cb = sle_mouse_key_set;
     sle_low_latency_mouse_register_callbacks(&mouse_cbk);
-    return ;
+    return;
 }
 
 /**
@@ -344,8 +343,8 @@ void dongle_cbk(uint8_t **data, uint16_t *length, uint8_t *device_index)
         return;
     }
     report_count = 0;
-    static usb_hid_mouse_report_t mouse_message = { 0 }; // must be static or global variabal
-    low_latency_mouse_t key_base = { 0 };
+    static usb_hid_mouse_report_t mouse_message = {0}; // must be static or global variabal
+    low_latency_mouse_t key_base = {0};
     if (sle_low_latency_dongle_get_em_data((uint8_t *)&key_base) != 0) {
         return;
     }

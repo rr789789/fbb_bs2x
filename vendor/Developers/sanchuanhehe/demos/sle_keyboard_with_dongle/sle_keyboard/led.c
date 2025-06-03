@@ -17,7 +17,6 @@
 #include "platform_core.h"
 #include "soc_osal.h"
 
-
 /**
  * @brief 将原始数据编码为 LED 驱动器可识别的数据
  *

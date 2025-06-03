@@ -15,7 +15,7 @@
 #include "osal_msgqueue.h"
 #include "keyscan.h"
 #include "keyscan_porting.h"
-#include "sle_errcode.h" 
+#include "sle_errcode.h"
 #include "sle_device_discovery.h"
 #include "sle_keyboard_server.h"
 #include "sle_keyboard_server_adv.h"
@@ -117,7 +117,8 @@ static void ssaps_server_write_request_cbk(uint8_t server_id,
         }
         // 发送到键盘
         if (key_nums > 0) {
-            // uapi_ble_hid_keyboard_input_str(key_nums, (char **)key_value_str); //TODO: fix undefined reference to `sapi_ble_hid_keyboard_input` 
+            // uapi_ble_hid_keyboard_input_str(key_nums, (char **)key_value_str); //TODO: fix undefined reference to
+            // `sapi_ble_hid_keyboard_input`
         }
         for (i = 0; i < key_nums; i++) {
             osal_vfree(key_value_str[i]);

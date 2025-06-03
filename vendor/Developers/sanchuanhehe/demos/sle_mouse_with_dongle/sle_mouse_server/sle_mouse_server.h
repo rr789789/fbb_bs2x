@@ -21,8 +21,8 @@ extern "C" {
  * @brief SLE服务句柄结构体
  */
 typedef struct {
-    uint16_t handle_in;   /**< 输入句柄 */
-    uint16_t handle_out;  /**< 输出句柄 */
+    uint16_t handle_in;  /**< 输入句柄 */
+    uint16_t handle_out; /**< 输出句柄 */
 } sle_item_handle_t;
 
 /**

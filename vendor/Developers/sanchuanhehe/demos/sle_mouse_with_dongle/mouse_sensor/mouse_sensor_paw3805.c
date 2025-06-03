@@ -15,13 +15,13 @@
 #include "spi.h"
 #include "tcxo.h"
 
-#define XY_DATA_SHIFT_LEN               8
-#define MOTION_BIT                      0x80
-#define MOTION_REG                      0x2
-#define X_LOW_REG                       0x3
-#define Y_LOW_REG                       0x4
-#define X_HI_REG                        0x11
-#define Y_HI_REG                        0x12
+#define XY_DATA_SHIFT_LEN 8
+#define MOTION_BIT 0x80
+#define MOTION_REG 0x2
+#define X_LOW_REG 0x3
+#define Y_LOW_REG 0x4
+#define X_HI_REG 0x11
+#define Y_HI_REG 0x12
 
 /**
  * @brief 鼠标通知数据结构体（外部定义）
@@ -113,7 +113,7 @@ static mouse_freq_t paw_3805_mouse_init(void)
     osal_printk("pid1: 0x%x\r\n", paw3805_read_reg(0)); // 0x31
     osal_printk("pid2: 0x%x\r\n", paw3805_read_reg(1)); // 0x61
     if (uapi_gpio_register_isr_func(CONFIG_MOUSE_PIN_MONTION, GPIO_INTERRUPT_LOW,
-        (gpio_callback_t)paw3805ek_mov_func) != ERRCODE_SUCC) {
+                                    (gpio_callback_t)paw3805ek_mov_func) != ERRCODE_SUCC) {
         return MOUSE_FREQ_MAX;
     }
     return MOUSE_FREQ_1K;

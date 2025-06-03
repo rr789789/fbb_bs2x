@@ -17,25 +17,25 @@
 #include "sle_device_manager.h"
 #include "bts_device_manager.h"
 
-#define NAME_MAX_LENGTH                           15
+#define NAME_MAX_LENGTH 15
 /* 连接调度间隔12.5ms，单位125us */
-#define SLE_CONN_INTV_MIN_DEFAULT                 0x64
+#define SLE_CONN_INTV_MIN_DEFAULT 0x64
 /* 连接调度间隔12.5ms，单位125us */
-#define SLE_CONN_INTV_MAX_DEFAULT                 0x64
+#define SLE_CONN_INTV_MAX_DEFAULT 0x64
 /* 连接调度间隔25ms，单位125us */
-#define SLE_ADV_INTERVAL_MIN_DEFAULT              0xC8
+#define SLE_ADV_INTERVAL_MIN_DEFAULT 0xC8
 /* 连接调度间隔25ms，单位125us */
-#define SLE_ADV_INTERVAL_MAX_DEFAULT              0xC8
+#define SLE_ADV_INTERVAL_MAX_DEFAULT 0xC8
 /* 超时时间5000ms，单位10ms */
-#define SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT      0x1F4
+#define SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT 0x1F4
 /* 超时时间4990ms，单位10ms */
-#define SLE_CONN_MAX_LATENCY                      0x1F3
+#define SLE_CONN_MAX_LATENCY 0x1F3
 /* 广播发送功率 */
-#define SLE_ADV_TX_POWER                          10
+#define SLE_ADV_TX_POWER 10
 /* 广播ID */
-#define SLE_ADV_HANDLE_DEFAULT                    1
+#define SLE_ADV_HANDLE_DEFAULT 1
 /* 最大广播数据长度 */
-#define SLE_ADV_DATA_LEN_MAX                      251
+#define SLE_ADV_DATA_LEN_MAX 251
 
 #define SLE_ADV_DATA_LEN 29
 #define SLE_ADV_RSP_DATA_LEN 11
@@ -51,23 +51,15 @@ static sle_dev_manager_callbacks_t g_sle_dev_mgr_cbk = {0};
  */
 static uint8_t g_sle_adv_data[SLE_ADV_DATA_LEN] = {
     // flag
-    0x01,
-    0x01, 0x01,
-    0x05,
-    0x04, 0x0B, 0x06, 0x09, 0x06,
+    0x01, 0x01, 0x01, 0x05, 0x04, 0x0B, 0x06, 0x09, 0x06,
     // appearance
-    0x03,
-    0x12, 0x09, 0x06, 0x07, 0x03, 0x02, 0x05, 0x00,
-    0x06, 0x09,
-    's', 'l', 'e', '_', 'm', 'o', 'u', 's', 'e'
-};
+    0x03, 0x12, 0x09, 0x06, 0x07, 0x03, 0x02, 0x05, 0x00, 0x06, 0x09, 's', 'l', 'e', '_', 'm', 'o', 'u', 's', 'e'};
 
 /**
  * @brief SLE广播响应数据
  */
 static uint8_t g_sle_adv_rsp_data[SLE_ADV_RSP_DATA_LEN] = {
-    0x0B,
-    0x09, 's', 'l', 'e', '_', 'm', 'o', 'u', 's', 'e',
+    0x0B, 0x09, 's', 'l', 'e', '_', 'm', 'o', 'u', 's', 'e',
 };
 
 /**
@@ -196,7 +188,7 @@ static void sle_mouse_server_sample_sle_power_on_cbk(uint8_t status)
  */
 static void sle_adv_announce_register_cbks(void)
 {
-    sle_announce_seek_callbacks_t seek_cbks = { 0 };
+    sle_announce_seek_callbacks_t seek_cbks = {0};
     seek_cbks.announce_enable_cb = sle_adv_announce_enable_cbk;
     seek_cbks.announce_disable_cb = sle_adv_announce_disable_cbk;
     seek_cbks.announce_terminal_cb = sle_adv_announce_terminal_cbk;

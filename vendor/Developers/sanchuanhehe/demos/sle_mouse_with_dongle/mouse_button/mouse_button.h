@@ -27,10 +27,10 @@ typedef union mouse_key {
      * @brief 鼠标按键位域结构
      */
     struct {
-        uint8_t left_key   : 1; /**< 左键 */
-        uint8_t right_key  : 1; /**< 右键 */
-        uint8_t mid_key    : 1; /**< 中键 */
-        uint8_t reserved   : 5; /**< 保留 */
+        uint8_t left_key : 1;  /**< 左键 */
+        uint8_t right_key : 1; /**< 右键 */
+        uint8_t mid_key : 1;   /**< 中键 */
+        uint8_t reserved : 5;  /**< 保留 */
     } b;
     uint8_t d8; /**< 按键状态字节访问 */
 } mouse_key_t;

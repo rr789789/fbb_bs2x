@@ -15,13 +15,13 @@
 #include "lpm_dev_ops.h"
 #include "mouse_sensor_spi.h"
 
-#define POWER_UP_MS                      50
-#define SPI_MOUSE_SEND_DATA_LEN          2
-#define SHORTEST_TIME_BETWEEN_WRITE_US   45
-#define HS_MOUSE_WRITE_8BIT              0x80
-#define INIT_DELAY_MS                    20
-#define SPI_TIMEOUT                      100
-#define MOUSE_OPRATION_DELAY_US          1000
+#define POWER_UP_MS 50
+#define SPI_MOUSE_SEND_DATA_LEN 2
+#define SHORTEST_TIME_BETWEEN_WRITE_US 45
+#define HS_MOUSE_WRITE_8BIT 0x80
+#define INIT_DELAY_MS 20
+#define SPI_TIMEOUT 100
+#define MOUSE_OPRATION_DELAY_US 1000
 
 /**
  * @brief SPI时钟使能（弱符号，默认空实现）
@@ -31,9 +31,7 @@ void spi_porting_clock_en(void) __attribute__((weak, alias("spi_porting_clock_en
 /**
  * @brief SPI时钟使能空实现
  */
-void spi_porting_clock_en_none(void)
-{
-}
+void spi_porting_clock_en_none(void) {}
 
 /**
  * @brief 用GPIO方式初始化SPI片选
@@ -71,8 +69,8 @@ static void mouse_spi_set_pinctrl(void)
  */
 void mouse_sensor_spi_open(uint8_t frame_format, uint8_t clk_polarity, uint8_t clk_phase, uint8_t mhz)
 {
-    spi_attr_t config = { 0 };
-    spi_extra_attr_t ext_config = { 0 };
+    spi_attr_t config = {0};
+    spi_extra_attr_t ext_config = {0};
     ext_config.sspi_param.wait_cycles = 0x10;
     config.freq_mhz = mhz;
     config.is_slave = false;
@@ -101,7 +99,7 @@ uint8_t mouse_spi_read_reg(uint8_t reg_addr)
 {
     uint8_t addr = reg_addr;
     uint8_t value;
-    spi_xfer_data_t mouse_recv_xfer = { 0 };
+    spi_xfer_data_t mouse_recv_xfer = {0};
     mouse_recv_xfer.rx_buff = &value;
     mouse_recv_xfer.rx_bytes = 1;
     mouse_recv_xfer.tx_buff = &addr;
@@ -120,7 +118,7 @@ uint8_t mouse_spi_read_reg(uint8_t reg_addr)
 void mouse_spi_burst_read(uint8_t reg_addr, uint8_t *buf, uint8_t lenth)
 {
     uint8_t addr = reg_addr;
-    spi_xfer_data_t mouse_recv_xfer = { 0 };
+    spi_xfer_data_t mouse_recv_xfer = {0};
     mouse_recv_xfer.rx_buff = buf;
     mouse_recv_xfer.rx_bytes = lenth;
     mouse_recv_xfer.tx_buff = &addr;
@@ -138,7 +136,7 @@ void mouse_spi_burst_read(uint8_t reg_addr, uint8_t *buf, uint8_t lenth)
 void mouse_spi_write_reg(uint8_t reg_addr, uint8_t val)
 {
     uint8_t cmd_send[SPI_MOUSE_SEND_DATA_LEN] = {reg_addr, val};
-    spi_xfer_data_t mouse_send_xfer = { 0 };
+    spi_xfer_data_t mouse_send_xfer = {0};
     mouse_send_xfer.tx_buff = cmd_send;
     mouse_send_xfer.tx_bytes = SPI_MOUSE_SEND_DATA_LEN;
     spi_porting_set_tx_mode(MOUSE_SPI);
@@ -155,7 +153,7 @@ void mouse_sensor_spi_opration(const spi_mouse_cfg_t *cfg, int16_t lenth)
     uint8_t cmd_recv_value;
     unused(cmd_recv_value);
     if (cfg == NULL) {
-        return ;
+        return;
     }
     for (int16_t i = 0; i < lenth; i++) {
         uapi_tcxo_delay_us(SHORTEST_TIME_BETWEEN_WRITE_US); // Sensor SPI time between write commands

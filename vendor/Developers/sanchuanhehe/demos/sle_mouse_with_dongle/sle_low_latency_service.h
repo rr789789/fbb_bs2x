@@ -15,7 +15,7 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-extern errcode_t sle_low_latency_dongle_get_em_data(uint8_t* em_data);
+extern errcode_t sle_low_latency_dongle_get_em_data(uint8_t *em_data);
 
 /**
  * @brief 低延迟鼠标应用初始化
