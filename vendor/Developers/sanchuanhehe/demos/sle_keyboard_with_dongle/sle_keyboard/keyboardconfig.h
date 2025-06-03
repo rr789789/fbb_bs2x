@@ -1,5 +1,5 @@
-#ifndef _KEYSCAN_TASK_H_
-#define _KEYSCAN_TASK_H_
+#ifndef KEYSCAN_TASK_H_$
+#define KEYSCAN_TASK_H_$
 
 #define HID_KEY_NONE 0x00
 
@@ -141,4 +141,4 @@
 
 // void *keyscan_task(const char *arg);
 
-#endif /* _KEYSCAN_TASK_H_ */
+#endif /* KEYSCAN_TASK_H_$ */
