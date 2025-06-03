@@ -30,11 +30,6 @@
 #define Y_HI_BIT 0x5
 
 /**
- * @brief 鼠标通知数据结构体（外部定义）
- */
-extern ssap_mouse_key_t g_mouse_notify_data;
-
-/**
  * @brief 读取PMW3816寄存器
  * @param reg_addr 寄存器地址
  * @return uint8_t 读取到的寄存器值

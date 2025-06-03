@@ -25,6 +25,12 @@ extern "C" {
 #endif /* __cplusplus */
 
 /**
+ * @brief 鼠标通知数据结构体（外部定义）
+ */
+extern ssap_mouse_key_t g_mouse_notify_data;
+
+
+/**
  * @enum mouse_sensor
  * @brief 鼠标传感器类型
  */
