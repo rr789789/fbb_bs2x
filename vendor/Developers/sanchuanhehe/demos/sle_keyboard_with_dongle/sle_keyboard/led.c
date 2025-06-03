@@ -17,7 +17,7 @@
 #include "platform_core.h"
 #include "soc_osal.h"
 
-#define LED_COLOR_BITS_PAIR_COUNT 4   // 每个颜色字节包含4组bit对
+#define LED_COLOR_BITS_PAIR_COUNT 4 // 每个颜色字节包含4组bit对
 
 /**
  * @brief 将原始数据编码为 LED 驱动器可识别的数据
@@ -246,7 +246,7 @@ static void spi_master_entry(void)
                 // 将随机数填充到led_data数组中
                 led_data_array[j][i].green = random_buffer[0] & 0b1111;
                 led_data_array[j][i].red = random_buffer[1] & 0b1111;
-                led_data_array[j][i].blue = random_buffer[2] & 0b1111;
+                led_data_array[j][i].blue = random_buffer[2] & 0b1111; //< 仅保留低4位,2表示生成的第三字节
             } else {
                 // 处理错误情况，例如输出错误信息
                 osal_printk(
