@@ -17,6 +17,8 @@
 #include "platform_core.h"
 #include "soc_osal.h"
 
+#define LED_COLOR_BITS_PAIR_COUNT 4   // 每个颜色字节包含4组bit对
+
 /**
  * @brief 将原始数据编码为 LED 驱动器可识别的数据
  *
@@ -30,7 +32,7 @@ void encode_led_data(grb_t *input_data, uint8_t *output_data, uint32_t length)
         uint8_t *byte_ptr = (uint8_t *)(&input_data[i]);
         for (uint8_t color = 0; color < LED_DATE_LEN; color++) {
             uint8_t byte = byte_ptr[color];
-            for (uint8_t bit_pair = 0; bit_pair < 4; bit_pair++) {
+            for (uint8_t bit_pair = 0; bit_pair < LED_COLOR_BITS_PAIR_COUNT; bit_pair++) {
                 uint8_t bit_val_1 = (byte >> (7 - 2 * bit_pair)) & 0x01; // 取出高位
                 uint8_t bit_val_2 = (byte >> (6 - 2 * bit_pair)) & 0x01; // 取出低位
 
@@ -44,7 +46,7 @@ void encode_led_data(grb_t *input_data, uint8_t *output_data, uint32_t length)
     }
 #ifdef debug
     osal_printk("encode_led_data: ");
-    for (uint32_t i = 0; i < length * LED_DATE_LEN * 4; i++) {
+    for (uint32_t i = 0; i < length * LED_DATE_LEN * LED_COLOR_BITS_PAIR_COUNT; i++) {
         osal_printk("0x%02x ", output_data[i]);
     }
     osal_printk("\r\n");
