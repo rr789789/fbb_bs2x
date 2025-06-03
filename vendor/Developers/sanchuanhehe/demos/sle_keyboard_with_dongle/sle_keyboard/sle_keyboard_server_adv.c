@@ -53,16 +53,16 @@ static uint16_t sle_set_adv_local_name(uint8_t *adv_data, uint16_t max_len)
     uint8_t *local_name = sle_local_name;
     uint8_t local_name_len = sizeof(sle_local_name) - 1;
 
-    sample_print("%s local_name_len = %d\r\n", SLE_KEYBOARD_SERVER_LOG, local_name_len);
-    sample_print("%s local_name: ", SLE_KEYBOARD_SERVER_LOG);
+    SAMPLE_PRINT("%s local_name_len = %d\r\n", SLE_KEYBOARD_SERVER_LOG, local_name_len);
+    SAMPLE_PRINT("%s local_name: ", SLE_KEYBOARD_SERVER_LOG);
     for (uint8_t i = 0; i < local_name_len; i++) {
-        sample_print("0x%02x ", local_name[i]);
+        SAMPLE_PRINT("0x%02x ", local_name[i]);
     }
-    sample_print("\r\n");
+    SAMPLE_PRINT("\r\n");
     adv_data[index++] = local_name_len + 1;
     adv_data[index++] = SLE_ADV_DATA_TYPE_COMPLETE_LOCAL_NAME;
     if (memcpy_s(&adv_data[index], max_len - index, local_name, local_name_len) != EOK) {
-        sample_print("%s memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
+        SAMPLE_PRINT("%s memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
         return 0;
     }
     return (uint16_t)index + local_name_len;
@@ -87,7 +87,7 @@ static uint16_t sle_set_adv_data(uint8_t *adv_data, uint16_t length)
         .value = SLE_ANNOUNCE_LEVEL_NORMAL,
     };
     if (memcpy_s(&adv_data[idx], SLE_ADV_DATA_LEN_MAX - idx, &adv_disc_level, len) != EOK) {
-        sample_print("%s adv_disc_level memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
+        SAMPLE_PRINT("%s adv_disc_level memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
         return 0;
     }
     idx += len;
@@ -99,7 +99,7 @@ static uint16_t sle_set_adv_data(uint8_t *adv_data, uint16_t length)
         .value = 0,
     };
     if (memcpy_s(&adv_data[idx], SLE_ADV_DATA_LEN_MAX - idx, &adv_access_mode, len) != EOK) {
-        sample_print("%s adv_access_mode memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
+        SAMPLE_PRINT("%s adv_access_mode memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
         return 0;
     }
     idx += len;
@@ -125,7 +125,7 @@ static uint16_t sle_set_scan_response_data(uint8_t *scan_rsp_data, uint16_t leng
         .value = SLE_ADV_TX_POWER,
     };
     if (memcpy_s(scan_rsp_data, SLE_ADV_DATA_LEN_MAX, &tx_power_level, scan_rsp_data_len) != EOK) {
-        sample_print("%s sle scan response data memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
+        SAMPLE_PRINT("%s sle scan response data memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
         return 0;
     }
     idx += scan_rsp_data_len;
@@ -158,14 +158,14 @@ static int sle_set_default_announce_param(void)
     param.conn_supervision_timeout = SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT;
     param.own_addr.type = 0;
     if (memcpy_s(param.own_addr.addr, SLE_ADDR_LEN, local_addr, SLE_ADDR_LEN) != EOK) {
-        sample_print("%s sle_set_default_announce_param data memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
+        SAMPLE_PRINT("%s sle_set_default_announce_param data memcpy fail\r\n", SLE_KEYBOARD_SERVER_LOG);
         return 0;
     }
-    sample_print("%s sle_keyboard_local addr: ", SLE_KEYBOARD_SERVER_LOG);
+    SAMPLE_PRINT("%s sle_keyboard_local addr: ", SLE_KEYBOARD_SERVER_LOG);
     for (uint8_t index = 0; index < SLE_ADDR_LEN; index++) {
-        sample_print("0x%02x ", param.own_addr.addr[index]);
+        SAMPLE_PRINT("0x%02x ", param.own_addr.addr[index]);
     }
-    sample_print("\r\n");
+    SAMPLE_PRINT("\r\n");
     return sle_set_announce_param(param.announce_handle, &param);
 }
 
@@ -189,29 +189,29 @@ static int sle_set_default_announce_data(void)
     data.announce_data = announce_data;
     data.announce_data_len = announce_data_len;
 
-    sample_print("%s data.announce_data_len = %d\r\n", SLE_KEYBOARD_SERVER_LOG, data.announce_data_len);
-    sample_print("%s data.announce_data: ", SLE_KEYBOARD_SERVER_LOG);
+    SAMPLE_PRINT("%s data.announce_data_len = %d\r\n", SLE_KEYBOARD_SERVER_LOG, data.announce_data_len);
+    SAMPLE_PRINT("%s data.announce_data: ", SLE_KEYBOARD_SERVER_LOG);
     for (uint8_t data_index = 0; data_index < data.announce_data_len; data_index++) {
-        sample_print("0x%02x ", data.announce_data[data_index]);
+        SAMPLE_PRINT("0x%02x ", data.announce_data[data_index]);
     }
-    sample_print("\r\n");
+    SAMPLE_PRINT("\r\n");
 
     seek_data_len = sle_set_scan_response_data(seek_rsp_data, SLE_ADV_DATA_LEN_MAX);
     data.seek_rsp_data = seek_rsp_data;
     data.seek_rsp_data_len = seek_data_len;
 
-    sample_print("%s data.seek_rsp_data_len = %d\r\n", SLE_KEYBOARD_SERVER_LOG, data.seek_rsp_data_len);
-    sample_print("%s data.seek_rsp_data: ", SLE_KEYBOARD_SERVER_LOG);
+    SAMPLE_PRINT("%s data.seek_rsp_data_len = %d\r\n", SLE_KEYBOARD_SERVER_LOG, data.seek_rsp_data_len);
+    SAMPLE_PRINT("%s data.seek_rsp_data: ", SLE_KEYBOARD_SERVER_LOG);
     for (uint8_t data_index = 0; data_index < data.seek_rsp_data_len; data_index++) {
-        sample_print("0x%02x ", data.seek_rsp_data[data_index]);
+        SAMPLE_PRINT("0x%02x ", data.seek_rsp_data[data_index]);
     }
-    sample_print("\r\n");
+    SAMPLE_PRINT("\r\n");
 
     ret = sle_set_announce_data(adv_handle, &data);
     if (ret == ERRCODE_SLE_SUCCESS) {
-        sample_print("%s set announce data success.\r\n", SLE_KEYBOARD_SERVER_LOG);
+        SAMPLE_PRINT("%s set announce data success.\r\n", SLE_KEYBOARD_SERVER_LOG);
     } else {
-        sample_print("%s set adv param fail.\r\n", SLE_KEYBOARD_SERVER_LOG);
+        SAMPLE_PRINT("%s set adv param fail.\r\n", SLE_KEYBOARD_SERVER_LOG);
     }
     return ERRCODE_SLE_SUCCESS;
 }
@@ -223,7 +223,7 @@ static int sle_set_default_announce_data(void)
  */
 static void sle_announce_enable_cbk(uint32_t announce_id, errcode_t status)
 {
-    sample_print("%s sle announce enable callback id:%02x, state:%x\r\n", SLE_KEYBOARD_SERVER_LOG, announce_id, status);
+    SAMPLE_PRINT("%s sle announce enable callback id:%02x, state:%x\r\n", SLE_KEYBOARD_SERVER_LOG, announce_id, status);
 }
 
 /**
@@ -233,7 +233,7 @@ static void sle_announce_enable_cbk(uint32_t announce_id, errcode_t status)
  */
 static void sle_announce_disable_cbk(uint32_t announce_id, errcode_t status)
 {
-    sample_print("%s sle announce disable callback id:%02x, state:%x\r\n", SLE_KEYBOARD_SERVER_LOG, announce_id,
+    SAMPLE_PRINT("%s sle announce disable callback id:%02x, state:%x\r\n", SLE_KEYBOARD_SERVER_LOG, announce_id,
                  status);
 }
 
@@ -243,7 +243,7 @@ static void sle_announce_disable_cbk(uint32_t announce_id, errcode_t status)
  */
 static void sle_announce_terminal_cbk(uint32_t announce_id)
 {
-    sample_print("%s sle announce terminal callback id:%02x\r\n", SLE_KEYBOARD_SERVER_LOG, announce_id);
+    SAMPLE_PRINT("%s sle announce terminal callback id:%02x\r\n", SLE_KEYBOARD_SERVER_LOG, announce_id);
 }
 
 /**
@@ -252,7 +252,7 @@ static void sle_announce_terminal_cbk(uint32_t announce_id)
  */
 static void sle_enable_cb(uint8_t status)
 {
-    sample_print("%s sle enable callback status:%x\r\n", SLE_KEYBOARD_SERVER_LOG, status);
+    SAMPLE_PRINT("%s sle enable callback status:%x\r\n", SLE_KEYBOARD_SERVER_LOG, status);
 }
 
 /**
@@ -272,13 +272,13 @@ errcode_t sle_keyboard_announce_register_cbks(void)
     dev_mgr_cbk.sle_enable_cb = sle_enable_cb;
     ret = sle_announce_seek_register_callbacks(&seek_cbks);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        sample_print("%s sle_keyboard_announce_register_cbks,register_callbacks fail :%x\r\n", SLE_KEYBOARD_SERVER_LOG,
+        SAMPLE_PRINT("%s sle_keyboard_announce_register_cbks,register_callbacks fail :%x\r\n", SLE_KEYBOARD_SERVER_LOG,
                      ret);
         return ret;
     }
     ret = sle_dev_manager_register_callbacks(&dev_mgr_cbk);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        sample_print("%s sle_keyboard_announce_register_cbks,register_callbacks fail :%x\r\n", SLE_KEYBOARD_SERVER_LOG,
+        SAMPLE_PRINT("%s sle_keyboard_announce_register_cbks,register_callbacks fail :%x\r\n", SLE_KEYBOARD_SERVER_LOG,
                      ret);
         return ret;
     }
@@ -298,7 +298,7 @@ errcode_t sle_keyboard_server_adv_init(void)
     sle_set_default_announce_data();
     ret = sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        sample_print("%s sle_keyboard_server_adv_init,sle_start_announce fail :%x\r\n", SLE_KEYBOARD_SERVER_LOG, ret);
+        SAMPLE_PRINT("%s sle_keyboard_server_adv_init,sle_start_announce fail :%x\r\n", SLE_KEYBOARD_SERVER_LOG, ret);
         return ret;
     }
     return ERRCODE_SLE_SUCCESS;

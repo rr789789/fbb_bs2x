@@ -37,7 +37,7 @@ extern "C" {
 #define SLE_UUID_TEST_DESCRIPTOR (SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE)
 
 /** @brief Print macro for debug output / 调试输出打印宏 */
-#define sample_print(fmt, args...) osal_printk(fmt, ##args)
+#define SAMPLE_PRINT(fmt, args...) osal_printk(fmt, ##args)
 /** @brief Log tag for SLE keyboard server / SLE键盘服务器日志标签 */
 #define SLE_KEYBOARD_SERVER_LOG "[sle keyboard server]"
 /** @brief Server initialization delay in milliseconds / 服务器初始化延迟毫秒数 */

@@ -1,5 +1,5 @@
-#ifndef KEYSCAN_TASK_H_$
-#define KEYSCAN_TASK_H_$
+#ifndef KEYSCAN_TASK_H
+#define KEYSCAN_TASK_H
 
 #define HID_KEY_NONE 0x00
 
@@ -139,4 +139,4 @@
         }                                                                                                              \
     }
 
-#endif /* KEYSCAN_TASK_H_$ */
+#endif /* KEYSCAN_TASK_H */
