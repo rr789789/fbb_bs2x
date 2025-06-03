@@ -172,10 +172,6 @@ static void sle_keyboard_server_rx_buf_init(uint8_t *buffer_addr, uint32_t buffe
 static int sle_keyboard_keyscan_callback(int key_nums, uint8_t key_values[])
 {
     uint8_t normal_key_num = 0;
-    // osal_printk("%s key_nums = %d, key_values = ", SLE_KEYBOARD_SERVER_LOG, key_nums);
-    // for (uint8_t i = 0; i < key_nums; i++) {
-    //     osal_printk("0x%02x ", key_values[i]);
-    // }
     if (sle_keyboard_client_is_connected() == 0) {
         return 1;
     }
@@ -207,7 +203,6 @@ static void *sle_keyboard_task(const char *arg)
 
     osal_printk("enter sle_keyboard_task!\r\n");
     // 1.delay for sle start
-    // osDelay(SLE_KEYBOARD_TASK_DURATION_MS * SLE_KEYBOARD_SERVER_DELAY_COUNT);
     // 2.pin config, full key need run it
 #if defined(CONFIG_KEYSCAN_USE_FULL_KEYS_TYPE)
     keyscan_porting_config_pins();

@@ -125,7 +125,7 @@ static mouse_sensor_oprator_t g_usb_hid_hs_mouse_operator = { 0 };
 static usb_hid_mouse_report_t g_send_mouse_msg = { 0 };
 static qdec_config_t g_usb_qdec_config = QDEC_DEFAULT_CONFIG;
 static int g_usb_mouse_hid_index;
-extern errcode_t sle_low_latency_dongle_get_em_data(uint8_t* em_data);
+
 
 /**
  * @brief 发送鼠标消息到SSAP

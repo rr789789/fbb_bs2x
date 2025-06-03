@@ -200,7 +200,6 @@ static void sle_adv_announce_register_cbks(void)
     seek_cbks.announce_enable_cb = sle_adv_announce_enable_cbk;
     seek_cbks.announce_disable_cb = sle_adv_announce_disable_cbk;
     seek_cbks.announce_terminal_cb = sle_adv_announce_terminal_cbk;
-    //seek_cbks.sle_enable_cb = sle_adv_enable_cbk;
     g_sle_dev_mgr_cbk.sle_power_on_cb = sle_mouse_server_sample_sle_power_on_cbk;
     g_sle_dev_mgr_cbk.sle_enable_cb = sle_adv_enable_cbk;
     sle_announce_seek_register_callbacks(&seek_cbks);

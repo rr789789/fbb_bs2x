@@ -17,13 +17,6 @@
 #include "platform_core.h"
 #include "soc_osal.h"
 
-#ifndef debug
-// #define debug
-#endif
-
-#ifndef dma_enable
-// #define dma_enable
-#endif
 
 /**
  * @brief 将原始数据编码为 LED 驱动器可识别的数据
@@ -60,13 +53,7 @@ void encode_led_data(grb_t *input_data, uint8_t *output_data, uint32_t length)
 }
 
 static inline void app_spi_init_pin(pin_t pin, spi_bus_t bus)
-{ // TODO: 增加防止重复初始化的逻辑
-    errcode_t ret;
-    // 发送reset信号
-    // uapi_pin_set_mode(pin, HAL_PIO_FUNC_GPIO);
-    // uapi_gpio_set_dir(pin, GPIO_DIRECTION_OUTPUT);
-    // uapi_gpio_set_val(pin, GPIO_LEVEL_LOW);
-    // osal_udelay(100);
+{
 #ifdef debug
     osal_printk("spi%d pinmux start!\r\n", bus); // TODO:debug
 #endif
