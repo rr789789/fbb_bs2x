@@ -39,7 +39,7 @@
 #define SLE_ADV_DATA_LEN_MAX 251
 
 /** @brief Local device name for SLE keyboard server / SLE键盘服务器本地设备名称 */
-static uint8_t sle_local_name[] = "sle_keyboard_server";
+static uint8_t sleLocalName[] = "sle_keyboard_server";
 
 /**
  * @brief Set advertisement local name data / 设置广播本地名称数据
@@ -50,8 +50,8 @@ static uint8_t sle_local_name[] = "sle_keyboard_server";
 static uint16_t sle_set_adv_local_name(uint8_t *adv_data, uint16_t max_len)
 {
     uint8_t index = 0;
-    uint8_t *local_name = sle_local_name;
-    uint8_t local_name_len = sizeof(sle_local_name) - 1;
+    uint8_t *local_name = sleLocalName;
+    uint8_t local_name_len = sizeof(sleLocalName) - 1;
 
     SAMPLE_PRINT("%s local_name_len = %d\r\n", SLE_KEYBOARD_SERVER_LOG, local_name_len);
     SAMPLE_PRINT("%s local_name: ", SLE_KEYBOARD_SERVER_LOG);
