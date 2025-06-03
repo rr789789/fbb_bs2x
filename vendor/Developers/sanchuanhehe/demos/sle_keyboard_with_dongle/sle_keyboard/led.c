@@ -209,19 +209,12 @@ void *spi_led_transfer_task(led_data_p arg)
 #include "soc_osal.h"
 #include "trng.h"
 
-#ifndef debug
-// #define debug
-#endif
-
 static void spi_master_entry(void)
 {
 #define SPI_TASK_STACK_SIZE 0x800
 #define SPI_TASK_PRIO OSAL_TASK_PRIORITY_HIGH
 
     osal_task *taskid;
-
-    // 创建任务调度
-    // osal_kthread_lock();
 
 // 定义所需的led_data_t结构体的数量
 #define LED_DATA_COUNT 6
