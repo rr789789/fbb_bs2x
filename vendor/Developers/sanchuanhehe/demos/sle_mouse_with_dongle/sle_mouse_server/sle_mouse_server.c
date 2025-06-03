@@ -653,7 +653,6 @@ static void ble_enable_cbk(uint8_t status)
 static void bt_core_enable_cb_register(void)
 {
     sle_announce_seek_callbacks_t seek_cbks = {0};
-    // seek_cbks.sle_enable_cb = ble_enable_cbk;
     g_sle_dev_mgr_cbk.sle_enable_cb = ble_enable_cbk;
     g_sle_dev_mgr_cbk.sle_power_on_cb = sle_keyboard_server_sample_sle_power_on_cbk;
     sle_dev_manager_register_callbacks(&g_sle_dev_mgr_cbk);
