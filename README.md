@@ -38,6 +38,10 @@
 
 ## 示例教程
 
+由于各厂商复位引脚设置的GPIO不同，可通过Kconfig-->Application-->Enable system control.-->Board reset pin number进行设置，默认是21。
+	HH-D03开发板（润和软件）的GPIOI021和GPIO14引出按键，均可作为复位按键使用；
+	BearPi-Pico_H2821E开发板（小熊派）的默认复位按键为GPIO17。
+
 HH-D03开发板示例教程
 
 | 一级分类     | 子分类          | 应用示例                                                     | 应用示例                                                  | 应用示例                                      |
