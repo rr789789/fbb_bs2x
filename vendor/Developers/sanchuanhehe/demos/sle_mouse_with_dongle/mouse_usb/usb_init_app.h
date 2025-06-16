@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+ * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @file usb_init_app.h
  * @brief USB Initialize Header
  * @author @CompanyNameTag

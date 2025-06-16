@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+ * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @file mouse_sensor_pmw3816.c
  * @brief Mouse sensor pmw3816 source
  * @author @CompanyNameTag

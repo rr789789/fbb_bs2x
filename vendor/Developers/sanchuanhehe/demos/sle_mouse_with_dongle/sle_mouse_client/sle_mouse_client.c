@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+ * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @file sle_mouse_client.c
  * @brief SLE Uart Client Source
  * @author @CompanyNameTag

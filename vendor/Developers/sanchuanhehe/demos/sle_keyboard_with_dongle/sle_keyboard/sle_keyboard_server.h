@@ -4,7 +4,7 @@
  * @author @CompanyNameTag
  * @date 2023-07-29
  * @version 1.0
- * @copyright Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+ * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  */
 
 #ifndef SLE_KEYBOARD_SERVER_H

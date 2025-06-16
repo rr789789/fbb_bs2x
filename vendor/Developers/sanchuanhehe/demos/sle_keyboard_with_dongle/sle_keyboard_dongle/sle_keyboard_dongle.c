@@ -1,7 +1,7 @@
 /**
  * @file sle_keyboard_dongle.c
  * @brief SLE Keyboard Dongle Source / SLE键盘适配器源代码
- * @copyright Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+ * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  *
  * Implements the SLE keyboard dongle functionality / 实现SLE键盘适配器功能
  *

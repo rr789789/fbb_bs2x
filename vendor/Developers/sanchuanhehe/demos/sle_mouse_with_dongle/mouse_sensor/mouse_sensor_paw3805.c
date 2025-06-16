@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+ * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @file mouse_sensor_paw3805.c
  * @brief Mouse sensor paw3805 source
  * @author @CompanyNameTag

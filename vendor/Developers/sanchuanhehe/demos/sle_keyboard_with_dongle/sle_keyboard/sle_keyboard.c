@@ -1,5 +1,5 @@
 /**
- * Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved. \n
+ * Copyright (c) @sanchuanhehe 2023-2023. All rights reserved. \n
  *
  * Description: SLE KEYBOARD Source. \n
  * Author: @CompanyNameTag \n

@@ -1,7 +1,7 @@
 /**
  * @file sle_mouse_with_dongle.c
  * @brief Sle鼠标与接收器样例源文件
- * @copyright Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+ * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @author @CompanyNameTag
  * @date 2023-08-01
  * @details Sle鼠标与接收器样例源文件，包含主流程入口与任务创建。

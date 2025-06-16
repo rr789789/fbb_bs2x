@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) CompanyNameMagicTag 2023-2023. All rights reserved.
+# Copyright (c) sanchuanhehe 2023-2023. All rights reserved.
 #===============================================================================
 if(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_KEYBOARD)
 set(SOURCES_LIST
