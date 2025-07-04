@@ -2,7 +2,7 @@
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @file sle_mouse_client.h
  * @brief SLE Mouse Client header
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-08-01
  */
 #ifndef SLE_MOUSE_CLIENT_H

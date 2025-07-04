@@ -5,7 +5,7 @@
  *
  * Implements the SLE keyboard dongle functionality / 实现SLE键盘适配器功能
  *
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  *
  * @date 2023-07-28
  * - Initial version / 初始版本

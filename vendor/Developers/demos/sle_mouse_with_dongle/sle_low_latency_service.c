@@ -2,7 +2,7 @@
  * Copyright (c) @sanchuanhehe 2023-2023. All rights reserved. \n
  *
  * Description: Sle Low Latency Mouse Source. \n
- * Author: @CompanyNameTag \n
+ * Author: @sanchuanhehe \n
  * History: \n
  * 2023-08-01, Create file. \n
  */

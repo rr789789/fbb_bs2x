@@ -1,7 +1,7 @@
 /**
  * @file sle_keyboard_server.c
  * @brief SLE keyboard server source implementation / SLE键盘服务器源码实现
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-07-29
  * @version 1.0
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.

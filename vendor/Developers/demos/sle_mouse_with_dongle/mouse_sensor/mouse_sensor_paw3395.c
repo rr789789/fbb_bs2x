@@ -2,7 +2,7 @@
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @file mouse_sensor_paw3395.c
  * @brief Mouse sensor paw3395 source
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-08-01
  */
 

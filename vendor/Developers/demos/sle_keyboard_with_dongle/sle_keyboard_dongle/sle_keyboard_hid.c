@@ -1,7 +1,7 @@
 /**
  * @file sle_keyboard_hid.c
  * @brief SLE keyboard dongle HID source implementation / SLE键盘适配器HID源码实现
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-07-28
  * @version 1.0
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.

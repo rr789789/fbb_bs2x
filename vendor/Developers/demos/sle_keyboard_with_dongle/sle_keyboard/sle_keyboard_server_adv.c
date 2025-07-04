@@ -1,7 +1,7 @@
 /**
  * @file sle_keyboard_server_adv.c
  * @brief SLE advertisement configuration for SLE keyboard server / SLE键盘服务器广播配置
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-07-29
  * @version 1.0
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.

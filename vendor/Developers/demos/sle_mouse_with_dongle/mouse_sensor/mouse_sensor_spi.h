@@ -2,7 +2,7 @@
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @file mouse_sensor_spi.h
  * @brief Mouse sensor spi
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-08-01
  */
 

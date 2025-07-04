@@ -2,7 +2,7 @@
  * Copyright (c) @sanchuanhehe 2023-2023. All rights reserved. \n
  *
  * Description: SPI Sample Source. \n
- * Author: @CompanyNameTag \n
+ * Author: @sanchuanhehe \n
  * History: \n
  * 2023-06-25, Create file. \n
  */

@@ -1,7 +1,7 @@
 /**
  * @file sle_keyboard_hid.h
  * @brief SLE keyboard HID configuration header file / SLE键盘HID配置头文件
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-07-28
  * @version 1.0
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.

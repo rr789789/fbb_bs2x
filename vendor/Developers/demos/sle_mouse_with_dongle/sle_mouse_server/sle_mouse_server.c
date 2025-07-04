@@ -2,7 +2,7 @@
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
  * @file sle_mouse_server.c
  * @brief SLE mouse server Source
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-08-01
  */
 

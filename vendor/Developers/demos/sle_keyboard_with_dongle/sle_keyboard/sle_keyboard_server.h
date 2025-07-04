@@ -1,7 +1,7 @@
 /**
  * @file sle_keyboard_server.h
  * @brief SLE keyboard server configuration header file / SLE键盘服务器配置头文件
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-07-29
  * @version 1.0
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.

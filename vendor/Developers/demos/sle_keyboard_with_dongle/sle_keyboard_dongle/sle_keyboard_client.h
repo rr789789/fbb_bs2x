@@ -1,7 +1,7 @@
 /**
  * @file sle_keyboard_client.h
  * @brief SLE keyboard client sample header file / SLE键盘客户端示例头文件
- * @author @CompanyNameTag
+ * @author @sanchuanhehe
  * @date 2023-04-03
  * @version 1.0
  * @copyright Copyright (c) @sanchuanhehe 2023-2023. All rights reserved.
