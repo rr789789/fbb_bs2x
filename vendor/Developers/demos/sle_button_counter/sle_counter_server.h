@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: Nearlink Server Task. \n
+ * 
+ */
+
 #ifndef _SLE_COUNTER_SERVER_H
 #define _SLE_COUNTER_SERVER_H
 

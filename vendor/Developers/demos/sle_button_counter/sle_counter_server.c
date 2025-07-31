@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: Nearlink Server Task. \n
+ * 
+ */
 
 #include "sle_counter_server.h"
 
