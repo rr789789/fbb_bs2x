@@ -1,0 +1,4 @@
+set(SOURCES "${SOURCES}" 
+"${CMAKE_CURRENT_SOURCE_DIR}/button.c"
+"${CMAKE_CURRENT_SOURCE_DIR}/sle_counter_server.c"
+ PARENT_SCOPE)
