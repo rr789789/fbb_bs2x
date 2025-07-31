@@ -22,7 +22,7 @@ static void *button_task(const char *arg)
         uapi_gpio_unregister_isr_func(BUTTON_GPIO);
     }
     while (1) {
-        osal_msleep(500);
+        osal_msleep(500); // 延时500毫秒
     }
     return NULL;
 }

@@ -78,6 +78,8 @@ typedef enum {
     SLE_ADV_DATA_TYPE_MANUFACTURER_SPECIFIC_DATA = 0xFF               /*!< 厂商自定义信息 */
 } sle_adv_data_type;
 
+#define MAX_BUTTON_COUNT 5
+#define MAX_BUTTON_MESSAGE_LEN 5
 extern bool buttonPressed;
 
 #endif

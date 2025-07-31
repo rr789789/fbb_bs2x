@@ -58,15 +58,16 @@ static errcode_t sle_set_default_announce_data(void)
     uint8_t announce_data[SLE_ADV_DATA_LEN_MAX] = {SLE_ADV_DATA_TYPE_DISCOVERY_LEVEL, 1, SLE_ANNOUNCE_LEVEL_NORMAL};
     uint8_t seek_rsp_data[SLE_ADV_DATA_LEN_MAX] = {SLE_ADV_DATA_TYPE_SHORTENED_LOCAL_NAME, sizeof(g_sle_local_name)};
 
-    memcpy_s(&seek_rsp_data[2], SLE_ADV_DATA_LEN_MAX - 2, g_sle_local_name, sizeof(g_sle_local_name));
+    memcpy_s(&seek_rsp_data[2], SLE_ADV_DATA_LEN_MAX - 2, g_sle_local_name,
+             sizeof(g_sle_local_name)); // 2表示类型+长度，后面接名字
 
     data.announce_data = announce_data;
 
-    data.announce_data_len = 3; // 由类型、长度、普通广播flag三位组成
+    data.announce_data_len = 3; // 3表示由类型、长度、普通广播flag三位组成
 
     data.seek_rsp_data = seek_rsp_data;
 
-    data.seek_rsp_data_len = 2 + sizeof(g_sle_local_name); // 由类型、长度、广播名组成
+    data.seek_rsp_data_len = 2 + sizeof(g_sle_local_name); // 2表示类型+长度，由类型、长度、广播名组成
 
     ret = sle_set_announce_data(adv_handle, &data);
 
@@ -131,7 +132,7 @@ static void sle_uuid_setu2(uint16_t u2, sle_uuid_t *out)
 {
     sle_uuid_set_base(out);
     out->len = UUID_LEN_2;
-    encode2byte_little(&out->uuid[14], u2);
+    encode2byte_little(&out->uuid[14], u2); // 14代表前面不变的标准UUID定义
 }
 
 static void ssaps_read_request_cbk(uint8_t server_id,
@@ -156,10 +157,6 @@ static void ssaps_write_request_cbk(uint8_t server_id,
         osal_printk("%02x", write_cb_para->value[idx]);
     }
     osal_printk("( %d )\r\n", write_cb_para->length);
-
-    if (status == ERRCODE_SUCC) {
-        // example_print_led_state(write_cb_para);
-    }
 }
 
 errcode_t sle_server_notify_data(const uint8_t *data, uint8_t len)
@@ -320,7 +317,7 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id,
         "sle_connect_state_changed_cbk conn_id:0x%02x, conn_state:0x%x, pair_state:0x%x, disc_reason:0x%x, "
         "addr:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
         conn_id, conn_state, pair_state, disc_reason, addr->addr[0], addr->addr[1], addr->addr[2], addr->addr[3],
-        addr->addr[4], addr->addr[5]);
+        addr->addr[4], addr->addr[5]); // 把地址0、1、2、3、4、5都打印出来
 
     if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
         sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
@@ -384,10 +381,10 @@ static int sle_counter_server_task(const char *arg)
     while (1) {
         osal_msleep(500); // 延时500毫秒
         if (buttonPressed) {
-            uint8_t temp[5] = {0}; // 随便定义一个长度，例如5位
+            uint8_t temp[MAX_BUTTON_MESSAGE_LEN] = {0};
             temp[0] = pressCount;
-            pressCount = (pressCount + 1) % 5; // 从0-4轮转
-            sle_server_notify_data(temp, 5);   // 这里把5位都发过去
+            pressCount = (pressCount + 1) % MAX_BUTTON_COUNT;
+            sle_server_notify_data(temp, MAX_BUTTON_MESSAGE_LEN);
             buttonPressed = false;
         }
     }
