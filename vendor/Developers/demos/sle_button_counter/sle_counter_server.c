@@ -61,12 +61,12 @@ static errcode_t sle_set_default_announce_data(void)
     memcpy_s(&seek_rsp_data[2], SLE_ADV_DATA_LEN_MAX - 2, g_sle_local_name, sizeof(g_sle_local_name));
 
     data.announce_data = announce_data;
-    // 由类型、长度、普通广播flag三位组成
-    data.announce_data_len = 3;
+
+    data.announce_data_len = 3; // 由类型、长度、普通广播flag三位组成
 
     data.seek_rsp_data = seek_rsp_data;
-    // 由类型、长度、广播名组成
-    data.seek_rsp_data_len = 2 + sizeof(g_sle_local_name);
+
+    data.seek_rsp_data_len = 2 + sizeof(g_sle_local_name); // 由类型、长度、广播名组成
 
     ret = sle_set_announce_data(adv_handle, &data);
 
@@ -332,10 +332,6 @@ static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errc
 {
     osal_printk("sle_pair_complete_cbk conn_id:0x%02x, status:0x%x, addr:%02x:%02x:%02x:%02x:%02x:%02x\r\n", conn_id,
                 status, addr->addr[0], addr->addr[1], addr->addr[2], addr->addr[3], addr->addr[4], addr->addr[5]);
-
-    if (status == ERRCODE_SUCC) {
-        // example_led_control_entry();
-    }
 }
 
 static errcode_t sle_conn_register_cbks(void)
@@ -386,12 +382,12 @@ static int sle_counter_server_task(const char *arg)
 
     uint8_t pressCount = 0;
     while (1) {
-        osal_msleep(500);
+        osal_msleep(500); // 延时500毫秒
         if (buttonPressed) {
-            uint8_t temp[5] = {0};
+            uint8_t temp[5] = {0}; // 随便定义一个长度，例如5位
             temp[0] = pressCount;
-            pressCount = (pressCount + 1) % 5;
-            sle_server_notify_data(temp, 5);
+            pressCount = (pressCount + 1) % 5; // 从0-4轮转
+            sle_server_notify_data(temp, 5);   // 这里把5位都发过去
             buttonPressed = false;
         }
     }

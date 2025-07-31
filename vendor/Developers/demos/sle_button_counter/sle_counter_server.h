@@ -1,10 +1,6 @@
 #ifndef _SLE_COUNTER_SERVER_H
 #define _SLE_COUNTER_SERVER_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "securec.h"
 #include "errcode.h"
 #include "osal_addr.h"
@@ -83,9 +79,5 @@ typedef enum {
 } sle_adv_data_type;
 
 extern bool buttonPressed;
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

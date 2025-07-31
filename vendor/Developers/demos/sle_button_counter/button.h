@@ -1,8 +1,5 @@
 #ifndef _BUTTON_H
 #define _BUTTON_H
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include "pinctrl.h"
 #include "common_def.h"
@@ -15,10 +12,5 @@ extern "C" {
 #define BUTTON_GPIO 14 // 按键
 #define BUTTON_TASK_STACK_SIZE 0x0400
 #define BUTTON_TASK_PRIO 25
-
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
