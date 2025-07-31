@@ -58,8 +58,8 @@ static errcode_t sle_set_default_announce_data(void)
     uint8_t announce_data[SLE_ADV_DATA_LEN_MAX] = {SLE_ADV_DATA_TYPE_DISCOVERY_LEVEL, 1, SLE_ANNOUNCE_LEVEL_NORMAL};
     uint8_t seek_rsp_data[SLE_ADV_DATA_LEN_MAX] = {SLE_ADV_DATA_TYPE_SHORTENED_LOCAL_NAME, sizeof(g_sle_local_name)};
 
-    memcpy_s(&seek_rsp_data[2], SLE_ADV_DATA_LEN_MAX - 2, g_sle_local_name,
-             sizeof(g_sle_local_name)); // 2表示类型+长度，后面接名字
+    memcpy_s(&seek_rsp_data[2], SLE_ADV_DATA_LEN_MAX - 2, g_sle_local_name, // 2表示类型+长度，后面接名字
+             sizeof(g_sle_local_name));
 
     data.announce_data = announce_data;
 
@@ -316,8 +316,13 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id,
     osal_printk(
         "sle_connect_state_changed_cbk conn_id:0x%02x, conn_state:0x%x, pair_state:0x%x, disc_reason:0x%x, "
         "addr:%02x:%02x:%02x:%02x:%02x:%02x\r\n",
-        conn_id, conn_state, pair_state, disc_reason, addr->addr[0], addr->addr[1], addr->addr[2], addr->addr[3],
-        addr->addr[4], addr->addr[5]); // 把地址0、1、2、3、4、5都打印出来
+        conn_id, conn_state, pair_state, disc_reason,
+        addr->addr[0],  // 打印地址0
+        addr->addr[1],  // 打印地址1
+        addr->addr[2],  // 打印地址2
+        addr->addr[3],  // 打印地址3
+        addr->addr[4],  // 打印地址4
+        addr->addr[5]); // 打印地址5
 
     if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
         sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
@@ -328,7 +333,13 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id,
 static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
     osal_printk("sle_pair_complete_cbk conn_id:0x%02x, status:0x%x, addr:%02x:%02x:%02x:%02x:%02x:%02x\r\n", conn_id,
-                status, addr->addr[0], addr->addr[1], addr->addr[2], addr->addr[3], addr->addr[4], addr->addr[5]);
+                status,
+                addr->addr[0],  // 打印地址0
+                addr->addr[1],  // 打印地址1
+                addr->addr[2],  // 打印地址2
+                addr->addr[3],  // 打印地址3
+                addr->addr[4],  // 打印地址4
+                addr->addr[5]); // 打印地址5
 }
 
 static errcode_t sle_conn_register_cbks(void)
