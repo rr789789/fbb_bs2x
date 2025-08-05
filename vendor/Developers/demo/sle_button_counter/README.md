@@ -6,7 +6,7 @@
 
 **效果图：** 
 
-<img src="./demo2.jpg" />
+<img src="./demo.jpg" />
 
 # 1.2 使用介绍
 
