@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: SLE Phone Demo. \n
+ * 
+ */
+
 import { abilityAccessCtrl, common, Want } from '@kit.AbilityKit'
 import { bundleManager } from '@kit.AbilityKit'
 import { BusinessError, Callback } from '@kit.BasicServicesKit'

@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: SLE Phone Demo. \n
+ * 
+ */
+ 
 import { access } from '@kit.ConnectivityKit'
 import { abilityAccessCtrl, common } from '@kit.AbilityKit'
 import { router } from '@kit.ArkUI'

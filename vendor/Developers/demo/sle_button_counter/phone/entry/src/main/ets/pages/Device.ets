@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: SLE Phone Demo. \n
+ * 
+ */
+
 import { router } from '@kit.ArkUI'
 import { SleWriteDialog } from '../dialogs/SleWriteDialog'
 import {
@@ -19,27 +26,7 @@ struct Device {
     @State macAddress: string = "00:00:00:00:00:00"
     @State deviceLog: string = ""
     @State serviceList: ssap.Service[] = []
-    // 在编写界面的时候，可以解开这一段调试界面样式
-    // @State serviceList: BleService[] = [{
-    //     uuid: "AAAA",
-    //     characteristicList: [{
-    //         uuid: "BBBB",
-    //         read: true,
-    //         notify: true,
-    //         write: true
-    //     }, { uuid: "CCCC", write: true }]
-    // }, {
-    //     uuid: "AAAA",
-    //     characteristicList: [{ uuid: "BBBB", read: true, notify: true }, { uuid: "CCCC", write: true }]
-    // }, {
-    //     uuid: "AAAA",
-    //     characteristicList: [{ uuid: "BBBB", read: true, notify: true }, { uuid: "CCCC", write: true }]
-    // }, {
-    //     uuid: "AAAA",
-    //     characteristicList: [{ uuid: "BBBB", read: true, notify: true }, { uuid: "CCCC", write: true }]
-    // }]
-
-
+    
     private propertyReadyToWrite: string = ""
     sleWriteDialogController: CustomDialogController = new CustomDialogController({
         builder: SleWriteDialog({
