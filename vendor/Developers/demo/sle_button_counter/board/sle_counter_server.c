@@ -15,9 +15,10 @@ static uint16_t g_property_handle = 0;                    // sle ntf property ha
 static uint8_t sle_uuid_base[] = {0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA,
                                   0xB7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-/* 广播名称 */
-static uint8_t g_sle_local_addr[SLE_ADDR_LEN] = {0x04, 0x01, 0x06, 0x08, 0x06, 0x03};
-static uint8_t g_sle_local_name[8] = "COUNTER";
+
+static uint8_t g_sle_local_addr[SLE_ADDR_LEN] = {0x04, 0x01, 0x06, 0x08, 0x06, 0x03};//广播地址
+static const char g_sle_local_name[] = "COUNTER";//广播名称
+
 static void sle_set_addr(void)
 {
     uint8_t *addr = g_sle_local_addr;
@@ -62,10 +63,10 @@ static errcode_t sle_set_default_announce_data(void)
     sle_announce_data_t data = {0};
     uint8_t adv_handle = SLE_ADV_HANDLE_DEFAULT;
     uint8_t announce_data[SLE_ADV_DATA_LEN_MAX] = {SLE_ADV_DATA_TYPE_DISCOVERY_LEVEL, 1, SLE_ANNOUNCE_LEVEL_NORMAL};
-    uint8_t seek_rsp_data[SLE_ADV_DATA_LEN_MAX] = {SLE_ADV_DATA_TYPE_SHORTENED_LOCAL_NAME, sizeof(g_sle_local_name)};
+    uint8_t seek_rsp_data[SLE_ADV_DATA_LEN_MAX] = {SLE_ADV_DATA_TYPE_SHORTENED_LOCAL_NAME, strlen(g_sle_local_name)};
 
     memcpy_s(&seek_rsp_data[2], SLE_ADV_DATA_LEN_MAX - 2, g_sle_local_name, // 2表示类型+长度，后面接名字
-             sizeof(g_sle_local_name));
+             strlen(g_sle_local_name));
 
     data.announce_data = announce_data;
 
@@ -73,7 +74,7 @@ static errcode_t sle_set_default_announce_data(void)
 
     data.seek_rsp_data = seek_rsp_data;
 
-    data.seek_rsp_data_len = 2 + sizeof(g_sle_local_name); // 2表示类型+长度，由类型、长度、广播名组成
+    data.seek_rsp_data_len = 2 + strlen(g_sle_local_name); // 2表示类型+长度，由类型、长度、广播名组成
 
     ret = sle_set_announce_data(adv_handle, &data);
 
