@@ -3,7 +3,7 @@
     "buildTarget": "standard-bs21e-1100e",
     "relativePath": "demo/rotary_encoder",
     "chip": "BS2X",
-    "buildDef": "CONFIG_SAMPLE_ROTARY_ENCODER_SW_PIN=5;CONFIG_SAMPLE_ROTARY_ENCODER_DT_PIN=6;CONFIG_SAMPLE_ROTARY_ENCODER_CLK_PIN=7;CONFIG_SAMPLE_ROTARY_ENCODER_DEBUG=0",
+    "buildDef": "",
     "needSmoke": "false",
     "key":"1",
     "name":"rotary_encoder",
