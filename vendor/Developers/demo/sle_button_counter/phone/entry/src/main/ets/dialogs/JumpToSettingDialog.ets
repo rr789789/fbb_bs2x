@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: SLE Phone Demo. \n
+ * 
+ */
+
 @CustomDialog
 export struct JumpToSettingDialog {
     cancel?: Function
