@@ -1,7 +1,7 @@
 [
   {
     "buildTarget": "standard-bs21e-1100e",
-    "relativePath": "demo/rotary_encoder",
+    "relativePath": "demos/rotary_encoder",
     "chip": "BS2X",
     "buildDef": "",
     "needSmoke": "false",
