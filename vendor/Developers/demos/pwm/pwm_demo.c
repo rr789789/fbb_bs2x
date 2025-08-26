@@ -102,9 +102,9 @@ void set_pwm_beep_frequency(int time)
     while (time--)
     {
         pwm_beep_start();
-        osal_msleep(1000);
+        osal_msleep(TEST_TCXO_DELAY_1000MS);
         pwm_beep_stop();
-        osal_msleep(1000);
+        osal_msleep(TEST_TCXO_DELAY_1000MS);
     }
 }
 
