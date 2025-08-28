@@ -27,9 +27,11 @@
 #define PM_STATE_WORK      0
 #define PM_STATE_STANDBY   1
 #define PM_STATE_SLEEP     2
+#define  seekin    40000
+#define  seekwin   300
+#define  worktime  10000
 extern int led_state; // 灯的状态
 #define PM_SAMPLE_GPIO_NUM  S_MGPIO2       // 用于低功耗唤醒的GPIO引脚编号
-
 
 void pm_low_power_entry(void);
 #endif

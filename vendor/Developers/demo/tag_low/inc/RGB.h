@@ -7,7 +7,7 @@
 #include "gpio.h"
 #include "soc_osal.h"
 #include "app_init.h"
-#include "watchdog.h" 
+#include "watchdog.h"
 
 #define RGB_DURATION_MS      500 // RGB灯闪烁间隔时间
 #define RGB_TASK_PRIO        24  // 闪烁任务优先级
@@ -17,9 +17,12 @@
 #define RED_LED_PIN               16
 #define GREEN_LED_PIN             15
 #define BLUE_LED_PIN              18
-
-#define RST_PIN 6
-
+#define RST_PIN                   6
+#define ALL_LEDS_OFF                       0
+#define RED_LED_ON                         1
+#define GREEN_LED_ON                       2
+#define BLUE_LED_ON                        3
+#define ALL_LEDS_ON                        4
 extern int led_state; // 灯的状态
 
 // 初始化RGB灯引脚
@@ -29,5 +32,4 @@ void rgb_init(void);
 void rgb_blinky_task(void);
 // 控制RGB灯
 void control_led(int red_state, int green_state, int blue_state);
-
-#endif // RGB_Hs 
+#endif 

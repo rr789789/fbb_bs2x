@@ -13,8 +13,6 @@
 #ifndef SLE_CLIENT_H
 #define SLE_CLIENT_H
 
-
-
 #include "app_init.h"
 #include "systick.h"
 #include "tcxo.h"
@@ -27,16 +25,19 @@
 #include "sle_connection_manager.h"
 #include "sle_ssap_client.h"
 #include "watchdog.h" 
-#include "RGB.h"
-#include "lowp.h"
+#include "pm_sys.h"
+
 #define SLE_MTU_SIZE_DEFAULT        1500
 #define SLE_SEEK_INTERVAL_DEFAULT   2000 //50*125ms
 #define SLE_SEEK_WINDOW_DEFAULT     100
 #define SLE_RX_BUF_LEN 256
-#define SLE_CLIENT_TASK_PRIO 26
-#define SLE_CLIENT_TASK_STACK_SIZE 0x2000
-#define RGB_TASK_PRIO        24
-#define RGB_TASK_STACK_SIZE  0x1000 
+#define XZERO        0
+#define XONE         1
+#define XSECOND      2
+#define XTHREE       3
+#define XSIX         6
+#define OSL100       100
+#define OSL50        50
 
 void sle_client_init(void);
 void sle_start_scan(void);

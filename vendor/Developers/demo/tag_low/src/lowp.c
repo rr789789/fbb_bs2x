@@ -9,7 +9,6 @@
  */
 
 #include "lowp.h"
-
 static uint8_t g_pm_state = PM_STATE_WORK; // 记录当前的电源管理状态
 
 // GPIO中断处理函数 //
@@ -32,8 +31,7 @@ static void pm_ulpgpio_wkup_handler(uint8_t ulp_gpio)
 // GPIO配置函数 //
 // 定义了一个ULP GPIO中断唤醒配置数组，配置了GPIO引脚PM_SAMPLE_GPIO_NUM，当检测到下降沿中断时，调用pm_ulpgpio_wkup_handler函数
 static ulp_gpio_int_wkup_cfg_t g_pm_wk_cfg[] = {
-    { 0, PM_SAMPLE_GPIO_NUM, true, ULP_GPIO_INTERRUPT_RISING_EDGE, pm_ulpgpio_wkup_handler }, 
-    //{ 0, PM_SAMPLE_GPIO_NUM, true, ULP_GPIO_INTERRUPT_FALLING_EDGE, pm_ulpgpio_wkup_handler },    // ulpgpio唤醒
+    { 0, PM_SAMPLE_GPIO_NUM, true, ULP_GPIO_INTERRUPT_RISING_EDGE, pm_ulpgpio_wkup_handler }, // ulpgpio唤醒
 };
 
 // GPIO睡眠配置函数 //
@@ -55,7 +53,6 @@ void pm_gpio_wkup_cfg(void)
     uapi_pin_set_mode(PM_SAMPLE_GPIO_NUM, 0);
     uapi_pin_set_pull(PM_SAMPLE_GPIO_NUM, PIN_PULL_UP);
     uapi_gpio_set_dir(PM_SAMPLE_GPIO_NUM, GPIO_DIRECTION_INPUT);
-   // uapi_gpio_register_isr_func(PM_SAMPLE_GPIO_NUM, GPIO_INTERRUPT_RISING_EDGE, (gpio_callback_t)pm_gpio_irq_func);
     uapi_gpio_register_isr_func(PM_SAMPLE_GPIO_NUM, GPIO_INTERRUPT_FALLING_EDGE, (gpio_callback_t)pm_gpio_irq_func);
     osal_printk("GPIO14 level after gpio init: %d\n", uapi_gpio_get_val(RED_LED_PIN));
 }
@@ -82,7 +79,7 @@ static int32_t pm_state_standby_to_sleep(uintptr_t arg)
 
     uint32_t irq_status = osal_irq_lock();
     sle_stop_seek();
-    sle_seek_param(40000, 300);
+    sle_seek_param(seekin, seekwin);
     g_pm_state = PM_STATE_SLEEP;
     osal_irq_restore(irq_status);
     osal_printk("standby to sleep\r\n");
@@ -109,13 +106,11 @@ static int32_t pm_state_sleep_to_work(uintptr_t arg)
     pm_gpio_wkup_cfg();
     // 打开广播、蓝牙回连
     rgb_init(); 
-    //sle_client_param(100, 100);
     g_pm_state = PM_STATE_WORK;
     osal_irq_restore(irq_status);
     osal_printk("sleep to work\r\n");
     return 0;
 }
-
 // 低功耗入口函数 //
 // 注册状态转换处理函数，重置工作状态，并设置状态转换持续时间
 void pm_low_power_entry(void)
@@ -129,7 +124,7 @@ void pm_low_power_entry(void)
     uapi_pm_state_trans_handler_register(&handler);
 
     uapi_pm_work_state_reset();
-    uapi_pm_set_state_trans_duration(10000, 10000);//系统在工作状态持续10s后自动进入待机,待机状态持续10s后自动进入睡眠
+    uapi_pm_set_state_trans_duration(worktime, worktime); //系统在工作状态持续10s后自动进入待机,待机状态持续10s后自动进入睡眠
 }
 
 
