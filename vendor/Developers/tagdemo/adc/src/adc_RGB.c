@@ -38,7 +38,6 @@ void set_led_state(int state)
 void rgb_blinky_task(void)
 {
     rgb_init();
-    //update_leds_based_on_state();
     while (1) 
     {
         switch (led_state) 

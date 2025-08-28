@@ -66,7 +66,7 @@ void rgb_blinky_task(void)
 // 虚拟接口，用于设置灯的状态
 void set_led_state(int state) 
 {
-    if (state >= 0 && state <= 4) 
+    if (state >=XZERO && state <= XFOUR) 
     { // 状态值范围从0到4
         led_state = state;
     }

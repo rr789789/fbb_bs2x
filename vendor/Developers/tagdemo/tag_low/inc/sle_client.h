@@ -26,6 +26,7 @@
 #include "sle_ssap_client.h"
 #include "watchdog.h" 
 #include "pm_sys.h"
+#include "RGB.h"
 
 #define SLE_MTU_SIZE_DEFAULT        1500
 #define SLE_SEEK_INTERVAL_DEFAULT   2000 //50*125ms
@@ -36,6 +37,7 @@
 #define XSECOND      2
 #define XTHREE       3
 #define XSIX         6
+#define XFIF         15
 #define OSL100       100
 #define OSL50        50
 

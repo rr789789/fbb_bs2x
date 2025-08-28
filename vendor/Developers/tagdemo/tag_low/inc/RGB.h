@@ -23,6 +23,8 @@
 #define GREEN_LED_ON                       2
 #define BLUE_LED_ON                        3
 #define ALL_LEDS_ON                        4
+#define XZERO                              0
+#define XFOUR                              4
 extern int led_state; // 灯的状态
 
 // 初始化RGB灯引脚

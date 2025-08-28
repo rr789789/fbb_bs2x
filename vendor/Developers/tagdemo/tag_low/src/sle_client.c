@@ -111,7 +111,7 @@ void sle_client_init(void)
     // 注册扫描回调函数 //
     sle_announce_seek_register_callbacks(&g_seek_cbk);
     sle_set_local_addr(&local_address);         // 设置本地地址
-    sle_set_local_name(sle_client_name, 15);  // 设置本地名称
+    sle_set_local_name(sle_client_name,XFIF);  // 设置本地名称
 
 }
 
