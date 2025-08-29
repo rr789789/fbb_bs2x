@@ -1,3 +1,11 @@
+/**
+ * Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved. \n
+ *
+ * Description: ADC Sample Source. \n
+ * Author: @CompanyNameTag \n
+ * History: \n
+ * 2023-07-06, Create file. \n
+ */
 #include "adc_rgb.h"
 #define ostime       1000
 #define XONE         1
