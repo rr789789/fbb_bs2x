@@ -15,8 +15,6 @@ static void sle_client_entry(void)
     sle_start_scan(); 
     rgb_init();  
     pm_low_power_entry();
-
-
     osal_kthread_lock();
     sle_progress_task_handle = osal_kthread_create((osal_kthread_handler)sle_progress_task, 0, "sle_progress_task", SLE_CLIENT_TASK_STACK_SIZE);
     if (sle_progress_task_handle != NULL) 
