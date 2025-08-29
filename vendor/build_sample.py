@@ -364,7 +364,7 @@ def sample_build_prepare(input_list):
         sample_file_path = parts[0]
         build_target = parts[1]
         sample_name = parts[2]
-        platfor_name = parts[3]
+        platform_name = parts[3]
         if len(parts) == 5:
             def_name = parts[4]
             if '=y' in def_name or '= y' in def_name:
@@ -384,12 +384,12 @@ def sample_build_prepare(input_list):
         global_combined = '_'.join(remaining_parts)
         if len(parts) >= 5:
             global_combined += '_'
-            build_def_sha = hashlib.sha256('-'.join(parts[4:]).encode('utf-8',errors='ignore'))
+            build_def_sha = hashlib.sha256('-'.join(parts[4:]).encode('utf-8', errors='ignore'))
             global_combined += build_def_sha.hexdigest()[:32]
         # 获取sample目录路径，并复制到指定目录
         # 截取目标内容
         target_string = sample_file_path.split('/build_config.json')[0] + '/'
-        samples = sample_name.replace('-','/')
+        samples = sample_name.replace('-', '/')
         source_directory = target_string + samples
         print(source_directory)
         print(f"[sample_build_prepare] source_directory: {source_directory}")
@@ -405,6 +405,8 @@ def sample_build_prepare(input_list):
             print(f"Error: {e.strerror}")
         delete_specific_content(bs21_compile_cmakelistfile, f'add_subdirectory_if_exist({sample_name.split("-")[1]})')
         insert_content_before_line(bs21_compile_cmakelistfile, bs21_cmakelist_search_string, f'add_subdirectory_if_exist({sample_name.split("-")[1]})\n')
+        if sample_name == "tag_low":
+            insert_content_before_line(bs21_compile_cmakelistfile, bs21_cmakelist_search_string,f'add_subdirectory_if_exist(tag_low)\n')
         compile_sdk_and_save_log(build_target)
         current_dir = os.getcwd()
         # 切换到上一层目录
