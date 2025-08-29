@@ -1,0 +1,12 @@
+[
+  {
+    "buildTarget": "standard-bs21e-1100e",
+    "relativePath": "demos/BS21E_LCD_ST7735S",
+    "chip": "BS2X",
+    "buildDef": "",
+    "needSmoke": "false",
+    "key":"1",
+    "name":"tft lcd demo",
+    "description":"tft lcd demo"
+  }
+]
