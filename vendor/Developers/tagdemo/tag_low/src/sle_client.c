@@ -17,7 +17,6 @@ uint8_t empty_addr[6] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; // 空地址
 #endif
 static sle_announce_seek_callbacks_t g_seek_cbk = {0};
 uint8_t sle_rx_buf[SLE_RX_BUF_LEN] = {0};
-extern int led_state; // 灯的状态
 
 uint8_t hex_to_string(const uint8_t *hex_buf, int hex_len, char *str_buf, int str_buf_size)
 {
