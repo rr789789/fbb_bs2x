@@ -24,7 +24,7 @@
 | 名称                                                         | 介绍                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | [SDK软件在线系列文档](https://docs.hisilicon.com/repos/fbb_bs2x/zh-CN/master/) | 该系列文档主要包括IO复用关系表、 AT命令开发指南、 DFU升级APK开发指南、设备驱动开发指南、NV存储开发指南、 功率配置开发指南、音频编解码开发指南、蓝牙软件开发指南、SDK Sample开发指南等文档，文档路径存放于docs/software、docs/debug、docs/tool |
-| [开发环境搭建文档](tools/README.md)                          | 主要包括windows系统编译工具搭建、SDK包下载，Linux系统编译工具搭建及SDK包下载，路径：toos |
+| [开发环境搭建文档](tools/README.md)                          | 主要包括windows系统编译工具搭建、SDK包下载，Linux系统编译工具搭建及SDK包下载，路径：tools |
 
 ##  支持的开发板
 
