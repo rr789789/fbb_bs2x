@@ -1,0 +1,12 @@
+[
+  {
+    "buildTarget": "standard-bs21e-1100e",
+    "relativePath": "demos/rotary_encoder",
+    "chip": "BS2X",
+    "buildDef": "",
+    "needSmoke": "false",
+    "key":"1",
+    "name":"rotary_encoder",
+    "description":"旋转编码器"
+  }
+]
