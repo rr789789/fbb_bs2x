@@ -2,9 +2,9 @@
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2025-2025. All rights reserved.
  *
  * Description:  w33 firmware file arrays.
- * Author: 
+ *
  * History:
- * 2025-11-01, Create file.
+ * 2025-11-28, Create file.
  */
 
 #ifndef W33_FW_FILE_ARRAY_H
