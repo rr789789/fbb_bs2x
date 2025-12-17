@@ -1,0 +1,23 @@
+/**
+ * Copyright (c) EndyTsang 2025. All rights reserved. \n
+ *
+ * Description: Button Task. \n
+ * 
+ */
+
+#ifndef _BUTTON_H
+#define _BUTTON_H
+
+#include "pinctrl.h"
+#include "common_def.h"
+#include "soc_osal.h"
+#include "gpio.h"
+#include "hal_gpio.h"
+#include "watchdog.h"
+#include "app_init.h"
+
+#define BUTTON_GPIO 14 // 按键
+#define BUTTON_TASK_STACK_SIZE 0x0400
+#define BUTTON_TASK_PRIO 25
+
+#endif

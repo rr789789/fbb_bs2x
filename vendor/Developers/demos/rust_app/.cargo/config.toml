@@ -1,0 +1,20 @@
+[build]
+target = "riscv32imfc-unknown-none-elf.json"
+
+[target.riscv32imfc-unknown-none-elf]
+linker = "riscv32-linux-musl-gcc"
+rustflags = [
+    "-C", "target-cpu=generic-rv32",
+    "-C", "link-arg=-nostdlib",
+    "-C", "link-arg=-ffreestanding", 
+    "-C", "save-temps=no",
+    "-C", "debuginfo=1",
+    "-C", "opt-level=s",
+    "-C", "panic=abort",
+    "-C", "relocation-model=static",
+    "-Z", "tls-model=local-exec",
+]
+
+[unstable]
+build-std = ["core", "alloc"]
+build-std-features = ["compiler-builtins-mem"]

@@ -1,0 +1,20 @@
+[package]
+name = "rust_app"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+cty = "0.2"
+
+[build-dependencies]
+bindgen = "0.69"  # 自动生成绑定
+
+[profile.release]
+opt-level = "s"           # 对应C的-Os
+lto = true               # 链接时优化
+codegen-units = 1        # 减少代码段
+panic = "abort"          # 避免unwinding
+strip = true             # 去除调试信息
