@@ -24,7 +24,7 @@
 #define ADC_REF_VOL_DIFFERENCE_MULT       2
 #define ADC_TICK2VOL_REF_VOLTAGE_MV       (ADC_REFERENCE_VOLTAGE_MV * ADC_REF_VOL_DIFFERENCE_MULT)
 
-
+// ci-test
 static void adc_set_io(uint8_t channel)
 {
     pin_t adc_pin[] = {S_MGPIO2, S_MGPIO3, S_MGPIO4, S_MGPIO5, S_MGPIO28, S_MGPIO29, S_MGPIO30, S_MGPIO31};
