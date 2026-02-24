@@ -31,6 +31,7 @@
 #define SLE_UART_BAUDRATE                   115200
 #define SLE_UART_TRANSFER_SIZE              256
 
+ // ci-test
 static uint8_t g_app_uart_rx_buff[SLE_UART_TRANSFER_SIZE] = { 0 };
 
 static uart_buffer_config_t g_app_uart_buffer_config = {
