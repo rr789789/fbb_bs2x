@@ -21,7 +21,6 @@
    ![image-20250625165556018](../../doc/media/sle_poll_measure_dis/image-20250625165556018.png)
 
  Ps: 需要根据实际连接的锚点数修改变量cs_interval的值来选择不同的测距频率，目前sample中提供的三种测距频率接口：分别是2Hz、1Hz、0.5Hz。对应关系由下表所示
-<div align="center">
 
 |宏|测距频率|单个Client最多连接数|
 |:------|:-----:|:-----:|
@@ -29,9 +28,6 @@
 |CARKEY_SLE_SLEM_1HZ|1Hz|5个|
 |CARKEY_SLE_SLEM_05HZ|0.5Hz|8个|
 
-
-
-</div>
 
 - 步骤四：在sle_measure_dis_sever.c中的g_measure_dis_server_addr中，为每个sever设置不同的地址，如下图所示
 
