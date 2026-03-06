@@ -27,6 +27,10 @@
 
 #define MAX_SERVERS 5                                           
 
+#define CARKEY_SLE_SLEM_05HZ    4 /* 0.5Hz测距频率*/
+#define CARKEY_SLE_SLEM_1HZ     2 /* 1Hz测距频率*/
+#define CARKEY_SLE_SLEM_2HZ     1 /* 2Hz测距频率*/
+
 typedef enum {
     SLEM_PROFILE_MSG_IQ = 0xFFFFFFEA,
 } slem_profile_msg_type_t;
