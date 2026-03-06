@@ -16,7 +16,7 @@
 
 ![image-20250625165545347](../../doc/media/sle_poll_measure_dis/image-20250625165545347.png)
 
-- 步骤三：根据需要连接的锚点数量，在sle_measure_dis_client.c中的measure_dis_slem_set_param函数中，修改变量con_anchor_num的值，如下图，如下图所示
+- 步骤三：根据需要连接的锚点数量，在sle_measure_dis_client.c中的measure_dis_slem_set_param函数中，修改变量con_anchor_num的值，如下图，如下图所示 
 
    ![image-20250625165556018](../../doc/media/sle_poll_measure_dis/image-20250625165556018.png)
 
