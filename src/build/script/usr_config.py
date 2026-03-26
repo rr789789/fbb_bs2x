@@ -37,6 +37,7 @@ def mconfig(command, chip, core, target, output, assignments = None, root=""):
     autoheader_header = '''/* Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved. */
 '''
     mconf_set_env(display_style, target_conf, config_header, autoheader_header, output)
+    os.chdir(root)
     kconf = Kconfig(filename=kconfig)
 
     if command == 'savemenuconfig':

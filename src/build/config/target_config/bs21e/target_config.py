@@ -83,7 +83,7 @@ target_template = {
         'nv_cfg': 'bs21e_nv_default',
         'gen_sec_bin': True,
         # 编译时重新生成kconfig，保证.config与最新kconfig框架同步
-        'reload_kconfig': True,
+        'reload_kconfig': False,
         'nv_crc16': True,
         'image_version':'bs21eh',
     },
