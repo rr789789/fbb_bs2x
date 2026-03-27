@@ -8,7 +8,7 @@ import shutil
 import hashlib
 from typing import List, Dict, Union, Set, Optional
 
-#bs21编译配置
+#bs21编译配置+testttt
 BUILD_INFO_FILENAME = 'build_config.json'
 bs21_cmakelist_search_string = 'build_component()'
 bs21_compile_cmakelistfile = 'src/application/samples/CMakeLists.txt'
