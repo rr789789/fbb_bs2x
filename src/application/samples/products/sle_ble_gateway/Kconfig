@@ -1,0 +1,22 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2024. All rights reserved.
+#===============================================================================
+
+config GW_MAX_CONNECTIONS
+    int
+    prompt "Maximum simultaneous connections"
+    range 2 16
+    default 8
+    depends on SAMPLE_SUPPORT_SLE_BLE_GATEWAY
+    help
+        Maximum number of simultaneous SLE+BLE connections managed by the gateway.
+
+config GW_DATA_MAX_LEN
+    int
+    prompt "Maximum payload size in bytes"
+    range 20 512
+    default 256
+    depends on SAMPLE_SUPPORT_SLE_BLE_GATEWAY
+    help
+        Maximum data payload length for a single gateway message (bytes).
