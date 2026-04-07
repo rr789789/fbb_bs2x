@@ -119,6 +119,10 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_MULTI_CONN)
     add_subdirectory_if_exist(sle_multi_conn)
 endif()
 
+if(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_BLE_GATEWAY)
+    add_subdirectory_if_exist(sle_ble_gateway)
+endif()
+
 set(SOURCES "${SOURCES}" PARENT_SCOPE)
 set(PUBLIC_HEADER "${PUBLIC_HEADER}" PARENT_SCOPE)
 set(LIBS "${LIBS}" PARENT_SCOPE)
