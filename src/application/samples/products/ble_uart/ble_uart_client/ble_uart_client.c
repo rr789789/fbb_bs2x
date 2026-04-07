@@ -35,8 +35,31 @@ static uint16_t g_ble_uart_chara_hanle_write_value = 0;
 /* uart client app uuid for test */
 static bt_uuid_t g_client_app_uuid = { UUID16_LEN, { 0 } };
 
-/* server address for client connect */
-static uint8_t g_ble_server_addr_connect[] = { 0x66, 0x55, 0x44, 0x33, 0x22, 0x11 };
+/* target server name — Board C scans for this name in adv data */
+#define BLE_GW_SERVER_NAME      "ble_gw"
+#define BLE_AD_TYPE_SHORT_NAME  0x08
+#define BLE_AD_TYPE_FULL_NAME   0x09
+
+/* Return 1 if adv_data contains the gateway local name, 0 otherwise */
+static int adv_data_has_name(const uint8_t *adv_data, uint8_t adv_len,
+                              const char *name, uint8_t name_len)
+{
+    uint8_t i = 0;
+    while (i + 1 < adv_len) {
+        uint8_t field_len  = adv_data[i];
+        uint8_t field_type = adv_data[i + 1];
+        if (field_len == 0) {
+            break;
+        }
+        if ((field_type == BLE_AD_TYPE_SHORT_NAME || field_type == BLE_AD_TYPE_FULL_NAME) &&
+            field_len - 1 == name_len &&
+            memcmp(&adv_data[i + 2], name, name_len) == 0) {
+            return 1;
+        }
+        i += 1 + field_len;
+    }
+    return 0;
+}
 
 static void bts_data_to_uuid_len2(uint16_t uuid_data, bt_uuid_t *out_uuid)
 {
@@ -81,23 +104,30 @@ void ble_uart_client_set_scan_param_cbk(errcode_t status)
     ble_uart_start_scan();
 }
 
-/* ble client scan result callback */
+/* ble client scan result callback — connect by name, no hardcoded MAC */
 void ble_uart_client_scan_result_cbk(gap_scan_result_data_t *scan_result_data)
 {
-    if (memcmp(g_ble_server_addr_connect, scan_result_data->addr.addr, sizeof(g_ble_server_addr_connect)) == 0) {
-        gap_ble_stop_scan();
-        osal_printk("\naddr:");
-        for (uint8_t i = 0; i < BD_ADDR_LEN; i++) {
-            osal_printk(" %02x: ", scan_result_data->addr.addr[i]);
-        }
-        bd_addr_t bt_uart_client_addr = { 0 };
-        bt_uart_client_addr.type = scan_result_data->addr.type;
-        if (memcpy_s(bt_uart_client_addr.addr, BD_ADDR_LEN, scan_result_data->addr.addr, BD_ADDR_LEN) != EOK) {
-            osal_printk("%s add server app addr memcpy failed\r\n", BLE_UART_CLIENT_ERROR);
-            return;
-        }
-        gap_ble_connect_remote_device(&bt_uart_client_addr);
+    if (scan_result_data->adv_data == NULL || scan_result_data->adv_len == 0) {
+        return;
     }
+    uint8_t name_len = (uint8_t)(sizeof(BLE_GW_SERVER_NAME) - 1);
+    if (!adv_data_has_name(scan_result_data->adv_data, scan_result_data->adv_len,
+                           BLE_GW_SERVER_NAME, name_len)) {
+        return;
+    }
+    gap_ble_stop_scan();
+    osal_printk("%s found \"%s\" addr:", BLE_UART_CLIENT_LOG, BLE_GW_SERVER_NAME);
+    for (uint8_t i = 0; i < BD_ADDR_LEN; i++) {
+        osal_printk(" %02x", scan_result_data->addr.addr[i]);
+    }
+    osal_printk("\r\n");
+    bd_addr_t bt_uart_client_addr = { 0 };
+    bt_uart_client_addr.type = scan_result_data->addr.type;
+    if (memcpy_s(bt_uart_client_addr.addr, BD_ADDR_LEN, scan_result_data->addr.addr, BD_ADDR_LEN) != EOK) {
+        osal_printk("%s add server app addr memcpy failed\r\n", BLE_UART_CLIENT_ERROR);
+        return;
+    }
+    gap_ble_connect_remote_device(&bt_uart_client_addr);
 }
 
 /* ble client connect state change callback */

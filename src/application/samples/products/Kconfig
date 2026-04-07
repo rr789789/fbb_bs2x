@@ -319,3 +319,19 @@ config SAMPLE_SUPPORT_HILINK
     depends on ENABLE_PRODUCTS_SAMPLE
     help
         This option means support hilink Sample.
+
+config SAMPLE_SUPPORT_SLE_BLE_GATEWAY
+    bool
+    prompt "Support SLE-BLE Gateway sample."
+    default n
+    depends on ENABLE_PRODUCTS_SAMPLE
+    help
+        This option means support the SLE-BLE transparent gateway sample.
+        Data received on an SLE SSAP Server connection is forwarded to the
+        paired BLE GATT connection, and vice versa.
+
+if SAMPLE_SUPPORT_SLE_BLE_GATEWAY
+menu "SLE-BLE Gateway Sample Configuration"
+    osource "application/samples/products/sle_ble_gateway/Kconfig"
+endmenu
+endif
