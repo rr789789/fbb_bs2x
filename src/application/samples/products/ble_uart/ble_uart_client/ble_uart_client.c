@@ -31,6 +31,8 @@ static uint16_t g_uart_conn_id = 0;
 static uint16_t g_uart_mtu = 100;
 /* characteristic handle */
 static uint16_t g_ble_uart_chara_hanle_write_value = 0;
+/* CCC descriptor handle for enabling notifications */
+static uint16_t g_ble_uart_ccc_handle = 0;
 
 /* uart client app uuid for test */
 static bt_uuid_t g_client_app_uuid = { UUID16_LEN, { 0 } };
@@ -231,6 +233,19 @@ static void ble_uart_client_discover_descriptor_cbk(uint8_t client_id, uint16_t 
         osal_printk("0x%02x", descriptor->uuid.uuid[i]);
     }
     osal_printk("\n%s descriptor handle:%d, status:%d\n", BLE_UART_CLIENT_LOG, descriptor->descriptor_hdl, status);
+
+    /* Check for CCC descriptor (0x2902) and enable notifications */
+    if (descriptor->uuid.uuid_len == UUID16_LEN &&
+        descriptor->uuid.uuid[0] == 0x29 && descriptor->uuid.uuid[1] == 0x02) {
+        g_ble_uart_ccc_handle = descriptor->descriptor_hdl;
+        uint8_t ccc_enable[] = {0x01, 0x00};
+        gattc_handle_value_t ccc_val = {0};
+        ccc_val.handle = g_ble_uart_ccc_handle;
+        ccc_val.data_len = sizeof(ccc_enable);
+        ccc_val.data = ccc_enable;
+        errcode_t ret = gattc_write_cmd(client_id, conn_id, &ccc_val);
+        osal_printk("%s CCC write enable notify handle:%d ret:%d\n", BLE_UART_CLIENT_LOG, g_ble_uart_ccc_handle, ret);
+    }
 
     gattc_read_req_by_uuid_param_t paramsss = { 0 };
     paramsss.uuid = descriptor->uuid;

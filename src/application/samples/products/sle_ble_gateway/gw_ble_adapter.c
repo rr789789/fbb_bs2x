@@ -62,6 +62,7 @@ static void gw_ble_start_adv(void);
 static uint8_t  g_gw_ble_server_id            = 0;
 static uint16_t g_gw_ble_notification_att_hdl = 0;
 static uint16_t g_gw_ble_conn_hdl             = 0;
+static volatile uint8_t g_gw_ble_conn_pending = 0;
 static volatile uint8_t g_gw_ble_status       = 0;
 
 /* -------------------------------------------------------------------------
@@ -119,6 +120,17 @@ static void gw_ble_char_add_cbk(uint8_t server_id, bt_uuid_t *uuid,
     osal_printk("%s char added char_hdl=0x%x val_hdl=0x%x\r\n",
                 GW_BLE_LOG, result->handle, result->value_handle);
     g_gw_ble_notification_att_hdl = result->value_handle;
+
+    /* If a BLE client connected before the service was ready, post the CONNECTED event now */
+    if (g_gw_ble_conn_pending) {
+        g_gw_ble_conn_pending = 0;
+        gw_msg_t msg = {0};
+        msg.type          = GW_MSG_CONN_CONNECTED;
+        msg.protocol      = GW_PROTO_BLE;
+        msg.proto_conn_id = g_gw_ble_conn_hdl;
+        msg.attr_handle   = g_gw_ble_notification_att_hdl;
+        gw_service_post_msg(&msg);
+    }
 
     /* Add CCC descriptor */
     bt_uuid_t ccc_uuid = {0};
@@ -202,27 +214,39 @@ static void gw_ble_connect_cbk(uint16_t conn_id, bd_addr_t *addr,
 {
     unused(pair_state);
     unused(disc_reason);
-    gw_msg_t msg = {0};
-    msg.protocol      = GW_PROTO_BLE;
-    msg.proto_conn_id = conn_id;
-    msg.attr_handle   = g_gw_ble_notification_att_hdl;
-
-    if (addr != NULL) {
-        if (memcpy_s(msg.peer_addr, sizeof(msg.peer_addr),
-                     addr->addr, BD_ADDR_LEN) != EOK) {
-            osal_printk("%s connect cbk addr memcpy fail\r\n", GW_BLE_LOG);
-        }
-    }
 
     if (conn_state == GAP_BLE_STATE_CONNECTED) {
         osal_printk("%s connected conn_id=%d\r\n", GW_BLE_LOG, conn_id);
         g_gw_ble_conn_hdl = conn_id;
-        msg.type = GW_MSG_CONN_CONNECTED;
+        if (g_gw_ble_notification_att_hdl == 0) {
+            /* Service not ready yet; defer the CONNECTED event until char handle is known */
+            g_gw_ble_conn_pending = 1;
+            return;
+        }
+        gw_msg_t msg = {0};
+        msg.type          = GW_MSG_CONN_CONNECTED;
+        msg.protocol      = GW_PROTO_BLE;
+        msg.proto_conn_id = conn_id;
+        msg.attr_handle   = g_gw_ble_notification_att_hdl;
+        if (addr != NULL) {
+            if (memcpy_s(msg.peer_addr, sizeof(msg.peer_addr),
+                         addr->addr, BD_ADDR_LEN) != EOK) {
+                osal_printk("%s connect cbk addr memcpy fail\r\n", GW_BLE_LOG);
+            }
+        }
         gw_service_post_msg(&msg);
     } else if (conn_state == GAP_BLE_STATE_DISCONNECTED) {
         osal_printk("%s disconnected conn_id=%d\r\n", GW_BLE_LOG, conn_id);
-        msg.type = GW_MSG_CONN_DISCONNECTED;
-        gw_service_post_msg(&msg);
+        if (g_gw_ble_conn_pending && g_gw_ble_conn_hdl == conn_id) {
+            /* Client disconnected before service was ready; just clear the pending flag */
+            g_gw_ble_conn_pending = 0;
+        } else {
+            gw_msg_t msg = {0};
+            msg.type          = GW_MSG_CONN_DISCONNECTED;
+            msg.protocol      = GW_PROTO_BLE;
+            msg.proto_conn_id = conn_id;
+            gw_service_post_msg(&msg);
+        }
         /* Restart advertising so new clients can connect */
         gw_ble_set_adv_data();
         gw_ble_start_adv();

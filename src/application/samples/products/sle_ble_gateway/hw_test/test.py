@@ -115,7 +115,7 @@ def wait_for_route(board_a, timeout=40):
     _log(f'Waiting up to {timeout}s for SLE+BLE connections & route ...')
     if board_a:
         # Watch for the gateway_demo route-established log line
-        ok = board_a.wait_for(b'Route: SLE', timeout)
+        ok = board_a.wait_for(b'route: SLE', timeout)
         if ok:
             _log(f'{GREEN}Route established (seen in Board A log).{RESET}')
         else:
