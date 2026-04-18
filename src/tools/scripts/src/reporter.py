@@ -60,7 +60,6 @@ class JumpReporter:
         lines.extend(self._build_top_targets(instructions))
         lines.extend(self._build_top_callers(analysis))
         lines.extend(self._build_freq_analysis(analysis))
-        lines.extend(self._build_detail_list(instructions))
 
         content = '\n'.join(lines)
         path = os.path.join(self.output_dir, 'jal_analysis_report.txt')
