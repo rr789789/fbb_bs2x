@@ -60,6 +60,9 @@ errcode_t sle_ota_recv_handler(uint8_t *data, uint16_t length)
 {
     sle_ota_frame_header_t *head = (sle_ota_frame_header_t *)((uint8_t *)data);
     uint16_t len = 0;
+    if (data == NULL || length < (SLE_LINK_FRAME_HEAD_LEN + SLE_LINK_FRAME_PAYLOAD_HEAD_LEN + SLE_LINK_FRAME_MIC_LEN)) {
+        return ERRCODE_INVALID_PARAM;
+    }
     if (head->flag != SLE_LINK_FRAME_HEAD_FLAG) {
         return ERRCODE_NOT_SUPPORT;
     }
@@ -79,25 +82,71 @@ errcode_t sle_ota_recv_handler(uint8_t *data, uint16_t length)
                             (data[SLE_LINK_FRAME_BODY_LEN_INDEX + 1] << FRAME_8_BIT_SHIFT);
         g_reassembly_len = SLE_LINK_FRAME_HEAD_LEN + SLE_LINK_FRAME_PAYLOAD_HEAD_LEN + body_len +
                            SLE_LINK_FRAME_MIC_LEN;
+        if (g_reassembly_len > WRITE_REQ_BUFFER_LEN) {
+            g_reassembly_len = 0;
+            return ERRCODE_INVALID_PARAM;
+        }
         len = length - SLE_LINK_FRAME_MIC_LEN;
-        if (memcpy_s(g_reassembly_buff, len, data, len) != EOK) {
+        if (len > WRITE_REQ_BUFFER_LEN) {
+            g_reassembly_len = 0;
+            return ERRCODE_INVALID_PARAM;
+        }
+        if (memcpy_s(g_reassembly_buff, WRITE_REQ_BUFFER_LEN, data, len) != EOK) {
             return ERRCODE_FAIL;
         }
         g_reassembly_offset = len;
         g_reassembly_expect_seq += 1;
     } else if ((head->frame_seq == (head->total_frame - 1)) && (g_reassembly_expect_seq == head->frame_seq)) {
         /* 最后一帧 */
-        /* 还未接收body长度 */
+        if (g_reassembly_len < g_reassembly_offset) {
+            g_reassembly_expect_seq = 0;
+            g_reassembly_offset = 0;
+            g_reassembly_len = 0;
+            return ERRCODE_FAIL;
+        }
         len = g_reassembly_len - g_reassembly_offset;
-        if (memcpy_s(g_reassembly_buff + g_reassembly_offset, len, data + SLE_LINK_FRAME_HEAD_LEN, len) != EOK) {
+        if (len > WRITE_REQ_BUFFER_LEN - g_reassembly_offset) {
+            g_reassembly_expect_seq = 0;
+            g_reassembly_offset = 0;
+            g_reassembly_len = 0;
+            return ERRCODE_FAIL;
+        }
+        if (length < SLE_LINK_FRAME_HEAD_LEN) {
+            g_reassembly_expect_seq = 0;
+            g_reassembly_offset = 0;
+            g_reassembly_len = 0;
+            return ERRCODE_INVALID_PARAM;
+        }
+        uint16_t src_len = length - SLE_LINK_FRAME_HEAD_LEN;
+        if (src_len < len) {
+            g_reassembly_expect_seq = 0;
+            g_reassembly_offset = 0;
+            g_reassembly_len = 0;
+            return ERRCODE_FAIL;
+        }
+        if (memcpy_s(g_reassembly_buff + g_reassembly_offset, WRITE_REQ_BUFFER_LEN - g_reassembly_offset,
+                     data + SLE_LINK_FRAME_HEAD_LEN, len) != EOK) {
             return ERRCODE_FAIL;
         }
         g_reassembly_expect_seq = 0;
         sle_ota_frame_header_t *req = (sle_ota_frame_header_t *)((uint8_t *)g_reassembly_buff);
         return sle_ota_dongle_cmd_receiver(req->service_id, req->command_id, g_reassembly_buff, g_reassembly_len);
     } else if (g_reassembly_expect_seq == head->frame_seq) {
+        if (length < (SLE_LINK_FRAME_HEAD_LEN + SLE_LINK_FRAME_MIC_LEN)) {
+            g_reassembly_expect_seq = 0;
+            g_reassembly_offset = 0;
+            g_reassembly_len = 0;
+            return ERRCODE_INVALID_PARAM;
+        }
         len = length - SLE_LINK_FRAME_HEAD_LEN - SLE_LINK_FRAME_MIC_LEN;
-        if (memcpy_s(g_reassembly_buff + g_reassembly_offset, len, data + SLE_LINK_FRAME_HEAD_LEN, len) != EOK) {
+        if (len > WRITE_REQ_BUFFER_LEN - g_reassembly_offset) {
+            g_reassembly_expect_seq = 0;
+            g_reassembly_offset = 0;
+            g_reassembly_len = 0;
+            return ERRCODE_FAIL;
+        }
+        if (memcpy_s(g_reassembly_buff + g_reassembly_offset, WRITE_REQ_BUFFER_LEN - g_reassembly_offset,
+                     data + SLE_LINK_FRAME_HEAD_LEN, len) != EOK) {
             return ERRCODE_FAIL;
         }
         g_reassembly_offset += len;
