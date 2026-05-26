@@ -378,11 +378,14 @@ static void tiot_packet_head_done(tiot_packet_context *ctx)
         packet_frame_error(ctx);
     }
 #else
-    if ((ctx->packet == NULL) || (circ_buf_query_free(&(ctx->rx_buff.buf)) <= payload_len)) {
-        tiot_print_err("[TIoT:rx]circ queue or rx buff no space.\n");
+    if (ctx->packet == NULL) {
+        tiot_print_err("[TIoT:rx]circ queue no space.\n");
         packet_frame_error(ctx);
-    }
-    if (ctx->packet != NULL) {
+    } else if (circ_buf_query_free(&(ctx->rx_buff.buf)) <= payload_len) {
+        tiot_print_err("[TIoT:rx]circ queue no space, free: %u, need: %u.\n",
+                       circ_buf_query_free(&(ctx->rx_buff.buf)), payload_len);
+        packet_frame_error(ctx);
+    } else {
         ctx->packet->len += payload_len;
     }
 #endif
@@ -439,8 +442,14 @@ uint32_t tiot_packet_handle(tiot_packet_context *ctx, uint8_t *data, uint32_t da
     /* 系统消息直接拷贝；buffer放不下时丢包处理，使用frame_error标识. */
     if ((ctx->current_frame == TIOT_PKT_FRAME_PAYLOAD) &&
         (ctx->head.subsys_code != SYS_MSG)) {
-        circ_buf_write_data(&(ctx->rx_buff.buf), data, handle_len, ctx->rx_buff.buff_write);
-        circ_buf_update_write_pos(&(ctx->rx_buff.buf), handle_len);
+        if (circ_buf_query_free(&(ctx->rx_buff.buf)) < handle_len) {
+            tiot_print_err("[TIoT:rx]circ buf overflow, free: %u, need: %u.\n",
+                           circ_buf_query_free(&(ctx->rx_buff.buf)), handle_len);
+            packet_frame_error(ctx);
+        } else {
+            circ_buf_write_data(&(ctx->rx_buff.buf), data, handle_len, ctx->rx_buff.buff_write);
+            circ_buf_update_write_pos(&(ctx->rx_buff.buf), handle_len);
+        }
     } else {
         if (ctx->pos != NULL) {
             (void)memcpy_s(ctx->pos, handle_len, data, handle_len);
