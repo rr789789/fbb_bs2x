@@ -260,12 +260,16 @@ void sle_ota_fhid_send_data_more(uint8_t service_id, uint8_t command_id, uint16_
 
 void sle_ota_data_handle(ssapc_handle_value_t *data)
 {
-    g_sle_ota_rpt_body[SLE_OTA_RPT_DATA_LEN_INDEX] = data->data_len;
-    g_sle_ota_rpt_body[SLE_OTA_RPT_DATA_LEN_INDEX + 1] = data->data_len >> SLE_OTA_8_BIT_SHIFT;
-    for (uint32_t i = 0; i < data->data_len && SLE_OTA_RESPONSE_HEADER_LEN + i < SLE_OTA_RESPONSE_LEN; i++) {
+    uint16_t actual_data_len = data->data_len;
+    if (actual_data_len > SLE_OTA_RESPONSE_LEN - SLE_OTA_RESPONSE_HEADER_LEN) {
+        actual_data_len = SLE_OTA_RESPONSE_LEN - SLE_OTA_RESPONSE_HEADER_LEN;
+    }
+    g_sle_ota_rpt_body[SLE_OTA_RPT_DATA_LEN_INDEX] = actual_data_len;
+    g_sle_ota_rpt_body[SLE_OTA_RPT_DATA_LEN_INDEX + 1] = actual_data_len >> SLE_OTA_8_BIT_SHIFT;
+    for (uint32_t i = 0; i < actual_data_len; i++) {
         g_sle_ota_rpt_body[SLE_OTA_RESPONSE_HEADER_LEN + i] = data->data[i];
     }
-    uint16_t body_len = SLE_OTA_RESPONSE_HEADER_LEN + data->data_len;
+    uint16_t body_len = SLE_OTA_RESPONSE_HEADER_LEN + actual_data_len;
     if (body_len <= SLE_LINK_FRAME_BODY_MAX_LEN) {
         sle_ota_fhid_send_data_one(SLE_OTA_RPT_SERVICEID, SLE_OTA_RPT_COMMANDID, body_len, g_sle_ota_rpt_body);
         return;
