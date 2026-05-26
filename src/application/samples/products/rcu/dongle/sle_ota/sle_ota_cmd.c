@@ -99,12 +99,13 @@ errcode_t sle_ota_recv_handler(uint8_t *data, uint16_t length)
         /* Bodylen长度 */
         uint16_t body_len = data[SLE_LINK_FRAME_BODY_LEN_INDEX] +
                             (data[SLE_LINK_FRAME_BODY_LEN_INDEX + 1] << FRAME_8_BIT_SHIFT);
-        g_reassembly_len = SLE_LINK_FRAME_HEAD_LEN + SLE_LINK_FRAME_PAYLOAD_HEAD_LEN + body_len +
+        uint32_t reassembly_len_calc = (uint32_t)SLE_LINK_FRAME_HEAD_LEN + SLE_LINK_FRAME_PAYLOAD_HEAD_LEN + body_len +
                            SLE_LINK_FRAME_MIC_LEN;
-        if (g_reassembly_len > WRITE_REQ_BUFFER_LEN) {
+        if (reassembly_len_calc > WRITE_REQ_BUFFER_LEN) {
             g_reassembly_len = 0;
             return ERRCODE_INVALID_PARAM;
         }
+        g_reassembly_len = (uint16_t)reassembly_len_calc;
         len = length - SLE_LINK_FRAME_MIC_LEN;
         if (len > WRITE_REQ_BUFFER_LEN) {
             g_reassembly_len = 0;
