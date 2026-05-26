@@ -1,0 +1,89 @@
+The user is asking about a potential SLE OTA data packet reassembly integer underflow leading to heap buffer overflow vulnerability. I need to search the codebase for SLE OTA related code, particularly focusing on data packet reassembly logic where integer underflow could occur.
+
+Let me search for SLE OTA related code in the codebase.
+The search has found very detailed information about the SLE OTA data packet reassembly vulnerability. Let me now read the actual files to get the exact code and line numbers for my fix.
+
+The key vulnerabilities are:
+
+1. **漏洞1 (Critical)**: In the last frame processing, `g_reassembly_len - g_reassembly_offset` can underflow when `body_len` is set to a small value by attacker
+2. **漏洞2 (Medium)**: In middle frame processing, `length - SLE_LINK_FRAME_HEAD_LEN - SLE_LINK_FRAME_MIC_LEN` can underflow
+3. **漏洞3 (Medium)**: In first frame processing, `length - SLE_LINK_FRAME_MIC_LEN` can underflow
+4. **漏洞4 (Low)**: `g_reassembly_len` has no upper bound check
+5. **漏洞5 (Low)**: Array overflow in `sle_ota_notification_cb`
+
+Let me read the two key files to get the exact code for fixing.
+问题**确实存在**。让我读取两个关键文件确认具体代码，然后提供修复方案。
+Now I have a clear picture of the vulnerabilities. Let me summarize and provide fixes for all the issues found.
+
+The key vulnerabilities in the `sle_ota_recv_handler` function are:
+
+1. **漏洞1 (Critical)**: Line 91 (dongle) / Line 110 (rcu): `len = g_reassembly_len - g_reassembly_offset;` - Integer underflow when `g_reassembly_len < g_reassembly_offset` (attacker controls `body_len` to be small, making `g_reassembly_len` small, while `g_reassembly_offset` is set from actual packet length which can be larger)
+
+2. **漏洞2 (Medium)**: Line 99 (dongle) / Line 118 (rcu): `len = length - SLE_LINK_FRAME_HEAD_LEN - SLE_LINK_FRAME_MIC_LEN;` - Integer underflow when `length < 7`
+
+3. **漏洞3 (Medium)**: Line 82 (dongle) / Line 101 (rcu): `len = length - SLE_LINK_FRAME_MIC_LEN;` - Integer underflow when `length < 2`
+
+4. **漏洞4 (Low)**: No validation that `g_reassembly_len` doesn't exceed `WRITE_REQ_BUFFER_LEN`
+
+5. **漏洞5 (Low)**: In `sle_ota_dongle.c` line 250-251, no bounds check when writing to `g_sle_ota_rpt_body`
+
+Now let me provide the fixes. I need to fix both the dongle version and the RCU version of `sle_ota_cmd.c`, and also the `sle_ota_dongle.c` for 漏洞5.
+
+Let me craft the fixes carefully.
+
+For the dongle version (`sle_ota_cmd.c`):
+- Add length validation at the top of the function (minimum length check)
+- Add `g_reassembly_len` upper bound check
+- Add `g_reassembly_offset` bounds check before writing to buffer
+- Add check for `g_reassembly_len >= g_reassembly_offset` before last frame processing
+- Use `WRITE_REQ_BUFFER_LEN - g_reassembly_offset` as the destination max size for `memcpy_s`
+
+For the RCU version, same fixes.
+
+For `sle_ota_dongle.c`, add bounds check in the notification callback loop.
+
+Let me write the fixes now.
+## 问题确认：SLE OTA 数据包重组整数下溢漏洞 **存在**
+
+在 `sle_ota_recv_handler` 函数中发现 **5 个整数下溢/溢出漏洞**，涉及 3 个文件：
+
+---
+
+### 漏洞汇总
+
+| # | 严重性 | 位置 | 漏洞描述 |
+|---|--------|------|----------|
+| 1 | **严重** | 最后一帧 `g_reassembly_len - g_reassembly_offset` | 攻击者构造小 `body_len`，使 `g_reassembly_len < g_reassembly_offset`，`uint16_t` 下溢产生极大值，导致 `memcpy_s` 越界写 |
+| 2 | **中等** | 中间帧 `length - 7` | 发送 `length < 7` 的短包，`uint16_t` 下溢 |
+| 3 | **中等** | 第一帧 `length - 2` | 发送 `length < 2` 的短包，`uint16_t` 下溢 |
+| 4 | **低** | `g_reassembly_len` 无上限校验 | `body_len` 最大 65535，`g_reassembly_len` 可远超缓冲区 256 字节 |
+| 5 | **低** | `sle_ota_dongle.c` 通知回调无越界检查 | `data->data_len > 102` 时 `g_sle_ota_rpt_body` 越界写 |
+
+---
+
+### 修复方案
+
+**文件1：dongle 版 `sle_ota_cmd.c`**
+Now let me fix the RCU version.
+**文件2：RCU 版 `sle_ota_cmd.c`**
+Now let me fix the 漏洞5 in `sle_ota_dongle.c` - the notification callback without bounds check.
+**文件3：`sle_ota_dongle.c` — 修复通知回调数组越界**
+三个文件均无 linter 错误，修复完成。
+
+---
+
+### 修复总结
+
+对 **3 个文件** 的 `sle_ota_recv_handler` 及通知回调做了如下安全加固：
+
+| 修复项 | 修改内容 |
+|--------|----------|
+| **输入长度校验** | 函数入口增加 `length < HEAD + PAYLOAD_HEAD + MIC` 的最小长度检查，防止后续减法下溢 |
+| **重组总长度上限** | 第一帧时检查 `g_reassembly_len <= WRITE_REQ_BUFFER_LEN`，防止 `body_len` 过大导致重组缓冲区溢出 |
+| **第一帧 `len` 校验** | 检查 `len = length - MIC_LEN` 不超过 `WRITE_REQ_BUFFER_LEN` |
+| **最后一帧下溢防护** | 先判断 `g_reassembly_len >= g_reassembly_offset`，防止 `uint16_t` 减法下溢产生极大值 |
+| **最后一帧源长度校验** | 检查 `length >= SLE_LINK_FRAME_HEAD_LEN` 且源数据足够填充 `len` |
+| **中间帧下溢防护** | 先检查 `length >= HEAD_LEN + MIC_LEN`，防止减法下溢 |
+| **`memcpy_s` 目标大小修正** | 所有 `memcpy_s` 的 `destMax` 参数从 `len` 改为 `WRITE_REQ_BUFFER_LEN - g_reassembly_offset`，确保边界检查有效 |
+| **异常时重置状态** | 所有异常分支均重置 `g_reassembly_offset/len/expect_seq`，防止状态残留 |
+| **通知回调越界修复** | `sle_ota_dongle.c` 中循环增加 `SLE_OTA_RESPONSE_HEADER_LEN + i < SLE_OTA_RESPONSE_LEN` 上界检查 |
