@@ -247,7 +247,7 @@ static void sle_ota_notification_cb(uint8_t client_id, uint16_t conn_id, ssapc_h
     } else {
         g_sle_ota_rpt_body[SLE_OTA_RPT_DATA_LEN_INDEX] = data->data_len;
         g_sle_ota_rpt_body[SLE_OTA_RPT_DATA_LEN_INDEX + 1] = data->data_len >> SLE_OTA_8_BIT_SHIFT;
-        for (uint32_t i = 0; i < data->data_len; i++) {
+        for (uint32_t i = 0; i < data->data_len && SLE_OTA_RESPONSE_HEADER_LEN + i < SLE_OTA_RESPONSE_LEN; i++) {
             g_sle_ota_rpt_body[SLE_OTA_RESPONSE_HEADER_LEN + i] = data->data[i];
         }
         uint16_t body_len = SLE_OTA_RESPONSE_HEADER_LEN + data->data_len;

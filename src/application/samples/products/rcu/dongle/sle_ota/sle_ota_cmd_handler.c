@@ -135,9 +135,14 @@ errcode_t sle_ota_manage_connection_service(uint8_t service_id, uint8_t command_
 
 static errcode_t sle_ota_write_cmd(uint8_t service_id, uint8_t command_id, uint8_t *buffer, uint16_t length)
 {
-    unused(length);
     errcode_t ret = ERRCODE_SUCC;
+    if (buffer == NULL || length <= WRITE_REQ_DATA_LEN_INDEX + 1) {
+        return ERRCODE_INVALID_PARAM;
+    }
     uint16_t len = (buffer[WRITE_REQ_DATA_LEN_INDEX]) + (buffer[WRITE_REQ_DATA_LEN_INDEX + 1] << FRAME_8_BIT_SHIFT);
+    if (len > length - WRITE_REQ_DATA_INDEX) {
+        return ERRCODE_INVALID_PARAM;
+    }
     uint8_t *data = buffer + WRITE_REQ_DATA_INDEX;
     ssapc_write_param_t sle_micro_send_param;
     sle_micro_send_param.handle = get_sle_ota_send_handle();

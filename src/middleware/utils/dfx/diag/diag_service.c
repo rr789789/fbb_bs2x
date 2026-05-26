@@ -44,13 +44,16 @@ STATIC errcode_t diag_service_data_merge(diag_ser_frame_t *frame, diag_router_fr
         return ERRCODE_INVALID_PARAM;
     }
 
-    uint8_t *src_buf = (uint8_t *)(uintptr_t)frame;
+    uint32_t total_buf_size = item->max_serv_pkg_len + sizeof(diag_ser_data_t);
 
     if (sn_ctrl == DIAG_FRAME_SN_START && g_merge_data[id].status != DIAG_DATA_MERGING) {
         /* 收到第一包，且当前状态是初始状态或组包结束状态 */
         dfx_log_debug("diag_service_data_merge: SN start! cur_sn = %d\r\n", cur_sn);
+        if (payload_len + sizeof(diag_ser_data_t) > total_buf_size) {
+            return ERRCODE_INVALID_PARAM;
+        }
         if (g_merge_data[id].buff == NULL) {
-            g_merge_data[id].buff = dfx_malloc(0, item->max_serv_pkg_len + sizeof(diag_ser_data_t));
+            g_merge_data[id].buff = dfx_malloc(0, total_buf_size);
         }
 
         g_merge_data[id].module_id = frame->module_id;
@@ -61,11 +64,29 @@ STATIC errcode_t diag_service_data_merge(diag_ser_frame_t *frame, diag_router_fr
         g_merge_data[id].last_sn + 1 == cur_sn) {
         /* 收到中间包，且当前状态是组包状态，且当前SN号是连续的 */
         dfx_log_debug("diag_service_data_merge: SN inside. cur_sn = %d\r\n", cur_sn);
+        if ((uint32_t)g_merge_data[id].offset + payload_len > total_buf_size) {
+            dfx_log_err("diag_service_data_merge: offset %u + payload_len %u > buf_size %lu\r\n",
+                        g_merge_data[id].offset, payload_len, total_buf_size);
+            if (g_merge_data[id].buff != NULL) {
+                dfx_free(0, g_merge_data[id].buff);
+            }
+            (void)memset_s(&g_merge_data[id], sizeof(diag_merge_data_t), 0, sizeof(diag_merge_data_t));
+            return ERRCODE_FAIL;
+        }
         merge_status = DIAG_DATA_MERGING;
     } else if (sn_ctrl == DIAG_FRAME_SN_END && g_merge_data[id].status == DIAG_DATA_MERGING &&
         g_merge_data[id].last_sn + 1 == cur_sn) {
         /* 收到最后结尾包，且当前状态是组包状态，且当前SN号是连续的 */
         dfx_log_debug("diag_service_data_merge: SN end. cur_sn = %d\r\n", cur_sn);
+        if ((uint32_t)g_merge_data[id].offset + payload_len > total_buf_size) {
+            dfx_log_err("diag_service_data_merge: offset %u + payload_len %u > buf_size %lu\r\n",
+                        g_merge_data[id].offset, payload_len, total_buf_size);
+            if (g_merge_data[id].buff != NULL) {
+                dfx_free(0, g_merge_data[id].buff);
+            }
+            (void)memset_s(&g_merge_data[id], sizeof(diag_merge_data_t), 0, sizeof(diag_merge_data_t));
+            return ERRCODE_FAIL;
+        }
         merge_status = DIAG_DATA_MERGED;
         need_process = true;
     } else {
@@ -82,8 +103,9 @@ STATIC errcode_t diag_service_data_merge(diag_ser_frame_t *frame, diag_router_fr
         return ERRCODE_MALLOC;
     }
 
+    uint32_t remain_buf_size = total_buf_size - g_merge_data[id].offset;
     uint8_t *dst_buf = g_merge_data[id].buff + g_merge_data[id].offset;
-    (void)memcpy_s(dst_buf, payload_len, src_buf, payload_len);
+    (void)memcpy_s(dst_buf, remain_buf_size, src_buf, payload_len);
 
     g_merge_data[id].offset += payload_len;
     g_merge_data[id].status = merge_status;

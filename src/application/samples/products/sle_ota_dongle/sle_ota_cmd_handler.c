@@ -218,9 +218,14 @@ static errcode_t sle_ota_stop_scan(uint8_t service_id, uint8_t command_id, uint8
 
 static errcode_t sle_ota_send_data(uint8_t service_id, uint8_t command_id, uint8_t *buffer, uint16_t length)
 {
-    unused(length);
     errcode_t ret = ERRCODE_SUCC;
+    if (buffer == NULL || length <= WRITE_REQ_DATA_LEN_INDEX + 1) {
+        return ERRCODE_INVALID_PARAM;
+    }
     uint16_t len = (buffer[WRITE_REQ_DATA_LEN_INDEX]) + (buffer[WRITE_REQ_DATA_LEN_INDEX + 1] << FRAME_8_BIT_SHIFT);
+    if (len > length - WRITE_REQ_DATA_INDEX) {
+        return ERRCODE_INVALID_PARAM;
+    }
     uint8_t *data = buffer + WRITE_REQ_DATA_INDEX;
     ssapc_write_param_t *sle_micro_send_param = get_sle_ota_send_param();
     sle_micro_send_param->data_len = len;
@@ -281,19 +286,28 @@ errcode_t sle_ota_discover_device_service(uint8_t service_id, uint8_t command_id
 
 static errcode_t sle_ota_connect(uint8_t service_id, uint8_t command_id, uint8_t *buffer, uint16_t length)
 {
-    unused(buffer);
-    unused(length);
+    unused(service_id);
+    unused(command_id);
     errcode_t ret = ERRCODE_SUCC;
     uint8_t delay_num = 0;
     sle_addr_t connect_addr = {0};
+    if (buffer == NULL || length < (uint16_t)(sizeof(struct sle_link_frame))) {
+        return ERRCODE_INVALID_PARAM;
+    }
     struct sle_link_frame *sle_link_frame = (struct sle_link_frame *)buffer;
+    if (sle_link_frame->body_len > length - offsetof(struct sle_link_frame, body)) {
+        return ERRCODE_INVALID_PARAM;
+    }
     struct sle_link_frame_tlv *sle_link_body = (struct sle_link_frame_tlv *)sle_link_frame->body;
-    uint16_t body_offset = 0;
-    while (body_offset < sle_link_frame->body_len) {
-        if (sle_link_body->type == 0x01) {
+    uint32_t body_offset = 0;
+    while (body_offset + offsetof(struct sle_link_frame_tlv, value) <= sle_link_frame->body_len) {
+        if (sle_link_body->length > sle_link_frame->body_len - body_offset - offsetof(struct sle_link_frame_tlv, value)) {
+            break;
+        }
+        if (sle_link_body->type == 0x01 && sle_link_body->length >= 1) {
             connect_addr.type = sle_link_body->value[0];
             osal_printk("tyep %d ", connect_addr.type);
-        } else if (sle_link_body->type == 0x02) {
+        } else if (sle_link_body->type == 0x02 && sle_link_body->length >= sizeof(connect_addr.addr)) {
             memcpy_s(connect_addr.addr, sizeof(connect_addr.addr), sle_link_body->value, sizeof(connect_addr.addr));
             osal_printk("addr %02x:%02x:%02x:%02x:%02x:%02x\r\n", connect_addr.addr[BT_INDEX_0],
                 connect_addr.addr[BT_INDEX_1], connect_addr.addr[BT_INDEX_2], connect_addr.addr[BT_INDEX_3],
@@ -325,18 +339,25 @@ static errcode_t sle_ota_disconnect(uint8_t service_id, uint8_t command_id, uint
 {
     unused(service_id);
     unused(command_id);
-    unused(buffer);
-    unused(length);
     errcode_t ret = ERRCODE_SUCC;
     sle_addr_t connect_addr = {0};
+    if (buffer == NULL || length < (uint16_t)(sizeof(struct sle_link_frame))) {
+        return ERRCODE_INVALID_PARAM;
+    }
     struct sle_link_frame *sle_link_frame = (struct sle_link_frame *)buffer;
+    if (sle_link_frame->body_len > length - offsetof(struct sle_link_frame, body)) {
+        return ERRCODE_INVALID_PARAM;
+    }
     struct sle_link_frame_tlv *sle_link_body = (struct sle_link_frame_tlv *)sle_link_frame->body;
-    uint16_t body_offset = 0;
-    while (body_offset < sle_link_frame->body_len) {
-        if (sle_link_body->type == 0x01) {
+    uint32_t body_offset = 0;
+    while (body_offset + offsetof(struct sle_link_frame_tlv, value) <= sle_link_frame->body_len) {
+        if (sle_link_body->length > sle_link_frame->body_len - body_offset - offsetof(struct sle_link_frame_tlv, value)) {
+            break;
+        }
+        if (sle_link_body->type == 0x01 && sle_link_body->length >= 1) {
             connect_addr.type = sle_link_body->value[0];
             osal_printk("tyep %d ", connect_addr.type);
-        } else if (sle_link_body->type == 0x02) {
+        } else if (sle_link_body->type == 0x02 && sle_link_body->length >= sizeof(connect_addr.addr)) {
             memcpy_s(connect_addr.addr, sizeof(connect_addr.addr), sle_link_body->value, sizeof(connect_addr.addr));
             osal_printk("addr %02x:%02x:%02x:%02x:%02x:%02x\r\n", connect_addr.addr[BT_INDEX_0],
                 connect_addr.addr[BT_INDEX_1], connect_addr.addr[BT_INDEX_2], connect_addr.addr[BT_INDEX_3],
