@@ -86,6 +86,46 @@
             }
         ]
     },
+    "requires": {
+        "min_cli_version": "0.1.0",
+        "toolchains": [
+            {
+                "name": "hcc",
+                "version": "7.3.0-20240618"
+            }
+        ]
+    },
+    "flash": {
+        "backend": "burntool",
+        "chiptype": "BS20",
+        "signalbaud": 750000,
+        "fwpkg_all_patterns": [
+            "output/{chip}/fwpkg/{target}/{chip}_all_in_one.fwpkg",
+            "tools/pkg/fwpkg/{chip}/{chip}_all.fwpkg"
+        ],
+        "fwpkg_load_only_patterns": [
+            "output/{chip}/fwpkg/{target}/{chip}_loadapp_only.fwpkg"
+        ]
+    },
+    "monitor": {
+        "default_baud": 115200,
+        "reset_method": "at_rst",
+        "reset_command": "AT+RST\r\n",
+        "boot_marker_examples": [
+            "boot.",
+            "APP|dbg uart init ok.",
+            "device_module_init:: succ!",
+            "cpu 0 entering scheduler"
+        ]
+    },
+    "examples": {
+        "roots": [
+            "application/samples/peripheral",
+            "application/samples/products",
+            "application/samples/nfc",
+            "vendor"
+        ]
+    },
     "console": {
         "serial_port": "",
         "baud": "115200",
