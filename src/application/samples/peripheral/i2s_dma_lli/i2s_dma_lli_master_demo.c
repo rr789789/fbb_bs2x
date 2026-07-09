@@ -13,7 +13,7 @@
 #include "soc_osal.h"
 #include "app_init.h"
 
-#define I2S_DIV_NUMBER              32
+#define I2S_DATA_WIDTH              32
 #define I2S_CHANNEL_NUMBER          2
 #define I2S_TX_INT_THRESHOLD        7
 #define I2S_RX_INT_THRESHOLD        1
@@ -40,11 +40,11 @@ static void *i2s_dma_master_task(const char *arg)
     i2s_config_t config = {
         .drive_mode= MASTER,
         .transfer_mode = STD_MODE,
-        .data_width = THIRTY_TWO_BIT,
+        .data_depth = THIRTY_TWO_BIT,
         .channels_num = TWO_CH,
         .timing = NONE_TIMING_MODE,
         .clk_edge = RISING_EDGE,
-        .div_number = I2S_DIV_NUMBER,
+        .data_width = I2S_DATA_WIDTH,
         .number_of_channels = I2S_CHANNEL_NUMBER,
     };
     i2s_dma_attr_t attr = {

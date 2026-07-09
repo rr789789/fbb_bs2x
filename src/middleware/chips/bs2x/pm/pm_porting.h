@@ -56,8 +56,6 @@ void pm_set_protocol_work_advance_time(uint16_t advance_time);
 
 uint16_t pm_get_protocol_work_advance_time(void);
 
-void pm_bg_refresh_config(bool high_temp);
-
 typedef void (*pm_usb_cbk_t)(void);
 
 void pm_usb_suspend_cbk(void);

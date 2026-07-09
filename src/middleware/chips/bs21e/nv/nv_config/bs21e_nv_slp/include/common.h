@@ -94,4 +94,26 @@ typedef struct {
     int32_t y;
     int32_t z;
 } slp_air_mouse_gyro_zero_offset_type_t;
+
+typedef struct {
+    uint32_t para0;
+    uint32_t para1;
+    int32_t para2;
+    int32_t para3;
+    int32_t para4;
+    int32_t para5;
+    int32_t para6;
+    int32_t para7;
+    int32_t para8;
+    int32_t para9;
+    int32_t para10;
+    int32_t para11;
+    int32_t para12;
+    int32_t para13;
+    int32_t para14;
+    int32_t para15;
+    int32_t para16;
+    int32_t para17;
+} slp_dongle_three_ant_cali_info_type_t;
+
 #endif /* COMMON_H */

@@ -41,6 +41,8 @@ static uint8_t g_pm_mcpu_64m_freq_used = 0;
 
 static uint8_t g_lpc_ccrg_clk_spi_used = 0;
 
+buck_vset_callback_t g_buck_vset_callback;
+
 static clock_vset_level_t pm_pm_get_vset_by_clk(clock_clk_src_t clk_src)
 {
     if (clk_src == CLOCK_CLK_SRC_TCXO_2X) {
@@ -59,6 +61,11 @@ static void pm_cldo_vset_vote(uint8_t id, clock_vset_level_t level)
     }
 }
 
+void pm_register_buck_vset_callback(buck_vset_callback_t cb)
+{
+    g_buck_vset_callback = cb;
+}
+
 static void pm_buck_vset_raise_judge(void)
 {
     if ((g_pm_cldo_1v1_vote != 0) && (g_pm_current_cldo_vset != CLOCK_VSET_LEVEL_1V1)) {
@@ -71,6 +78,13 @@ static void pm_buck_vset_raise_judge(void)
         uapi_pmu_ldo_set_voltage(PMU_LDO_ID_CLDO, PMU_CLDO_VSET_1V1);
         uapi_tcxo_delay_us(120ULL); // 升压之后delay120us
         g_pm_current_cldo_vset = CLOCK_VSET_LEVEL_1V1;
+        if (g_buck_vset_callback == NULL) { return; }
+        // DPA电由BUCK/MICLDO直供，BUCK/MICLDO电压修改需对应修改功率配置码字，共三档0:1.1v，1:1.2v，2:1.3v
+#ifdef CONFIG_POWER_SUPPLY_BY_LDO
+        g_buck_vset_callback(0x2);
+#else
+        g_buck_vset_callback(0x1);
+#endif
     }
 }
 
@@ -85,6 +99,9 @@ static void pm_buck_vset_reduce_judge(void)
 #endif
         g_pm_current_cldo_vset = CLOCK_VSET_LEVEL_1V0;
         writew(0x52000540, 0x6);    // Close dll2.
+        if (g_buck_vset_callback == NULL) { return; }
+        // DPA电由BUCK/MICLDO直供，BUCK/MICLDO电压修改需对应修改功率配置码字，共三档0:1.1v，1:1.2v，2:1.3v
+        g_buck_vset_callback(0x0);
     }
 }
 

@@ -65,6 +65,47 @@ target = {
         'nv_cfg': 'bs20_nv_default',
         'upg_pkg': ['application'],
     },
+    'bs20-n1200-rcu': {
+        'base_target_name': 'standard-bs20-n1200',
+        'defines': [
+            'SUPPORT_ITCM_OPTIMIZATION', '-:ITCM_MAX_WATERLINE=0x4E990'
+        ],
+        'ram_component': ['-:nfc_controller'],
+        'liteos_kconfig': 'bs20_rcu',
+        'loaderboot_cfg': 'loaderboot-bs20-n1200',
+        'flashboot_cfg': 'flashboot-bs20-n1200',
+        'sector_cfg': 'bs20-rcu',
+        'nv_cfg': 'bs20_nv_default',
+        'upg_pkg': ['application'],
+    },
+    'bs20-turnkey-mouse': {
+        'base_target_name': 'standard-bs20-n1200',
+        'defines': ['-:TEST_SUITE', '-:AT_COMMAND', 'SW_UART_DEBUG', '-:NFC_TASK_EXIST', '-:SUPPORT_MULTI_LIBS',
+                    'SUPPORT_SLE_BLE_PERIPHERAL', '-:ITCM_MAX_WATERLINE=0x52180'
+        ],
+        'ram_component': ['-:nfc_controller', '-:cal_dis', '-:std_rom_lds_porting', 'turnkey_mouse_lds_porting'],
+        'ram_component_set' : ['-:can', 'pwm'],
+        'liteos_kconfig': 'bs20',
+        'upg_pkg': ['application'],
+        'loaderboot_cfg': 'loaderboot-bs20-n1200',
+        'flashboot_cfg': 'flashboot-bs20-n1200-usb-with-ota',
+        'sector_cfg': 'bs20-turnkey-mouse',
+        'nv_cfg': 'bs20_nv_turnkey_mouse',
+    },
+    'bs20-turnkey-dongle': {
+        'base_target_name': 'standard-bs20-n1200',
+        'defines': ['-:TEST_SUITE', '-:AT_COMMAND', 'SW_UART_DEBUG', '-:NFC_TASK_EXIST', '-:SUPPORT_MULTI_LIBS',
+                    '-:ITCM_MAX_WATERLINE=0x50100'
+        ],
+        'ram_component': ['-:nfc_controller', '-:cal_dis', '-:ir'],
+        'ram_component_set' : ['-:can', '-:pwm'],
+        'liteos_kconfig': 'bs20',
+        'upg_pkg': ['application'],
+        'loaderboot_cfg': 'loaderboot-bs20-n1200',
+        'flashboot_cfg': 'flashboot-bs20-n1200-usb-with-ota',
+        'sector_cfg': 'bs20-turnkey-dongle',
+        'nv_cfg': 'bs20_nv_turnkey_dongle',
+    },
 }
 
 # custom copy rules, put it in target_group below and it takes effect.

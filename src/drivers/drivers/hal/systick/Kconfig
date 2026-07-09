@@ -5,6 +5,6 @@
 
 config SYSTICK_WITH_TWO_DATA_REGS
     bool
-    prompt "Systick Calculated With Two Data Registers "
+    prompt "Systick Calculated With Two Data Registers."
     default n
     depends on DRIVER_SUPPORT_SYSTICK

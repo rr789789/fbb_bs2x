@@ -148,6 +148,10 @@ typedef enum clock_ccrg_spi_used {
  */
 void clock_ccrg_spi_enable(clock_ccrg_spi_used_t dev, bool en);
 
+// DPA电由BUCK/MICLDO直供，BUCK/MICLDO电压修改需对应修改功率配置码字，共三档0:1.1v，1:1.2v，2:1.3v
+typedef void (*buck_vset_callback_t)(uint8_t level);
+void pm_register_buck_vset_callback(buck_vset_callback_t cb);
+
 /**
  * @}
  */

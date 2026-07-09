@@ -28,6 +28,7 @@ extern "C" {
 #define I2S_S_CLK                       32000    /* unit: khz. */
 #define FREQ_OF_NEED                    32       /* unit: khz. */
 #define I2S_CR                          0x608
+#define I2S_MCLK                        0x72c
 #define M_CLKEN0                        0x40
 #define I2S_MCLK_DIV_NUM                2
 #define I2S_CR_DIV_NUM_BIT              5
@@ -89,11 +90,11 @@ void sio_porting_clock_enable(bool enable);
 
 /**
  * @brief  Get the BCLK Div number.
- * @param  [in]  data_width I2S data width.
+ * @param  [in]  data_depth I2S data width.
  * @param  [in]  ch I2S transmission Channels Number.
  * @return The BCLK Div number.
  */
-uint32_t sio_porting_get_bclk_div_num(uint8_t data_width, uint32_t ch);
+uint32_t sio_porting_get_bclk_div_num(uint8_t data_depth, uint32_t ch);
 
 /**
  * @brief  Config the pin mode.

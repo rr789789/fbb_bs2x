@@ -77,6 +77,10 @@
 #endif
 #endif
 
+#if defined(CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT)
+#include "dfx_channel.h"
+#endif
+
 #define BT_CORE_INDEX 1
 #define GNSS_CORE_INDEX 3
 #define SEC_CORE_INDEX 4
@@ -151,6 +155,11 @@ void log_init_after_rtos(void)
 {
 #if CORE == BT
     log_oml_ota_init();
+#if defined(CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT)
+    if (uapi_diag_get_custom_output_status()) {
+        return;
+    }
+#endif
     log_oam_status_store_init();
 #endif
 }

@@ -129,6 +129,8 @@ static void hal_pwm_v151_set_action(uint8_t group, pwm_action_t action)
         hal_pwm_v151_start((pwm_v151_group_t)group);
     } else if (action == PWM_ACTION_STOP) {
         hal_pwm_v151_stop((pwm_v151_group_t)group);
+    } else if (action == PWM_ACTION_CONTINUE_CLR) {
+        g_repeat_flag = false;
     } else if (action == PWM_ACTION_CONTINUE_SET) {
         g_repeat_flag = true;
     }

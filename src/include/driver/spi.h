@@ -52,6 +52,36 @@ typedef hal_spi_extra_attr_t spi_extra_attr_t;
  */
 typedef hal_spi_xfer_data_t spi_xfer_data_t;
 
+#if defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
+/**
+ * @if Eng
+ * @brief  SPI DMA transfer done/error callback function.
+           @ref uapi_spi_set_dma_mode is invoked or the error is happened.
+ * @note   This callback is invoked in an interrupt context.
+ * @param  channel DMA channel.
+ * @else
+ * @brief  SPI dma发送数据的完成回调函数，通过 @ref uapi_spi_set_dma_mode 注册到驱动中。
+ * @note   这个函数是在中断上下文中执行的。
+ * @param  channel DMA通道。
+ * @endif
+ */
+typedef void (*spi_dma_tx_callback_t)(uint8_t channel);
+
+/**
+ * @if Eng
+ * @brief  SPI DMA receive done/error callback function.
+           @ref uapi_spi_set_dma_mode is invoked or the error is happened.
+ * @note   This callback is invoked in an interrupt context.
+ * @param  channel DMA channel.
+ * @else
+ * @brief  SPI dma接收数据的完成回调函数，通过 @ref uapi_spi_set_dma_mode 注册到驱动中。
+ * @note   这个函数是在中断上下文中执行的。
+ * @param  channel DMA通道。
+ * @endif
+ */
+typedef void (*spi_dma_rx_callback_t)(uint8_t channel);
+#endif  /* CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
+
 /**
  * @if Eng
  * @brief  Definition of SPI DMA configuration.
@@ -60,39 +90,46 @@ typedef hal_spi_xfer_data_t spi_xfer_data_t;
  * @endif
  */
 typedef struct spi_dma_config {
-    uint8_t src_width;          /*!< @if Eng Transfer data width of the source.
-                                 *           - 0: 1byte
-                                 *           - 1: 2byte
-                                 *           - 2: 4byte
-                                 *   @else   源端传输数据宽度。 \n
-                                 *           - 0: 1字节
-                                 *           - 1: 2字节
-                                 *           - 2: 4字节
-                                 *   @endif */
-    uint8_t dest_width;         /*!< @if Eng Transfer data width of the destination.
-                                 *            - 0: 1byte
-                                 *            - 1: 2byte
-                                 *            - 2: 4byte
-                                 *   @else   目的端传输数据宽度。 \n
-                                 *           - 0: 1字节
-                                 *           - 1: 2字节
-                                 *           - 2: 4字节
-                                 *   @endif */
-    uint8_t burst_length;       /*!< @if Eng Number of data items, to be written to the destination every time
-                                 *           a destination burst transaction request is made from
-                                 *           either the corresponding hardware or software handshaking interface.
-                                 *           - 0: burst length is 1
-                                 *           - 1: burst length is 4
-                                 *           - 2: burst length is 8
-                                 *           - 3: burst length is 16
-                                 *   @else   每次从相应的硬件或软件握手接口发出目的burst请求时,要写入目的端数据量。
-                                 *           - 0: burst长度是1
-                                 *           - 1: burst长度是4
-                                 *           - 2: burst长度是8
-                                 *           - 3: burst长度是16
-                                 *   @endif */
-    uint8_t priority;           /*!< @if Eng Transfer channel priority(Minimum: 0 and Maximum: 3).
-                                 *   @else   传输通道优先级(最小为0以及最大为3)。  @endif */
+    uint8_t src_width;                  /*!< @if Eng Transfer data width of the source.
+                                         *           - 0: 1byte
+                                         *           - 1: 2byte
+                                         *           - 2: 4byte
+                                         *   @else   源端传输数据宽度。 \n
+                                         *           - 0: 1字节
+                                         *           - 1: 2字节
+                                         *           - 2: 4字节
+                                         *   @endif */
+    uint8_t dest_width;                 /*!< @if Eng Transfer data width of the destination.
+                                         *            - 0: 1byte
+                                         *            - 1: 2byte
+                                         *            - 2: 4byte
+                                         *   @else   目的端传输数据宽度。 \n
+                                         *           - 0: 1字节
+                                         *           - 1: 2字节
+                                         *           - 2: 4字节
+                                         *   @endif */
+    uint8_t burst_length;               /*!< @if Eng Number of data items, to be written to the destination every time
+                                         *           a destination burst transaction request is made from
+                                         *           either the corresponding hardware or software handshaking
+                                         *           interface.
+                                         *           - 0: burst length is 1
+                                         *           - 1: burst length is 4
+                                         *           - 2: burst length is 8
+                                         *           - 3: burst length is 16
+                                         *   @else   每次从相应的硬件或软件握手接口发出目的burst请求时,要写入目的端数据量。
+                                         *           - 0: burst长度是1
+                                         *           - 1: burst长度是4
+                                         *           - 2: burst长度是8
+                                         *           - 3: burst长度是16
+                                         *   @endif */
+    uint8_t priority;                   /*!< @if Eng Transfer channel priority(Minimum: 0 and Maximum: 3).
+                                         *   @else   传输通道优先级(最小为0以及最大为3)。  @endif */
+#if defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
+    spi_dma_rx_callback_t rx_callback;  /*!< @if Receive callback to called when data read is completed.
+                                     *   @else   接收数据完成时的回调函数。  @endif */
+    spi_dma_tx_callback_t tx_callback;  /*!< @if Transmit callback to called when data write is completed.
+                                     *   @else   数据发送完成时的回调函数。  @endif */
+#endif  /* CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 } spi_dma_config_t;
 
 /**

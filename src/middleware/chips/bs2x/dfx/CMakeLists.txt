@@ -12,6 +12,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sample_data_adapt.c
     ${CMAKE_CURRENT_SOURCE_DIR}/diag_adapt_sdt.c
     ${CMAKE_CURRENT_SOURCE_DIR}/diag_adapt_flash.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/log_oam_logger_porting.c
 )
 
 set(PUBLIC_HEADER

@@ -81,14 +81,14 @@ typedef struct i2s_config {
                                                  *           - 0: 标准模式
                                                  *           - 1: 多路模式
                                                  *   @endif */
-    uint8_t data_width;                         /*!< @if Eng I2S data width:
+    uint8_t data_depth;                         /*!< @if Eng I2S data depth:
                                                  *           - 0: RESERVED
                                                  *           - 1: 16 Bits
                                                  *           - 2: 18 Bits
                                                  *           - 3: 20 Bits
                                                  *           - 4: 24 Bits
                                                  *           - 5: 32 Bits
-                                                 *   @else   I2S 数据宽度：
+                                                 *   @else   I2S 数据深度：
                                                  *           - 0: 保留
                                                  *           - 1: 16位
                                                  *           - 2: 18位
@@ -121,8 +121,8 @@ typedef struct i2s_config {
                                                  *           - 0: 下降沿
                                                  *           - 1: 上升沿
                                                  *   @endif */
-    uint8_t div_number;                         /*!< @if Eng Div number, see @ref i2s_config.data_width.
-                                                     @else   分频系数，见 @ref i2s_config.data_width 成员。 @endif */
+    uint8_t data_width;                         /*!< @if Eng SIO data width,.
+                                                     @else   SIO 数据位宽。 @endif */
     uint8_t number_of_channels;                 /*!< @if Eng Number of channels, see @ref i2s_config.channels_num.
                                                      @else   通道数，见 @ref i2s_config.channels_num 成员。 @endif */
 } i2s_config_t;

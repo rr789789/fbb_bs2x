@@ -76,7 +76,7 @@ install_sdk(${CMAKE_CURRENT_SOURCE_DIR}/Huawei_LiteOS/open_source/CMSIS/CMSIS/RT
 get_target_property(COM_HEADER ${COMPONENT_NAME}_interface INTERFACE_COMPILE_OPTIONS)
 MESSAGE(STATUS "COM_HEADER${COM_HEADER}")
 
-list(APPEND LITEOS_BASELIB "base" "cmsis_kernel" "cmsis_user" "csysdeps" "driverbase" "init" "interrupt" "riscv" "targets")
+list(APPEND LITEOS_BASELIB  "interrupt" "riscv")
 list(REMOVE_DUPLICATES LITEOS_BASELIB)
 set(LOS_LIB "${LITEOS_BASELIB}" CACHE INTERNAL "" FORCE)
 list(REMOVE_ITEM LITEOS_BASELIB "m" "c" "gcc")

@@ -56,17 +56,24 @@
 <a name="table1557726816410"></a>
 <table><thead align="left"><tr id="row2942532716410"><th class="cellrowborder" valign="top" width="20.72%" id="mcps1.1.4.1.1"><p id="p3778275416410"><a name="p3778275416410"></a><a name="p3778275416410"></a><strong id="b5687322716410"><a name="b5687322716410"></a><a name="b5687322716410"></a>文档版本</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="26.119999999999997%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
+<th class="cellrowborder" valign="top" width="26.090000000000003%" id="mcps1.1.4.1.2"><p id="p5627845516410"><a name="p5627845516410"></a><a name="p5627845516410"></a><strong id="b5800814916410"><a name="b5800814916410"></a><a name="b5800814916410"></a>发布日期</strong></p>
 </th>
-<th class="cellrowborder" valign="top" width="53.16%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>修改说明</strong></p>
+<th class="cellrowborder" valign="top" width="53.190000000000005%" id="mcps1.1.4.1.3"><p id="p2382284816410"><a name="p2382284816410"></a><a name="p2382284816410"></a><strong id="b3316380216410"><a name="b3316380216410"></a><a name="b3316380216410"></a>修改说明</strong></p>
 </th>
 </tr>
 </thead>
-<tbody><tr id="row1674128202419"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
+<tbody><tr id="row729218331249"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1888018141615"><a name="p1888018141615"></a><a name="p1888018141615"></a>02</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-07-04</p>
+<td class="cellrowborder" valign="top" width="26.090000000000003%" headers="mcps1.1.4.1.2 "><p id="p1488041414620"><a name="p1488041414620"></a><a name="p1488041414620"></a>2026-04-29</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p169114261115"><a name="p169114261115"></a><a name="p169114261115"></a>第一次正式版本发布。</p>
+<td class="cellrowborder" valign="top" width="53.190000000000005%" headers="mcps1.1.4.1.3 "><a name="ul141062094520"></a><a name="ul141062094520"></a><ul id="ul141062094520"><li>更新“<a href="#ZH-CN_TOPIC_0000001829430336">TLV格式</a>”章节内容。</li><li>更新“<a href="#ZH-CN_TOPIC_0000001829590096">通用错误码</a>”章节内容。</li></ul>
+</td>
+</tr>
+<tr id="row1674128202419"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
+</td>
+<td class="cellrowborder" valign="top" width="26.090000000000003%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-07-04</p>
+</td>
+<td class="cellrowborder" valign="top" width="53.190000000000005%" headers="mcps1.1.4.1.3 "><p id="p169114261115"><a name="p169114261115"></a><a name="p169114261115"></a>第一次正式版本发布。</p>
 </td>
 </tr>
 </tbody>
@@ -74,7 +81,9 @@
 
 # 概述<a name="ZH-CN_TOPIC_0000001829430328"></a>
 
+-   **[背景](#ZH-CN_TOPIC_0000001829590088)**  
 
+-   **[需求](#ZH-CN_TOPIC_0000001876189753)**  
 
 ## 背景<a name="ZH-CN_TOPIC_0000001829590088"></a>
 
@@ -88,6 +97,7 @@
 
 SLE-Link协议定义了新的SLE Frame格式，格式如下：
 
+-   **[SLE Frame格式定义](#ZH-CN_TOPIC_0000001829430332)**  
 
 ## SLE Frame格式定义<a name="ZH-CN_TOPIC_0000001829430332"></a>
 
@@ -177,12 +187,19 @@ SLE-Link协议定义了新的SLE Frame格式，格式如下：
 </tbody>
 </table>
 
+-   **[Header](#ZH-CN_TOPIC_0000001829590092)**  
 
+-   **[Service ID](#ZH-CN_TOPIC_0000001876189757)**  
 
+-   **[Command ID](#ZH-CN_TOPIC_0000001876269537)**  
 
+-   **[TLV格式](#ZH-CN_TOPIC_0000001829430336)**  
 
+-   **[通用错误码](#ZH-CN_TOPIC_0000001829590096)**  
 
+-   **[MIC校验](#ZH-CN_TOPIC_0000001876189761)**  
 
+-   **[Frame合法性原则](#ZH-CN_TOPIC_0000001876269541)**  
 
 ### Header<a name="ZH-CN_TOPIC_0000001829590092"></a>
 
@@ -213,42 +230,42 @@ Service ID定义如下表。
 </thead>
 <tbody><tr id="row4587mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4589mcpsimp"><a name="p4589mcpsimp"></a><a name="p4589mcpsimp"></a>0x01</p>
 </td>
-<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4591mcpsimp"><a name="p4591mcpsimp"></a><a name="p4591mcpsimp"></a><a href="Device-Discovery-Service.md">Device Discovery Service</a></p>
+<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4591mcpsimp"><a name="p4591mcpsimp"></a><a name="p4591mcpsimp"></a><a href="#ZH-CN_TOPIC_0000001876269545">Device Discovery Service</a></p>
 </td>
 <td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4594mcpsimp"><a name="p4594mcpsimp"></a><a name="p4594mcpsimp"></a>设备发现。</p>
 </td>
 </tr>
 <tr id="row4595mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4597mcpsimp"><a name="p4597mcpsimp"></a><a name="p4597mcpsimp"></a>0x02</p>
 </td>
-<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p175964513713"><a name="p175964513713"></a><a name="p175964513713"></a><a href="Connection-Management-Service.md">Connection Management Service</a></p>
+<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p175964513713"><a name="p175964513713"></a><a name="p175964513713"></a><a href="#ZH-CN_TOPIC_0000001876189781">Connection Management Service</a></p>
 </td>
 <td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4602mcpsimp"><a name="p4602mcpsimp"></a><a name="p4602mcpsimp"></a>连接管理。</p>
 </td>
 </tr>
 <tr id="row4603mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4605mcpsimp"><a name="p4605mcpsimp"></a><a name="p4605mcpsimp"></a>0x03</p>
 </td>
-<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4607mcpsimp"><a name="p4607mcpsimp"></a><a name="p4607mcpsimp"></a><a href="SSAP-Client-Service.md">SSAP Client Service</a></p>
+<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4607mcpsimp"><a name="p4607mcpsimp"></a><a name="p4607mcpsimp"></a><a href="#ZH-CN_TOPIC_0000001829590136">SSAP Client Service</a></p>
 </td>
 <td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4609mcpsimp"><a name="p4609mcpsimp"></a><a name="p4609mcpsimp"></a>SSAP Client服务。</p>
 </td>
 </tr>
 <tr id="row4610mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4612mcpsimp"><a name="p4612mcpsimp"></a><a name="p4612mcpsimp"></a>0x04</p>
 </td>
-<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4614mcpsimp"><a name="p4614mcpsimp"></a><a name="p4614mcpsimp"></a><a href="SSAP-Server-Service.md">SSAP Server Service</a></p>
+<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4614mcpsimp"><a name="p4614mcpsimp"></a><a name="p4614mcpsimp"></a><a href="#ZH-CN_TOPIC_0000001876189809">SSAP Server Service</a></p>
 </td>
 <td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4616mcpsimp"><a name="p4616mcpsimp"></a><a name="p4616mcpsimp"></a>SSAP Server服务。</p>
 </td>
 </tr>
 <tr id="row4617mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4619mcpsimp"><a name="p4619mcpsimp"></a><a name="p4619mcpsimp"></a>0x05</p>
 </td>
-<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4621mcpsimp"><a name="p4621mcpsimp"></a><a name="p4621mcpsimp"></a><a href="Factory-Test-Service.md">Factory Test Service</a></p>
+<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4621mcpsimp"><a name="p4621mcpsimp"></a><a name="p4621mcpsimp"></a><a href="#ZH-CN_TOPIC_0000001829590160">Factory Test Service</a></p>
 </td>
 <td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4623mcpsimp"><a name="p4623mcpsimp"></a><a name="p4623mcpsimp"></a>产测模式。</p>
 </td>
 </tr>
 <tr id="row4624mcpsimp"><td class="cellrowborder" valign="top" width="16%" headers="mcps1.1.4.1.1 "><p id="p4626mcpsimp"><a name="p4626mcpsimp"></a><a name="p4626mcpsimp"></a>0x06</p>
 </td>
-<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4628mcpsimp"><a name="p4628mcpsimp"></a><a name="p4628mcpsimp"></a><a href="Low-Latency-Service.md">Low Latency Service</a></p>
+<td class="cellrowborder" valign="top" width="43%" headers="mcps1.1.4.1.2 "><p id="p4628mcpsimp"><a name="p4628mcpsimp"></a><a name="p4628mcpsimp"></a><a href="#ZH-CN_TOPIC_0000001876269609">Low Latency Service</a></p>
 </td>
 <td class="cellrowborder" valign="top" width="41%" headers="mcps1.1.4.1.3 "><p id="p4630mcpsimp"><a name="p4630mcpsimp"></a><a name="p4630mcpsimp"></a>低延时模式。</p>
 </td>
@@ -264,10 +281,10 @@ Command ID：占1字节，用于标识具体命令类型，每个Service ID对�
 
 TLVs封装消息中的具体信息。一个Payload的body下可以对应多个TLV。
 
-![](figures/zh-cn_image_0000001829590172.png)
+![](figures/80049337-3F43-4782-8692-0661ACFEF5BA.png)
 
 -   Type：占用1个字节，表示消息类型，取值0\~255。其中0x00，0xFF不使用，0x7F固定用作错误码。
--   Length：占用2个字节，表示后面value的长度，取值范围0\~65535。当Length为0时，表明Value不存在。
+-   Length：占用1个字节，表示后面value的长度，取值范围0\~255。当Length为0时，表明Value不存在。
 -   Value：为具体的数据。
 
 **注：简化处理，不支持Type下再挂子节点。**
@@ -276,7 +293,7 @@ TLVs封装消息中的具体信息。一个Payload的body下可以对应多个TL
 
 通用错误码Type值为127，固定为1个字节。格式如下。
 
-![](figures/zh-cn_image_0000001876189837.png)
+![](figures/1.png)
 
 <a name="table4646mcpsimp"></a>
 <table><thead align="left"><tr id="row4652mcpsimp"><th class="cellrowborder" valign="top" width="16%" id="mcps1.1.4.1.1"><p id="p4654mcpsimp"><a name="p4654mcpsimp"></a><a name="p4654mcpsimp"></a><strong id="b4655mcpsimp"><a name="b4655mcpsimp"></a><a name="b4655mcpsimp"></a>Error</strong></p>
@@ -347,7 +364,9 @@ MIC采用CRC-16，算法名称：CRC-16/XMODEM，多项式poly：0x1021
 
 ### Frame合法性原则<a name="ZH-CN_TOPIC_0000001876269541"></a>
 
+-   **[接收Frame Request](#ZH-CN_TOPIC_0000001829430340)**  
 
+-   **[接收Frame Response](#ZH-CN_TOPIC_0000001829590100)**  
 
 #### 接收Frame Request<a name="ZH-CN_TOPIC_0000001829430340"></a>
 
@@ -359,27 +378,47 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 # 服务接口定义<a name="ZH-CN_TOPIC_0000001876189765"></a>
 
+-   **[Device Discovery Service](#ZH-CN_TOPIC_0000001876269545)**  
 
+-   **[Connection Management Service](#ZH-CN_TOPIC_0000001876189781)**  
 
+-   **[SSAP Client Service](#ZH-CN_TOPIC_0000001829590136)**  
 
+-   **[SSAP Server Service](#ZH-CN_TOPIC_0000001876189809)**  
 
+-   **[Factory Test Service](#ZH-CN_TOPIC_0000001829590160)**  
 
+-   **[Low Latency Service](#ZH-CN_TOPIC_0000001876269609)**  
 
 ## Device Discovery Service<a name="ZH-CN_TOPIC_0000001876269545"></a>
 
+-   **[使能SLE](#ZH-CN_TOPIC_0000001829430344)**  
 
+-   **[去使能SLE](#ZH-CN_TOPIC_0000001829590104)**  
 
+-   **[设置本地设备地址](#ZH-CN_TOPIC_0000001876189769)**  
 
+-   **[获取本地设备地址](#ZH-CN_TOPIC_0000001876269549)**  
 
+-   **[设置本地设备名称](#ZH-CN_TOPIC_0000001829430348)**  
 
+-   **[获取本地设备名称](#ZH-CN_TOPIC_0000001829590108)**  
 
+-   **[设置设备公开数据](#ZH-CN_TOPIC_0000001876189773)**  
 
+-   **[设置设备公开参数](#ZH-CN_TOPIC_0000001876269553)**  
 
+-   **[开始设备公开](#ZH-CN_TOPIC_0000001829430352)**  
 
+-   **[结束设备公开](#ZH-CN_TOPIC_0000001829590112)**  
 
+-   **[设置设备扫描参数](#ZH-CN_TOPIC_0000001876189777)**  
 
+-   **[上报设备扫描结果](#ZH-CN_TOPIC_0000001876269557)**  
 
+-   **[开始设备扫描](#ZH-CN_TOPIC_0000001829430356)**  
 
+-   **[停止设备扫描](#ZH-CN_TOPIC_0000001829590116)**  
 
 ### 使能SLE<a name="ZH-CN_TOPIC_0000001829430344"></a>
 
@@ -1287,24 +1326,43 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 ## Connection Management Service<a name="ZH-CN_TOPIC_0000001876189781"></a>
 
+-   **[发送链接请求](#ZH-CN_TOPIC_0000001876269561)**  
 
+-   **[断开链接请求](#ZH-CN_TOPIC_0000001829430360)**  
 
+-   **[更新链接参数请求](#ZH-CN_TOPIC_0000001829590120)**  
 
+-   **[发送配对请求](#ZH-CN_TOPIC_0000001876189785)**  
 
+-   **[删除配对](#ZH-CN_TOPIC_0000001876269565)**  
 
+-   **[删除所有配对](#ZH-CN_TOPIC_0000001829430364)**  
 
+-   **[获取配对设备数量](#ZH-CN_TOPIC_0000001829590124)**  
 
+-   **[获取配对设备](#ZH-CN_TOPIC_0000001876189789)**  
 
+-   **[获取配对状态](#ZH-CN_TOPIC_0000001876269569)**  
 
+-   **[读取对端设备RSSI值](#ZH-CN_TOPIC_0000001829430368)**  
 
+-   **[设置ACB链路参数](#ZH-CN_TOPIC_0000001829590128)**  
 
+-   **[设置PHY参数](#ZH-CN_TOPIC_0000001876189793)**  
 
+-   **[设置最大功率](#ZH-CN_TOPIC_0000001876269573)**  
 
+-   **[发送链接管理能力查询请求](#ZH-CN_TOPIC_0000001829430372)**  
 
+-   **[断开所有链接](#ZH-CN_TOPIC_0000001829590132)**  
 
+-   **[获取绑定设备](#ZH-CN_TOPIC_0000001876189797)**  
 
+-   **[设置调制与编码策略](#ZH-CN_TOPIC_0000001876269577)**  
 
+-   **[设置最大payload字节数](#ZH-CN_TOPIC_0000001829430376)**  
 
+-   **[发送连接状态查询请求](#ZH-CN_TOPIC_0000001954647133)**  
 
 ### 发送链接请求<a name="ZH-CN_TOPIC_0000001876269561"></a>
 
@@ -2457,13 +2515,21 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 ## SSAP Client Service<a name="ZH-CN_TOPIC_0000001829590136"></a>
 
+-   **[注册SSAP客户端](#ZH-CN_TOPIC_0000001876189801)**  
 
+-   **[注销SSAP客户端](#ZH-CN_TOPIC_0000001876269581)**  
 
+-   **[查找服务、特征、描述符](#ZH-CN_TOPIC_0000001829430380)**  
 
+-   **[发起按照UUID读取请求](#ZH-CN_TOPIC_0000001829590140)**  
 
+-   **[发起按照句柄读取请求](#ZH-CN_TOPIC_0000001876189805)**  
 
+-   **[发起写请求](#ZH-CN_TOPIC_0000001876269585)**  
 
+-   **[发起写命令](#ZH-CN_TOPIC_0000001829430384)**  
 
+-   **[发送交换info请求](#ZH-CN_TOPIC_0000001829590144)**  
 
 ### 注册SSAP客户端<a name="ZH-CN_TOPIC_0000001876189801"></a>
 
@@ -3114,19 +3180,33 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 ## SSAP Server Service<a name="ZH-CN_TOPIC_0000001876189809"></a>
 
+-   **[注册SSAP服务端](#ZH-CN_TOPIC_0000001876269589)**  
 
+-   **[注销SSAP服务端](#ZH-CN_TOPIC_0000001829430388)**  
 
+-   **[异步添加SSAP服务](#ZH-CN_TOPIC_0000001829590148)**  
 
+-   **[异步添加SSAP属性](#ZH-CN_TOPIC_0000001876189813)**  
 
+-   **[异步添加SSAP描述](#ZH-CN_TOPIC_0000001876269593)**  
 
+-   **[同步添加SSAP服务](#ZH-CN_TOPIC_0000001829430392)**  
 
+-   **[同步添加SSAP属性](#ZH-CN_TOPIC_0000001829590152)**  
 
+-   **[同步添加SSAP描述](#ZH-CN_TOPIC_0000001876189817)**  
 
+-   **[开始SSAP服务](#ZH-CN_TOPIC_0000001876269597)**  
 
+-   **[删除所有SSAP服务](#ZH-CN_TOPIC_0000001829430396)**  
 
+-   **[发送SSAP响应](#ZH-CN_TOPIC_0000001829590156)**  
 
+-   **[发送通知或指示](#ZH-CN_TOPIC_0000001876189821)**  
 
+-   **[通过UUID发送通知或指示](#ZH-CN_TOPIC_0000001876269601)**  
 
+-   **[设置服务端info](#ZH-CN_TOPIC_0000001829430400)**  
 
 ### 注册SSAP服务端<a name="ZH-CN_TOPIC_0000001876269589"></a>
 
@@ -4341,10 +4421,15 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 ## Factory Test Service<a name="ZH-CN_TOPIC_0000001829590160"></a>
 
+-   **[打开射频发送](#ZH-CN_TOPIC_0000001876189825)**  
 
+-   **[打开射频接收](#ZH-CN_TOPIC_0000001876269605)**  
 
+-   **[关闭射频收发](#ZH-CN_TOPIC_0000001829430404)**  
 
+-   **[重置射频收发](#ZH-CN_TOPIC_0000001829590164)**  
 
+-   **[设置RSSI阈值](#ZH-CN_TOPIC_0000001876189829)**  
 
 ### 打开射频发送<a name="ZH-CN_TOPIC_0000001876189825"></a>
 
@@ -4653,8 +4738,11 @@ Host侧检查DATA内容，Header是0x1F, 且对MIC前的所有字段做校验，
 
 ## Low Latency Service<a name="ZH-CN_TOPIC_0000001876269609"></a>
 
+-   **[低延时鼠标侧使能](#ZH-CN_TOPIC_0000001829430408)**  
 
+-   **[低延时Dongle侧使能](#ZH-CN_TOPIC_0000001829590168)**  
 
+-   **[低延时参数设置](#ZH-CN_TOPIC_0000001876189833)**  
 
 ### 低延时鼠标侧使能<a name="ZH-CN_TOPIC_0000001829430408"></a>
 

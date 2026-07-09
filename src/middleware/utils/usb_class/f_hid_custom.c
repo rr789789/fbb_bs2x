@@ -921,7 +921,7 @@ static int usbclass_hid_setup(struct usbdevclass_driver_s *driver, struct usbdev
   struct hid_dev_s *hid;
   struct hid_driver_s *drvr;
   struct usbdev_req_s *req;
-  int ret;
+  int ret = -1;
   int new_req = 0;
 
   (void)dataout; (void)outlen;
@@ -954,6 +954,7 @@ static int usbclass_hid_setup(struct usbdevclass_driver_s *driver, struct usbdev
         case USB_REQ_SETINTERFACE:
           usb_init_suc();
           usbclass_hid_set_endpoint(driver, dev);
+          ret = 0;
           break;
 
         case USB_REQ_GETINTERFACE:
@@ -1069,7 +1070,7 @@ static int usbclass_hid_setup(struct usbdevclass_driver_s *driver, struct usbdev
           return -1;
         }
     }
-  return 0;
+    return ret;
 }
 
 static void usbclass_hid_disconnect(struct usbdevclass_driver_s *driver, struct usbdev_s *dev)

@@ -98,6 +98,18 @@ extern "C" {
                                               ((uint32_t)(((uint32_t)(fileid) & 0x3FC) << 0x6)) |  \
                                               ((uint32_t)(((mid) & 0x3F) | (((lev) & 0x3) << 0x6))))
 
+// 新接口,高位20bit参数传递, 使用lui指令传参
+#define para_press_opt(mid, lev, fileid, lineno) \
+    ((uint32_t)((((uint32_t)(fileid) & 0x3FF) << 22) | \
+                (((uint32_t)(lineno) & 0x3FF) << 12)))
+
+// 1. 提取 fileid
+#define get_fileid_opt(val)  (((val) >> 22) & 0x3FF)
+// 2. 提取 lineno
+#define get_line_opt(val)  (((val) >> 12) & 0x3FF)
+
+#define MAX_LINES           1024
+
 #define oal_log_lenth(arg_num)              (sizeof(om_log_header_t) + sizeof(uint32_t) * (arg_num) + sizeof(uint8_t))
 #define log_lenth_and_sn_press(arg_num, SN) (oal_log_lenth(arg_num) | ((uint32_t)(SN) << OM_LOG_SN_OFFSET))
 #else
@@ -233,6 +245,8 @@ extern "C" {
 #define oml_bgh_log_print4(mid, lvl, fmt, p1, p2, p3, p4) \
     log_event_print4(log_head_press(OM_BGH), para_press(LOG_BGHMODULE, lvl, THIS_FILE_ID, __LINE__), \
                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4))
+
+/* 为兼容部分项目rom化代码中的错误引用保留 */
 #define oml_bgh_log_print5(mid, lvl, fmt, num, arg...) \
     log_event_print_alterable_para_press(log_head_press(OM_BGH), \
                                          para_press(LOG_BGHMODULE, lvl, THIS_FILE_ID, __LINE__), num, ##arg)
@@ -686,16 +700,11 @@ typedef struct {
 
 #if (USE_COMPRESS_LOG_INSTEAD_OF_SDT_LOG == NO)
 void log_event_print0(uint32_t log_header, uint32_t presspara);
-
 void log_event_print1(uint32_t log_header, uint32_t presspara, uint32_t para1);
-
 void log_event_print2(uint32_t log_header, uint32_t presspara, uint32_t para1, uint32_t para2);
-
 void log_event_print3(uint32_t log_header, uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
-
 void log_event_print4(uint32_t log_header, uint32_t presspara, uint32_t para1, uint32_t para2,
                       uint32_t para3, uint32_t para4);
-
 void log_event_print_alterable_para_press(uint32_t log_header, uint32_t presspara, uint32_t paranum, ...);
 
 void log_event_wifi_print0(uint32_t presspara);
@@ -703,6 +712,282 @@ void log_event_wifi_print1(uint32_t presspara, uint32_t para1);
 void log_event_wifi_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
 void log_event_wifi_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
 void log_event_wifi_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+
+#if defined(CONFIG_LOG_USE_OPTIMIZE) || defined(CONFIG_LOG_USE_OPTIMIZE_V2)
+void log_event_bt_print0(uint32_t presspara);
+void log_event_bt_print1(uint32_t presspara, uint32_t para1);
+void log_event_bt_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
+void log_event_bt_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
+void log_event_bt_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+
+void log_event_bth_print0(uint32_t presspara);
+void log_event_bth_print1(uint32_t presspara, uint32_t para1);
+void log_event_bth_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
+void log_event_bth_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
+void log_event_bth_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+#endif
+
+#if defined(CONFIG_LOG_USE_OPTIMIZE)
+// 参数优化接口,降低接口调用传参指令数量
+// btc 专用, 参数优化接口
+#define oml_bt_log_new_print0(mid, lvl, fmt) \
+    log_event_bt_print0(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__))
+#define oml_bt_log_new_print1(mid, lvl, fmt, p1) \
+    log_event_bt_print1(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), (uint32_t)(p1))
+#define oml_bt_log_new_print2(mid, lvl, fmt, p1, p2) \
+    log_event_bt_print2(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2))
+#define oml_bt_log_new_print3(mid, lvl, fmt, p1, p2, p3) \
+    log_event_bt_print3(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3))
+#define oml_bt_log_new_print4(mid, lvl, fmt, p1, p2, p3, p4) \
+    log_event_bt_print4(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4))
+#define oml_bt_log_new_print5(mid, lvl, fmt, p1, p2, p3, p4, p5) \
+    log_event_bt_print5(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4), (uint32_t)(p5))
+#define oml_bt_log_new_print6(mid, lvl, fmt, p1, p2, p3, p4, p5, p6) \
+    log_event_bt_print6(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4), (uint32_t)(p5), (uint32_t)(p6))
+// bth 专用, 参数优化接口
+#define oml_bth_log_new_print0(mid, lvl, fmt) \
+    log_event_bth_print0(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__))
+#define oml_bth_log_new_print1(mid, lvl, fmt, p1) \
+    log_event_bth_print1(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), (uint32_t)(p1))
+#define oml_bth_log_new_print2(mid, lvl, fmt, p1, p2) \
+    log_event_bth_print2(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2))
+#define oml_bth_log_new_print3(mid, lvl, fmt, p1, p2, p3) \
+    log_event_bth_print3(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3))
+#define oml_bth_log_new_print4(mid, lvl, fmt, p1, p2, p3, p4) \
+    log_event_bth_print4(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4))
+#define oml_bth_log_new_print5(mid, lvl, fmt, arg...) \
+    log_event_print_alterable_para_press(log_head_press(OM_BTH), \
+                                         para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), FIVE_ARG, ##arg)
+#define oml_bth_log_new_print6(mid, lvl, fmt, arg...) \
+    log_event_print_alterable_para_press(log_head_press(OM_BTH), \
+                                         para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), SIX_ARG, ##arg)
+#elif defined(CONFIG_LOG_USE_OPTIMIZE_V2)
+/* BT模块按level分类的打印接口 */
+void log_event_bt_err_print0(uint32_t presspara);
+void log_event_bt_err_print1(uint32_t presspara, uint32_t para1);
+void log_event_bt_err_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
+void log_event_bt_err_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
+void log_event_bt_err_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+
+void log_event_bt_wrn_print0(uint32_t presspara);
+void log_event_bt_wrn_print1(uint32_t presspara, uint32_t para1);
+void log_event_bt_wrn_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
+void log_event_bt_wrn_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
+void log_event_bt_wrn_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+
+void log_event_bt_info_print0(uint32_t presspara);
+void log_event_bt_info_print1(uint32_t presspara, uint32_t para1);
+void log_event_bt_info_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
+void log_event_bt_info_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
+void log_event_bt_info_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+
+/* BTH模块按level分类的打印接口 */
+void log_event_bth_err_print0(uint32_t presspara);
+void log_event_bth_err_print1(uint32_t presspara, uint32_t para1);
+void log_event_bth_err_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
+void log_event_bth_err_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
+void log_event_bth_err_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+
+void log_event_bth_wrn_print0(uint32_t presspara);
+void log_event_bth_wrn_print1(uint32_t presspara, uint32_t para1);
+void log_event_bth_wrn_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
+void log_event_bth_wrn_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
+void log_event_bth_wrn_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+
+void log_event_bth_info_print0(uint32_t presspara);
+void log_event_bth_info_print1(uint32_t presspara, uint32_t para1);
+void log_event_bth_info_print2(uint32_t presspara, uint32_t para1, uint32_t para2);
+void log_event_bth_info_print3(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3);
+void log_event_bth_info_print4(uint32_t presspara, uint32_t para1, uint32_t para2, uint32_t para3, uint32_t para4);
+
+#define ERR_NUM         1
+#define WRN_NUM         2
+#define INFO_NUM        3
+
+// 参数优化接口,降低接口调用传参指令数量
+// btc 专用, 参数优化接口
+#define oml_bt_log_new_print0(mid, lvl, fmt) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bt_print0(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bt_err_print0(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bt_wrn_print0(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bt_info_print0(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__)); \
+        } \
+    } while (0)
+
+#define oml_bt_log_new_print1(mid, lvl, fmt, p1) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bt_print1(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bt_err_print1(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), (uint32_t)(p1)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bt_wrn_print1(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), (uint32_t)(p1)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bt_info_print1(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), (uint32_t)(p1)); \
+        } \
+    } while (0)
+
+#define oml_bt_log_new_print2(mid, lvl, fmt, p1, p2) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bt_print2(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bt_err_print2(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bt_wrn_print2(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bt_info_print2(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2)); \
+        } \
+    } while (0)
+
+#define oml_bt_log_new_print3(mid, lvl, fmt, p1, p2, p3) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bt_print3(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bt_err_print3(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bt_wrn_print3(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bt_info_print3(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3)); \
+        } \
+    } while (0)
+
+#define oml_bt_log_new_print4(mid, lvl, fmt, p1, p2, p3, p4) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bt_print4(para_press(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                             (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bt_err_print4(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bt_wrn_print4(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bt_info_print4(para_press_opt(LOG_BTMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4)); \
+        } \
+    } while (0)
+
+// bth 专用, 参数优化接口
+#define oml_bth_log_new_print0(mid, lvl, fmt) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bth_print0(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bth_err_print0(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bth_wrn_print0(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bth_info_print0(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__)); \
+        } \
+    } while (0)
+
+#define oml_bth_log_new_print1(mid, lvl, fmt, p1) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bth_print1(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bth_err_print1(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), (uint32_t)(p1)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bth_wrn_print1(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), (uint32_t)(p1)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bth_info_print1(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), (uint32_t)(p1)); \
+        } \
+    } while (0)
+
+#define oml_bth_log_new_print2(mid, lvl, fmt, p1, p2) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bth_print2(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bth_err_print2(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bth_wrn_print2(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bth_info_print2(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2)); \
+        } \
+    } while (0)
+
+#define oml_bth_log_new_print3(mid, lvl, fmt, p1, p2, p3) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bth_print3(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bth_err_print3(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bth_wrn_print3(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bth_info_print3(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                     (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3)); \
+        } \
+    } while (0)
+
+#define oml_bth_log_new_print4(mid, lvl, fmt, p1, p2, p3, p4) \
+    do { \
+        const uint32_t _lvl = lvl; \
+        if (__LINE__ >= MAX_LINES) { \
+            log_event_bth_print4(para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4)); \
+        } else if (_lvl == ERR_NUM) { \
+            log_event_bth_err_print4(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4)); \
+        } else if (_lvl == WRN_NUM) { \
+            log_event_bth_wrn_print4(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4)); \
+        } else if (_lvl == INFO_NUM) { \
+            log_event_bth_info_print4(para_press_opt(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), \
+                    (uint32_t)(p1), (uint32_t)(p2), (uint32_t)(p3), (uint32_t)(p4)); \
+        } \
+    } while (0)
+
+#define oml_bth_log_new_print5(mid, lvl, fmt, arg...) \
+    log_event_print_alterable_para_press(log_head_press(OM_BTH), \
+                                         para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), FIVE_ARG, ##arg)
+#define oml_bth_log_new_print6(mid, lvl, fmt, arg...) \
+    log_event_print_alterable_para_press(log_head_press(OM_BTH), \
+                                         para_press(LOG_BTHMODULE, lvl, THIS_FILE_ID, __LINE__), SIX_ARG, ##arg)
+#endif
 
 #if CORE == CORE_LOGGING
 void log_event_print_alterable_para_press_by_write_uart_fifo(

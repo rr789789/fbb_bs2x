@@ -53,6 +53,9 @@ typedef struct {
     unsigned int reboot_count;       // reboot count since coldboot
     unsigned int ep_reboot_count;    // exception reboot count continuously
     unsigned int enable_sha_check;   // total size until here: 172 Byte
+#ifdef CONFIG_SUPPORT_USER_PRESERVE_DATA
+    uint8_t user_preserve[CONFIG_USER_PRESERVE_DATA_LEN];
+#endif
 } preserve_data_t;
 #pragma pack()
 
@@ -563,6 +566,36 @@ void system_boot_reason_process(void)
         default:
             break;
     }
+}
+#endif
+
+#ifdef CONFIG_SUPPORT_USER_PRESERVE_DATA
+errcode_t get_user_preserve(uint8_t *buffer, size_t buffer_len, size_t offset)
+{
+    if (buffer == NULL || offset > UINT32_MAX - buffer_len ||
+        (offset + buffer_len) > sizeof(g_preserve_data_lib.user_preserve)) {
+        return ERRCODE_INVALID_PARAM;
+    }
+
+    errno_t ret = memcpy_s(buffer, buffer_len, g_preserve_data_lib.user_preserve + offset, buffer_len);
+    if (ret != 0) {
+        return ERROR_SECURITY_MEMCPY_S;
+    }
+    return ERRCODE_SUCC;
+}
+
+errcode_t set_user_preserve(uint8_t *buffer, size_t buffer_len, size_t offset)
+{
+    if (buffer == NULL || offset > UINT32_MAX - buffer_len ||
+        (offset + buffer_len) > sizeof(g_preserve_data_lib.user_preserve)) {
+        return ERRCODE_INVALID_PARAM;
+    }
+
+    errno_t ret = memcpy_s(g_preserve_data_lib.user_preserve + offset, buffer_len, buffer, buffer_len);
+    if (ret != 0) {
+        return ERROR_SECURITY_MEMCPY_S;
+    }
+    return ERRCODE_SUCC;
 }
 #endif
 

@@ -29,7 +29,8 @@
     "HDB_TXT_DST_DIR":"output/bs22/database/bs22-n1100/build_hso_cfg/hdb/struct",
     "HDB_TXT_SRC_DIR":"build/config/target_config/bs22/hdb_config/database_template/acore/system/diag",
 
-    "HDB_XML_PRE_GENERATED_DIR":[],
+    "HDB_XML_PRE_GENERATED_CORE":["acore"],
+    "HDB_XML_PRE_GENERATED_DIR":["interim_binary/bs22/build_hso_cfg"],
 
     "BT_STATUS_DIR":"build/config/target_config/bs22/hdb_config/database_cfg",
     "OTA_MSG_DIR":"build/config/target_config/bs22/hdb_config/database_cfg"

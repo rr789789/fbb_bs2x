@@ -48,8 +48,8 @@ void slp_wakeup_pin_config(void)
 {
     uapi_pin_set_mode(S_MGPIO10, PIN_MODE_61); // GPIO10置为sync管脚
     // wakeup host
-    (void)uapi_gpio_register_isr_func(S_MGPIO15, GPIO_INTERRUPT_RISING_EDGE, tiot_board_gpio_callback);
-    (void)uapi_gpio_enable_interrupt(S_MGPIO15);
+    (void)uapi_gpio_register_isr_func(S_MGPIO6, GPIO_INTERRUPT_RISING_EDGE, tiot_board_gpio_callback);
+    (void)uapi_gpio_enable_interrupt(S_MGPIO6);
     // imu_int2
 #if defined(CONFIG_PINCTRL_SUPPORT_IE)
     (void)uapi_pin_set_ie(S_MGPIO14, PIN_IE_0);

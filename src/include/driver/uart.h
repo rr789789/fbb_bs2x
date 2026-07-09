@@ -789,6 +789,17 @@ bool uapi_uart_dma_lli_is_stop(uart_bus_t bus);
 #if defined(CONFIG_UART_SUPPORT_RECV_RAW_DATA)
 /**
  * @if Eng
+ * @brief Get UART RAW data recv bus.
+ * @retval The UART bus.
+ * @else
+ * @brief 获取UART不定长数据的串口号。
+ * @retval 串口号。
+ * @endif
+ */
+uart_bus_t uart_dma_recv_get_bus(void);
+
+/**
+ * @if Eng
  * @brief End UART RAW data recv.
  * @param [in] uart_bus The UART bus. see @ref uart_bus_t.
  * @retval ERRCODE_SUCC Success.

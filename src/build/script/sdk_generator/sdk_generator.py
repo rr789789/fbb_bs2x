@@ -28,6 +28,11 @@ sdk_copy_common_files = [
 sdk_close_components = [
 ]
 
+# sdk构建的拦截白名单，名单内的芯片，sdk构建必须指定开源管理规则：open_source_path
+sdk_intercept_list = [
+    'bs21a', 'bs20', 'bs20h', 'bs21', 'bs21e', 'bs22', 'bs26'
+]
+
 def compare_path_bin(path1, path2):
     for file in os.listdir(path1):
         if not file.endswith('.bin'):
@@ -137,12 +142,10 @@ class SdkGenerator:
 
     def copy_depends(self, cmake_trace_file):
         depend_cmake_files = self.parse_depend_cmake_files(cmake_trace_file)
-        print('jia depend_cmake_files:' + str(depend_cmake_files))
         cmake_dest = self.copy_srcs(depend_cmake_files)
         for path in sdk_copy_common_files:
             if not os.path.exists(path):
                 sdk_copy_common_files.remove(path)
-        print('jia sdk_copy_common_files:' + str(sdk_copy_common_files))
         self.copy_srcs(sdk_copy_common_files)
         if self.env.get('use_memuconfig') != False:
             self.copy_menuconfig()
@@ -192,6 +195,33 @@ class SdkGenerator:
             if dest is not None:
                 dest_src.append(dest)
         return dest_src
+
+    def copy_headers(self, file_list):
+        dest_headers = []
+        for file in file_list:
+            if not os.path.exists(file):
+                print("SDK GENERATE ERROR!!")
+                print("FILE: %s is not exists!!" % file)
+                raise
+            if os.path.isfile(file) and file.endswith('.h'):
+                # 文件且以.h结尾时直接拷贝
+                dest = self.copy_module.copy_file(file)
+                if dest is not None:
+                    dest_headers.append(dest)
+            elif os.path.isdir(file):
+                # 目录时遍历并拷贝头文件
+                for root, dirs, files in os.walk(file):
+                    for f in files:
+                        if f.endswith('.h'):
+                            src_file = os.path.join(root, f)
+                            dest = self.copy_module.copy_file(src_file)
+                            if dest is not None:
+                                dest_headers.append(dest)
+                continue
+            else:
+                # 其他情况跳过
+                continue
+        return dest_headers
 
     def register_org_target_path(self, path):
         self.org_target_output_path.append(path)
@@ -272,12 +302,87 @@ class SdkGenerator:
             self.sdk_makefile_build(nhso, build_level)
         self.sdk_delete_tmp_files()
 
+    # sdk 生成后，二次编译验证前执行
+    def pre_sdk_build_check(self, chip, sdk_output_path, sdk_pkg_target_name):
+        sdk_pre_sdk_py = os.path.join(target_config_path, chip, 'scripts', 'pre_sdk_build.py')
+        if os.path.exists(sdk_pre_sdk_py):
+            print("pre process sdk before build...")
+            args = [sys.executable, sdk_pre_sdk_py, sdk_output_path]
+            for target in sdk_pkg_target_name:
+                args.append(target)
+            exec_shell(args)
+
+        if not all(chip_item in sdk_intercept_list for chip_item in self.chip):
+            # 不在白名单的芯片不检查
+            return
+
+        open_source_path = self.env.get('open_source_path')
+        if open_source_path:
+            sdk_source_release_path = os.path.join(root_path, open_source_path)
+            if os.path.exists(sdk_source_release_path):
+                with open(sdk_source_release_path, 'r', encoding='utf-8') as file:
+                    source_release = json.load(file)
+                    # 拷贝指定文件到sdk目录
+                    cp_src = [os.path.join(root_path, path) for path in source_release["sdk_copy"]["path"]]
+                    self.copy_srcs(cp_src)
+                    # 拷贝头文件（.h）到sdk目录
+                    cp_headers = [os.path.join(root_path, path) for path in source_release["closed_components"]["header"]]
+                    self.copy_headers(cp_headers)
+
+                    # 删除sdk_delete指定的文件
+                    self.delete_sub_paths(sdk_output_path, source_release["sdk_delete"]["path"])
+
+                    # sdk文件扫描
+                    self.check_sdk_files(sdk_output_path, source_release)
+
     def is_close_component(self, path):
         for f in sdk_close_components:
             tmp = f.replace(root_path,  self.sdk_root_path)
             if path.startswith(tmp):
                 return True
         return False
+
+    def check_sdk_files(self, sdk_path, sdk_config):
+        """
+        检查SDK拦截路径中的文件是否在放行列表中
+
+        Args:
+            sdk_config (dict): SDK配置信息, 包含intercept_path, intercept_type, open_files等
+        """
+
+        # 获取配置信息
+        intercept_paths = sdk_config["sdk_intercept"]["intercept_path"]
+        intercept_types = sdk_config["sdk_intercept"]["intercept_type"]
+        open_files = [os.path.join(sdk_path, file_path) for file_path in sdk_config["sdk_intercept"]["open_files"]]
+
+        # 存储未放行的文件
+        unallowed_files = []
+        # 遍历所有拦截路径
+        for path in intercept_paths:
+            check_path = os.path.join(sdk_path, path)
+            # 检查路径是否存在
+            if not os.path.exists(check_path):
+                print(f"Warning: sdk拦截路径不存在 - {check_path}")
+                continue
+
+            # 遍历路径下的所有文件
+            for root, dirs, files in os.walk(check_path):
+                for file in files:
+                    # 检查文件扩展名是否匹配拦截类型
+                    if any(file.endswith(ext) for ext in intercept_types):
+                        # 构造完整文件路径
+                        full_path = os.path.join(root, file)
+
+                        # 检查文件是否在放行列表中
+                        if full_path not in open_files:
+                            unallowed_files.append(full_path)
+
+        # 如果存在未放行的文件，打印并报错
+        if unallowed_files:
+            print("Error: 发现未放行的拦截文件")
+            for file in unallowed_files:
+                print(f"  {file}")
+            exit(-1)
 
     def sdk_makefile_build(self, nhso, build_level):
         with open(os.path.join(self.sdk_root_path, 'make.cmd'), 'r') as fp:
@@ -305,3 +410,92 @@ class SdkGenerator:
                 sys.exit(1)
             os.chdir(org_pwd)
             idx = idx + 1
+
+    def delete_sub_paths(self, base_path, sub_paths):
+        for sub in sub_paths:
+            full = os.path.join(base_path, sub)
+            if os.path.exists(full):
+                print(f"Rm SDK: {full}")
+                if os.path.isfile(full):
+                    os.remove(full)
+                elif os.path.isdir(full):
+                    try:
+                        shutil.rmtree(full)
+                    except Exception as e:
+                        print(f"Failed rm SDK: {full}, Error: {e}")
+            else:
+                print(f"Rm path not found, skipped: {full}")
+
+    def check_sdk_components(self, sdk_target_env):
+        """
+        检查ram_component中的组件是否都在其他列表中
+
+        Args:
+            sdk_target_env (dict): SDK目标target
+            source_release (dict): 源发布配置
+
+        Returns:
+            bool: 检查是否通过
+        """
+        if not all(chip_item in sdk_intercept_list for chip_item in self.chip):
+            # 不在白名单的芯片不检查
+            return
+
+        open_source_path = self.env.get('open_source_path')
+        if open_source_path:
+            sdk_source_release_path = os.path.join(root_path, open_source_path)
+            if os.path.exists(sdk_source_release_path):
+                source_release = {}
+                with open(sdk_source_release_path, 'r', encoding='utf-8') as file:
+                    source_release = json.load(file)
+                # 获取合并后的ram_component内容
+                ram_components_str = sdk_target_env.get('ram_component')
+
+                if not ram_components_str:
+                    return False
+
+                ram_components = [comp.strip() for comp in ram_components_str.split(';') if comp.strip()]
+
+                # 获取所有开放组件列表
+                open_components = source_release["open_components"]["components"]
+                closed_components = source_release["closed_components"]["components"]
+
+                # 转换为集合并求交集
+                open_set = set(open_components)
+                closed_set = set(closed_components)
+                intersection = open_set & closed_set
+
+                # 检查是否存在交集
+                if intersection:
+                    # 存在交集，报错并打印交集内容
+                    print("Error: 开闭源组件存在重复定义")
+                    for comp in intersection:
+                        print(f"\"{comp}\",")
+                    exit(-1)
+
+                sdk_target_env.append("closed_components", ";".join(str(component) for component in closed_components))
+                self.env.append("closed_components", ";".join(str(component) for component in closed_components))
+
+                # 合并所有组件列表
+                all_components = set(open_components + closed_components)
+
+                # 检查每个ram组件是否存在于所有组件中
+                missing_components = []
+                for component in ram_components:
+                    if component not in all_components:
+                        missing_components.append(component)
+
+                # 如果有缺失的组件，打印错误并退出
+                if missing_components:
+                    print(f"Error: {sdk_target_env.config['target_command']} 以下组件未在开源发布文件指定")
+                    print(f"SDK开源发布文件:{sdk_source_release_path}")
+                    for comp in missing_components:
+                        print(f"\"{comp}\",")
+                    exit(-1)
+                return True
+            else:
+                print("Warning: open_source_path路径不存在")
+                exit(-1)
+        else:
+            print("Warning: 请指定sdk构建使用的open_source_path路径")
+            exit(-1)

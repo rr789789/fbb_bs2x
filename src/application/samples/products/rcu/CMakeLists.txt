@@ -117,7 +117,6 @@ endif()
 if(DEFINED CONFIG_SAMPLE_SUPPORT_BLE_CLIENT)
 list(APPEND SOURCES_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/dongle/ble_rcu_dongle/ble_rcu_client.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/dongle/ble_rcu_dongle/ble_rcu_until.c
 )
 list(APPEND HEADER_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/dongle/ble_rcu_dongle

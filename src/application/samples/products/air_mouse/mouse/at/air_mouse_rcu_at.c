@@ -27,6 +27,12 @@ static at_ret_t slp_at_rcu_sleep_req(void)
     return AT_RET_OK;
 }
 
+ static at_ret_t slp_at_wakeup_req(void)
+{
+    wakeup_callback(1);
+    return AT_RET_OK;
+}
+
 // 断链且不清除配对记录
 static at_ret_t slp_at_rcu_disconnect_req(void)
 {
@@ -62,6 +68,16 @@ static at_cmd_entry_t g_slp_server_at_table[] = {
         NULL,
         NULL,
     },
+    {
+        "SLPWAKEUP",
+        1, // ID
+        0, // Attribute
+        NULL,
+        slp_at_wakeup_req,
+        NULL,
+        NULL,
+        NULL,
+ 	},
     {
         "SLPAMDISCONNECT",
         1, // ID

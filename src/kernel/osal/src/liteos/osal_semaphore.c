@@ -12,6 +12,9 @@
 #include "osal_errno.h"
 #include "osal_inner.h"
 
+// 非法 sem id, 赋一个异常的ID给上层，防止把0号信号量误释放
+#define LOS_SEM_MAX_INDEX           (KERNEL_SEM_LIMIT + 1)
+
 int osal_sem_init(osal_semaphore *sem, int val)
 {
 #ifdef LOSCFG_SEMAPHORE_DEBUG
@@ -23,6 +26,7 @@ int osal_sem_init(osal_semaphore *sem, int val)
     }
     unsigned int ret = LOS_SemCreate(val, (unsigned int *)&(sem->sem)); /* semid may be zero */
     if (ret != LOS_OK) {
+        sem->sem = (void *)((uintptr_t)LOS_SEM_MAX_INDEX);
         osal_log("LOS_SemCreate failed! ret = %#x.\n", ret);
     }
     return (int)ret;
@@ -39,6 +43,7 @@ int osal_sem_binary_sem_init(osal_semaphore *sem, int val)
     }
     unsigned int ret = LOS_BinarySemCreate(val, (unsigned int *)&(sem->sem));
     if (ret != OSAL_SUCCESS) {
+        sem->sem = (void*)((uintptr_t)LOS_SEM_MAX_INDEX);
         osal_log("LOS_BinarySemCreate failed! ret = %#x.\n", ret);
     }
     return (int)ret;
@@ -49,7 +54,7 @@ void osal_sem_destroy(osal_semaphore *sem)
 #ifdef LOSCFG_SEMAPHORE_DEBUG
     osal_log("osal_sem_destroy caller is:0x%x\r\n", (unsigned int)__builtin_return_address(0));
 #endif
-    if (sem == NULL) {
+    if (sem == NULL || (uintptr_t)(sem->sem) >= LOS_SEM_MAX_INDEX) {
         osal_log("parameter invalid!\n");
         return;
     }

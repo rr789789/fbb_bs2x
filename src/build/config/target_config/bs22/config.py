@@ -63,6 +63,34 @@ target = {
         'sector_cfg': 'bs22-standard',
         'nv_cfg': 'bs22_nv_default',
     },
+    'bs22-turnkey-mouse': {
+        'base_target_name': 'standard-bs22-n1200',
+        'defines': ['-:TEST_SUITE', '-:AT_COMMAND', 'SW_UART_DEBUG', '-:NFC_TASK_EXIST', '-:SUPPORT_MULTI_LIBS',
+                    'SUPPORT_SLE_BLE_PERIPHERAL', '-:ITCM_MAX_WATERLINE=0x51F50'
+        ],
+        'ram_component': ['-:nfc_controller', '-:cal_dis', '-:std_rom_lds_porting', 'turnkey_mouse_lds_porting'],
+        'ram_component_set' : ['-:can', 'pwm'],
+        'liteos_kconfig': 'bs22',
+        'upg_pkg': ['application'],
+        'loaderboot_cfg': 'loaderboot-bs22-n1200',
+        'flashboot_cfg': 'flashboot-bs22-n1200-usb-with-ota',
+        'sector_cfg': 'bs22-turnkey-mouse',
+        'nv_cfg': 'bs22_nv_turnkey_mouse',
+    },
+    'bs22-turnkey-dongle': {
+        'base_target_name': 'standard-bs22-n1200',
+        'defines': ['-:TEST_SUITE', '-:AT_COMMAND', 'SW_UART_DEBUG', '-:NFC_TASK_EXIST', '-:SUPPORT_MULTI_LIBS',
+                    '-:ITCM_MAX_WATERLINE=0x4FCF0'
+        ],
+        'ram_component': ['-:nfc_controller', '-:cal_dis', '-:ir'],
+        'ram_component_set' : ['-:can', '-:pwm'],
+        'liteos_kconfig': 'bs22',
+        'upg_pkg': ['application'],
+        'loaderboot_cfg': 'loaderboot-bs22-n1200',
+        'flashboot_cfg': 'flashboot-bs22-n1200-usb-with-ota',
+        'sector_cfg': 'bs22-turnkey-dongle',
+        'nv_cfg': 'bs22_nv_turnkey_dongle',
+    },
 }
 
 # custom copy rules, put it in target_group below and it takes effect.

@@ -187,6 +187,14 @@
             "structure_type": "slp_air_mouse_gyro_zero_offset_type_t",
             "attributions": 1,
             "value": [ 0, 0, 0 ]
+        },
+
+        "slp_dongle_three_ant_cali_info_type_t":{
+            "key_id": "0x13",
+            "key_status": "alive",
+            "structure_type": "slp_dongle_three_ant_cali_info_type_t",
+            "attributions": 1,
+            "value": [18761, 18761, 0, 0, 0, 0, 0, 0, 10000000, 0, 0, 0, 0, 0, 0, 0, 10000000, 0]
         }
     }
 }

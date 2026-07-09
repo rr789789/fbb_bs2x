@@ -21,8 +21,18 @@ config SUPPORT_LOG_THREAD
     prompt "CREATE LOG MAIN THREAD."
     default y
 
+config SUPPORT_LOG_CUSTOM_OUTPUT
+    bool
+    prompt "LOG CUSTOM OUTPUT."
+    default n
+
+config FLASHBOOT_INFO_TO_APP
+    bool
+    prompt "Enable Flashboot send info to Application."
+    default n
+
 config BS2X_USER_PRODUCT_ID
     hex
-    prompt "BS2X user product ID. The value 0 is invalid and will not be verified. "
+    prompt "BS2X user product ID. The value 0 is invalid and will not be verified."
     range 0 0xFFFFFF
     default 0

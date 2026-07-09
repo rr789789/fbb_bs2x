@@ -28,7 +28,7 @@ target_template = {
                     'USE_CMSIS_OS', 'LIBCMD', 'LITEOS_ONETRACK', 'LIBCONNECTIVITY', 'LOSCFG_FS_FAT_CACHE', 'DUMP_MEM_SUPPORT',
                     "CONFIG_NV_SUPPORT_SINGLE_CORE_SYSTEM", 'CONFIG_NV_FEATURE_SUPPORT', 'FLASH_SECBOOT_SIZE=0x1000',
                     'LIBUTIL_COMPAT', "LITEOS_208", "BTH_LOG_BUG_FIX", 'OSALLOG_DISABLE', 'SUPPORT_DIAG_V2_PROTOCOL', 'SUPPORT_CPU_TRACE_PRINT',
-                    'SUPPORT_HEAP_PRINT', 'ITCM_MAX_WATERLINE=0x4E030',],
+                    'SUPPORT_HEAP_PRINT', 'ITCM_MAX_WATERLINE=0x4E030', 'CONFIG_LOG_USE_OPTIMIZE_V2'],
         'defines_set': ['libsec_defines', 'chip_defines', 'version_defines'],
         'ram_component': ['main_init_porting', 'arch_port', 'pmu_porting', 'libboundscheck', 'non_os', 'board_config', 'ulp_aon', 'osal',
                           'clocks_porting', 'error_code', 'hal_mips', 'mem_config_porting',

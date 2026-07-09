@@ -124,3 +124,9 @@ config SPI_SUPPORT_DELAY_FOR_WRITEREAD
     prompt "SPI support delay between write and read."
     default n
     depends on DRIVER_SUPPORT_SPI
+
+config SPI_SUPPORT_TRANSFER_IN_DMA_ISR
+    bool
+    prompt "SPI UART Support transmit and receive in dma isr."
+    default n
+    depends on DRIVER_SUPPORT_SPI

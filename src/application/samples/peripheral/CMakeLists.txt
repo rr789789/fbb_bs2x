@@ -22,6 +22,10 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_TCXO)
     add_subdirectory_if_exist(tcxo)
 endif()
 
+if(DEFINED CONFIG_SAMPLE_SUPPORT_CMP)
+    add_subdirectory_if_exist(cmp)
+endif()
+
 if(DEFINED CONFIG_SAMPLE_SUPPORT_DMA)
     add_subdirectory_if_exist(dma)
 endif()

@@ -425,6 +425,87 @@ errcode_t sle_rf_reset(void);
  */
 errcode_t sle_factory_register_callbacks(sle_factory_callbacks_t *func);
 
+/**
+ * @if Eng
+ * @brief Enum of ble radio frequency rx start
+ * @else
+ * @brief 射频单音参数
+ * @endif
+ */
+typedef struct {
+    uint8_t rf_freq;            /*!< @if Eng tx frequency,Scope:0x00~0x4E,2402+x*2
+                                     @else   发送频率,范围:0x00~0x4E,2402+x*2 @endif */
+    uint8_t rf_mode;            /*!< @if Eng single tone mode,00:start,FF:stop
+                                     @else   单音模式,00:开启,FF:关闭 @endif */
+} sle_rf_single_tone_t;
+
+/**
+ * @if Eng
+ * @brief  set radio frequenct single tone mode.
+ * @par Description: set radio frequenct single tone mode.
+ * @param  [in]  param param.
+ * @retval ERRCODE_SUCC Success.
+ * @par Depends:
+ * @li sle_common.h
+ * @else
+ * @brief  设置射频单音模式。
+ * @par Description: 设置射频单音模式。
+ * @param  [in]  param 配置参数.
+ * @retval ERRCODE_SUCC 成功。
+ * @par 依赖：
+ * @li sle_common.h
+ * @endif
+ */
+errcode_t sle_factory_rf_set_single_tone(const sle_rf_single_tone_t* param);
+
+/**
+ * @if Eng
+ * @brief  Get CFO report value.
+ * @par Description:
+ * Retrieve the measured CFO value from the RF module, typically used for frequency calibration
+ * or synchronization tasks in wireless communication systems.
+ * @param  [out] cfo Pointer to store the CFO result (positive/negative indicates frequency drift direction).
+ * @retval ERRCODE_SUCC  Success, CFO value stored in `cfo`.
+ * @retval ERRCODE_INVAL Null pointer passed as `cfo`.
+ * @retval ERRCODE_SLE_STATUS_ERR  Failed to read CFO (invalid state).
+ * @par Depends:
+ * @li sle_common.h
+ * @else
+ * @brief  获取载波频偏（CFO）测量值。
+ * @par 描述：
+ * 从射频模块获取当前测量的载波频偏值，通常用于无线通信系统的频率校准或同步任务。
+ * @param  [out] cfo 指向存储CFO结果的指针（正负表示频偏方向）。
+ * @retval ERRCODE_SUCC  成功，CFO值已存入 `cfo`。
+ * @retval ERRCODE_INVAL 传入空指针 `cfo`。
+ * @retval ERRCODE_SLE_STATUS_ERR 读取CFO失败（硬件错误或状态无效）。
+ * @par 依赖：
+ * @li sle_common.h
+ * @endif
+ */
+errcode_t sle_factory_sync_get_cfo_rpt(int8_t* cfo);
+
+/**
+ * @if Eng
+ * @brief  Set CFO report RSSI threshold.
+ * @par Description:
+ * Configure the RSSI signal strength threshold for triggering CFO (Carrier Frequency Offset) reports.
+ * The system will only generate CFO reports when the received signal power exceeds this threshold.
+ * @param  [in] rssi_limit RSSI threshold value (unit: dBm).
+ * @retval ERRCODE_SUCC  Success, threshold updated.
+ * @par Depends:
+ * @li sle_common.h
+ * @else
+ * @brief  设置CFO报告的RSSI门限值。
+ * @par 描述：
+ * 配置触发载波频偏（CFO）报告所需的RSSI信号强度门限值。
+ * 系统仅在接收信号功率超过此门限时才会生成CFO报告。
+ * @param  [in] rssi_limit RSSI门限值（单位：dBm）。
+ * @retval ERRCODE_SUCC  成功，门限值已更新。
+ * @par 依赖：
+ * @li sle_common.h
+ * @endif
+ */
+errcode_t sle_factory_set_cfo_rpt_rssi_limit(const int8_t rssi_limit);
 
 #ifdef __cplusplus
 }

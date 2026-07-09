@@ -123,6 +123,10 @@ void show_reboot_info(void);
 #if defined(BUILD_APPLICATION_STANDARD)
 void print_system_boot_status(void);
 #endif
+#ifdef CONFIG_SUPPORT_USER_PRESERVE_DATA
+errcode_t get_user_preserve(uint8_t *buffer, size_t buffer_len, size_t offset);
+errcode_t set_user_preserve(uint8_t *buffer, size_t buffer_len, size_t offset);
+#endif
 /**
  * @}
  */

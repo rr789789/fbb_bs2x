@@ -35,3 +35,21 @@ config SIO_USING_V151
     bool
     prompt "SIO Using V151"
     default n
+
+config I2S_OUTER_CLK_IN
+    bool
+    prompt "I2S use outer mclk."
+    default n
+    depends on SIO_USING_V151
+
+config I2S_MCLK_PIN
+    int
+    prompt "Choose I2S MCLK pin."
+    depends on I2S_OUTER_CLK_IN
+    default 12
+
+config I2S_MCLK_PIN_MODE
+    int
+    prompt "Choose MCLK WS pin mode."
+    depends on I2S_OUTER_CLK_IN
+    default 39

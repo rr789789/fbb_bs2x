@@ -38,7 +38,9 @@ endif()
 if(${CHIP_FAMILY} MATCHES "bs2x")
     set(PUBLIC_DEFINES
         CHIP_BS2X=1
-        CHIP_BS2X_VERSION="${CHIP} 1.0.18"
+        CHIP_BS2X_VERSION="${CHIP} 1.0.19"
+        FLASHBOOT_VERSION=0x26031019  # yymmvvvv
+        FLASHBOOT_VER_STR="${CHIP} 1.0.19"
     )
 else()
     set(PUBLIC_DEFINES
@@ -241,6 +243,52 @@ set(PRIVATE_HEADER
 )
 
 set(PRIVATE_DEFINES
+)
+
+set(PUBLIC_DEFINES
+)
+
+# use this when you want to add ccflags like -include xxx
+set(COMPONENT_PUBLIC_CCFLAGS
+)
+
+set(COMPONENT_CCFLAGS
+)
+
+set(WHOLE_LINK
+    true
+)
+
+set(MAIN_COMPONENT
+    false
+)
+
+build_component()
+
+set(COMPONENT_NAME "sec_efuse")
+
+set(SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/sec_efuse/sec_efuse.c
+)
+
+set(PUBLIC_HEADER
+    ${ROOT_DIR}/bootloader/commonboot/include
+    ${ROOT_DIR}/middleware/utils/algorithm/sha256
+    ${CMAKE_CURRENT_SOURCE_DIR}/boot/boot_config
+
+)
+
+if(NOT DEFINED CONFIG_BOOT_SUPPORT_SECURE_VERIFY_V2)
+    list(APPEND PUBLIC_HEADER "${ROOT_DIR}/bootloader/commonboot/include/secure_verify_boot_v1")
+else()
+    list(APPEND PUBLIC_HEADER "${ROOT_DIR}/bootloader/commonboot/include/secure_verify_boot_v2")
+endif()
+
+set(PRIVATE_HEADER
+)
+
+set(PRIVATE_DEFINES
+    -DCONFIG_BOOT_SUPPORT_RSA3072_VERIFY
 )
 
 set(PUBLIC_DEFINES

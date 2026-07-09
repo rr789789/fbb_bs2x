@@ -180,6 +180,7 @@ class CMakeBuilder(BuildEnvironment):
         for sdk_target in sdk_pkg_target_name:
             sdk_target_env = TargetEnvironment(sdk_target, self.extr_defines, self.extr_ccflags)
             output_path = sdk_target_env.get_output_path()
+            self.sdk.check_sdk_components(sdk_target_env)
             self.compile_target(sdk_target, sdk_target_env)
             self.sdk.copy_depends('%s/cmake_trace.txt' % output_path)
             if self.sdk.env.get('reload_kconfig'):

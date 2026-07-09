@@ -9,7 +9,11 @@
 
 #include "hal_dma_mem.h"
 #include "common_def.h"
+#ifdef BUILD_NOOSAL
+#include "irmalloc.h"
+#else
 #include "memory/osal_addr.h"
+#endif
 
 #ifdef CONFIG_DMA_LLI_NODE_FIX_MEM
 STATIC void *g_hal_dma_lli_node = NULL;
@@ -34,7 +38,11 @@ errcode_t hal_dma_mem_init(uint32_t node_size)
 {
 #ifdef CONFIG_DMA_LLI_NODE_FIX_MEM
     if (g_hal_dma_lli_node == NULL) {
+#ifdef BUILD_NOOSAL
+        g_hal_dma_lli_node = irmalloc(node_size * DMA_CHANNEL_MAX_NUM * g_hal_dma_lli_node_maxnum);
+#else
         g_hal_dma_lli_node = osal_kmalloc(node_size * DMA_CHANNEL_MAX_NUM * g_hal_dma_lli_node_maxnum, 0);
+#endif
         if (g_hal_dma_lli_node == NULL) {
             return ERRCODE_MALLOC;
         }
@@ -52,7 +60,11 @@ void hal_dma_mem_deinit(void)
 {
 #ifdef CONFIG_DMA_LLI_NODE_FIX_MEM
     if (g_hal_dma_lli_node != NULL) {
+#ifdef BUILD_NOOSAL
+        irfree(g_hal_dma_lli_node);
+#else
         osal_kfree(g_hal_dma_lli_node);
+#endif
         g_hal_dma_lli_node = NULL;
     }
 #endif
@@ -75,7 +87,11 @@ void *hal_dma_mem_alloc(dma_channel_t ch, uint32_t node_size)
         ((uint8_t)ch * g_hal_dma_lli_node_maxnum + g_hal_dma_lli_index[ch] - 1) * node_size;
 #else
     unused(ch);
+#ifdef BUILD_NOOSAL
+    return irmalloc(node_size);
+#else
     return osal_kmalloc(node_size, 0);
+#endif
 #endif
 }
 
@@ -93,6 +109,10 @@ void hal_dma_mem_free(dma_channel_t ch, void *addr)
     unused(addr);
 #else
     unused(ch);
+#ifdef BUILD_NOOSAL
+    return irfree(addr);
+#else
     return osal_kfree(addr);
+#endif
 #endif
 }

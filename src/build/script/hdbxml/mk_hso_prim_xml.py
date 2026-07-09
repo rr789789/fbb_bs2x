@@ -44,7 +44,7 @@ g_log_entry = [
     r"acore_log[0-4](\s*)\(",
     r"[printlog]{3,5}_alter(\s*)\(",
     r"[PRINTLOG]{3,5}_ALTER(\s*)\(",
-    r"_LOG[0-4]{1,2}(\s*)\(",
+    r"_LOG[0-9]{1,2}(\s*)\(",
     r"(DBG|INFO|ERR|WARN)_LOG(\s*)\(",
     # BTH
     r"(dbg|info|err|warn)_log(\s*)\(",

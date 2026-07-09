@@ -27,8 +27,15 @@ typedef struct spi_dma_trans_inf {
 #endif  /* NOT CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH */
     uint8_t channel;
     uint8_t reserved;
+#if !defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
     osal_semaphore dma_sem;
+#endif  /* NOT CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 } spi_dma_trans_inf_t;
+
+#if defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
+static spi_dma_rx_callback_t g_spi_dma_rx_callback[SPI_BUS_MAX_NUM] = { 0 };
+static spi_dma_tx_callback_t g_spi_dma_tx_callback[SPI_BUS_MAX_NUM] = { 0 };
+#endif /* NOT CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 
 static spi_dma_trans_inf_t g_dma_trans_tx[SPI_BUS_MAX_NUM] = { 0 };
 static spi_dma_trans_inf_t g_dma_trans_rx[SPI_BUS_MAX_NUM] = { 0 };
@@ -483,7 +490,7 @@ errcode_t uapi_spi_init(spi_bus_t bus, spi_attr_t *attr, spi_extra_attr_t *extra
     spi_port_clock_enable(bus, true);
 #endif
 
-#if defined(CONFIG_SPI_SUPPORT_DMA) && (CONFIG_SPI_SUPPORT_DMA == 1)
+#if defined(CONFIG_SPI_SUPPORT_DMA) && (!CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
     (void)osal_sem_init(&(g_dma_trans_tx[bus].dma_sem), 0);
     (void)osal_sem_init(&(g_dma_trans_rx[bus].dma_sem), 0);
 #endif  /* CONFIG_SPI_SUPPORT_DMA */
@@ -516,7 +523,7 @@ errcode_t uapi_spi_deinit(spi_bus_t bus)
 
     errcode_t ret = hal_spi_deinit(bus);
 
-#if defined(CONFIG_SPI_SUPPORT_DMA) && (CONFIG_SPI_SUPPORT_DMA == 1)
+#if defined(CONFIG_SPI_SUPPORT_DMA) && (!CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
     osal_sem_destroy(&(g_dma_trans_tx[bus].dma_sem));
     osal_sem_destroy(&(g_dma_trans_rx[bus].dma_sem));
 #endif  /* CONFIG_SPI_SUPPORT_DMA */
@@ -555,6 +562,10 @@ errcode_t uapi_spi_set_dma_mode(spi_bus_t bus, bool en, const spi_dma_config_t *
     if (en) {
         data.dma_tx_level = spi_port_tx_data_level_get(bus);
         data.dma_rx_level = spi_port_rx_data_level_get(bus);
+#if defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
+        g_spi_dma_rx_callback[bus] = dma_cfg->rx_callback;
+        g_spi_dma_tx_callback[bus] = dma_cfg->tx_callback;
+#endif  /* CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 #if !defined(CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH)
         if (dma_cfg != NULL) {
             g_dma_cfg[bus].src_width = dma_cfg->src_width;
@@ -568,6 +579,10 @@ errcode_t uapi_spi_set_dma_mode(spi_bus_t bus, bool en, const spi_dma_config_t *
     } else {
         data.dma_tx_level = 0;
         data.dma_rx_level = 0;
+#if defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
+        g_spi_dma_rx_callback[bus] = NULL;
+        g_spi_dma_tx_callback[bus] = NULL;
+#endif  /* CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
     }
 
     data.is_enable = en;
@@ -598,7 +613,20 @@ static void spi_dma_isr(uint8_t int_type, uint8_t ch, uintptr_t arg)
         if (int_type == 0) {
             dma_trans[bus].trans_succ = true;
         }
+#if defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
+        if ((uint32_t)arg == 0) {
+            if (g_spi_dma_tx_callback[bus] != NULL) {
+                g_spi_dma_tx_callback[bus](ch);
+            }
+        } else {
+            if (g_spi_dma_rx_callback[bus] != NULL) {
+                g_spi_dma_rx_callback[bus](ch);
+            }
+        }
+#endif  /* CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
+#if defined(CONFIG_SPI_SUPPORT_DMA) && (!CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
         osal_sem_up(&(dma_trans[bus].dma_sem));
+#endif  /* CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
     }
 }
 
@@ -645,6 +673,14 @@ static void spi_dma_common_config(dma_ch_user_peripheral_config_t *transfer_conf
     transfer_config->burst_length = dma_cfg->burst_length;
     transfer_config->priority = dma_cfg->priority;
 }
+#else
+static void spi_dma_common_config(dma_ch_user_peripheral_config_t *transfer_config, const spi_xfer_data_t *data)
+{
+    transfer_config->src_width = spi_dma_get_mem_width(transfer_config->src, data->tx_bytes);
+    transfer_config->transfer_num = (uint16_t)data->tx_bytes >> transfer_config->src_width;
+    transfer_config->burst_length = HAL_DMA_BURST_TRANSACTION_LENGTH_1;
+    transfer_config->priority = HAL_DMA_CH_PRIORITY_0;
+}
 #endif  /* NOT CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH */
 
 static void spi_dma_tx_config(dma_ch_user_peripheral_config_t *transfer_config, spi_bus_t bus)
@@ -666,6 +702,7 @@ static void spi_dma_tx_config(dma_ch_user_peripheral_config_t *transfer_config, 
 
 static errcode_t spi_write_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32_t timeout)
 {
+    unused(timeout);
     uint32_t arg = 0;
     dma_ch_user_peripheral_config_t transfer_config = { 0 };
     uint8_t channel = DMA_CHANNEL_NONE;
@@ -674,10 +711,7 @@ static errcode_t spi_write_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint3
     }
     transfer_config.src = (uint32_t)(uintptr_t)data->tx_buff;
 #if defined(CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH) && (CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH == 1)
-    transfer_config.src_width = spi_dma_get_mem_width(transfer_config.src, data->tx_bytes);
-    transfer_config.transfer_num = (uint16_t)data->tx_bytes >> transfer_config.src_width;
-    transfer_config.burst_length = HAL_DMA_BURST_TRANSACTION_LENGTH_1;
-    transfer_config.priority = HAL_DMA_CH_PRIORITY_0;
+    spi_dma_common_config(&transfer_config, data);
 #else
     if (data->tx_bytes % bit(g_dma_cfg[bus].src_width) == 0) {
         transfer_config.transfer_num = (uint16_t)data->tx_bytes >> g_dma_cfg[bus].src_width;
@@ -709,6 +743,7 @@ static errcode_t spi_write_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint3
         return ERRCODE_SPI_DMA_CONFIG_ERROR;
     }
 
+#if !defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
     if (osal_sem_down_timeout(&(g_dma_trans_tx[bus].dma_sem), timeout) != OSAL_SUCCESS) {
         uapi_dma_end_transfer(channel);
         g_dma_trans_tx[bus].channel = 0;
@@ -721,6 +756,7 @@ static errcode_t spi_write_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint3
     if (!g_dma_trans_tx[bus].trans_succ) {
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
     }
+#endif  /* NOT CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 
     return ERRCODE_SUCC;
 }
@@ -744,6 +780,7 @@ static void spi_dma_rx_config(dma_ch_user_peripheral_config_t *transfer_config, 
 
 static errcode_t spi_read_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32_t timeout)
 {
+    unused(timeout);
     uint32_t arg = 1;
     dma_ch_user_peripheral_config_t transfer_config = { 0 };
     uint8_t channel = DMA_CHANNEL_NONE;
@@ -785,6 +822,7 @@ static errcode_t spi_read_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32
         return ERRCODE_SPI_DMA_CONFIG_ERROR;
     }
 
+#if !defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
     if (osal_sem_down_timeout(&(g_dma_trans_rx[bus].dma_sem), timeout) != OSAL_SUCCESS) {
         uapi_dma_end_transfer(channel);
         g_dma_trans_rx[bus].channel = 0;
@@ -797,6 +835,7 @@ static errcode_t spi_read_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32
     if (!g_dma_trans_rx[bus].trans_succ) {
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
     }
+#endif  /* NOT CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 
     return ERRCODE_SUCC;
 }
@@ -885,6 +924,7 @@ static errcode_t spi_write_dma_config(spi_bus_t bus, uint8_t *ch, const spi_xfer
     return ERRCODE_SUCC;
 }
 
+#if !defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
 static void spi_writeread_dma_clear_trans(spi_bus_t bus, uint8_t channel_tx, uint8_t channel_rx)
 {
     g_dma_trans_tx[bus].channel = 0;
@@ -892,9 +932,11 @@ static void spi_writeread_dma_clear_trans(spi_bus_t bus, uint8_t channel_tx, uin
     uapi_dma_end_transfer(channel_rx);
     uapi_dma_end_transfer(channel_tx);
 }
+#endif  /* NOT CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 
 static errcode_t spi_writeread_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32_t timeout)
 {
+    unused(timeout);
     uint8_t channel_rx;
     uint8_t channel_tx;
 
@@ -922,6 +964,7 @@ static errcode_t spi_writeread_dma(spi_bus_t bus, const spi_xfer_data_t *data, u
         return ERRCODE_SPI_DMA_CONFIG_ERROR;
     }
 
+#if !defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
     if (osal_sem_down_timeout(&(g_dma_trans_tx[bus].dma_sem), timeout) != OSAL_SUCCESS) {
         spi_writeread_dma_clear_trans(bus, channel_tx, channel_rx);
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
@@ -937,6 +980,7 @@ static errcode_t spi_writeread_dma(spi_bus_t bus, const spi_xfer_data_t *data, u
     if ((!g_dma_trans_tx[bus].trans_succ) || (!g_dma_trans_rx[bus].trans_succ)) {
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
     }
+#endif  /* NOT CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 
     return ERRCODE_SUCC;
 }

@@ -19,6 +19,8 @@ _start:
         j Reset_Handler
 
 Reset_Handler:
+        mv t4, a0  /* Use in main, do not change */
+        mv t5, a1  /* Use in main, do not change */
         la t0, TrapVector
         csrw    mtvec, t0
         csrwi   mstatus, 0
@@ -37,6 +39,31 @@ Reset_Handler:
         /* initialize global pointer */
         la      gp, _gp_
         .option pop
+
+#ifdef CONFIG_FLASHBOOT_INFO_TO_APP
+        bgeui a1, 25, end_trans
+
+        lui a5, 0x20000
+        bltu a0, a5, end_trans
+
+        sub a5, a0, a5
+        lui a4, 0x10
+        sub a4, a4, a1
+        bltu a4, a5, end_trans
+
+        la t3, g_intheap_begin
+
+flashboot_info_trans:
+        lw     t0, (t4)
+        sw     t0, (t3)
+        addi   t4, t4, 4
+        addi   t3, t3, 4
+        addi   t5, t5, -4               /* Decrease the number of bytes to do by a quad octet */
+        blt    x0, t5, flashboot_info_trans   /* Keep going until it is all done */
+        la     s10, g_intheap_begin
+
+end_trans:
+#endif
 
         # initialize stack pointer
         la sp, __stack_top__
@@ -162,5 +189,8 @@ end_clear_bss_loop:
         li      t0, 0x00006000
         csrs    mstatus, t0
         fssr    x0
+#ifdef CONFIG_FLASHBOOT_INFO_TO_APP
+        mv a0, s10
+#endif
         la t0, main
         jr t0
