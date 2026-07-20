@@ -216,7 +216,7 @@ static void sle_uart_client_sample_exchange_info_cbk(uint8_t client_id, uint16_t
     osal_printk("%s exchange mtu, mtu size: %d, version: %d.\r\n", SLE_UART_CLIENT_LOG,
                 param->mtu_size, param->version);
     ssapc_find_structure_param_t find_param = { 0 };
-    find_param.type = SSAP_FIND_TYPE_PROPERTY;
+    find_param.type = SSAP_FIND_TYPE_PRIMARY_SERVICE;
     find_param.start_hdl = 1;
     find_param.end_hdl = 0xFFFF;
     ssapc_find_structure(0, conn_id, &find_param);
@@ -232,6 +232,11 @@ static void sle_uart_client_sample_find_structure_cbk(uint8_t client_id, uint16_
                 service->start_hdl, service->end_hdl, service->uuid.len);
     g_sle_uart_find_service_result.start_hdl = service->start_hdl;
     g_sle_uart_find_service_result.end_hdl = service->end_hdl;
+    ssapc_find_structure_param_t find_param = {0}; 
+    find_param.type = SSAP_FIND_TYPE_PROPERTY; 
+    find_param.start_hdl = service->start_hdl; 
+    find_param.end_hdl = service->end_hdl; 
+     ssapc_find_structure(0, conn_id, &find_param);
     memcpy_s(&g_sle_uart_find_service_result.uuid, sizeof(sle_uuid_t), &service->uuid, sizeof(sle_uuid_t));
 }
 
