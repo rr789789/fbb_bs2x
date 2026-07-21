@@ -144,6 +144,8 @@ errcode_t uapi_pwm_open(uint8_t channel, const pwm_config_t *cfg)
 
     if (cfg->repeat) {
         g_hal_funcs->set_action(channel, PWM_ACTION_CONTINUE_SET);
+    } else {
+        g_hal_funcs->set_action(channel, PWM_ACTION_CONTINUE_CLR);
     }
     osal_irq_restore(id);
 
@@ -337,6 +339,10 @@ errcode_t uapi_pwm_clear_group(uint8_t group)
 
 errcode_t uapi_pwm_start_group(uint8_t group)
 {
+    if (unlikely(!g_pwm_inited)) {
+        return ERRCODE_PWM_NOT_INIT;
+    }
+
     errcode_t ret = uapi_pwm_group_check(group);
     if (ret != ERRCODE_SUCC) {
         return ret;
@@ -351,6 +357,10 @@ errcode_t uapi_pwm_start_group(uint8_t group)
 
 errcode_t uapi_pwm_stop_group(uint8_t group)
 {
+    if (unlikely(!g_pwm_inited)) {
+        return ERRCODE_PWM_NOT_INIT;
+    }
+
     errcode_t ret = uapi_pwm_group_check(group);
     if (ret != ERRCODE_SUCC) {
         return ret;

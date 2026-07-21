@@ -129,3 +129,9 @@ config GPIO_SUPPORT_MULTISYSTEM
     prompt "Using set/clr reg to control multi system gpio."
     default n
     depends on GPIO_USING_V150
+
+config GPIO_REDECE_IRQ_TIME
+    bool
+    prompt "GPIO support to reduce the time of irq handler."
+    default n
+    depends on GPIO_USING_V150

@@ -40,11 +40,11 @@ static bool g_i2s_inited = false;
 static hal_sio_config_t g_hal_config = {
     .drive_mode= (hal_sio_driver_mode_t)0,
     .transfer_mode = (hal_sio_transfer_mode_t)0,
-    .data_width = (hal_sio_data_width_t)0,
+    .data_depth = (hal_sio_data_depth_t)0,
     .channels_num = (hal_sio_channel_number_t)0,
     .timing = (hal_sio_timing_mode_t)0,
     .clk_edge = (hal_sio_clk_edge_t)0,
-    .div_number = 0,
+    .data_width = 0,
     .number_of_channels = 0,
 };
 
@@ -104,11 +104,11 @@ errcode_t uapi_i2s_set_config(sio_bus_t bus, const i2s_config_t *config)
     hal_sio_config_t hal_config = {
         .drive_mode= (hal_sio_driver_mode_t)config->drive_mode,
         .transfer_mode = (hal_sio_transfer_mode_t)config->transfer_mode,
-        .data_width = (hal_sio_data_width_t)config->data_width,
+        .data_depth = (hal_sio_data_depth_t)config->data_depth,
         .channels_num = (hal_sio_channel_number_t)config->channels_num,
         .timing = (hal_sio_timing_mode_t)config->timing,
         .clk_edge = (hal_sio_clk_edge_t)config->clk_edge,
-        .div_number = config->div_number,
+        .data_width = config->data_width,
         .number_of_channels = config->number_of_channels,
     };
     g_hal_funcs->set_config(bus, &hal_config);
@@ -128,11 +128,11 @@ errcode_t uapi_i2s_get_config(sio_bus_t bus, i2s_config_t *config)
 
     config->drive_mode = g_hal_config.drive_mode;
     config->transfer_mode = g_hal_config.transfer_mode;
-    config->data_width = g_hal_config.data_width;
+    config->data_depth = g_hal_config.data_depth;
     config->channels_num = g_hal_config.channels_num;
     config->timing = g_hal_config.timing;
     config->clk_edge = g_hal_config.clk_edge;
-    config->div_number = g_hal_config.div_number;
+    config->data_width = g_hal_config.data_width;
     config->number_of_channels = g_hal_config.number_of_channels;
 
     return ret;

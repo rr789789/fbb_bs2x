@@ -4,7 +4,7 @@
  *
  * Create:
  */
-#include "systick.h"
+#include "tcxo.h"
 #include "non_os.h"
 #include "common_def.h"
 #ifdef SUPPORT_DFX_PRESERVE
@@ -186,7 +186,7 @@ static void panic_set_desc(panic_id_t origin, uint32_t code, uint32_t caller)
     panic_desc_t panic_desc;
     panic_desc.origin = origin;
     panic_desc.code = code;
-    panic_desc.timestamp_ms = (uint32_t)uapi_systick_get_us();
+    panic_desc.timestamp_ms = (uint32_t)uapi_tcxo_get_us();
     panic_desc.caller = caller;
     set_last_panic(&panic_desc);
 }

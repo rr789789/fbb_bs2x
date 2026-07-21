@@ -77,7 +77,7 @@ static uint16_t sle_set_adv_data(uint8_t *adv_data)
 
     len = sizeof(struct sle_adv_common_value);
     struct sle_adv_common_value adv_disc_level = {
-        .length = len - 1,
+        .length = len - 2,
         .type = SLE_ADV_DATA_TYPE_DISCOVERY_LEVEL,
         .value = SLE_ANNOUNCE_LEVEL_NORMAL,
     };
@@ -90,7 +90,7 @@ static uint16_t sle_set_adv_data(uint8_t *adv_data)
 
     len = sizeof(struct sle_adv_common_value);
     struct sle_adv_common_value adv_access_mode = {
-        .length = len - 1,
+        .length = len - 2,
         .type = SLE_ADV_DATA_TYPE_ACCESS_MODE,
         .value = 0,
     };

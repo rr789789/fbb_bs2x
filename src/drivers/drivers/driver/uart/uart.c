@@ -1241,6 +1241,11 @@ STATIC void uart_idle_isr(uart_bus_t bus)
 
 STATIC void uart_rx_isr(uart_bus_t bus)
 {
+#if defined(CONFIG_UART_SUPPORT_RECV_RAW_DATA)
+    if (bus == uart_dma_recv_get_bus()) {
+        return;
+    }
+#endif  /* defined(CONFIG_UART_SUPPORT_RECV_RAW_DATA) */
     uint16_t uart_rx_isr_available;
     uint8_t uart_rx_isr_data = 0;
     bool rx_fifo_empty = false;

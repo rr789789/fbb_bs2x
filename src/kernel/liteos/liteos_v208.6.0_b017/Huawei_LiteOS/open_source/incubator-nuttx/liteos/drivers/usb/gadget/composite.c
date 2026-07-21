@@ -847,7 +847,8 @@ static int composite_setup(FAR struct usbdevclass_driver_s *driver,
               }
           }
           break;
-
+        case USB_REQ_SYNCHFRAME:
+          break;
 #endif
         default:
           usbtrace(TRACE_CLSERROR(USBCOMPOSITE_TRACEERR_UNSUPPORTEDSTDREQ),

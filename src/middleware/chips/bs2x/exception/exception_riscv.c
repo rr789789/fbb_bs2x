@@ -95,6 +95,10 @@
 #define SP_OFFSET               0x10
 #endif
 #define CONTEXT_OFFSET          (4 * 4 + 33 * 4 + 4)
+#ifdef WDT_INVOKE_USER_CALLBACK
+#define WDT_IRT_BIT                  0x2
+#define CHECK_CWDT_NMI_INT(status)  (((status) & WDT_IRT_BIT) == WDT_IRT_BIT)
+#endif
 
 #if defined(USE_CMSIS_OS) && defined(__LITEOS__)
 extern VOID OsExcInfoDisplay(uint32_t excType, const ExcContext *excBufAddr);
@@ -712,7 +716,7 @@ void do_hard_fault_handler(exc_context_t *exc_buf_addr)
         PRINT("Oops:NMI\n");
         PRINT("nmi raw interrupt is 0x%x"NEWLINE, non_os_get_nmi_raw_status());
 #ifdef WDT_INVOKE_USER_CALLBACK
-        if (watchdog_port_check_nmi_intr(non_os_get_nmi_raw_status()) == ERRCODE_SUCC) {
+        if (CHECK_CWDT_NMI_INT(non_os_get_nmi_raw_status()) == 1) {
             irq_wdt_handler();
         }
 #endif

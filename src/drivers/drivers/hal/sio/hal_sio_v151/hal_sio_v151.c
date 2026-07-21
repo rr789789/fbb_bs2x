@@ -103,10 +103,10 @@ static void hal_sio_v151_extend_receive_config(sio_bus_t bus, hal_sio_channel_nu
     hal_sio_v151_mode_set_chn_num(bus, channel);
 }
 
-static void hal_sio_v151_data_width_set(sio_bus_t bus, hal_sio_data_width_t data_width)
+static void hal_sio_v151_data_width_set(sio_bus_t bus, hal_sio_data_depth_t data_depth)
 {
-    hal_sio_v151_data_width_set_tx_mode(bus, data_width);
-    hal_sio_v151_data_width_set_rx_mode(bus, data_width);
+    hal_sio_v151_data_width_set_tx_mode(bus, data_depth);
+    hal_sio_v151_data_width_set_rx_mode(bus, data_depth);
 }
 
 void hal_sio_v151_master_mode_sel(sio_bus_t bus, bool enable)
@@ -146,7 +146,7 @@ void hal_i2s_set_bclk(sio_bus_t bus, uint8_t data_width, uint32_t ch)
     hal_sio_v151_i2s_crg_set_bclk_div_en(bus, 1);
 }
 
-void hal_sio_v151_i2s_drive_mode(sio_bus_t bus, uint8_t drive_mode, uint8_t data_width, uint8_t number_of_channels)
+static void hal_sio_v151_i2s_drive_mode(sio_bus_t bus, uint8_t drive_mode, uint8_t data_width, uint8_t number_of_channels)
 {
     hal_sio_v151_i2s_clk_sel(bus);
     if (drive_mode == 0) {
@@ -162,7 +162,7 @@ static void hal_i2s_config(sio_bus_t bus, hal_sio_mode_t mode)
 {
     hal_sio_v151_set_intmask(bus, SIO_LOOP_INTMASK);
     hal_sio_v151_mode_set_mode(bus, mode);
-    hal_sio_v151_i2s_drive_mode(bus, g_hal_sio_config[bus].drive_mode, g_hal_sio_config[bus].div_number,
+    hal_sio_v151_i2s_drive_mode(bus, g_hal_sio_config[bus].drive_mode, g_hal_sio_config[bus].data_width,
                                g_hal_sio_config[bus].number_of_channels);
     hal_sio_v151_mode_set_clk_edge(bus, 1);
 
@@ -170,7 +170,7 @@ static void hal_i2s_config(sio_bus_t bus, hal_sio_mode_t mode)
         hal_sio_v151_extend_receive_config(bus, g_hal_sio_config[bus].channels_num);
     }
 
-    hal_sio_v151_data_width_set(bus, g_hal_sio_config[bus].data_width);
+    hal_sio_v151_data_width_set(bus, g_hal_sio_config[bus].data_depth);
     hal_sio_v151_i2s_pos(bus);
     hal_sio_v151_ct_clr_set_rst_n(bus, 1);
     hal_sio_v151_ct_set_set_rst_n(bus, 1);

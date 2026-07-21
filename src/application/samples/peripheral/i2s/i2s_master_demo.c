@@ -13,7 +13,7 @@
 #include "soc_osal.h"
 #include "app_init.h"
 
-#define I2S_DIV_NUM                24
+#define I2S_DATA_WIDTH             24
 #define I2S_NUMBER_OF_CHANNELS     2
 #define TCXO_DELAY_MS              1000
 #define I2S_TASK_DURATION_MS       500
@@ -43,11 +43,11 @@ static void *i2s_master_task(const char *arg)
     i2s_config_t config = {
         .drive_mode= MASTER,
         .transfer_mode = STD_MODE,
-        .data_width = TWENTY_FOUR_BIT,
+        .data_depth = TWENTY_FOUR_BIT,
         .channels_num = TWO_CH,
         .timing = NONE_TIMING_MODE,
         .clk_edge = RISING_EDGE,
-        .div_number = I2S_DIV_NUM,
+        .data_width = I2S_DATA_WIDTH,
         .number_of_channels = I2S_NUMBER_OF_CHANNELS,
     };
     uint32_t i2s_first_data = 0x100000;

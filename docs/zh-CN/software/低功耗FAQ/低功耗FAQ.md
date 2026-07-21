@@ -63,25 +63,25 @@
 </th>
 </tr>
 </thead>
-<tbody><tr id="row530911260812"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p630913262816"><a name="p630913262816"></a><a name="p630913262816"></a><span id="ph1495913271286"><a name="ph1495913271286"></a><a name="ph1495913271286"></a>04</span></p>
+<tbody><tr id="row530911260812"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p630913262816"><a name="p630913262816"></a><a name="p630913262816"></a>04</p>
 </td>
-<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p10309226587"><a name="p10309226587"></a><a name="p10309226587"></a><span id="ph06137281087"><a name="ph06137281087"></a><a name="ph06137281087"></a>2025-03-26</span></p>
+<td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p10309226587"><a name="p10309226587"></a><a name="p10309226587"></a>2025-03-26</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p184161737186"><a name="p184161737186"></a><a name="p184161737186"></a>更新“<a href="IO无法唤醒系统.md">IO无法唤醒系统</a>”章节内容。</p>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p184161737186"><a name="p184161737186"></a><a name="p184161737186"></a>更新“<a href="#ZH-CN_TOPIC_0000001849335705">IO无法唤醒系统</a>”章节内容。</p>
 </td>
 </tr>
 <tr id="row126557395911"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p1365520385916"><a name="p1365520385916"></a><a name="p1365520385916"></a>03</p>
 </td>
 <td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p76551535599"><a name="p76551535599"></a><a name="p76551535599"></a>2024-08-29</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><a name="ul889722410137"></a><a name="ul889722410137"></a><ul id="ul889722410137"><li>更新“<a href="低功耗导致OTA升级异常.md">低功耗导致OTA升级异常</a>”章节内容。</li><li>新增“<a href="提前唤醒时间问题.md">提前唤醒时间问题</a>”章节内容。</li></ul>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><a name="ul889722410137"></a><a name="ul889722410137"></a><ul id="ul889722410137"><li>更新“<a href="#ZH-CN_TOPIC_0000001849215661">低功耗导致OTA升级异常</a>”章节内容。</li><li>新增“<a href="#ZH-CN_TOPIC_0000002007260232">提前唤醒时间问题</a>”章节内容。</li></ul>
 </td>
 </tr>
 <tr id="row11834117715"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p283413117713"><a name="p283413117713"></a><a name="p283413117713"></a>02</p>
 </td>
 <td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p2834811178"><a name="p2834811178"></a><a name="p2834811178"></a>2024-07-04</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><a name="ul12916110673"></a><a name="ul12916110673"></a><ul id="ul12916110673"><li>更新“<a href="系统无法睡眠.md">系统无法睡眠</a>”章节内容。</li><li>更新“<a href="IO无法唤醒系统.md">IO无法唤醒系统</a>”章节内容。</li></ul>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><a name="ul12916110673"></a><a name="ul12916110673"></a><ul id="ul12916110673"><li>更新“<a href="#ZH-CN_TOPIC_0000001800548732">系统无法睡眠</a>”章节内容。</li><li>更新“<a href="#ZH-CN_TOPIC_0000001849335705">IO无法唤醒系统</a>”章节内容。</li></ul>
 </td>
 </tr>
 <tr id="row62911234133915"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
@@ -89,14 +89,14 @@
 <td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p184131311111"><a name="p184131311111"></a><a name="p184131311111"></a>2024-05-24</p>
 </td>
 <td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p169114261115"><a name="p169114261115"></a><a name="p169114261115"></a>第一次正式版本发布。</p>
-<a name="ul4732433579"></a><a name="ul4732433579"></a><ul id="ul4732433579"><li>更新“<a href="功耗比预期高.md">功耗比预期高</a>”章节内容。</li><li>新增“<a href="供电模式-软件配置.md">供电模式&amp;软件配置</a>”章节内容。</li></ul>
+<a name="ul4732433579"></a><a name="ul4732433579"></a><ul id="ul4732433579"><li>更新“<a href="#ZH-CN_TOPIC_0000001802496858">功耗比预期高</a>”章节内容。</li><li>新增“<a href="#ZH-CN_TOPIC_0000001891763188">供电模式&软件配置</a>”章节内容。</li></ul>
 </td>
 </tr>
 <tr id="row17855333201319"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p13855123310138"><a name="p13855123310138"></a><a name="p13855123310138"></a>00B02</p>
 </td>
 <td class="cellrowborder" valign="top" width="26.119999999999997%" headers="mcps1.1.4.1.2 "><p id="p1485553351312"><a name="p1485553351312"></a><a name="p1485553351312"></a>2024-04-12</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p785593319137"><a name="p785593319137"></a><a name="p785593319137"></a>更新“<a href="系统无法睡眠.md">系统无法睡眠</a>”章节内容。</p>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p785593319137"><a name="p785593319137"></a><a name="p785593319137"></a>更新“<a href="#ZH-CN_TOPIC_0000001800548732">系统无法睡眠</a>”章节内容。</p>
 </td>
 </tr>
 <tr id="row5615142573419"><td class="cellrowborder" valign="top" width="20.72%" headers="mcps1.1.4.1.1 "><p id="p7616122512348"><a name="p7616122512348"></a><a name="p7616122512348"></a>00B01</p>

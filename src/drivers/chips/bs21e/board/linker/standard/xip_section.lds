@@ -90,6 +90,8 @@
 						.text.fsm_msg_list_free .text.fsm_reset_ram \
 						.text.evt_task_gle_acb_abnormal_cbk .text.evt_task_gle_acb_init_link_segment \
 						.text.evt_sched_delete_task \
+						.text.lm_gle_llcp_phy_update_ind_srv_act_replace \
+						.text.bgtp_lowpower_init_handler \
 						)
 		*libbt_host.a:*.o* (.text.gaph_smp_cfm_cbk_replace .text.smp_key_distribute_go_replace \
 							.text.smp_tk_ask_replace .text.smp_ecdh_public_key_generate_replace \
@@ -104,6 +106,7 @@
 							.text.smp_require_end_replace \
 							.text.bt_init_stack_replace \
 							.text.smp_pairing_request_recv_replace \
+							.text.smp_le_link_start_encryption_replace \
 							)
 	    . = ALIGN(8);
 	} > FLASH_PROGRAM

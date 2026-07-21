@@ -78,7 +78,7 @@ static uart_buffer_config_t g_app_uart_buffer_config = {
 static uart_idle_int_receive_cb_t g_idle_recv_cb[UART_BUS_MAX_NUMBER] = { NULL };
 dma_channel_t g_rx_dma_channel = DMA_CHANNEL_NONE;
 dma_ch_user_peripheral_config_t g_rx_dma_config = { 0 };
-uint8_t g_uart_bus = 0;
+uint8_t g_uart_bus = UART_BUS_NONE;
 #endif
 
 static uint8_t *g_lli_rx_payload_buff[UART_BUS_MAX_NUMBER] = { NULL };
@@ -555,6 +555,11 @@ static errcode_t uapi_uart_recv_raw_data_dma_config(uart_bus_t uart_bus)
     }
     return uapi_uart_register_rx_callback(uart_bus, UART_RX_CONDITION_MASK_IDLE,
                                           CONFIG_UART_IDLE_PAYLOAD_LEN, uart_idle_rx_cb);
+}
+
+uart_bus_t uart_dma_recv_get_bus(void)
+{
+    return g_uart_bus;
 }
 
 errcode_t uapi_uart_dma_recv_raw_data(uart_bus_t uart_bus, uart_idle_int_receive_cb_t callback)

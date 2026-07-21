@@ -13,6 +13,7 @@
 #include "platform_types.h"
 #include "platform_core.h"
 #include "arch_port.h"
+#include "ulp_gpio.h"
 #include "gpio_porting.h"
 
 /**
@@ -79,7 +80,11 @@ uintptr_t gpio_porting_base_addr_get(uint32_t channel)
 
 void gpio_ulp_int_en(bool on)
 {
-    unused(on);
+    if (on) {
+        ulp_gpio_init();
+    } else {
+        ulp_gpio_deinit();
+    }
 }
 
 void gpio_select_core(pin_t pin, cores_t core)

@@ -65,25 +65,32 @@ BS2X系列包含BS21/BS22/BS26，本文档以BS21为例。
 </th>
 </tr>
 </thead>
-<tbody><tr id="row1366485094810"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p13664135054819"><a name="p13664135054819"></a><a name="p13664135054819"></a>04</p>
+<tbody><tr id="row370510316159"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p1870503110150"><a name="p1870503110150"></a><a name="p1870503110150"></a>05</p>
+</td>
+<td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p137051131141512"><a name="p137051131141512"></a><a name="p137051131141512"></a>2026-04-29</p>
+</td>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p179011432161619"><a name="p179011432161619"></a><a name="p179011432161619"></a>更新“<a href="#ZH-CN_TOPIC_0000001800390348">编译&测试</a>”章节内容。</p>
+</td>
+</tr>
+<tr id="row1366485094810"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p13664135054819"><a name="p13664135054819"></a><a name="p13664135054819"></a>04</p>
 </td>
 <td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p196640500486"><a name="p196640500486"></a><a name="p196640500486"></a>2025-08-07</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p96642507484"><a name="p96642507484"></a><a name="p96642507484"></a>更新“<a href="详细介绍.md">详细介绍</a>”章节内容。</p>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p96642507484"><a name="p96642507484"></a><a name="p96642507484"></a>更新“<a href="#ZH-CN_TOPIC_0000001848731989">详细介绍</a>”章节内容。</p>
 </td>
 </tr>
 <tr id="row04501152238"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p1716535616314"><a name="p1716535616314"></a><a name="p1716535616314"></a>03</p>
 </td>
 <td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p616585612315"><a name="p616585612315"></a><a name="p616585612315"></a>2025-05-30</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p161656569316"><a name="p161656569316"></a><a name="p161656569316"></a>更新“<a href="用户指南.md">用户指南</a>”章节内容。</p>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p161656569316"><a name="p161656569316"></a><a name="p161656569316"></a>更新“<a href="#ZH-CN_TOPIC_0000001801892382">用户指南</a>”章节内容。</p>
 </td>
 </tr>
 <tr id="row5830425563"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p1583020255616"><a name="p1583020255616"></a><a name="p1583020255616"></a>02</p>
 </td>
 <td class="cellrowborder" valign="top" width="26.14%" headers="mcps1.1.4.1.2 "><p id="p783002145619"><a name="p783002145619"></a><a name="p783002145619"></a>2025-01-14</p>
 </td>
-<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p883017211563"><a name="p883017211563"></a><a name="p883017211563"></a>更新“<a href="用户指南.md">用户指南</a>”章节内容。</p>
+<td class="cellrowborder" valign="top" width="53.16%" headers="mcps1.1.4.1.3 "><p id="p883017211563"><a name="p883017211563"></a><a name="p883017211563"></a>更新“<a href="#ZH-CN_TOPIC_0000001801892382">用户指南</a>”章节内容。</p>
 </td>
 </tr>
 <tr id="row104141231143713"><td class="cellrowborder" valign="top" width="20.7%" headers="mcps1.1.4.1.1 "><p id="p0413131712"><a name="p0413131712"></a><a name="p0413131712"></a>01</p>
@@ -105,29 +112,25 @@ BS2X系列包含BS21/BS22/BS26，本文档以BS21为例。
 
 # 编译&测试<a name="ZH-CN_TOPIC_0000001800390348"></a>
 
+-   **[编译说明](#ZH-CN_TOPIC_0000001848689813)**  
 
+-   **[测试说明](#ZH-CN_TOPIC_0000001801930964)**  
 
 ## 编译说明<a name="ZH-CN_TOPIC_0000001848689813"></a>
 
-1.  打开IDE工具目录，双击env\_start.bat打开终端命令行。
+进行menuconfig配置打开低功耗宏（如下图）后编译对应target生成镜像包即可。
 
-    ![](figures/zh-cn_image_0000001802091112.png)
+![](figures/zh-cn_image_0000002543371258.png)
 
-2.  命令行进到SDK对应路径。
-
-    ![](figures/zh-cn_image_0000001809583116.png)
-
-3.  执行“python build.py”。
-
-    ![](figures/zh-cn_image_0000001809583424.png)
-
-    输入bs21-pm序号回车即执行编译。
-
-4.  去SDK目录下tools\\pkg\\fwpkg\\bs21取镜像包烧录即可。
+>![](public_sys-resources/icon-notice.gif) **须知：** 
+>该功能只是个低功耗sample，为防止冲突需要保证其他sample不使能。
+>低功耗状态机和示例代码见：
+>middleware/chips/bs2x/pm/pm\_sys/pm\_sys.c
+>application/samples/products/lowpower.c
 
 ## 测试说明<a name="ZH-CN_TOPIC_0000001801930964"></a>
 
-1.  烧录bs21-pm对应镜像。
+1.  烧录对应镜像。
 2.  搜索并连接蓝牙“BS21-pm-demo”（pm\_ble\_server\_adv.c中配置）。
 3.  系统会根据宏 DURATION\_MS\_OF\_WORK\_TO\_STANDBY 设置的时间进入保连。
 4.  系统会根据宏 DURATION\_MS\_OF\_STANDBY\_TO\_SLEEP 设置的时间进入睡眠。
@@ -135,9 +138,13 @@ BS2X系列包含BS21/BS22/BS26，本文档以BS21为例。
 
 # 系统状态管理<a name="ZH-CN_TOPIC_0000001802052154"></a>
 
+-   **[系统状态](#ZH-CN_TOPIC_0000001848849777)**  
 
+-   **[接口说明](#ZH-CN_TOPIC_0000001802090744)**  
 
+-   **[状态机原理](#ZH-CN_TOPIC_0000001848689817)**  
 
+-   **[使用配置说明](#ZH-CN_TOPIC_0000001849591453)**  
 
 ## 系统状态<a name="ZH-CN_TOPIC_0000001848849777"></a>
 
@@ -177,7 +184,9 @@ BS2X系列包含BS21/BS22/BS26，本文档以BS21为例。
 
 ## 状态机原理<a name="ZH-CN_TOPIC_0000001848689817"></a>
 
+-   **[概述](#ZH-CN_TOPIC_0000001848891933)**  
 
+-   **[详细介绍](#ZH-CN_TOPIC_0000001848731989)**  
 
 ### 概述<a name="ZH-CN_TOPIC_0000001848891933"></a>
 

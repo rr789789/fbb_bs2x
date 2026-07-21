@@ -43,7 +43,7 @@ def merge_db_xml(root, chip):
     dst_xml_file = G_PARAMS['HDB_PRIM_XML_DST_FILE'].strip()
     base_dir  = G_PARAMS['HDB_XML_TEMP_BASE_DIR']
 
-    mod_list = os.listdir(base_dir)
+    mod_list = sorted(os.listdir(base_dir))
     print("merge_db_xml: mod_list = ", mod_list)
 
     dst_xml_dir = os.path.abspath(os.path.join(dst_xml_file, ".."))
@@ -65,7 +65,7 @@ def merge_db_xml(root, chip):
         msg_root_element = get_msg_root(subsystem)
         msg_root_element.clear()
 
-        filelist = os.listdir(os.path.join(base_dir, mod))
+        filelist = sorted(os.listdir(os.path.join(base_dir, mod)))
         for filename in filelist:
             tmp_xml_file = os.path.join(os.path.join(base_dir, mod), filename)
             tree = ElementTree()

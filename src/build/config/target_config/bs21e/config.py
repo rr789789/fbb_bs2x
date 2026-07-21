@@ -53,6 +53,16 @@ target = {
         'nv_cfg': 'bs21e_nv_default',
         'upg_pkg': ['application'],
     },
+    'bs21e-1100e-rcu': {
+        'base_target_name': 'standard-bs21e-1100e',
+        'defines': ['-:ITCM_MAX_WATERLINE=0x54000'],
+        'liteos_kconfig': 'bs21e_rcu',
+        'loaderboot_cfg': 'loaderboot-bs21e-1100e',
+        'flashboot_cfg': 'flashboot-bs21e-1100e',
+        'upg_pkg': ['application'],
+        'sector_cfg': 'bs21e-rcu',
+        'nv_cfg': 'bs21e_nv_rcu',
+    },
     'bs21e-1100e-slp': {
         'base_target_name': 'standard-bs21e-1100e',
         'defines': ['SUPPORT_SLP_CLIENT', 'PRODUCT_AIR_MOUSE', '-:ITCM_MAX_WATERLINE=0x51010'],
@@ -69,6 +79,34 @@ target = {
         'sector_cfg': 'bs21e-slp-central-peripheral',
         'upg_pkg': ['application'],
         'nv_cfg': 'bs21e_nv_slp',
+    },
+    'bs21e-turnkey-mouse': {
+        'base_target_name': 'standard-bs21e-1100e',
+        'defines': ['-:TEST_SUITE', '-:AT_COMMAND', 'SW_UART_DEBUG', '-:NFC_TASK_EXIST', '-:SUPPORT_MULTI_LIBS',
+                    'SUPPORT_SLE_BLE_PERIPHERAL', '-:ITCM_MAX_WATERLINE=0x50B70'
+        ],
+        'ram_component': ['-:nfc_controller', '-:cal_dis', '-:std_rom_lds_porting', 'turnkey_mouse_lds_porting'],
+        'ram_component_set' : ['-:can', 'pwm'],
+        'liteos_kconfig': 'bs21e',
+        'upg_pkg': ['application'],
+        'loaderboot_cfg': 'loaderboot-bs21e-1100e',
+        'flashboot_cfg': 'flashboot-bs21e-1100e-usb-with-ota',
+        'sector_cfg': 'bs21e-turnkey-mouse',
+        'nv_cfg': 'bs21e_nv_turnkey_mouse',
+    },
+    'bs21e-turnkey-dongle': {
+        'base_target_name': 'standard-bs21e-1100e',
+        'defines': ['-:TEST_SUITE', '-:AT_COMMAND', 'SW_UART_DEBUG', '-:NFC_TASK_EXIST', '-:SUPPORT_MULTI_LIBS',
+                    '-:ITCM_MAX_WATERLINE=0x4EAB0'
+        ],
+        'ram_component': ['-:nfc_controller', '-:cal_dis', '-:ir'],
+        'ram_component_set' : ['-:can', '-:pwm'],
+        'liteos_kconfig': 'bs21e',
+        'upg_pkg': ['application'],
+        'loaderboot_cfg': 'loaderboot-bs21e-1100e',
+        'flashboot_cfg': 'flashboot-bs21e-1100e-usb-with-ota',
+        'sector_cfg': 'bs21e-turnkey-dongle',
+        'nv_cfg': 'bs21e_nv_turnkey_dongle',
     },
 }
 

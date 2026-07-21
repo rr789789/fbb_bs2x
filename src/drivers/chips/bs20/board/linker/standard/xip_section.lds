@@ -94,7 +94,8 @@
 						.text.evt_task_gle_acb_update_low_latency_param_with_instant .text.evt_task_gle_iob_low_latency_update_acb_sed_info \
 						.text.evt_task_gle_acb_free_txdesc_from_tog .text.evt_task_gle_acb_low_latency_switch_md \
 						.text.evt_task_gle_acb_low_latency_set_intv_change_flag .text.evt_task_gle_acb_update_low_latency_param \
-						.text.evt_task_gle_acb_low_latency_update_phy .text.evt_task_gle_acb_update_low_latency_sed_info)
+						.text.evt_task_gle_acb_low_latency_update_phy .text.evt_task_gle_acb_update_low_latency_sed_info \
+						.text.ble_errorint_isr_ram .text.lm_gle_llcp_phy_update_ind_srv_act_replace)
 		*libbt_host.a:*.o* (.text.gaph_smp_cfm_cbk_replace .text.smp_key_distribute_go_replace \
 							.text.smp_tk_ask_replace .text.smp_ecdh_public_key_generate_replace \
 							.text.smp_ecdh_pairing_public_key_recv_replace .text.bth_init_replace \
@@ -111,6 +112,7 @@
 							.text.smp_require_end_replace \
 							.text.bt_init_stack_replace \
 							.text.smp_pairing_request_recv_replace \
+							.text.smp_le_link_start_encryption_replace \
 							)
 	    . = ALIGN(8);
 	} > FLASH_PROGRAM

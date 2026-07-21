@@ -4,6 +4,7 @@
  * This file should be changed only infrequently and with great care.
  */
 #include <stdint.h>
+#include <stdbool.h>
 #include "dfx_adapt_layer.h"
 #include "diag.h"
 #include "diag_ind_src.h"
@@ -27,16 +28,27 @@ errcode_t bth_ota_data_send(uint8_t *data_ptr, uint16_t data_len);
 #endif
 
 #if defined(CONFIG_SUPPORT_LOG_THREAD)
+#if defined(CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT)
+#define DIAG_TRIGGER_DEFAULT_COUNT     5
+#define DIAG_MAXIMUM_LENGTH            64
+
+static uint32_t g_dst_mod_id = 0;
+static bool g_enable_custom_output = false;
+static diag_custom_output_func_t g_diag_custom_output_func = NULL;
+static diag_trigger_func_t g_diag_trigger_func = NULL;
+
+static bool g_enable_diag_trigger = false;
+static uint8_t g_diag_trans_count = 0;
+static uint8_t g_diag_custom_buffer[DIAG_MAXIMUM_LENGTH] = {0};
+#endif  /* CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT */
+
 void diag_uart_rx_proc(uint8_t *buffer, uint16_t length)
 {
     uapi_diag_channel_rx_mux_char_data(DFX_DIAG_CHANNEL, buffer, length);
 }
 
-static int32_t diag_channel_uart_output(void *fd, dfx_data_type_t data_type,
-                                        uint8_t *data[], uint16_t len[], uint8_t cnt)
+static int32_t diag_channel_uart_output(uint8_t *data[], uint16_t len[], uint8_t cnt)
 {
-    unused(fd);
-    unused(data_type);
     for (uint8_t i = 0; i < cnt; i++) {
 #if defined(CONFIG_UART_SUPPORT_TX_INT) && (!defined(CONFIG_UART_LOG_WRITE_WITH_NOLOCK))
         if (osal_in_interrupt() || data_type == DFX_DATA_DIAG_PKT_CRITICAL) {
@@ -50,6 +62,124 @@ static int32_t diag_channel_uart_output(void *fd, dfx_data_type_t data_type,
     }
     return ERRCODE_SUCC;
 }
+
+#if defined(CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT)
+static int32_t diag_channel_custom_output(uint8_t *data[], uint16_t len[], uint8_t cnt)
+{
+    if (g_diag_custom_output_func == NULL) {
+        return ERRCODE_FAIL;
+    }
+    if (cnt == 1) {
+        g_diag_custom_output_func(data[0], len[0]);
+    } else {
+        uint32_t total_len = 0;
+        uint8_t *buf_ptr = g_diag_custom_buffer;
+        for (uint8_t i = 0; i < cnt; i++) {
+            total_len += len[i];
+            if (total_len > DIAG_MAXIMUM_LENGTH) {
+                return ERRCODE_FAIL;
+            }
+            memcpy_s(buf_ptr, len[i], data[i], len[i]);
+            buf_ptr += len[i];
+        }
+        g_diag_custom_output_func(g_diag_custom_buffer, total_len);
+    }
+
+    return ERRCODE_SUCC;
+}
+#endif  /* CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT */
+
+static int32_t diag_channel_output(void *fd, dfx_data_type_t data_type,
+                                   uint8_t *data[], uint16_t len[], uint8_t cnt)
+{
+    unused(fd);
+    unused(data_type);
+#if defined(CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT)
+    if (g_enable_custom_output == true) {
+        return diag_channel_custom_output(data, len, cnt);
+    }
+#endif  /* CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT */
+    return diag_channel_uart_output(data, len, cnt);
+}
+
+#if defined(CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT)
+void uapi_diag_register_custom_output(diag_custom_output_func_t func)
+{
+    g_diag_custom_output_func = func;
+}
+
+uint32_t diag_adapt_get_dst_mod_id(void)
+{
+    return g_dst_mod_id;
+}
+
+void uapi_diag_set_dest_id(uint8_t dest_id)
+{
+    g_dst_mod_id = (uint32_t)dest_id;
+}
+
+void uapi_diag_switch_custom_output(bool en)
+{
+    g_enable_custom_output = en;
+}
+
+bool uapi_diag_get_custom_output_status(void)
+{
+    return g_enable_custom_output;
+}
+
+bool uapi_diag_block_check(void)
+{
+    if (!g_enable_diag_trigger) {
+        return true;
+    }
+    if (g_diag_trans_count == 0) {
+        return false;
+    }
+    g_diag_trans_count--;
+    return true;
+}
+
+void uapi_diag_block_clear(void)
+{
+    if (!g_enable_diag_trigger) {
+        return;
+    }
+    g_diag_trans_count = 0;
+}
+
+static void diag_enable_trans(unsigned long param)
+{
+    /* 更新参数 */
+    g_diag_trans_count = (uint8_t)param;
+    if (param == 0) {
+        g_diag_trans_count = DIAG_TRIGGER_DEFAULT_COUNT;
+    }
+    /* 发送消息至log_task触发调度 */
+    if (g_diag_trigger_func != NULL) {
+        g_diag_trigger_func();
+    }
+}
+
+void uapi_diag_enable_trans(uint8_t id, uint8_t count)
+{
+    unused(id);
+    if (!g_enable_diag_trigger) {
+        return;
+    }
+    diag_enable_trans((unsigned long)count);
+}
+
+void uapi_diag_register_trigger_func(diag_trigger_func_t func)
+{
+    g_diag_trigger_func = func;
+}
+
+void uapi_diag_switch_trigger_enable(bool en)
+{
+    g_enable_diag_trigger = en;
+}
+#endif  /* CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT */
 #endif
 
 #if defined(CONFIG_BT_UPG_ENABLE) && (CONFIG_BT_UPG_ENABLE == 1)
@@ -106,7 +236,7 @@ errcode_t diag_register_channel(void)
         (errcode_t)ERRCODE_SUCC) {
         return ERRCODE_FAIL;
     }
-    if (uapi_diag_channel_set_tx_hook(DFX_DIAG_CHANNEL, diag_channel_uart_output) != ERRCODE_SUCC) {
+    if (uapi_diag_channel_set_tx_hook(DFX_DIAG_CHANNEL, diag_channel_output) != ERRCODE_SUCC) {
         return ERRCODE_FAIL;
     }
 #endif

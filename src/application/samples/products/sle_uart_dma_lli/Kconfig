@@ -4,11 +4,9 @@
 #===============================================================================
 choice
     prompt "Choice target UART DMA SLE Sample Mode"
-    default SAMPLE_SUPPORT_SLE_UART_DMA_MASTER_A
     config SAMPLE_SUPPORT_SLE_UART_DMA_MASTER_A
         bool
         prompt "Support UART Master Sample(A)."
-        default y
         depends on SAMPLE_SUPPORT_SLE_UART_DMA
         help
             This option means support UART Master Sample.
@@ -16,7 +14,6 @@ choice
     config SAMPLE_SUPPORT_SLE_UART_DMA_MASTER_B
         bool
         prompt "Support UART Master Sle Sample(B)."
-        default n
         depends on SAMPLE_SUPPORT_SLE_UART_DMA
         help
             This option means support UART Master Sle Sample.
@@ -24,7 +21,6 @@ choice
     config SAMPLE_SUPPORT_SLE_UART_DMA_SLAVE_C
         bool
         prompt "Support UART Slave Sle Sample(C)."
-        default n
         depends on SAMPLE_SUPPORT_SLE_UART_DMA
         help
             This option means support UART Slave Sle Sample.
@@ -32,7 +28,6 @@ choice
     config SAMPLE_SUPPORT_SLE_UART_DMA_SLAVE_D
         bool
         prompt "Support UART Slave Sample(D)."
-        default n
         depends on SAMPLE_SUPPORT_SLE_UART_DMA
         help
             This option means support UART Slave Sample.

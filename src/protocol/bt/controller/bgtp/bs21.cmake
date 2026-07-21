@@ -146,6 +146,7 @@ if(BT_ROM_VERSION)
     )
 
     set(PRIVATE_DEFINES
+        BUILD_ROM_COMPILE
     )
 
     set(PUBLIC_DEFINES

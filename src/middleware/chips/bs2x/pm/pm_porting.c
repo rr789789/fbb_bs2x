@@ -478,8 +478,8 @@ static void pm_pmu_regs_config_for_slp(void)
 
 #if defined(PM_REDUCE_BG_REFRESH_RATE)
     // 车上等对高低温要求高的场景不建议用，键鼠、水气表、遥控器这种可以用
-    writew(0x5702C4D0, 0x20);   // ref_vbg_en_ret在睡眠状态下维持1的时间=1ms
-    writew(0x5702C4D4, 0x1FF);  // ref_vbg_en_ret在睡眠状态下维持0的时间=16ms
+    writew(0x5702C4D0, 0x40);   // ref_vbg_en_ret在睡眠状态下维持1的时间=2ms
+    writew(0x5702C4D4, 0x100);  // ref_vbg_en_ret在睡眠状态下维持0的时间=8ms
 #endif
 
     // RAM retention enable.
@@ -487,27 +487,12 @@ static void pm_pmu_regs_config_for_slp(void)
     writew(0x5702C900, 0x3F7F);
 
     // 调整CLDO、MICLDO、FLASHLDO使能延时手动控制值
-    reg32_setbits(0x5702C200, 0x12, 0x4, 0x4);
-    reg32_setbits(0x5702C204, 0x12, 0x4, 0x5);
-    reg32_setbits(0x5702C208, 0x12, 0x4, 0x5);
+    reg32_setbits(0x5702C200, 0xC, 0x4, 0x4);
+    reg32_setbits(0x5702C204, 0xC, 0x4, 0x5);
+    reg32_setbits(0x5702C208, 0xC, 0x4, 0x5);
 
     // EFUSE disable autoread.
     writew(0x5702C99C, 0x0);
-}
-
-void pm_bg_refresh_config(bool high_temp)
-{
-    unused(high_temp);
-#if defined(PM_REDUCE_BG_REFRESH_RATE)
-    // 常温下配置1ms开/16ms关(0x20/0x1FF)，高温下切换为2ms开/8ms关(0x40/0x100)。
-    if (high_temp) {
-        writew(0x5702C4D0, 0x40);
-        writew(0x5702C4D4, 0x100);
-    } else {
-        writew(0x5702C4D0, 0x20);
-        writew(0x5702C4D4, 0x1FF);
-    }
-#endif
 }
 
 void uapi_pm_lpc_init(void)

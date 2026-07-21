@@ -23,3 +23,15 @@ config PRINT_HSO_LOG_BY_USB_SERIAL
     prompt "Support print hso log by usb serial."
     default n
     depends on MIDDLEWARE_SUPPORT_DFX
+
+config SUPPORT_USER_PRESERVE_DATA
+    bool
+    prompt "Support user defined preserve data."
+    default n
+    depends on MIDDLEWARE_SUPPORT_DFX
+
+config USER_PRESERVE_DATA_LEN
+    int
+    prompt "User defined preserve data length."
+    default 4
+    depends on SUPPORT_USER_PRESERVE_DATA

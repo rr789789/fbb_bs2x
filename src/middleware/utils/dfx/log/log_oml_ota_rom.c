@@ -10,6 +10,9 @@
 #include "log_oam_ota.h"
 #include "log_oam_status.h"
 #include "log_oam_pcm.h"
+#if defined(CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT)
+#include "dfx_channel.h"
+#endif
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -100,6 +103,11 @@ void log_oam_status_store_unregister_callback(void)
 void log_oam_status_store_trigger_callback(uint8_t prime_id, uint16_t msg_id, uint16_t mode,
                                            uint16_t length, const uint32_t *param)
 {
+#if defined(CONFIG_SUPPORT_LOG_CUSTOM_OUTPUT)
+    if (uapi_diag_get_custom_output_status()) {
+        return;
+    }
+#endif
     if (g_log_oam_status_store_deal != NULL) {
         g_log_oam_status_store_deal(prime_id, msg_id, mode, length, param);
     }

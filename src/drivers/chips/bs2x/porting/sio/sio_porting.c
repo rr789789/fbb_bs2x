@@ -81,10 +81,15 @@ uint32_t sio_porting_get_bclk_div_num(uint8_t data_width, uint32_t ch)
     float middle_div;
     s_clk = I2S_S_CLK;
     freq_of_need = FREQ_OF_NEED;
+#ifdef CONFIG_I2S_OUTER_CLK_IN
+    mclk_div_num = 1;
+    uapi_reg_setbit(M_CTL_RB_BASE + I2S_MCLK, 0);
+#else
     mclk_div_num = uapi_reg_getbits(M_CTL_RB_BASE + I2S_CR, I2S_CR_DIV_NUM_BIT, I2S_CR_DIV_NUM_LEN);
     if ((mclk_div_num == 0) || (mclk_div_num == 1) || (mclk_div_num == I2S_MCLK_DIV_NUM)) {
         mclk_div_num = I2S_MCLK_DIV;
     }
+#endif
     middle_div = (s_clk / mclk_div_num) / (freq_of_need * data_width * ch);
     if ((uint32_t)(middle_div * I2S_PARAM + 1) == ((uint32_t)middle_div * I2S_PARAM + 1)) {  /* 对float类型向上取整。 */
         bclk_div_num = (uint32_t)middle_div + 1;
@@ -106,6 +111,9 @@ void sio_porting_i2s_pinmux(void)
     uapi_pin_set_mode(CONFIG_I2S_WS_PIN, CONFIG_I2S_WS_PIN_MODE);
     uapi_pin_set_mode(CONFIG_I2S_DO_PIN, CONFIG_I2S_DO_PIN_MODE);
     uapi_pin_set_mode(CONFIG_I2S_DI_PIN, CONFIG_I2S_DI_PIN_MODE);
+#if defined (CONFIG_I2S_OUTER_CLK_IN)
+    uapi_pin_set_mode(CONFIG_I2S_MCLK_PIN, CONFIG_I2S_MCLK_PIN_MODE);
+#endif
 #endif
 }
 

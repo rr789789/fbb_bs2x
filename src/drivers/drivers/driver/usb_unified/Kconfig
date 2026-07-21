@@ -589,12 +589,10 @@ choice
 
 config DRIVERS_USB_HID_OUTPUT_REPORT_EVENT
     bool "Use stack event to recieve hid data"
-        default n
         depends on DRIVERS_USB_HID_OUTPUT_REPORT
 
 config DRIVERS_USB_HID_OUTPUT_REPORT_CALLBACK
     bool "Use callback to recieve hid data"
-      default n
       depends on DRIVERS_USB_HID_OUTPUT_REPORT
 
 endchoice

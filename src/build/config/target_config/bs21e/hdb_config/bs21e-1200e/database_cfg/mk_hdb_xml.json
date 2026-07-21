@@ -29,7 +29,8 @@
     "HDB_TXT_DST_DIR":"output/bs21e/database/bs21e-1200e/build_hso_cfg/hdb/struct",
     "HDB_TXT_SRC_DIR":"build/config/target_config/bs21e/hdb_config/database_template/acore/system/diag",
 
-    "HDB_XML_PRE_GENERATED_DIR":[],
+    "HDB_XML_PRE_GENERATED_CORE":["acore"],
+    "HDB_XML_PRE_GENERATED_DIR":["interim_binary/bs21e/build_hso_cfg"],
 
     "BT_STATUS_DIR":"build/config/target_config/bs21e/hdb_config/database_cfg",
     "OTA_MSG_DIR":"build/config/target_config/bs21e/hdb_config/database_cfg"

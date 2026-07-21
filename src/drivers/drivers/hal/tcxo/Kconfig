@@ -5,6 +5,6 @@
 
 config TCXO_WITH_TWO_DATA_REGS
     bool
-    prompt "TCXO Calculated With Two Data Registers "
+    prompt "TCXO Calculated With Two Data Registers"
     default n
     depends on DRIVER_SUPPORT_TCXO

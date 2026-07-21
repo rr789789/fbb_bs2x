@@ -310,6 +310,33 @@ typedef struct {
     td_u32 data8;
     td_u32 data9;
 } diag_log_msg10;
+typedef struct {
+    td_u32 data0;
+    td_u32 data1;
+    td_u32 data2;
+    td_u32 data3;
+    td_u32 data4;
+    td_u32 data5;
+    td_u32 data6;
+    td_u32 data7;
+    td_u32 data8;
+    td_u32 data9;
+    td_u32 data10;
+} diag_log_msg11;
+typedef struct {
+    td_u32 data0;
+    td_u32 data1;
+    td_u32 data2;
+    td_u32 data3;
+    td_u32 data4;
+    td_u32 data5;
+    td_u32 data6;
+    td_u32 data7;
+    td_u32 data8;
+    td_u32 data9;
+    td_u32 data10;
+    td_u32 data11;
+} diag_log_msg12;
 typedef enum {
     APPLICATION_CORE = 0,
     PROTOCOL_CORE,

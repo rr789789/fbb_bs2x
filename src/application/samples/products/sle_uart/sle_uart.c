@@ -12,24 +12,24 @@
 #include "uart.h"
 #include "pm_clock.h"
 #include "sle_low_latency.h"
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_UART_SERVER)
+#if defined(CONFIG_SAMPLE_ENABLE_SLE_UART_SERVER)
 #include "securec.h"
 #include "sle_uart_server.h"
 #include "sle_uart_server_adv.h"
 #include "sle_device_discovery.h"
 #include "sle_errcode.h"
-#elif defined(CONFIG_SAMPLE_SUPPORT_SLE_UART_CLIENT)
+#elif defined(CONFIG_SAMPLE_ENABLE_SLE_UART_CLIENT)
 #define SLE_UART_TASK_STACK_SIZE            0x600
 #define SLE_UART_SSAPC_PRINTF_LOG_INTERVAL     50
 static uint16_t g_ssapc_recv_pkts = 0;
 #include "sle_connection_manager.h"
 #include "sle_ssap_client.h"
 #include "sle_uart_client.h"
-#endif  /* CONFIG_SAMPLE_SUPPORT_SLE_UART_CLIENT */
+#endif  /* CONFIG_SAMPLE_ENABLE_SLE_UART_CLIENT */
 
 #define SLE_UART_TASK_PRIO                  28
 #define SLE_UART_TASK_DURATION_MS           2000
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_UART_SERVER)
+#if defined(CONFIG_SAMPLE_ENABLE_SLE_UART_SERVER)
 #define SLE_UART_SERVER_DELAY_COUNT         5
 
 #define SLE_UART_TASK_STACK_SIZE            0x1200
@@ -151,7 +151,7 @@ static void *sle_uart_server_task(const char *arg)
     uint8_t rx_buf[SLE_UART_SERVER_MSG_QUEUE_MAX_SIZE] = {0};
     uint32_t rx_length = SLE_UART_SERVER_MSG_QUEUE_MAX_SIZE;
     uint8_t sle_connect_state[] = "sle_dis_connect";
-
+    sle_dev_register_cbks();
     sle_uart_server_create_msgqueue();
     sle_uart_server_register_msg(sle_uart_server_write_msgqueue);
     sle_uart_server_init(ssaps_server_read_request_cbk, ssaps_server_write_request_cbk);
@@ -181,7 +181,7 @@ static void *sle_uart_server_task(const char *arg)
     sle_uart_server_delete_msgqueue();
     return NULL;
 }
-#elif defined(CONFIG_SAMPLE_SUPPORT_SLE_UART_CLIENT)
+#elif defined(CONFIG_SAMPLE_ENABLE_SLE_UART_CLIENT)
 
 void sle_uart_notification_cb(uint8_t client_id, uint16_t conn_id, ssapc_handle_value_t *data,
     errcode_t status)
@@ -218,6 +218,7 @@ static void sle_uart_client_read_int_handler(const void *buffer, uint16_t length
 static void *sle_uart_client_task(const char *arg)
 {
     unused(arg);
+    sle_uart_client_sample_dev_cbk_register();
     errcode_t ret = uapi_uart_register_rx_callback(CONFIG_SLE_UART_BUS,
                                                    UART_RX_CONDITION_FULL_OR_SUFFICIENT_DATA_OR_IDLE,
                                                    1, sle_uart_client_read_int_handler);
@@ -228,7 +229,7 @@ static void *sle_uart_client_task(const char *arg)
 
     return NULL;
 }
-#endif  /* CONFIG_SAMPLE_SUPPORT_SLE_UART_CLIENT */
+#endif  /* CONFIG_SAMPLE_ENABLE_SLE_UART_CLIENT */
 
 static void sle_uart_entry(void)
 {
@@ -239,15 +240,13 @@ static void sle_uart_entry(void)
         osal_printk("Clock config fail.\r\n");
     }
     osal_kthread_lock();
-#if defined(CONFIG_SAMPLE_SUPPORT_SLE_UART_SERVER)
-    sle_dev_register_cbks();
+#if defined(CONFIG_SAMPLE_ENABLE_SLE_UART_SERVER)
     task_handle = osal_kthread_create((osal_kthread_handler)sle_uart_server_task, 0, "SLEUartServerTask",
                                       SLE_UART_TASK_STACK_SIZE);
-#elif defined(CONFIG_SAMPLE_SUPPORT_SLE_UART_CLIENT)
-    sle_uart_client_sample_dev_cbk_register();
+#elif defined(CONFIG_SAMPLE_ENABLE_SLE_UART_CLIENT)
     task_handle = osal_kthread_create((osal_kthread_handler)sle_uart_client_task, 0, "SLEUartDongleTask",
                                       SLE_UART_TASK_STACK_SIZE);
-#endif /* CONFIG_SAMPLE_SUPPORT_SLE_UART_CLIENT */
+#endif /* CONFIG_SAMPLE_ENABLE_SLE_UART_CLIENT */
     if (task_handle != NULL) {
         osal_kthread_set_priority(task_handle, SLE_UART_TASK_PRIO);
     }

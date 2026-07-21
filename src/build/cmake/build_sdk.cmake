@@ -103,7 +103,7 @@ if (DEFINED SDK_OUTPUT_PATH)
     if(${type} STREQUAL "start")
         set(START_SYMBOL "" CACHE INTERNAL "" FORCE)
         file(WRITE ${COMPONENT_INFO} "{\n")
-        file(APPEND ${COMPONENT_INFO} 
+        file(APPEND ${COMPONENT_INFO}
         "\"COMPONENTS\":{")
     elseif(${type} STREQUAL "end")
         set(PUBLIC_INCLUDES)

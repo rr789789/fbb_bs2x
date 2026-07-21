@@ -42,6 +42,11 @@ void pmu_init(void)
     writew(0x5702C404, 0x321);  // BUCK_CFG_REG_1
     writew(0x5702C40C, 0x180);  // BUCK_CFG_REG_3
 
+    writew(0x5702C234, 0);
+    // 高阻
+    reg32_clrbit(0x5702C230, 0x9);
+    writew(0x5702C974, 0x3);    // NFC_LIMITER_SENSE_ENB_CFG：手动打开
+    
     writel(0x57008410, 0x40);   // XOCLKOUTDIE(S_MGPIO25): 寄存器控制关闭
     clock_protocol_rst();
 }

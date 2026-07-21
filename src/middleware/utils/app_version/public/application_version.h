@@ -66,6 +66,11 @@ typedef struct {
 #endif
 } startup_table;
 
+typedef struct {
+    uint32_t version_id;
+    uint8_t version_str[20];
+} flashboot_info_t;
+
 #define SSB_TO_BT_MAX sizeof(startup_table)
 
 #if (defined BUILD_APPLICATION_SSB)

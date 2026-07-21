@@ -56,6 +56,9 @@ set(LOG_DEF
     ${CMAKE_CURRENT_SOURCE_DIR}/../../middleware/chips/bs2x/dfx/include/log_def_slp.h
 )
 
+# 添加特性宏
+# add_definitions(-DPRE_FEATURE_AT_REG_RW) # AT命令读写寄存器
+
 #指定静态库生成位置
 set(LIB_OUT_PATH ${BIN_DIR}/${CHIP}/libs/slp/${TARGET_COMMAND})
 

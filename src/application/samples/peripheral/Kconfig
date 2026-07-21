@@ -12,6 +12,7 @@ config ENABLE_ALL_PERIPHERAL_SAMPLE
     select SAMPLE_SUPPORT_BUTTON
     select SAMPLE_SUPPORT_CALENDAR
     select SAMPLE_SUPPORT_CLOCKS
+    select SAMPLE_SUPPORT_CMP
     select SAMPLE_SUPPORT_DMA
     select SAMPLE_SUPPORT_I2C
     select SAMPLE_SUPPORT_I2S
@@ -115,6 +116,20 @@ config SAMPLE_SUPPORT_CLOCKS
 if SAMPLE_SUPPORT_CLOCKS
 menu "CLOCKS Sample Configuration"
     osource "application/samples/peripheral/clocks/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_CMP
+    bool
+    prompt "Support CMP Sample."
+    default n
+    depends on ENABLE_PERIPHERAL_SAMPLE
+    help
+        This option means support CMP Sample.
+
+if SAMPLE_SUPPORT_CMP
+menu "CMP Sample Configuration"
+    osource "application/samples/peripheral/cmp/Kconfig"
 endmenu
 endif
 

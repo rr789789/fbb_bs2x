@@ -14,7 +14,9 @@
 #include "chip_core_irq.h"
 #include "spi_porting.h"
 #if defined(CONFIG_SPI_SUPPORT_LPC)
+#ifndef BUILD_FLASHBOOT
 #include "pm_clock.h"
+#endif
 #endif
 #if defined(CONFIG_SPI_SUPPORT_QUERY_REGS)
 #include "osal_debug.h"
@@ -487,6 +489,14 @@ void spi_port_get_regs_value(spi_bus_t bus)
 #if defined(CONFIG_SPI_SUPPORT_LPC)
 void spi_port_clock_enable(spi_bus_t bus, bool on)
 {
+#if defined(BUILD_FLASHBOOT)
+    if (on) {
+        writew(0x5200055C, 0x3); // sel XO32M
+        reg16_setbit(0x52000044, ((uint16_t)bus + 0x1)); // enable clk
+    } else {
+        reg16_clrbit(0x52000044, ((uint16_t)bus + 0x1)); // disable clk
+    }
+#else
     clock_control_type_t control_type;
     clock_mclken_aperp_type_t aperp_type;
 
@@ -515,5 +525,6 @@ void spi_port_clock_enable(spi_bus_t bus, bool on)
     }
     clock_ccrg_spi_enable((clock_ccrg_spi_used_t)(bus), on);
     uapi_clock_control(control_type, aperp_type);
+#endif
 }
 #endif

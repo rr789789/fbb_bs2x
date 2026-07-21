@@ -144,7 +144,7 @@ typedef enum hal_sio_voice_channel {
  * @brief  SIO 数据位宽。
  * @endif
  */
-typedef enum hal_sio_data_width {
+typedef enum hal_sio_data_depth {
     RESERVED,                                   /*!< @if Eng RESERVED.
                                                      @else   保留。 @endif */
     SIXTEEN_BIT,                                /*!< @if Eng 16 BITS.
@@ -157,7 +157,7 @@ typedef enum hal_sio_data_width {
                                                      @else   24位。 @endif */
     THIRTY_TWO_BIT                              /*!< @if Eng 32 BITS.
                                                      @else   32位。 @endif */
-} hal_sio_data_width_t;
+} hal_sio_data_depth_t;
 
 /**
  * @if Eng
@@ -221,16 +221,16 @@ typedef struct hal_sio_config {
                                                      @else   SIO 设备模式。 @endif */
     hal_sio_transfer_mode_t transfer_mode;      /*!< @if Eng SIO transmission path modes.
                                                      @else   SIO 传输路径模式。 @endif */
-    hal_sio_data_width_t data_width;            /*!< @if Eng SIO data width.
-                                                     @else   SIO 数据宽度。 @endif */
+    hal_sio_data_depth_t data_depth;            /*!< @if Eng SIO data depth.
+                                                     @else   SIO 数据位深。 @endif */
     hal_sio_channel_number_t channels_num;      /*!< @if Eng Number of SIO transmission Channels.
                                                      @else   SIO 传输通道数。 @endif */
     hal_sio_timing_mode_t timing;               /*!< @if Eng SIO timing mode.
                                                      @else   SIO 时序模式。 @endif */
     hal_sio_clk_edge_t clk_edge;                /*!< @if Eng PCM clock edge mode.
                                                      @else   PCM 时钟边沿模式。 @endif */
-    uint8_t div_number;                         /*!< @if Eng Div number, see @ref hal_sio_config.data_width.
-                                                     @else   分频系数，见 @ref hal_sio_config.data_width 成员 @endif */
+    uint8_t data_width;                         /*!< @if Eng SIO data width,.
+                                                     @else   SIO 数据位宽。 @endif */
     uint8_t number_of_channels;                 /*!< @if Eng Number of channels, see @ref hal_sio_config.channels_num.
                                                      @else   通道数，见 @ref hal_sio_config.channels_num 成员。 @endif */
 } hal_sio_config_t;

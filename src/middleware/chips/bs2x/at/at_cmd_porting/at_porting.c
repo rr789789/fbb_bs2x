@@ -45,7 +45,6 @@ void bth_sle_common_at_cmd_register(void);
 #define AT_UART_RX_PIN              TEST_SUITE_UART_RX_PIN
 #define AT_UART_BAUD_RATE           TEST_SUITE_UART_BAUD_RATE
 #endif
-#define AT_RX_BUFF_SIZE             128
 #define CRLF_STR                    "\r\n"
 #define CR_ASIC_II                  0xD
 
@@ -54,7 +53,7 @@ static osal_task g_at_task = { 0 };
 static osal_task g_testsuite_task = { 0 };
 #endif
 static unsigned long g_custom_at_msg_queue;
-static uint8_t g_at_uart_rx_buffer[AT_RX_BUFF_SIZE];
+static uint8_t g_at_uart_rx_buffer[CONFIG_AT_CMD_MAX_LENGTH];
 
 /* at uart write port */
 static void at_write_func(const char *data)
