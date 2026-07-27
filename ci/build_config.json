@@ -1,0 +1,11 @@
+[
+  {
+    "buildTarget": "standard-bs21e-1100e",
+    "relativePath": "sdk/full",
+    "chip": "BS2X",
+    "buildDef": "",
+    "needSmoke": "false",
+    "name": "full_sdk",
+    "description": "Full SDK build, triggered when build-relevant files under src/ or ci/ change"
+  }
+]
