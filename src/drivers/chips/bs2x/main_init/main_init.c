@@ -309,6 +309,20 @@ static void watchdog_init(void)
 #endif
 }
 
+static bool pmu_control_pin_reset_enable(pin_t pin)
+{
+    uapi_pin_set_mode(pin, 0);
+    uapi_pin_set_pull(pin, PIN_PULL_UP);
+#if defined(CONFIG_PINCTRL_SUPPORT_IE)
+    uapi_pin_set_ie(pin, PIN_IE_1);
+#endif
+    reg16_setbit(0x5702C51C, 0x0);
+    reg16_setbits(0x5702C51C, 0x4, 0x5, (uint8_t)pin);
+    uapi_tcxo_delay_ms(5);
+    reg16_clrbit(0x5702C51C, 0x0);
+    return true;
+}
+
 static void app_upg_init(void)
 {
 #if defined(SUPPORT_CFBB_UPG) || defined(CONFIG_BT_UPG_ENABLE) || defined(CONFIG_SLE_UPG_ENABLE)
@@ -349,6 +363,7 @@ static void ota_extern_flash_init(void)
     uapi_flash_read_id(0, &manufacture_id);
     flash_save_manufacturer(0, manufacture_id);
 #endif
+    pmu_control_pin_reset_enable(21);    // important
 }
 
 #ifdef SUPPORT_SLP_CLIENT
@@ -392,6 +407,12 @@ static void chip_hw_init(void)
 #else
     uapi_pin_init();
     hardware_config_init();
+#endif
+
+#ifdef CONFIG_SYSTEM_CONTROL_ENABLE
+    pmu_control_pin_reset_enable(CONFIG_BOARD_RESET_NUM);
+#else
+    pmu_control_pin_reset_enable(21);
 #endif
 
 #ifdef SW_UART_DEBUG

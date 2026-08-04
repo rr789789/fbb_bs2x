@@ -19,6 +19,16 @@ config SYSTEM_CONTROL_ENABLE
         This option means support system control config.
 
 if SYSTEM_CONTROL_ENABLE
+config BOARD_RESET_NUM
+    int
+    prompt "Board reset pin number (0-31)"
+    range 0 31
+    default 21
+    help
+        This option sets the board reset pin number.
+        The value must be between 0 and 31.
+        Default value is 21.
+
 config POWER_SUPPLY_BY_LDO
     bool
     prompt "Power supply by ldo."
