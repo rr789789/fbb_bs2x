@@ -79,6 +79,7 @@ typedef struct {
                                         @else   SPP socket对应的服务UUID。 @endif */
     spp_socket_type_t socket_type; /*!< @if Eng SPP socket type
                                         @else SPP socket类型。@endif */
+    bool is_encrypt;               /*!< @if Eng is encrypted (not use now, encrypted default)
                                         @else 是否加密（目前此参数未使用，默认加密）。@endif */
 } spp_create_socket_para_t;
 

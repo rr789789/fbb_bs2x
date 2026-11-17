@@ -185,6 +185,8 @@ enum {
 /* vbr */
 #define BT_AUDIO_A2DP_MPEG12_VBRSUPPORT        0x01
 
+typedef struct {
+    td_u8 codec_type;       /*!< @if Eng codec type.
                                  @else   编码格式类型。 @endif */
     td_u8 cap_len;          /*!< @if Eng codec cap len.
                                  @else   编码格式能力集长度。 @endif */

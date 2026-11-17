@@ -55,7 +55,17 @@ typedef enum {
     AVRCP_CT_ELEMENT_ATTR_TITLE = 0x01, /*!< @if Eng Title, song name or content description
                                        @else 标题，歌曲名或者内容描述 @endif */
     AVRCP_CT_ELEMENT_ATTR_ARTIST_NAME =
-
+        0x02, /*!< @if Eng Artist(s), performer(s) or group coded per specified character set
+             @else 艺人、表演者或团体 @endif */
+    AVRCP_CT_ELEMENT_ATTR_ALBUM_NAME = 0x03,   /*!< @if Eng Album @else 唱片，专辑 @endif */
+    AVRCP_CT_ELEMENT_ATTR_TRACK_NUMBER = 0x04, /*!< @if Eng The order number of the audio-file on its original recording
+                                              @else 音频文件的原始编号 @endif */
+    AVRCP_CT_ELEMENT_ATTR_TOTAL_NUMBER_OF_TRACKS = 0x05, /*!< @if Eng The total number of tracks/elements on the
+                                                        original recording @else tracks/elements的总个数 @endif */
+    AVRCP_CT_ELEMENT_ATTR_TRACK_GENRE = 0x06,            /*!< @if Eng Genre @else 风格，流派 @endif */
+    AVRCP_CT_ELEMENT_ATTR_TRACK_PLAYING_TIME = 0x07      /*!< @if Eng The length of the audio file in milliseconds
+                                                        @else 音频文件的播放时间 @endif */
+} avrcp_ct_element_attr_id_t;
 
 /**
  * @if Eng
@@ -226,6 +236,7 @@ typedef struct {
  * @endif
  */
 typedef struct {
+    unsigned char attr_num;                       /*!< @if Eng Specifies the attribute number, in range(1, 255)
                                                        @else TG返回的attribute数量，1-255 @endif */
     avrcp_ct_element_attr_value_cb_t *attr_value; /*!< @if Eng Specifies the attribute msg
                                                        @else 属性信息，根据attrNum大小动态分配空间 @endif */

@@ -184,6 +184,91 @@ typedef enum {
  * @endif
  */
 typedef enum {
+    HFP_AG_TYPE_ALL_CALLS = 0x01,            /*!< @if Eng (Release) all the existing calls @else 所有存在的通话 @endif */
+    HFP_AG_TYPE_INCOMING_CALL = 0x02,        /*!< @if Eng (Reject or accept) the incoming call @else 来电 @endif */
+    HFP_AG_TYPE_HELDINCOMING_CALL = 0x03,    /*!< @if Eng (Reject or accept) the Held incoming call
+                                                  @else 保持状态的来电 @endif */
+    HFP_AG_TYPE_OUTGOING_CALL = 0x04,        /*!< @if Eng (Release) the outgoing call @else 呼叫中的通话 @endif */
+    HFP_AG_TYPE_ONGOING_CALL = 0x05,         /*!< @if Eng (Release) the ongoing call @else 进行中的通话 @endif */
+} hfp_ag_type_t;
+
+/**
+ * @if Eng
+ * @brief Enum of hfp type.
+ * @else
+ * @brief AG 挂断类型。
+ * @endif
+ */
+typedef enum {
+    HFP_AG_CANCELED_ALLCALL   = 0x01,    /*!< @if Eng AG released all calls or GSM Service Unavailable
+                                              @else AG释放所有通话或者GSM服务不可用 @endif */
+    HFP_AG_CANCELED_CALLSETUP = 0x02,    /*!< @if Eng AG or GSM Release the Incoming Call or Outgoing Call
+                                              @else AG或者GSM释放来电中的通话或者呼叫中的通话 @endif */
+    HFP_AG_CANCELED_LASTCALL  = 0x03,    /*!< @if Eng AG or GSM Release Last Call in Call
+                                              @else AG或者GSM释放最后一次通话 @endif */
+    HFP_AG_CANCELED_CALLHELD  = 0x04,    /*!< @if Eng GSM Release only held calls @else GSM释放保持中的通话 @endif */
+} hfp_ag_action_t;
+
+/**
+ * @if Eng
+ * @brief Enum of last or not.
+ * @else
+ * @brief 是否最后一个。
+ * @endif
+ */
+typedef enum {
+    HFP_AG_LAST_NO = 0,
+    HFP_AG_LAST_YES = 1,
+} hfp_ag_last_t;
+
+/**
+ * @if Eng
+ * @brief Extended Audio Gateway Error Codes.
+ * @else
+ * @brief 扩展的音频网关错误码。
+ * @endif
+ */
+typedef enum {
+    HFP_CMEERR_AGFAILURE                  = 0,  /*!< @if Eng AG failure @else AG失败 @endif */
+    HFP_CMEERR_NOCONN2PHONE               = 1,  /*!< @if Eng No connection to phone @else 没有连接到手机 @endif */
+    HFP_CMEERR_OPERATION_NOTALLOWED       = 3,  /*!< @if Eng Operation not allowed @else 操作不允许 @endif */
+    HFP_CMEERR_OPERATION_NOTSUPPORTED     = 4,  /*!< @if Eng Operation not supported @else 操作不支持 @endif */
+    HFP_CMEERR_PHSIMPIN_REQUIRED          = 5,  /*!< @if Eng PH-SIM PIN required @else 需要PH-SIM卡PIN码 @endif */
+    HFP_CMEERR_SIMNOT_INSERTED            = 10, /*!< @if Eng SIM not inserted @else 没有插入SIM卡 @endif */
+    HFP_CMEERR_SIMPIN_REQUIRED            = 11, /*!< @if Eng SIM PIN required @else 需要SIM卡PIN码 @endif */
+    HFP_CMEERR_SIMPUK_REQUIRED            = 12, /*!< @if Eng SIM PUK required @else 需要SIM卡PUK码 @endif */
+    HFP_CMEERR_SIM_FAILURE                = 13, /*!< @if Eng SIM failure @else SIM卡失败 @endif */
+    HFP_CMEERR_SIM_BUSY                   = 14, /*!< @if Eng SIM busy @else SIM卡忙 @endif */
+    HFP_CMEERR_INCORRECT_PASSWORD         = 16, /*!< @if Eng Incorrect password @else 不正确的密码 @endif */
+    HFP_CMEERR_SIMPIN2_REQUIRED           = 17, /*!< @if Eng SIM PIN2 required @else 需要SIM卡PIN2码 @endif */
+    HFP_CMEERR_SIMPUK2_REQUIRED           = 18, /*!< @if Eng SIM PUK2 required @else 需要SIM卡PUK2码 @endif */
+    HFP_CMEERR_MEMORY_FULL                = 20, /*!< @if Eng Memory full @else 内存满 @endif */
+    HFP_CMEERR_INVALID_INDEX              = 21, /*!< @if Eng Invalid index @else 无效索引 @endif */
+    HFP_CMEERR_MEMORY_FAILURE             = 23, /*!< @if Eng Memory failure @else 内存申请失败 @endif */
+    HFP_CMEERR_TEXTSTRING_TOOLONG         = 24, /*!< @if Eng Text string too long @else 文本字符串过长 @endif */
+    HFP_CMEERR_INVALID_CHAR_INTEXTSTRING  = 25, /*!< @if Eng Invalid characters in text string
+                                                     @else 文本字符串中的无效字符 @endif */
+    HFP_CMEERR_DIAL_STRING_TOOLONG        = 26, /*!< @if Eng Dial string too long @else 拨号过长 @endif */
+    HFP_CMEERR_INVALID_CHAR_INDIALSTRING  = 27, /*!< @if Eng Invalid characters in dial string
+                                                     @else 拨号中的无效字符 @endif */
+    HFP_CMEERR_NETWORK_NOSERVICE          = 30, /*!< @if Eng No network service @else 没有网络服务 @endif */
+    HFP_CMEERR_NETWORK_TIMEOUT            = 31, /*!< @if Eng Network timeout @else 网络超时 @endif */
+    HFP_CMEERR_EMERGENCYCALL_ONLY         = 32,  /*!< @if Eng Network not allowed, emergency calls only
+                                                     @else 网络不允许，仅支持紧急呼叫 @endif */
+} hfp_ag_cmee_error_t;
+
+/**
+ * @if Eng
+ * @brief The mode of clcc.
+ * @else
+ * @brief 模式
+ * @endif
+ */
+typedef enum {
+    HFP_AG_CLCC_VOICE = 0,
+    HFP_AG_CLCC_DATA = 1,
+    HFP_AG_CLCC_FAX = 2,
+} hfp_ag_clcc_mode_t;
 
 /**
  * @if Eng
@@ -248,6 +333,23 @@ typedef enum {
  * @endif
  */
 typedef enum {
+    HFP_AG_COPS_AUTO = 0,       /*!< @if Eng Automatic (<oper> field is ignored) @else 自动 @endif */
+    HFP_AG_COPS_MANU = 1,       /*!< @if Eng Manual (<oper> field shall be present, and <AcT> optionally)
+                                     @else 手动 @endif */
+    HFP_AG_COPS_OFF = 2,        /*!< @if Eng Deregister from network @else 断开网络 @endif */
+    HFP_AG_COPS_DISABLE = 3,    /*!< @if Eng set only <format> (for read command +COPS?),
+                                     do not attempt registration/deregistration (<oper> and <AcT> fields are ignored);
+                                     this value is not applicable in read command response
+                                     @else 仅在读命令中配置 @endif */
+    HFP_AG_COPS_MANU_AUTO = 4,   /*!< @if Eng manual/automatic (<oper> field shall be present);
+                                     if manual selection fails, automatic mode (<mode>=0) is entered
+                                     @else 自动/手动自动切换 @endif */
+} hfp_ag_cops_mode_t;
+
+typedef struct {
+    uint8_t type;      /*!< @if Eng The format of the phone number provided, the region of value is 128-175
+                            @else 电话号码类型，值范围是128-175 @endif */
+    uint8_t service;   /*!< @if Eng Indicates which service this phone number relates to.
                             Shall be either 4 (voice) or 5 (fax). See @ref hfp_ag_cnum_service_t
                             @else 服务类型，协议支持4或5，见 @ref hfp_ag_cnum_service_t @endif */
     uint8_t num_len;                             /*!< @if Eng The length of the phone number @else 电话号码长度 @endif */
@@ -259,6 +361,7 @@ typedef enum {
 } hfp_phone_info_t;
 
 typedef struct {
+    uint8_t idx;       /*!< @if Eng The numbering (start with 1) of the call given by the sequence of setting up or
                             receiving the calls @else 通话记录索引 @endif */
     uint8_t dir;       /*!< @if Eng Direction, see @ref hfp_ag_clcc_dir_t
                             @else 方向，见 @ref hfp_ag_clcc_dir_t @endif */
