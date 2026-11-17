@@ -35,7 +35,6 @@ extern "C" {
 
 #if defined (CONFIG_DRIVERS_USB_4G_MODEM) || defined (CONFIG_DRIVERS_USB_SERIAL)
 #ifdef CONFIG_NET_LWIP_SACK
-extern uint32_t u3g_write_from_shell(int argc, const char **argv);
 #endif
 #endif
 

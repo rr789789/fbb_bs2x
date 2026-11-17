@@ -67,10 +67,6 @@ extern "C" {
 
 #define NETDEV_RXERRORS(a)
 
-void rndis_net_lock(void);
-void rndis_net_unlock(void);
-#define net_lock() rndis_net_lock()
-#define net_unlock() rndis_net_unlock()
 
 typedef uint32_t wdparm_t;
 typedef uint32_t irqstate_t;
@@ -146,13 +142,7 @@ struct net_driver_s
   int (*d_txavail)(struct net_driver_s *driver);
 };
 
-void netdev_register(struct net_driver_s *netdev);
-void netdev_unregister(struct net_driver_s *netdev);
-void rndis_get_composite_devdesc(struct composite_devdesc_s *dev);
 
-void rndis_workqueue_init(struct work_s *work, worker_t worker);
-int work_queue(int qid, FAR struct work_s *work, worker_t worker,
-               FAR void *arg, clock_t delay);
 
 #ifdef __cplusplus
 }

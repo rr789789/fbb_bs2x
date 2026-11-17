@@ -137,139 +137,15 @@ typedef struct pcm_config {
  */
 typedef void (*pcm_callback_t)(uint32_t *left_buff, uint32_t *right_buff, uint32_t length);
 
-/**
- * @if Eng
- * @brief  Initialize the PCM.
- * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
- * @param  [in]  callback PCM callback.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t.
- * @else
- * @brief  初始化PCM。
- * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
- * @param  [in]  callback PCM回调函数。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_pcm_init(sio_bus_t bus, pcm_callback_t callback);
 
-/**
- * @if Eng
- * @brief  Deinitialize the PCM.
- * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t.
- * @else
- * @brief  去初始化PCM。
- * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_pcm_deinit(sio_bus_t bus);
 
-/**
- * @if Eng
- * @brief  Configured PCM Device.
- * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
- * @param  [in]  config Configuration of the PCM device.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t.
- * @else
- * @brief  配置PCM设备。
- * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
- * @param  [in]  config PCM设备的配置信息。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_pcm_set_config(sio_bus_t bus, const pcm_config_t *config);
 
-/**
- * @if Eng
- * @brief  Get the configuration of PCM Device.
- * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
- * @param  [in]  config Configuration of the PCM device.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t.
- * @else
- * @brief  获取PCM设备的配置信息。
- * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
- * @param  [in]  config PCM设备的配置信息。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_pcm_get_config(sio_bus_t bus, pcm_config_t *config);
 
-/**
- * @if Eng
- * @brief  Write data to the PCM device.
- * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
- * @param  [in]  data Pointer to transfer data. @ref pcm_tx_data_t.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t.
- * @else
- * @brief  写入数据到PCM设备。
- * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
- * @param  [in]  data 数据传输指针，参考 @ref pcm_tx_data_t 。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_pcm_write_data(sio_bus_t bus, pcm_tx_data_t *data);
 
-/**
- * @if Eng
- * @brief  Start to read data from the PCM device.
- * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t
- * @else
- * @brief  开始从PCM设备中读取数据。
- * @param  [in]  bus 指定的SIO接口。参考 @ref sio_bus_t
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败。参考 @ref errcode_t
- * @endif
- */
-errcode_t uapi_pcm_read_start(sio_bus_t bus);
 
 #if defined(CONFIG_PCM_SUPPORT_LOOPBACK) && (CONFIG_PCM_SUPPORT_LOOPBACK == 1)
-/**
- * @if Eng
- * @brief  Open loop mode of the PCM.
- * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
- * @param  [in]  en Enable loop back mode or not.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t.
- * @else
- * @brief  打开自测模式。
- * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
- * @param  [in]  en 是否开启回环模式。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_pcm_loopback(sio_bus_t bus, bool en);
 #endif  /* CONFIG_PCM_SUPPORT_LOOPBACK */
 
-/**
- * @if Eng
- * @brief  Get the PCM received data.
- * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
- * @param  [in]  data Pointer to received data, see @ref pcm_rx_data_t.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t.
- * @else
- * @brief  获取PCM接收数据。
- * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
- * @param  [in]  data 接收数据指针，参考 @ref pcm_rx_data_t 。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_pcm_get_data(sio_bus_t bus, pcm_rx_data_t *data);
 
 /**
  * @}

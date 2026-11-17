@@ -25,20 +25,6 @@ extern "C" {
  * @{
  */
 
-/**
- * @if Eng
- * @brief  Obtain the nandflash ID.
- * @param  [in]  id The pointer to store the returned ID.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t
- * @else
- * @brief  获取Nand Flash的ID。
- * @param  [in]  id 用于存储ID的数据指针。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_nandflash_read_id(uint16_t *id);
 
 /**
  * @}

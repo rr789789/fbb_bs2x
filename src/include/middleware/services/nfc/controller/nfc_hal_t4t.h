@@ -140,82 +140,9 @@ static inline bool NFC_HAL_IsT4TSwSucc(uint8_t sw1, uint8_t sw2)
     return ((sw1 == CMD_COMPLETE_SW1) && (sw2 == CMD_COMPLETE_SW2));
 }
 
-/**
- * @if Eng
- * @brief  T4T Poller send select NDEF tag application by AID command and get response.
- * @param  [in,out] rApduInfo  T4T response APDU structure. For details, see @ref NfcHalT4tRApdu.
- * @retval NFC_OK   Success.
- * @retval Other    Failure. For details, see @ref NfcErrorCode.
- * @else
- * @brief  T4T轮询设备发送根据AID选择NDEF应用命令并接收回复。
- * @param  [in,out] rApduInfo  T4T 回复APDU内容结构体。 参考 @ref NfcHalT4tRApdu 。
- * @retval NFC_OK   成功。
- * @retval Other    失败。 参考 @ref NfcErrorCode 。
- * @endif
- */
-NfcErrorCode NFC_HAL_T4TPollerSelectAid(NfcHalT4tRApdu *rApduInfo);
 
-/**
- * @if Eng
- * @brief  T4T Poller send select file by FID command and get response.
- * @param  [in]     fid  File id.
- * @param  [in,out] rApduInfo  T4T response APDU structure. For details, see @ref NfcHalT4tRApdu.
- * @retval NFC_OK   Success.
- * @retval Other    Failure. For details, see @ref NfcErrorCode.
- * @else
- * @brief  T4T轮询设备发送根据FID选择文件命令并接收回复。
- * @param  [in]     fid  文件标识符。
- * @param  [in,out] rApduInfo  T4T 回复APDU内容结构体。 参考 @ref NfcHalT4tRApdu 。
- * @retval NFC_OK   成功。
- * @retval Other    失败。 参考 @ref NfcErrorCode 。
- * @endif
- */
-NfcErrorCode NFC_HAL_T4TPollerSelectFile(uint16_t fid, NfcHalT4tRApdu *rApduInfo);
 
-/**
- * @if Eng
- * @brief  T4T Poller send READ_BINARY command and get response.
- * @param  [in]     offset  The address offset in bytes from the beginning of the NDEF File to start reading.
- * @param  [in]     expRspLen  Expected response length. \n
- *                  It indicates the maximum length of the data field in the response APDU. \n
- *                  It should not be greater than dataBuffSize in @ref NfcHalT4tRApdu and @ref T4T_DATA_MAX_LEN.
- * @param  [in,out] rApduInfo  T4T response APDU structure. For details, see @ref NfcHalT4tRApdu.
- * @retval NFC_OK   Success.
- * @retval Other    Failure. For details, see @ref NfcErrorCode.
- * @else
- * @brief  T4T轮询设备发送读数据命令并接收回复。
- * @param  [in]     offset  相较于NDEF文件开头，读取位置的地址偏移量。
- * @param  [in]     expRspLen  期望接收回复的大小。 \n
- *                  该值表示回复APDU中数据域的最大长度。 \n
- *                  该值不应大于 @ref NfcHalT4tRApdu 中的dataBuffSize，以及 @ref T4T_DATA_MAX_LEN 。
- * @param  [in,out] rApduInfo  T4T 回复APDU内容结构体。 参考 @ref NfcHalT4tRApdu 。
- * @retval NFC_OK   成功。
- * @retval Other    失败。 参考 @ref NfcErrorCode 。
- * @endif
- */
-NfcErrorCode NFC_HAL_T4TPollerReadData(uint16_t offset, uint8_t expRspLen, NfcHalT4tRApdu *rApduInfo);
 
-/**
- * @if Eng
- * @brief  T4T Poller send UPDATE_BINARY command and get response.
- * @param  [in]     offset  The address offset in bytes from the beginning of the NDEF File to start writing.
- * @param  [in]     data  Data buffer to write.
- * @param  [in]     dataLen  Data length. For maximum length, see @ref T4T_DATA_MAX_LEN.
- * @param  [in,out] rApduInfo  T4T response APDU structure. For details, see @ref NfcHalT4tRApdu.
- * @retval NFC_OK   Success.
- * @retval Other    Failure. For details, see @ref NfcErrorCode.
- * @else
- * @brief  T4T轮询设备发送写数据命令并接收回复。
- * @param  [in]     offset  相较于从NDEF文件开头，写入位置的地址偏移量。
- * @param  [in]     data  所要写入的内容。
- * @param  [in]     dataLen  写入内容的大小。最大值参考 @ref T4T_DATA_MAX_LEN 。
- * @param  [in,out] rApduInfo  T4T 回复APDU内容结构体。 参考 @ref NfcHalT4tRApdu 。
- * @retval NFC_OK   成功。
- * @retval Other    失败。 参考 @ref NfcErrorCode 。
- * @endif
- */
-NfcErrorCode NFC_HAL_T4TPollerWriteData(uint16_t offset, const uint8_t *data, uint8_t dataLen,
-                                        NfcHalT4tRApdu *rApduInfo);
 
 #ifdef __cplusplus
 }

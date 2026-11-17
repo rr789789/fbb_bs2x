@@ -70,68 +70,10 @@ typedef struct mem_monitor_config {
  */
 typedef void (*uapi_mem_monitor_callback_t)(uint32_t addr, uint32_t id);
 
-/**
- * @if Eng
- * @brief  Initialize the MEM_Monitor.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t.
- * @else
- * @brief  初始化MEM_Monitor。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_mem_monitor_init(void);
 
-/**
- * @if Eng
- * @brief  Deinitialize the MEM_Monitor.
- * @else
- * @brief  去初始化MEM_Monitor。
- * @endif
- */
-void uapi_mem_monitor_deinit(void);
 
-/**
- * @if Eng
- * @brief  Enable the specified MEM_Monitor.
- * @param  [in]  monitor Indicates the index of MEM_Monitor want to enable.
- * @param  [in]  callback The MEM_Monitor callback of the interrupt.
- * @else
- * @brief  使能指定的MEM_Monitor。
- * @param  [in]  monitor MEM_Monitor的索引。
- * @param  [in]  callback 中断的MEM_Monitor回调。
- * @endif
- */
-void uapi_mem_monitor_enable(mem_monitor_t monitor, uapi_mem_monitor_callback_t callback);
 
-/**
- * @if Eng
- * @brief  Disable the specified MEM_Monitor.
- * @param  [in]  monitor Indicates the index of MEM_Monitor want to disable.
- * @else
- * @brief  去使能MEM_Monitor。
- * @param  [in]  monitor MEM_Monitor的索引。
- * @endif
- */
-void uapi_mem_monitor_disable(mem_monitor_t monitor);
 
-/**
- * @if Eng
- * @brief  Set the Monitoring address and Monitoring mode for a MEM_Monitor section.
- * @param  [in]  monitor Indicates the index of MEM_Monitor.
- * @param  [in]  config Configuration of the section need to set, see @ref mem_monitor_config_t.
- * @retval ERRCODE_SUCC   Success.
- * @retval Other          Failure. For details, see @ref errcode_t .
- * @else
- * @brief  设置监控地址段以及工作模式。
- * @param  [in]  monitor MEM_Monitor的索引
- * @param  [in]  config 内存监控段的需要设置。 see @ref mem_monitor_config_t 。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败，参考 @ref errcode_t 。
- * @endif
- */
-errcode_t uapi_mem_monitor_set_section(mem_monitor_t monitor, mem_monitor_config_t *config);
 
 /**
  * @}

@@ -34,6 +34,4 @@ typedef struct {
     uint8_t *smooth_num;
 } slem_pos_dis_prob;
 
-errcode_slem slem_alg_calc_pos(float (*anchorPara)[3], slem_pos_dis_prob *p_dis_prob, slem_pos_cfg *cfg, uint8_t key_id,
-                               slem_tag_pos *result);
 #endif

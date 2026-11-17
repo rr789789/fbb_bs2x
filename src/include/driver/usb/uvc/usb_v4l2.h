@@ -388,7 +388,6 @@ struct v4l2_buffer
   uint32_t reserved;
 };
 
-uint8_t *uvc_get_frame_buf(struct file *filep, uint32_t index, uint32_t offset);
 
 #ifdef __cplusplus
 }

@@ -95,49 +95,7 @@ typedef struct {
     bt_avrcp_tg_get_media_status_cbks   get_media_status_cbk;
 } bt_avrcp_tg_bts_cbk;
 
-/**
- * @if Eng
- * @brief  Use this funtion to register callback function of avrcp tg media.
- * @par Description:
- *           Use this funtion to register callback function of avrcp tg media.
- * @attention  NULL
- * @param  [in]  func type  #bt_avrcp_tg_bts_cbk *, a poniter of the callback funcs.
- * @retval #td_void  no return value.
- * @par Dependency:
- * @li bt_audio.h
- * @else
- * @brief  媒体注册Avrcp TG回调函数。
- * @par 说明:媒体注册Avrcp TG回调函数。
- * @attention  NULL
- * @param  [in]  func type  #bt_avrcp_tg_bts_cbk *, 指向回调函数接口定义的指针, 参考 {@link bt_avrcp_tg_bts_cbk}。
- * @retval #td_void  无返回值。
- * @par 依赖:
- * @li bt_audio.h
- * @endif
- */
-td_void bt_avrcp_tg_register_audio_cbk(bt_avrcp_tg_bts_cbk *func);
 
-/**
- * @if Eng
- * @brief  Use this funtion to deregister callback function of avrcp tg media.
- * @par Description:
- *           Use this funtion to deregister callback function of avrcp tg media.
- * @attention  NULL
- * @param  [in]  #td_void
- * @retval #td_void  no return value.
- * @par Dependency:
- * @li bt_audio.h
- * @else
- * @brief  媒体去注册Avrcp TG回调函数。
- * @par 说明:媒体去注册Avrcp TG回调函数。
- * @attention  NULL
- * @param  [in]  #td_void
- * @retval #td_void  无返回值。
- * @par 依赖:
- * @li bt_audio.h
- * @endif
- */
-td_void bt_avrcp_tg_degister_audio_cbk(td_void);
 
 /**
  * @}

@@ -158,48 +158,7 @@ typedef struct NfcHalT3tUpdateRspParamsStruct {
     uint8_t flag2;
 } NfcHalT3tUpdateRspParams;
 
-/**
- * @if Eng
- * @brief  T3T poller send CHECK command and receive response.
- * @param  [in]     cmdParams  The structure storing T3T CHECK command parameters. \n
- *                             For details, see @ref NfcHalT3tCmdParams.
- * @param  [out]    rspParams  The structure storing T3T response parameters of CHECK command. \n
- *                             For details, see @ref NfcHalT3tCheckRspParams.
- * @retval NFC_OK   Success.
- * @retval Other    Failure. For details, see @ref NfcErrorCode.
- * @else
- * @brief  T3T轮询设备发送查询命令并接收响应。
- * @param  [in]     cmdParams  查询命令所需参数结构体。 详情参考 @ref NfcHalT3tCmdParams 。
- * @param  [out]    rspParams  查询命令的响应参数结构体。 详情参考 @ref NfcHalT3tCheckRspParams 。
- * @retval NFC_OK   成功。
- * @retval Other    失败。 参考 @ref NfcErrorCode 。
- * @endif
- */
-NfcErrorCode NFC_HAL_T3TPollCheckCmd(NfcHalT3tCmdParams *cmdParams, NfcHalT3tCheckRspParams *rspParams);
 
-/**
- * @if Eng
- * @brief  T3T poller send UPDATE command and receive response.
- * @param  [in]     cmdParams  The structure storing T3T UPDATE command parameters. \n
- *                             For details, see @ref NfcHalT3tCmdParams.
- * @param  [out]    rspParams  The structure storing T3T response parameters of UPDATE command. \n
- *                             For details, see @ref NfcHalT3tUpdateRspParams.
- * @param  [in]     writeData  Data buffer to write.
- * @param  [in]     writeDataLen  The byte length of data buffer.
- * @retval NFC_OK   Success.
- * @retval Other    Failure. For details, see @ref NfcErrorCode.
- * @else
- * @brief  T3T轮询设备发送更新命令并接收响应。
- * @param  [in]     cmdParams  更新命令所需参数结构体。 详情参考 @ref NfcHalT3tCmdParams 。
- * @param  [out]    rspParams  更新命令的响应参数结构体。 详情参考 @ref NfcHalT3tCheckRspParams 。
- * @param  [in]     writeData  要写入的内容。
- * @param  [in]     writeDataLen  要写入的长度。
- * @retval NFC_OK   成功。
- * @retval Other    失败。 参考 @ref NfcErrorCode 。
- * @endif
- */
-NfcErrorCode NFC_HAL_T3TPollUpdateCmd(NfcHalT3tCmdParams *cmdParams, NfcHalT3tUpdateRspParams *rspParams,
-                                      const uint8_t *writeData, uint8_t writeDataLen);
 
 #ifdef __cplusplus
 }

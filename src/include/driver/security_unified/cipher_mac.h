@@ -57,9 +57,6 @@ extern "C" {
             若支持 keyslot，则必须使用方法2，否则只能使用方法1.
  * @endif
  */
-errcode_t uapi_drv_cipher_symc_aes_cmac(const uint8_t *data, uint32_t data_len,
-    const uint8_t *key, uint32_t key_len, uint32_t keyslot_handle,
-    uint8_t out_mac[16]);
 
 /**
  * @}

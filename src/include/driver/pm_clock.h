@@ -74,44 +74,8 @@ uint32_t uapi_clock_crg_get_freq(clock_crg_id_t id);
  */
 void uapi_clock_clken_config(clock_clken_id_t id, bool clk_en);
 
-/**
- * @if Eng
- * @brief  Config the CLOCK selector.
- * @param  [in]  id The CLOCK selector ID.
- * @param  [in]  clk_sel Configured value of the CLOCK selector.
- * @else
- * @brief  配置时钟选择器。
- * @param  [in]  id 时钟选择器ID。
- * @param  [in]  clk_sel 时钟选择器配置值。
- * @endif
- */
-void uapi_clock_clksel_config(clock_clksel_id_t id, uint8_t clk_sel);
 
-/**
- * @if Eng
- * @brief  Config the CLOCK frequency divisor.
- * @param  [in]  id The CLOCK divider ID.
- * @param  [in]  clk_div The CLOCK frequency divisor.
- * @else
- * @brief  配置时钟分频系数。
- * @param  [in]  id 时钟分频器ID。
- * @param  [in]  clk_div 时钟频率分频系数。
- * @endif
- */
-void uapi_clock_clkdiv_config(clock_clkdiv_id_t id, uint8_t clk_div);
 
-/**
- * @if Eng
- * @brief  Get the CLOCK frequency divisor.
- * @param  [in]  id The CLOCK divider ID.
- * @return The CLOCK frequency divisor.
- * @else
- * @brief  获取时钟分频系数。
- * @param  [in]  id 时钟分频器ID。
- * @return 时钟分频系数。
- * @endif
- */
-uint8_t uapi_clock_get_clkdiv(clock_clkdiv_id_t id);
 
 /**
  * @if Eng
