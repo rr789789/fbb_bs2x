@@ -143,9 +143,6 @@
   #ifdef OS_DFX_SUPPORT
   #include "os_dfx.h"
   #endif
-  #if defined(CONFIG_SECURE_STORAGE_SUPPORT)
-  #include "security_init.h"
-  #endif
   #if defined(SUPPORT_EXTERN_FLASH)
   #include "flash.h"
   #include "flash_porting.h"

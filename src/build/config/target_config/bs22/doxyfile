@@ -851,7 +851,6 @@ INPUT                  =    ./../../../../build/config/target_config/bs22/doc/dr
                             ./../../../../include/driver/qdec.h \
                             ./../../../../include/driver/sfc.h \
                             ./../../../../include/driver/spi.h \
-                            ./../../../../include/driver/ssi.h \
                             ./../../../../include/driver/systick.h \
                             ./../../../../include/driver/tcxo.h \
                             ./../../../../include/driver/timer.h \

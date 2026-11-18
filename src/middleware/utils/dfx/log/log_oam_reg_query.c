@@ -13,7 +13,6 @@
 #include "log_oam_msg.h"
 #include "log_common.h"
 #ifdef USE_GPIO_SIMULATE_SSI
-#include "ssi.h"
 #include "tcxo.h"
 #endif
 #include "log_oam_reg_query.h"
