@@ -6,6 +6,40 @@ config LOSCFG_KERNEL_MIN
     help
       This option will enable mini kernel of LiteOS.
 
+config LOSCFG_KERNEL_OBJ_DYNAMIC_ALLOC
+    bool "Enable obj dynamic alloc"
+    default n 
+    help
+      This option will enable dynamic alloc obj.
+ 
+config LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+    bool "Enable Task dynamic alloc"
+    default n
+    depends on LOSCFG_KERNEL_OBJ_DYNAMIC_ALLOC
+    help
+      This option will enable dynamic alloc for Task control block.
+ 
+config LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
+    bool "Enable Swtmr dynamic alloc"
+    default n
+    depends on LOSCFG_KERNEL_OBJ_DYNAMIC_ALLOC
+    help
+      This option will enable dynamic alloc for Software Timer control block.
+ 
+config LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+    bool "Enable Queue dynamic alloc"
+    default n
+    depends on LOSCFG_KERNEL_OBJ_DYNAMIC_ALLOC
+    help
+      This option will enable dynamic alloc for Queue control block.
+ 
+config LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
+    bool "Enable Sem dynamic alloc"
+    default n
+    depends on LOSCFG_KERNEL_OBJ_DYNAMIC_ALLOC
+    help
+      This option will enable dynamic alloc for Semaphore control block.
+
 menuconfig LOSCFG_KERNEL_SMP
     bool "Enable Kernel SMP"
     default n

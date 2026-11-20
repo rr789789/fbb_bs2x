@@ -91,6 +91,7 @@
 						.text.evt_task_gle_acb_abnormal_cbk .text.evt_task_gle_acb_init_link_segment \
 						.text.evt_sched_delete_task \
 						.text.lm_gle_llcp_phy_update_ind_srv_act_replace \
+						.text.lm_ble_acl_srv_host_suggest_data_length_replace \
 						)
 		*libbt_host.a:*.o* (.text.gaph_smp_cfm_cbk_replace .text.smp_key_distribute_go_replace \
 							.text.smp_tk_ask_replace .text.smp_ecdh_public_key_generate_replace \

@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="dev connect already,return ok! @gap_ui.c(63),ERROR" ID="0xdb5c01fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="create gap_context failed @gap_ui.c(72),ERROR" ID="0xdb5c0242" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap_create_connection_async enter! @gap_ui.c(76),INFO" ID="0xdb5c0265" />
+			</MSG_LOG>

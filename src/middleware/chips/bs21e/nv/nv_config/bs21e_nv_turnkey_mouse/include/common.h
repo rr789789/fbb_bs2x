@@ -86,7 +86,7 @@ typedef struct {
     uint8_t connect_flag;   // mouse_conn_flag
     uint8_t ble_pair_flag;
     uint8_t sle_pair_flag;
-    uint8_t mode;
+    uint8_t mode;           // app_mouse_mode_t
 } mouse_channel_info_t;
 
 typedef struct {
@@ -97,7 +97,7 @@ typedef struct {
     uint8_t sle_mouse_channel;
     uint8_t ble_loop_mac;
     uint8_t sle_loop_mac;
-    uint8_t status;
+    uint8_t status; // mouse_pair_status_t
     mouse_channel_info_t channel_info[CHANNEL_MAX_NUM];
 } mouse_pair_info_t;
 

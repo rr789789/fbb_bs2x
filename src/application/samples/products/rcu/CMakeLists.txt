@@ -31,6 +31,13 @@ list(APPEND SOURCES_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/rcu/sle_service/sle_service_bas.c
     ${CMAKE_CURRENT_SOURCE_DIR}/rcu/sle_service/sle_service_ntf.c
 )
+
+if(DEFINED CONFIG_SLE_UPG_ENABLE)
+list(APPEND SOURCES_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/rcu/sle_rcu_server/sle_rcu_ota_server.c
+)
+endif()
+
 list(APPEND HEADER_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/rcu/sle_rcu_server
     ${CMAKE_CURRENT_SOURCE_DIR}/rcu/sle_service

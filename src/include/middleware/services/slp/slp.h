@@ -404,6 +404,22 @@ typedef enum {
                                             @else slp光标中高速移动 @endif */
 } SlpCursorSpeed;
 
+/**
+ * @if Eng
+ * @brief Enum of slp click tremor prevention sensitivity
+ * @else
+ * @brief slp点击防抖
+ * @endif
+ */
+typedef enum {
+    SLP_CLICK_TREMOR_PREV_SENS_LOW = 0,     /*!< @if Eng slp click tremor prevention low sensitivity
+                                                 @else slp点击防抖低灵敏度 @endif */
+    SLP_CLICK_TREMOR_PREV_SENS_MEDIUM,      /*!< @if Eng slp click tremor prevention medium sensitivity
+                                                 @else slp点击防抖中灵敏度 @endif */
+    SLP_CLICK_TREMOR_PREV_SENS_HIGH,        /*!< @if Eng slp click tremor prevention high sensitivity
+                                                 @else slp点击防抖高灵敏度 @endif */
+} SlpClickTremorPrevSens;
+
 #pragma pack(1)
 /**
  * @if Eng
@@ -415,10 +431,16 @@ typedef enum {
 typedef struct {
     uint8_t cursorSpeed;               /*!< @if Eng slp cursor speed, @ref SlpCursorSpeed
                                             @else slp光标移动速度，参考 { @ref SlpCursorSpeed }. @endif */
+    uint8_t clickTremorPrevSens;       /*!< @if Eng slp click tremor prevention sensitivity, @ref SlpClickTremorPrevSens
+                                            @else slp点击防抖灵敏度，参考 { @ref SlpClickTremorPrevSens }. @endif */
+    int16_t cursorVerOffset;           /*!< @if Eng cursor vertical offset, unit: mm, range:[-1000, 1000]
+                                            @else 光标竖直偏移量，单位：毫米，取值范围：[-1000, 1000] @endif */
     uint16_t width;                    /*!< @if Eng screen width, unit: mm
                                             @else 屏幕宽度，单位：毫米 @endif */
     uint16_t height;                   /*!< @if Eng screen height, unit: mm
                                             @else 屏幕高度，单位：毫米. @endif */
+    int16_t dongleAntPoseOffset;       /*!< @if Eng dongle antenna pose offset, unit: mm
+                                            @else dongle天线位置偏移量，单位：毫米. @endif */
 } SlpScreenParam;
 #pragma pack()
 
@@ -499,6 +521,8 @@ typedef struct {
                                              @else 屏幕参数 @endif */
     SlpRfSwParam rfSwParam;             /*!< @if Eng RF switch parameters
                                              @else 射频开关控制参数 @endif */
+    uint8_t accWakeupThreshold;         /*!< @if Eng Acc wakeup threshold, cfg this parameter based on the imu manual.
+                                            @else 加速度计唤醒阈值, 结合imu手册按需配置 @endif */
 } SlpLocalAtt;
 
 /**
@@ -641,6 +665,28 @@ typedef struct {
 
 /**
  * @if Eng
+ * @brief Struct of IMU raw data
+ * @else
+ * @brief IMU原始数据
+ * @endif
+ */
+typedef struct {
+    int16_t accX;                   /*!< @if Eng accelerometer x-axis data, needs to be mapped to ±8g
+                                         @else 加速度计x轴数据，需要映射到±8g @endif */
+    int16_t accY;                   /*!< @if Eng accelerometer y-axis data, needs to be mapped to ±8g
+                                         @else 加速度计y轴数据，需要映射到±8g @endif */
+    int16_t accZ;                   /*!< @if Eng accelerometer z-axis data, needs to be mapped to ±8g
+                                         @else 加速度计z轴数据，需要映射到±8g @endif */
+    int16_t gyroX;                  /*!< @if Eng gyroscope x-axis data, needs to be mapped to ±2000 degree/second
+                                         @else 陀螺仪x轴数据，需要映射到±2000度/秒 @endif */
+    int16_t gyroY;                  /*!< @if Eng gyroscope y-axis data, needs to be mapped to ±2000 degree/second
+                                         @else 陀螺仪y轴数据，需要映射到±2000度/秒 @endif */
+    int16_t gyroZ;                  /*!< @if Eng gyroscope z-axis data, needs to be mapped to ±2000 degree/second
+                                         @else 陀螺仪z轴数据，需要映射到±2000度/秒 @endif */
+} SlpImuRawData;
+
+/**
+ * @if Eng
  * @brief Callback invoked when report cursor data
  * @par Callback invoked when report cursor data
  * @attention 1.This function is called in SLP context,should not be blocked or do long time waiting.
@@ -654,7 +700,7 @@ typedef struct {
  * @param  [in]  cursorResult 光标点数据。
  * @endif
  */
-typedef void (*SlpReportCursorCallback)(SlpCursorRslt *cursorRslt);
+typedef void (*SlpReportCursorCallback)(SlpCursorRslt *cursorRslt, SlpImuRawData *imuRawData);
 
 /**
  * @if Eng
@@ -848,28 +894,6 @@ typedef void (*SlpReportRegValueCallback)(uint32_t addr, uint32_t value);
  * @endif
  */
 typedef void (*SlpReportTsensorCallback)(int16_t tsensor);
-
-/**
- * @if Eng
- * @brief Struct of IMU raw data
- * @else
- * @brief IMU原始数据
- * @endif
- */
-typedef struct {
-    int16_t accX;                   /*!< @if Eng accelerometer x-axis data, needs to be mapped to ±8g
-                                         @else 加速度计x轴数据，需要映射到±8g @endif */
-    int16_t accY;                   /*!< @if Eng accelerometer y-axis data, needs to be mapped to ±8g
-                                         @else 加速度计y轴数据，需要映射到±8g @endif */
-    int16_t accZ;                   /*!< @if Eng accelerometer z-axis data, needs to be mapped to ±8g
-                                         @else 加速度计z轴数据，需要映射到±8g @endif */
-    int16_t gyroX;                  /*!< @if Eng gyroscope x-axis data, needs to be mapped to ±2000 degree/second
-                                         @else 陀螺仪x轴数据，需要映射到±2000度/秒 @endif */
-    int16_t gyroY;                  /*!< @if Eng gyroscope y-axis data, needs to be mapped to ±2000 degree/second
-                                         @else 陀螺仪y轴数据，需要映射到±2000度/秒 @endif */
-    int16_t gyroZ;                  /*!< @if Eng gyroscope z-axis data, needs to be mapped to ±2000 degree/second
-                                         @else 陀螺仪z轴数据，需要映射到±2000度/秒 @endif */
-} SlpImuRawData;
 
 /**
  * @if Eng
@@ -1370,6 +1394,40 @@ ErrcodeSlpClient SlpSetCursorSpeedCommand(SlpCursorSpeed mode);
 
 /**
  * @if Eng
+ * @brief  Set click tremor prevention sensitivity.
+ * @par Description: Set click tremor prevention sensitivity.
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @param  [in]  sens click tremor prevention sensitivity, see @ref SlpClickTremorPrevSens
+ * @else
+ * @brief  设置点击防抖灵敏度。
+ * @par Description: 设置点击防抖灵敏度。
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @param  [in]  sens 点击防抖灵敏度，@ref SlpClickTremorPrevSens
+ * @endif
+ */
+ErrcodeSlpClient SlpSetClickTremorPrevSensCommand(SlpClickTremorPrevSens sens);
+
+/**
+ * @if Eng
+ * @brief  Set cursor vertical offset.
+ * @par Description: Set cursor vertical offset.
+ * @retval ERRCODE_SLPC_SUCCESS Success.
+ * @retval Other        Failure. For details, see @ref ErrcodeSlpClient
+ * @param  [in]  verOffset vertical offset
+ * @else
+ * @brief  设置光标竖直偏移量。
+ * @par Description: 设置光标竖直偏移量。
+ * @retval ERRCODE_SLPC_SUCCESS 成功。
+ * @retval Other        失败。参考 @ref ErrcodeSlpClient
+ * @param  [in]  verOffset 竖直偏移量
+ * @endif
+ */
+ErrcodeSlpClient SlpSetCursorVerOffsetCommand(int16_t verOffset);
+
+/**
+ * @if Eng
  * @brief Enum of SLP command callbacks
  * @else
  * @brief SLP上层命令回调
@@ -1586,8 +1644,8 @@ ErrcodeSlpClient SlpSetTransformParam(SlpTransformParam *param);
  * @endif
  */
 typedef struct {
-    int16_t downtilt;         /*!< @if Eng Dongle tail downtilt, unit:°, range:[-45, 45]
-                                   @else Dongle尾部下倾角，单位：度，取值范围：[-45, 45] @endif */
+    int16_t downtilt;         /*!< @if Eng Dongle tail downtilt, unit:°, range:[-90, 90]
+                                   @else Dongle尾部下倾角，单位：度，取值范围：[-90, 90] @endif */
     int16_t verDisToCarSeat;  /*!< @if Eng Vertical distance to car seat, positive when car seat is below, unit:mm
                                    @else Dongle到汽车座椅的垂直距离，汽车座椅在下为正，单位：毫米 @endif */
     int16_t verDisToSreenTop; /*!< @if Eng Vertical distance to screen top, positive when screen top is below, unit:mm
@@ -1666,23 +1724,6 @@ typedef enum {
  * @endif
  */
 ErrcodeSlpClient SlpSetLogLevel(SlpLogLevel nbLevel, SlpLogLevel wbLevel);
-
-/**
- * @if Eng
- * @brief  Slp set IMU reporting frequency.
- * @par Description: Slp IMU reporting frequency.
- * @param  [in]  freq reporting frequency，unit: Hz, range: 1,2,3,4,5,6,8,10,12,15,16,20,24,30,40,48,60,80,120
- * @retval ERRCODE_SLPC_SUCCESS Success.
- * @retval Other        Failure.
- * @else
- * @brief  设置IMU原始数据上报频率。
- * @par Description: 设置IMU原始数据上报频率。
- * @param  [in]  freq 上报频率, 单位：赫兹, 取值范围：1,2,3,4,5,6,8,10,12,15,16,20,24,30,40,48,60,80,120
- * @retval ERRCODE_SLPC_SUCCESS 成功。
- * @retval Other        失败。
- * @endif
- */
-ErrcodeSlpClient SlpSetImuReportFreq(uint8_t freq);
 
 /**
  * @if Eng

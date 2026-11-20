@@ -24,7 +24,11 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define GPIO_SET_DIR_INPUT
+#ifdef CONFIG_XMIT_WITH_DMA
+#define UART_RX_BUFFER_SIZE     1024
+#else
 #define UART_RX_BUFFER_SIZE     56
+#endif
 
 /* TIoT驱动使用MCU UART个数. */
 enum tiot_uart_port {
@@ -54,10 +58,14 @@ typedef struct {
 
 static tiot_xmit_callbacks g_tiot_xmit_cbs;
 static const uart_extra_attr_t uart_extra_attr = {
-    .tx_dma_enable = 0,                                           /* 0: TX没有使用DMA, 1: TX使用DMA */
+    .tx_dma_enable = true,                                        /* 0: TX没有使用DMA, 1: TX使用DMA */
     .tx_int_threshold = UART_FIFO_INT_TX_LEVEL_EQ_2_CHARACTER,    /* 设置触发中断的Tx fifo水线. */
-    .rx_dma_enable = 0,                                           /* 0: RX没有使用DMA, 1: RX使用DMA */
+    .rx_dma_enable = true,                                        /* 0: RX没有使用DMA, 1: RX使用DMA */
+#ifdef CONFIG_XMIT_WITH_RX_DMA
+    .rx_int_threshold = UART_FIFO_INT_RX_LEVEL_2_LESS_THAN_FULL,  /* 设置触发中断的Rx FIFO水线. */
+#else
     .rx_int_threshold = UART_FIFO_INT_RX_LEVEL_1_2,               /* 设置触发中断的Rx FIFO水线. */
+#endif
 };
 
 /* MCU UART管脚接收回调，按TIoT驱动使用UART个数适配增加。 */

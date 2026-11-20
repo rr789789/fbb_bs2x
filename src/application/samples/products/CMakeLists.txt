@@ -47,6 +47,14 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_RCU)
     add_subdirectory_if_exist(rcu)
 endif()
 
+if(DEFINED CONFIG_SAMPLE_SUPPORT_BLE_OTA_DONGLE)
+    add_subdirectory_if_exist(ble_ota_dongle)
+endif()
+
+if(DEFINED CONFIG_SAMPLE_SUPPORT_BLE_OTA_SERVER)
+    add_subdirectory_if_exist(ble_ota_server)
+endif()
+
 if(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_OTA_DONGLE)
     add_subdirectory_if_exist(sle_ota_dongle)
 endif()
@@ -117,6 +125,10 @@ endif()
 
 if(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_MULTI_CONN)
     add_subdirectory_if_exist(sle_multi_conn)
+endif()
+
+if(DEFINED CONFIG_SAMPLE_SUPPORT_HIFIND)
+    add_subdirectory_if_exist(hifind)
 endif()
 
 set(SOURCES "${SOURCES}" PARENT_SCOPE)

@@ -30,6 +30,7 @@
 #include "los_config.h"
 
 #define OS_BITMAP_MASK 0x1FU
+#define OS_BITMAP_MAX_BITS 32
 
 VOID LOS_BitmapSet(UINT32 *bitmap, UINT16 pos)
 {
@@ -65,4 +66,12 @@ UINT16 LOS_LowBitGet(UINT32 bitmap)
     }
 
     return CTZ(bitmap);
+}
+
+UINT16 LOS_FirstZeroGet(UINT32 bitmap)
+{
+    if (bitmap == 0xFFFFFFFF) {
+        return OS_BITMAP_MAX_BITS;
+    }
+    return CTZ(~bitmap);
 }

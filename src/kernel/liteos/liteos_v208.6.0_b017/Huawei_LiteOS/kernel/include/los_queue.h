@@ -785,6 +785,31 @@ extern UINT32 LOS_QueueDelete(UINT32 queueId);
  */
 extern UINT32 LOS_QueueInfoGet(UINT32 queueId, QUEUE_INFO_S *queueInfo);
 
+#ifndef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+#define OS_QUEUECB_FOREACH(queueCb, index) \
+    UINT32 index; \
+    LosQueueCB *(queueCb); \
+    for ((index) = 0; (index) < LOSCFG_BASE_IPC_QUEUE_LIMIT; (index)++) { \
+        (queueCb) = &g_queueCBArray[index]; \
+        if ((queueCb)->queueStatus == OS_QUEUE_UNUSED) continue
+
+#define OS_QUEUECB_FOREACH_END }
+
+#define OS_QUEUE_CB_FROM_QID(qId) (((qId) < LOSCFG_BASE_IPC_QUEUE_LIMIT) ? \
+                                    &g_queueCBArray[qId] : NULL)
+#else
+#define OS_QUEUECB_FOREACH(queueCb, node) \
+    LOS_DL_LIST *node; \
+    LosQueueCB *(queueCb); \
+    LOS_LIST_FOR_EACH(node, &g_usedQueueCBList) { \
+        (queueCb) = LOS_DL_LIST_ENTRY(node, LosQueueCB, pendList)
+
+#define OS_QUEUECB_FOREACH_END }
+
+#define OS_QUEUE_CB_FROM_QID(qId) \
+    (((qId) < LOSCFG_BASE_IPC_QUEUE_LIMIT) ? g_queueCBMap[qId] : NULL)
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -49,3 +49,21 @@ config SFC_USE_CUSTOMIZED_DEVICE_INFO
     prompt "SFC use custom device information, which is defined in the porting"
     default n
     depends on DRIVER_SUPPORT_SFC
+
+config SFC_CUSTOMER_DEFAULT_MODE
+    bool
+    prompt "SFC use custom default mode, this configuration is used when the Flash ID cannot be matched."
+    default n
+    depends on DRIVER_SUPPORT_SFC
+
+config SFC_CUSTOMER_DEFAULT_READ_TYPE
+    int
+    prompt "SFC customer default read type. For details, see the sfc_port_get_unknown_flash_info API."
+    default 0
+    depends on SFC_CUSTOMER_DEFAULT_MODE
+
+config SFC_CUSTOMER_DEFAULT_WRITE_TYPE
+    int
+    prompt "SFC customer default write type. For details, see the sfc_port_get_unknown_flash_info API."
+    default 0
+    depends on SFC_CUSTOMER_DEFAULT_MODE

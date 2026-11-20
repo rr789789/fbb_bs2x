@@ -195,6 +195,14 @@
             "structure_type": "slp_dongle_three_ant_cali_info_type_t",
             "attributions": 1,
             "value": [18761, 18761, 0, 0, 0, 0, 0, 0, 10000000, 0, 0, 0, 0, 0, 0, 0, 10000000, 0]
+        },
+
+        "radar_delay_cali_info_type_t":{
+            "key_id": "0x14",
+            "key_status": "alive",
+            "structure_type": "radar_delay_cali_info_type_t",
+            "attributions": 1,
+            "value": [0, 0]
         }
     }
 }

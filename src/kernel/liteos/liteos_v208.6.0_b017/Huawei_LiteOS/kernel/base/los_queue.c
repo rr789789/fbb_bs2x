@@ -39,7 +39,34 @@
 #endif
 
 LITE_OS_SEC_BSS LosQueueCB *g_osAllQueue = NULL;
+#ifndef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
 LITE_OS_SEC_BSS STATIC LOS_DL_LIST g_freeQueueList;
+#endif
+
+#ifdef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+DEFINE_OBJ_TEMPLATE(OS_OBJ_TYPE_QUEUECB, queue,
+                    LOSCFG_BASE_IPC_QUEUE_LIMIT,
+                    LOSCFG_QUEUE_CB_BASE_NUM,
+                    sizeof(LosQueueCB));
+ 
+STATIC INLINE LosQueueCB *OsGetQueueCB(VOID)
+{
+    UINT32 queueId;
+    LosQueueCB *queueCb = (LosQueueCB *)ALLOC_OBJ(queue, &queueId);
+    if (queueCb != NULL) {
+        queueCb->queueId = queueId;
+        queueCb->queueState = LOS_UNUSED;
+    }
+    return queueCb;
+}
+ 
+STATIC INLINE VOID OsReleaseQueueCB(LosQueueCB *queueCb)
+{
+    if (queueCb != NULL) {
+        FREE_OBJ(queue, queueCb, queueCb->queueId);
+    }
+}
+#endif
 
 /* Error number for OsQueueBufferOperate */
 #define OS_QUEUE_OPERATE_ERROR_INVALID_TYPE       1
@@ -49,11 +76,16 @@ LITE_OS_SEC_BSS STATIC LOS_DL_LIST g_freeQueueList;
 STATIC INLINE VOID OsQueueNodeRecycle(LosQueueCB *queueNode)
 {
     queueNode->queueState = LOS_UNUSED;
+#ifdef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+    OsReleaseQueueCB(queueNode);
+#else
     LOS_ListTailInsert(&g_freeQueueList, &queueNode->readWriteList[OS_QUEUE_WRITE]);
+#endif
 }
 
 LITE_OS_SEC_TEXT_INIT UINT32 OsQueueInit(VOID)
 {
+#ifndef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
     LosQueueCB *queueNode = NULL;
     UINT32 index;
 
@@ -64,6 +96,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 OsQueueInit(VOID)
         queueNode->queueId = index;
         OsQueueNodeRecycle(queueNode);
     }
+#endif
 
     if (OsQueueDbgInitHook() != LOS_OK) {
         return LOS_ERRNO_QUEUE_NO_MEMORY;
@@ -87,10 +120,19 @@ LITE_OS_SEC_TEXT_INIT STATIC UINT32 OsQueueCreateInternal(UINT16 len, UINT32 *qu
                                                           UINT8 *queue, UINT8 queueMemType)
 {
     LosQueueCB *queueCB = NULL;
+#ifndef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
     LOS_DL_LIST *unusedQueue = NULL;
+#endif
     UINT32 intSave;
 
     SCHEDULER_LOCK(intSave);
+#ifdef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+    queueCB = OsGetQueueCB();
+    if (queueCB == NULL) {
+        SCHEDULER_UNLOCK(intSave);
+        return LOS_ERRNO_QUEUE_NO_MEMORY;
+    }
+#else
     if (LOS_ListEmpty(&g_freeQueueList)) {
         SCHEDULER_UNLOCK(intSave);
         OsQueueCheckHook();
@@ -100,6 +142,7 @@ LITE_OS_SEC_TEXT_INIT STATIC UINT32 OsQueueCreateInternal(UINT16 len, UINT32 *qu
     unusedQueue = LOS_DL_LIST_FIRST(&g_freeQueueList);
     LOS_ListDelete(unusedQueue);
     queueCB = GET_QUEUE_LIST(unusedQueue);
+#endif
     queueCB->queueLen = len;
     queueCB->queueSize = msgSize;
     queueCB->queueHandle = queue;

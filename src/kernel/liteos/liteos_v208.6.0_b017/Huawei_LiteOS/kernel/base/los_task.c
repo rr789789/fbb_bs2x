@@ -82,6 +82,32 @@ STATIC VOID OsConsoleIDSetHook(UINT32 param1,
 STATIC VOID OsExcStackCheckHook(VOID) __attribute__((weakref("OsExcStackCheck")));
 #endif
 
+#ifdef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+#include "los_obj_template.h"
+DEFINE_OBJ_TEMPLATE(OS_OBJ_TYPE_TASKCB, task,
+                    LOSCFG_BASE_CORE_TSK_LIMIT,
+                    LOSCFG_TASK_CB_BASE_NUM,
+                    sizeof(LosTaskCB));
+STATIC INLINE LosTaskCB *OsGetTaskCB(VOID)
+{
+    UINT32 taskId;
+    LosTaskCB *taskCb = (LosTaskCB *)ALLOC_OBJ(task, &taskId);
+    if (taskCb != NULL) {
+        taskCb->taskId = taskId;
+        taskCb->taskStatus = OS_TASK_STATUS_UNUSED;
+        obj_template_task.id_map[taskId] = taskCb;
+    }
+    return taskCb;
+}
+
+STATIC INLINE VOID OsReleaseTaskCB(LosTaskCB *taskCb)
+{
+    if (taskCb != NULL) {
+        FREE_OBJ(task, taskCb, taskCb->taskId);
+    }
+}
+#endif
+
 STATIC VOID OsTaskStackFree(LosTaskCB *taskCB)
 {
 #ifdef LOSCFG_TASK_STACK_DYNAMIC_ALLOCATION
@@ -99,7 +125,11 @@ STATIC VOID OsTaskStackFree(LosTaskCB *taskCB)
     }
 #endif
     taskCB->topOfStack = 0;
+#ifdef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+    (void)OsReleaseTaskCB(taskCB);
+#else
     LOS_ListAdd(&g_losFreeTask, &taskCB->pendList);
+#endif
 }
 
 #ifdef LOSCFG_TASK_JOINABLE
@@ -283,13 +313,19 @@ LITE_OS_SEC_TEXT_INIT UINT32 OsTaskInit(VOID)
 {
     UINT32 index;
 
+#ifndef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
     LOS_ListInit(&g_losFreeTask);
+#endif
     LOS_ListInit(&g_taskRecycleList);
+ 
+#ifndef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+    /* 动态模式：1. 初始化TaskID位图；2. 初始化TaskCB基础池 */
     for (index = 0; index < KERNEL_TSK_LIMIT; index++) {
         g_osTaskCBArray[index].taskStatus = OS_TASK_STATUS_UNUSED;
         g_osTaskCBArray[index].taskId = index;
         LOS_ListTailInsert(&g_losFreeTask, &g_osTaskCBArray[index].pendList);
     }
+#endif
 
     OsPriQueueInit();
 
@@ -894,6 +930,13 @@ LITE_OS_SEC_TEXT_INIT STATIC VOID OsTaskCBInit(LosTaskCB *taskCB, const TSK_INIT
 
 STATIC UINT32 OsTaskGetFreeTaskCB(LosTaskCB **taskCB)
 {
+    #ifdef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+	*taskCB = OsGetTaskCB();
+    if (*taskCB == NULL) {
+        PRINT_ERR("tackCB return null ptr\n");
+        return LOS_ERRNO_TSK_PTR_NULL;
+    }
+#else
     if (LOS_ListEmpty(&g_losFreeTask)) {
         return LOS_ERRNO_TSK_TCB_UNAVAILABLE;
     }
@@ -903,6 +946,7 @@ STATIC UINT32 OsTaskGetFreeTaskCB(LosTaskCB **taskCB)
         return LOS_ERRNO_TSK_PTR_NULL;
     }
     LOS_ListDelete(LOS_DL_LIST_FIRST(&g_losFreeTask));
+#endif
     return LOS_OK;
 }
 
@@ -993,7 +1037,12 @@ STATIC UINT32 OsTaskCreateOnly(UINT32 *taskId, TSK_INIT_PARAM_S *initParam, VOID
 
 LOS_ERREND_REWIND_TCB:
     SCHEDULER_LOCK(intSave);
+#ifdef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+	/* 动态模式：1. 释放TaskID；2. 释放TaskCB */
+    (void)OsReleaseTaskCB(taskCB);
+#else
     LOS_ListAdd(&g_losFreeTask, &taskCB->pendList);
+#endif
 LOS_ERREND:
     SCHEDULER_UNLOCK(intSave);
     return errRet;

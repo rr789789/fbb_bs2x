@@ -99,7 +99,7 @@ static int32_t tiot_fw_read_until(tiot_fw *fw, uint8_t *buff, uint32_t len, uint
     uint32_t read_len = len;
     uint32_t read_cnt = 0;
     while (read_len > 0) {
-        ret = tiot_firmware_read_timeout(fw, &buff[read_cnt], read_len, timeout_ms);
+        ret = tiot_firmware_read(fw, &buff[read_cnt], read_len, timeout_ms);
         if (ret <= 0) {
             return -1;
         }
@@ -160,7 +160,7 @@ static int32_t tiot_fw_ack_handle_hiburn(tiot_fw *fw, const uint8_t *cmd, uint16
 
     tiot_unused(cmd);
     tiot_print_dbg("[TIoT:hiburn]ack handle...\r\n");
-    ret = tiot_firmware_read_timeout(fw, &ack, sizeof(uint8_t), recv_ack_timeout);
+    ret = tiot_firmware_read(fw, &ack, sizeof(uint8_t), recv_ack_timeout);
     if (ret != sizeof(uint8_t)) {
         return TIOT_FW_LOAD_RET_ERR;
     }
@@ -175,7 +175,7 @@ static int32_t tiot_fw_ack_handle_hiburn(tiot_fw *fw, const uint8_t *cmd, uint16
     }
     /* 非空命令时收到STA说明数据错误或超时，等待下一个STA后重发。 */
     if (ack == TIOT_FW_FILE_STA) {
-        ret = tiot_firmware_read_timeout(fw, &ack, sizeof(uint8_t), recv_ack_timeout);
+        ret = tiot_firmware_read(fw, &ack, sizeof(uint8_t), recv_ack_timeout);
         if (ret != sizeof(uint8_t)) {
             return TIOT_FW_LOAD_RET_ERR;
         }
@@ -310,7 +310,7 @@ static int32_t tiot_fw_recv_ack_frame_handle_hiburn(tiot_fw *fw, const uint8_t *
         return TIOT_FW_LOAD_RET_OK;
     }
     while (1) {
-        ret = tiot_firmware_read_timeout(fw, &ack, sizeof(uint8_t), recv_ack_timeout);
+        ret = tiot_firmware_read(fw, &ack, sizeof(uint8_t), recv_ack_timeout);
         if (ret != sizeof(uint8_t)) {
             return TIOT_FW_LOAD_RET_ERR;
         }
@@ -339,7 +339,7 @@ static int32_t tiot_fw_recv_string_handle_hiburn(tiot_fw *fw, const uint8_t *cmd
     tiot_unused(cmd);
     tiot_unused(len);
     while (1) {
-        ret = tiot_firmware_read_timeout(fw, &byte, sizeof(uint8_t), last_byte_timeout);
+        ret = tiot_firmware_read(fw, &byte, sizeof(uint8_t), last_byte_timeout);
         if (ret == 0) {
             break;
         }

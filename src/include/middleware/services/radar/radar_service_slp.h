@@ -221,6 +221,50 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief  radar cali res save mode.
+ * @else
+ * @brief  雷达校准参数保存模式。
+ * @endif
+ */
+typedef enum {
+    RADAR_CALI_RES_SAVE_IN_NV,              /*!< @if Eng radar cali res save mode: save in host nv
+                                                @else   雷达校准参数存储在host NV中 @endif */
+    RADAR_CALI_RES_SAVE_IN_EEPROM,          /*!< @if Eng radar cali res save mode: save in device eeprom
+                                                @else   雷达校准参数存储在device EEPROM中 @endif */
+} radar_cali_res_save_mode_t;
+
+/**
+ * @if Eng
+ * @brief  radar report mode.
+ * @else
+ * @brief  雷达数据上报模式。
+ * @endif
+ */
+typedef enum {
+    RADAR_REPORT_RES = 0,                   /*!< @if Eng radar report mode: only report detection result
+                                                @else   只上报检测结果 @endif */
+    RADAR_REPORT_SLEEP_RAW_DATA = 1,        /*!< @if Eng radar report mode: report both detection result and sleep raw data
+                                                @else   同时上报检测结果和睡眠原始数据 @endif */
+} radar_report_mode_t;
+
+/**
+ * @if Eng
+ * @brief  radar respiration detection result.
+ * @else
+ * @brief  雷达呼吸检测结果信息。
+ * @endif
+*/
+typedef struct {
+    uint16_t resp_rate;             /*!< @if Eng radar detection res: resp rate
+                                        @else    雷达呼吸检测结果：目标呼吸率(次/分钟) @endif */
+    uint16_t resp_wave_point;       /*!< @if Eng radar  detection res: resp wave point
+                                        @else    雷达呼吸检测结果：目标呼吸波形点(取值范围1~100) @endif */
+    uint16_t resp_quality;          /*!< @if Eng radar  detection res: resp quality
+                                        @else    雷达呼吸检测结果：目标呼吸检测质量 @endif */
+} radar_resp_res_t;
+
+/**
+ * @if Eng
  * @brief  radar target detection result.
  * @else
  * @brief  雷达目标检测结果信息。
@@ -235,6 +279,14 @@ typedef struct {
                                                     @else   雷达检测结果：目标角度(0.01度) @endif */
     int16_t vel; /*!< @if Eng radar detection res: target velocity(cm/s)
                                                     @else   雷达检测结果：目标速度(厘米/秒) @endif */
+    uint16_t activity_intensity;    /*!< @if Eng radar detection res: activity intensity
+                                        @else   雷达检测结果：目标活动强度 @endif */
+    radar_resp_res_t resp_res;      /*!< @if Eng radar detection res: target respiration result
+                                        @else   雷达检测结果：呼吸检测结果 @endif */
+    uint16_t reserve0;              /*!< @if Eng radar raw data msg: reserve0
+                                        @else    雷达数据：保留字段0 @endif */
+    uint16_t reserve1;              /*!< @if Eng radar raw data msg: reserve1
+                                        @else    雷达数据：保留字段1 @endif */
 } radar_target_info_t;
 
 /**
@@ -337,13 +389,15 @@ typedef struct {
  */
 typedef struct {
     uint32_t rpt_mode;      /*!< @if Eng radar algorithm basic parameter: report mode. default is 0.
-                                @else   雷达算法基础参数: 数据上报类型，默认值为0 @endif */
+                                @else   雷达算法基础参数: 数据上报类型，默认值为0 see @ref radar_report_mode_t @endif */
     uint32_t sensitivity;   /*!< @if Eng radar algorithm basic parameter: detection sensitivity. default is 0.
                                 @else   雷达算法基础参数: 检测灵敏度, 默认值为0 @endif */
     uint32_t rng_boundary;  /*!< @if Eng radar algorithm basic parameter: detection range boundary. uint cm, default is 700.
                                 @else   雷达算法基础参数: 距离检测边界，单位cm，默认值700 @endif */
     uint32_t delay_time;    /*!< @if Eng radar algorithm basic parameter: delay time. uint s, default is 20.
                                 @else   雷达算法基础参数: 退出时延，单位S，默认值20 @endif */
+    uint16_t ant_space_amp_coef;    /*!< @if Eng radar algorithm basic parameter: antena spce amplify coefficient, default is 10000.
+                                        @else   雷达算法基础参数: 天线间距缩放系数，默认值10000 @endif */
     uint16_t static_create_range;   /*!< @if Eng radar algorithm basic parameter: static target creation range threshold. uint cm, default is 0.
                                         @else   雷达算法基础参数: 静目标允许创建的距离门限。单位cm，默认为0。@endif */
     uint8_t is_wire_down;   /*!< @if Eng radar algorithm basic parameter: is terminal wire heading down or up. 1 for down, 0 for up.
@@ -352,7 +406,23 @@ typedef struct {
                                 @else   雷达算法基础参数: 角度检测边界，单位°，默认值60 @endif */
     uint8_t anti_multipath_mode; /*!< @if Eng radar algorithm parameter: anti-multipath mode. default is 0. see @ref radar_anti_multipath_mode_t.
                                     @else   雷达算法基础参数: 抗多径虚警模式。默认值0 @endif */
+    uint8_t cali_res_save_mode; /*!< @if Eng radar algorithm parameter: cali result save mode. default is 0. see @ref radar_cali_res_save_mode_t.
+                                    @else   雷达算法基础参数: 校准参数存储模式，默认值为0，表示存入Host芯片的NV中。@endif */
 } radar_alg_basic_para_t;
+
+/**
+ * @if Eng
+ * @brief  radar algorithm extra parameter.
+ * @else
+ * @brief  雷达算法额外参数。
+ * @endif
+ */
+typedef struct {
+    uint8_t snapshot_timeout;       /*!< @if Eng radar algorithm extra parameter: snapshot timeout..
+                                        @else   雷达算法额外参数: 快照超时阈值 @endif */
+    uint16_t maintain_time;         /*!< @if Eng radar algorithm extra parameter: maintain time.
+                                        @else   雷达算法额外参数: 外边界维持时间 @endif */
+} radar_alg_extra_para_t;
 
 /**
  * @if Eng
@@ -407,9 +477,25 @@ typedef struct {
                                                         @else   雷达算法参数: AI补偿参数 @endif */
     radar_sensitivity_para_t sensitivity_para;  /*!< @if Eng radar algorithm parameter: sensitivity parameter
                                                         @else   雷达算法参数: 灵敏度参数 @endif */
+    radar_alg_extra_para_t extra_para;          /*!< @if Eng radar algorithm parameter: extra parameter
+                                                        @else   雷达算法参数: 额外参数 @endif */
     uint8_t reserve[RADAR_ALG_PARA_RSV_BYTE];   /*!< @if Eng radar alg parameter: reserve parameter
                                                         @else   雷达算法参数：预留位 @endif */
 } radar_alg_para_t;
+
+/**
+ * @if Eng
+ * @brief  radar factory test info.
+ * @else
+ * @brief  雷达产线测试信息。
+ * @endif
+ */
+typedef struct {
+    uint8_t psnr;                                               /*!< @if Eng radar mfg res: psnr
+                                                                    @else   雷达产线测试信息：信噪比 @endif */
+    uint8_t noise;                                              /*!< @if Eng radar mfg res: noise
+                                                                    @else   雷达产线测试信息：底噪 @endif */
+} radar_factory_test_info_t;
 
 /**
  * @if Eng
@@ -503,6 +589,7 @@ errcode_radar_client_t uapi_radar_set_hardware_para(radar_hardware_para_t *para)
  * @brief  设置雷达算法参数。
  * @par Description: 设置雷达算法参数。
  * @param [in] para 雷达算法参数。
+ * @param [in] is_write_to_nv 是否将参数写入NV。
  * @retval 执行结果错误码。
  * @endif
  */
@@ -627,6 +714,23 @@ errcode_radar_client_t uapi_radar_set_power_status(uint8_t status);
  * @endif
  */
 errcode_radar_client_t uapi_radar_get_status(uint8_t *status);
+
+/**
+ * @if Eng
+ * @brief  get radar factory test info.
+ * @par Description: get radar factory test info.
+ * @param [in] test_info. see @ref radar_factory_test_info_t.
+ * @param [in] cali_res_save_mode. see @ref radar_cali_res_save_mode_t.
+ * @retval error code.
+ * @else
+ * @brief  获取雷达产线测试信息。
+ * @par Description: 获取雷达产线测试信息。
+ * @param [in] test_info 产测信息。
+ * @param [in] cali_res_save_mode 产测结果保存模式。
+ * @retval 执行结果错误码。
+ * @endif
+ */
+errcode_radar_client_t uapi_radar_get_factory_test_info(radar_factory_test_info_t *test_info, uint8_t cali_res_save_mode);
 
 #pragma pack()
 

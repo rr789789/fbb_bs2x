@@ -20,7 +20,6 @@
 #include "sle_rcu_client.h"
 
 #define SLE_MICRO_MULTINUM_ONE                      1
-#define SLE_MICRO_MULTINUM_TWO                      2
 #define SLE_ADDR_INDEX0                             0
 #define SLE_ADDR_INDEX1                             1
 #define SLE_ADDR_INDEX2                             2
@@ -52,9 +51,9 @@ static ssapc_write_param_t g_sle_rcu_send_param = { 0 };
 typedef struct sle_multicon_stru {
     uint8_t current_connect;
     uint8_t connected_num;
-    uint8_t is_connected[CONFIG_RCU_MULTICON_NUM];
-    uint16_t conn_id[CONFIG_RCU_MULTICON_NUM];
-    uint8_t addr[CONFIG_RCU_MULTICON_NUM][SLE_ADDR_LEN];
+    uint8_t is_connected[SLE_MICRO_MULTINUM_ONE];
+    uint16_t conn_id[SLE_MICRO_MULTINUM_ONE];
+    uint8_t addr[SLE_MICRO_MULTINUM_ONE][SLE_ADDR_LEN];
 } sle_multicon_stru_t;
 static sle_multicon_stru_t g_sle_multicon_param = { 0 };
 
@@ -144,6 +143,9 @@ void sle_rcu_start_scan(void)
 
 static void sle_rcu_client_sample_sle_enable_cbk(uint8_t status)
 {
+#if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
+    return;
+#endif
     if (status != 0) {
         osal_printk("%s sle_rcu_client_sample_sle_enable_cbk,status error\r\n", SLE_RCU_DONGLE_LOG);
     } else {
@@ -165,9 +167,7 @@ static void sle_rcu_client_sample_sle_enable_cbk(uint8_t status)
             return;
         }
         osal_printk("%s enter callback of sle enable,start scan!\r\n", SLE_RCU_DONGLE_LOG);
-#if !defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
         sle_rcu_start_scan();
-#endif
     }
 }
 
@@ -181,7 +181,7 @@ static void sle_rcu_client_sample_seek_enable_cbk(errcode_t status)
 static uint8_t sle_rcu_find_unconnect_server_by_addr(uint8_t *server_addr)
 {
     uint8_t i;
-    for (i = 0; i < CONFIG_RCU_MULTICON_NUM; i++) {
+    for (i = 0; i < SLE_MICRO_MULTINUM_ONE; i++) {
         if (g_sle_multicon_param.is_connected[i] == 1) {
             continue;
         }
@@ -202,7 +202,7 @@ static uint8_t sle_rcu_find_unconnect_server_by_addr(uint8_t *server_addr)
 static uint8_t sle_rcu_find_connected_server_by_addr(const uint8_t *server_addr)
 {
     uint8_t i;
-    for (i = 0; i < CONFIG_RCU_MULTICON_NUM; i++) {
+    for (i = 0; i < SLE_MICRO_MULTINUM_ONE; i++) {
         if (g_sle_multicon_param.is_connected[i] == 0) {
             continue;
         }
@@ -223,19 +223,24 @@ static uint8_t sle_rcu_find_connected_server_by_addr(const uint8_t *server_addr)
 
 static void sle_rcu_client_sample_seek_result_info_cbk(sle_seek_result_info_t *seek_result_data)
 {
+    if (seek_result_data == NULL || seek_result_data->data == NULL) {
+        return;
+    }
+
+    uint8_t find_connect_server = 0;
+    find_connect_server = sle_rcu_find_unconnect_server_by_addr(seek_result_data->addr.addr);
+#if !defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
 #if defined(CONFIG_SAMPLE_SUPPORT_CLIENT_TV)
     uint8_t arr[] = {'s', 'l', 'e', '_', 'r', 'c', 'u', '1'};
 #endif
 #if defined(CONFIG_SAMPLE_SUPPORT_CLIENT_OTT)
     uint8_t arr[] = {'s', 'l', 'e', '_', 'r', 'c', 'u', '2'};
 #endif
-    uint8_t find_connect_server = 0;
-    if (seek_result_data == NULL || seek_result_data->data == NULL) {
-        return;
-    }
-    find_connect_server = sle_rcu_find_unconnect_server_by_addr(seek_result_data->addr.addr);
-    if ((find_connect_server < CONFIG_RCU_MULTICON_NUM) &&
+    if ((find_connect_server < SLE_MICRO_MULTINUM_ONE) &&
         (memcmp(seek_result_data->data + SLE_DEV_NAME_OFFSET, arr, sizeof(arr)) == 0)) {
+#else
+    if (find_connect_server < SLE_MICRO_MULTINUM_ONE) {
+#endif
         osal_printk("%s find server addr:[0x%02x:0x%02x:xx:xx:xx:0x%02x], index = %d\r\n", SLE_RCU_DONGLE_LOG,
                     seek_result_data->addr.addr[SLE_ADDR_INDEX0], seek_result_data->addr.addr[SLE_ADDR_INDEX1],
                     seek_result_data->addr.addr[SLE_ADDR_INDEX5], find_connect_server);
@@ -286,7 +291,7 @@ static void sle_rcu_client_sample_connect_state_changed_cbk(uint16_t conn_id, co
 
         g_sle_multicon_param.is_connected[g_sle_multicon_param.current_connect] = 1;
         g_sle_multicon_param.connected_num++;
-        if (g_sle_multicon_param.connected_num < CONFIG_RCU_MULTICON_NUM) {
+        if (g_sle_multicon_param.connected_num < SLE_MICRO_MULTINUM_ONE) {
             sle_rcu_start_scan();
         }
     } else if (conn_state == SLE_ACB_STATE_NONE) {
@@ -295,12 +300,12 @@ static void sle_rcu_client_sample_connect_state_changed_cbk(uint16_t conn_id, co
         osal_printk("%s SLE_ACB_STATE_DISCONNECTED\r\n", SLE_RCU_DONGLE_LOG);
         g_ssap_connect_state = 0;
         uint8_t connected_server_id = sle_rcu_find_connected_server_by_addr(addr->addr);
-        if (connected_server_id < CONFIG_RCU_MULTICON_NUM) {
+        if (connected_server_id < SLE_MICRO_MULTINUM_ONE) {
             g_sle_multicon_param.is_connected[connected_server_id] = 0;
             g_sle_multicon_param.connected_num--;
         }
 #if !defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
-        if (g_sle_multicon_param.connected_num < CONFIG_RCU_MULTICON_NUM) {
+        if (g_sle_multicon_param.connected_num < SLE_MICRO_MULTINUM_ONE) {
             sle_rcu_start_scan();
         }
 #endif
@@ -421,34 +426,12 @@ static void sle_rcu_client_sample_ssapc_cbk_register(ssapc_notification_callback
 
 static void sle_client_tartget_server_init(void)
 {
-    switch (CONFIG_RCU_MULTICON_NUM) {
-        case SLE_MICRO_MULTINUM_ONE:
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX0] = CONFIG_SLE_MULTICON_SERVER1_ADDR0;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX1] = CONFIG_SLE_MULTICON_SERVER1_ADDR1;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX2] = CONFIG_SLE_MULTICON_SERVER1_ADDR2;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX3] = CONFIG_SLE_MULTICON_SERVER1_ADDR3;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX4] = CONFIG_SLE_MULTICON_SERVER1_ADDR4;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX5] = CONFIG_SLE_MULTICON_SERVER1_ADDR5;
-            break;
-        case SLE_MICRO_MULTINUM_TWO:
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX0] = CONFIG_SLE_MULTICON_SERVER1_ADDR0;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX1] = CONFIG_SLE_MULTICON_SERVER1_ADDR1;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX2] = CONFIG_SLE_MULTICON_SERVER1_ADDR2;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX3] = CONFIG_SLE_MULTICON_SERVER1_ADDR3;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX4] = CONFIG_SLE_MULTICON_SERVER1_ADDR4;
-            g_sle_multicon_param.addr[0][SLE_ADDR_INDEX5] = CONFIG_SLE_MULTICON_SERVER1_ADDR5;
-#if defined(CONFIG_SLE_EXSIT_TWO_MULTICON_SERVER)
-            g_sle_multicon_param.addr[1][SLE_ADDR_INDEX0] = CONFIG_SLE_MULTICON_SERVER2_ADDR0;
-            g_sle_multicon_param.addr[1][SLE_ADDR_INDEX1] = CONFIG_SLE_MULTICON_SERVER2_ADDR1;
-            g_sle_multicon_param.addr[1][SLE_ADDR_INDEX2] = CONFIG_SLE_MULTICON_SERVER2_ADDR2;
-            g_sle_multicon_param.addr[1][SLE_ADDR_INDEX3] = CONFIG_SLE_MULTICON_SERVER2_ADDR3;
-            g_sle_multicon_param.addr[1][SLE_ADDR_INDEX4] = CONFIG_SLE_MULTICON_SERVER2_ADDR4;
-            g_sle_multicon_param.addr[1][SLE_ADDR_INDEX5] = CONFIG_SLE_MULTICON_SERVER2_ADDR5;
-#endif
-            break;
-        default:
-            break;
-    }
+    g_sle_multicon_param.addr[0][SLE_ADDR_INDEX0] = CONFIG_SLE_MULTICON_SERVER1_ADDR0;
+    g_sle_multicon_param.addr[0][SLE_ADDR_INDEX1] = CONFIG_SLE_MULTICON_SERVER1_ADDR1;
+    g_sle_multicon_param.addr[0][SLE_ADDR_INDEX2] = CONFIG_SLE_MULTICON_SERVER1_ADDR2;
+    g_sle_multicon_param.addr[0][SLE_ADDR_INDEX3] = CONFIG_SLE_MULTICON_SERVER1_ADDR3;
+    g_sle_multicon_param.addr[0][SLE_ADDR_INDEX4] = CONFIG_SLE_MULTICON_SERVER1_ADDR4;
+    g_sle_multicon_param.addr[0][SLE_ADDR_INDEX5] = CONFIG_SLE_MULTICON_SERVER1_ADDR5;
 }
 
 void sle_rcu_client_init(ssapc_notification_callback notification_cb, ssapc_indication_callback indication_cb)

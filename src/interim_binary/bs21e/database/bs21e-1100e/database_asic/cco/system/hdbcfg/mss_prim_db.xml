@@ -72,8 +72,8 @@
         </USERPLANE_LOG>
     </SUBSYSTEM>
     <SUBSYSTEM NAME="acore" DATA_STRUCT_FILE="..\diag\prot_core_hso_msg_struct_def.txt" DESCRIPTION="" MULTIMODE="acore">
-        <MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="App main @app_os_init.c(328),INFO" ID="0xa0020a45" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[Mcpu mips statistics] total work time: %dus, total idle time: %dus. @app_os_init.c(332),INFO" ID="0xa0020a65" />
+        <MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="App main @app_os_init.c(336),INFO" ID="0xa0020a85" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[Mcpu mips statistics] total work time: %dus, total idle time: %dus. @app_os_init.c(340),INFO" ID="0xa0020aa5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt task list reserve memcpy error @att_common.c(308),ERROR" ID="0xddf209a2" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="gatt find input report reference by report id item is null @att_common.c(419),ERROR" ID="0xddf20d1a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="gatt find input report reference by report id invalid handle @att_common.c(423),ERROR" ID="0xddf20d3a" />
@@ -160,15 +160,16 @@
 			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP][SLEEP]bgtp_bsub_wakeup_irq_handler sleep_time:0x%x, dur_slot:%d, finecnt:%d, 32k:%d @bgtp_sleep_sw_ram.c(265),INFO" ID="0x8964084d" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP][SLEEP]bgtp_bsub_wakeup_irq_handler wkup timeout, curclk:0x%x, slpus:%d, uscnt:%d @bgtp_sleep_sw_ram.c(268),ERROR" ID="0x89640862" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp passkey number atb. @ble_ahia_gap.c(49),INFO" ID="0xd86c018d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp passkey entry does not support. @ble_ahia_gap.c(60),INFO" ID="0xd86c01e5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble remove adv by handle atb. @ble_ahia_gap.c(67),INFO" ID="0xd86c021d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp pair remote device atb. @ble_ahia_gap.c(185),INFO" ID="0xd86c05cd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp remove pair info atb. @ble_ahia_gap.c(227),INFO" ID="0xd86c071d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble add white list atb. @ble_ahia_gap.c(234),INFO" ID="0xd86c0755" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble rmv white list atb. @ble_ahia_gap.c(241),INFO" ID="0xd86c078d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble conn white list atb. @ble_ahia_gap.c(252),INFO" ID="0xd86c07e5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble get white list atb. @ble_ahia_gap.c(263),INFO" ID="0xd86c083d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp set key from btc atb. @ble_ahia_gap.c(293),INFO" ID="0xd86c092d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp pair req result atb. @ble_ahia_gap.c(66),INFO" ID="0xd86c0215" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp passkey entry does not support. @ble_ahia_gap.c(78),INFO" ID="0xd86c0275" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble remove adv by handle atb. @ble_ahia_gap.c(85),INFO" ID="0xd86c02ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp pair remote device atb. @ble_ahia_gap.c(203),INFO" ID="0xd86c065d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp remove pair info atb. @ble_ahia_gap.c(246),INFO" ID="0xd86c07b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble add white list atb. @ble_ahia_gap.c(253),INFO" ID="0xd86c07ed" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble rmv white list atb. @ble_ahia_gap.c(260),INFO" ID="0xd86c0825" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble conn white list atb. @ble_ahia_gap.c(271),INFO" ID="0xd86c087d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble get white list atb. @ble_ahia_gap.c(282),INFO" ID="0xd86c08d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp set key from btc atb. @ble_ahia_gap.c(312),INFO" ID="0xd86c09c5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery service req atb. @ble_ahia_gatt.c(28),INFO" ID="0xd87200e5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt get hid report map req atb. @ble_ahia_gatt.c(37),INFO" ID="0xd872012d" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt find include service req atb. @ble_ahia_gatt.c(47),INFO" ID="0xd872017d" />
@@ -235,12 +236,15 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc remove extern adv err! len = %d @ble_ahib_gap.c(360),ERROR" ID="0xde9e0b42" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc passkey response: %d @ble_ahib_gap.c(372),ERROR" ID="0xde9e0ba2" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc passkey response err! len = %d @ble_ahib_gap.c(375),ERROR" ID="0xde9e0bba" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi: %d @ble_ahib_gap.c(403),ERROR" ID="0xde9e0c9a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi err! len = %d @ble_ahib_gap.c(406),ERROR" ID="0xde9e0cb2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set local addr = %d @ble_ahib_gap.c(414),ERROR" ID="0xde9e0cf2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_gap.c(795),WARNING" ID="0xde9e18db" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_gap.c(804),WARNING" ID="0xde9e1923" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gap.c(847),ERROR" ID="0xde9e1a7a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set pair req rpt err! len = %d @ble_ahib_gap.c(387),ERROR" ID="0xde9e0c1a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc pair req result response: %d @ble_ahib_gap.c(399),ERROR" ID="0xde9e0c7a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc pair req result response err! len = %d @ble_ahib_gap.c(402),ERROR" ID="0xde9e0c92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi: %d @ble_ahib_gap.c(431),ERROR" ID="0xde9e0d7a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi err! len = %d @ble_ahib_gap.c(434),ERROR" ID="0xde9e0d92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set local addr = %d @ble_ahib_gap.c(442),ERROR" ID="0xde9e0dd2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_gap.c(840),WARNING" ID="0xde9e1a43" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_gap.c(849),WARNING" ID="0xde9e1a8b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gap.c(895),ERROR" ID="0xde9e1bfa" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail: %d @ble_ahib_gatt.c(37),WARNING" ID="0xdea4012b" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail. len = %d @ble_ahib_gatt.c(49),ERROR" ID="0xdea4018a" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail: %d @ble_ahib_gatt.c(56),ERROR" ID="0xdea401c2" />
@@ -373,71 +377,72 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="ble upper callback get table is null, module_id:%02x @ble_ahib_manager.c(95),WARNING" ID="0xdeb202fb" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="ble ahib init @ble_ahib_manager.c(120),INFO" ID="0xdeb203c5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="ble at cmd factory register callbacks in @ble_at_cmd_factory.c(85),INFO" ID="0xd84002ad" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble at cmd gap register callbacks in @ble_at_cmd_gap_test.c(180),INFO" ID="0xd84805a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble at cmd gap register callbacks in @ble_at_cmd_gap_test.c(190),INFO" ID="0xd84805f5" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gattc register callbacks failed,ret = %x @ble_at_cmd_gatt_test.c(170),ERROR" ID="0xd8460552" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatts register callbacks failed,ret = %x @ble_at_cmd_gatt_test.c(287),ERROR" ID="0xd84608fa" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at str to uuid param error @ble_at_common.c(21),ERROR" ID="0xd90a00aa" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] uuid len error @ble_at_common.c(25),ERROR" ID="0xd90a00ca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at gap register at fail @ble_at_gap.c(433),ERROR" ID="0xd90c0d8a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble gap register callback at fail @ble_at_gap.c(442),ERROR" ID="0xd90c0dd2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at link common error type:%u @ble_at_gap.c(474),ERROR" ID="0xd90c0ed2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at link common addr error type:%u @ble_at_gap.c(485),ERROR" ID="0xd90c0f2a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[Error] ble at link common failed,ret = %x, type = %u @ble_at_gap.c(520),ERROR" ID="0xd90c1042" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble remove all pairs failed,ret = %x @ble_at_gap.c(532),ERROR" ID="0xd90c10a2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at disconnect_remote_device_by_hdl error @ble_at_gap.c(551),ERROR" ID="0xd90c113a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble disconn peer by conn handle connection node NULL! @ble_at_gap.c(557),ERROR" ID="0xd90c116a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble disconnect remote device failed,ret = %x @ble_at_gap.c(563),ERROR" ID="0xd90c119a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gap ble get paired devices num ret:%x @ble_at_gap.c(575),INFO" ID="0xd90c11fd" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at cmd gap get pair device fail, ret = %x @ble_at_gap.c(590),INFO" ID="0xd90c1275" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at cmd gap get bonded device fail, ret = %x @ble_at_gap.c(609),INFO" ID="0xd90c130d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at connect_param_update error @ble_at_gap.c(628),ERROR" ID="0xd90c13a2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble connect param update failed,ret = %x @ble_at_gap.c(640),ERROR" ID="0xd90c1402" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at read_remote_device_rssi error @ble_at_gap.c(649),ERROR" ID="0xd90c144a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble pair read remote rssi failed,ret = %x @ble_at_gap.c(655),ERROR" ID="0xd90c147a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble start scan failed,ret = %x @ble_at_gap.c(668),ERROR" ID="0xd90c14e2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble stop scan failed,ret = %x @ble_at_gap.c(679),ERROR" ID="0xd90c153a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at scan_parameters error @ble_at_gap.c(688),ERROR" ID="0xd90c1582" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set scan parameters failed,ret = %x @ble_at_gap.c(701),ERROR" ID="0xd90c15ea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble get local name new fail @ble_at_gap.c(720),ERROR" ID="0xd90c1682" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble get local name failed,ret = %x @ble_at_gap.c(727),ERROR" ID="0xd90c16ba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set_local_name error @ble_at_gap.c(739),ERROR" ID="0xd90c171a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at name len error @ble_at_gap.c(744),ERROR" ID="0xd90c1742" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set local name new fail @ble_at_gap.c(751),ERROR" ID="0xd90c177a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at cmd gap ble set local name data memcpy fail @ble_at_gap.c(757),ERROR" ID="0xd90c17aa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set local name failed,ret = %x @ble_at_gap.c(765),ERROR" ID="0xd90c17ea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set local_appearance error @ble_at_gap.c(776),ERROR" ID="0xd90c1842" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set local appearance failed,ret = %x @ble_at_gap.c(782),ERROR" ID="0xd90c1872" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set start adv error @ble_at_gap.c(796),ERROR" ID="0xd90c18e2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble start adv failed,ret = %x @ble_at_gap.c(801),ERROR" ID="0xd90c190a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at sec_param error @ble_at_gap.c(810),ERROR" ID="0xd90c1952" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set sec param failed ret = %x @ble_at_gap.c(822),ERROR" ID="0xd90c19b2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv param error @ble_at_gap.c(831),ERROR" ID="0xd90c19fa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv param peer addr error @ble_at_gap.c(846),ERROR" ID="0xd90c1a72" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv param tx_power error -127~20, 127 @ble_at_gap.c(854),ERROR" ID="0xd90c1ab2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble set adv param failed,ret = %x @ble_at_gap.c(861),ERROR" ID="0xd90c1aea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set stop adv error @ble_at_gap.c(870),ERROR" ID="0xd90c1b32" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble stop adv failed,ret = %x @ble_at_gap.c(875),ERROR" ID="0xd90c1b5a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data error @ble_at_gap.c(884),ERROR" ID="0xd90c1ba2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data new adv data error @ble_at_gap.c(894),ERROR" ID="0xd90c1bf2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data adv data fail @ble_at_gap.c(900),ERROR" ID="0xd90c1c22" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data new scan rsp data error @ble_at_gap.c(910),ERROR" ID="0xd90c1c72" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data rsp data fail @ble_at_gap.c(916),ERROR" ID="0xd90c1ca2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[INFO] gap ble set adv data ret = %x @ble_at_gap.c(923),INFO" ID="0xd90c1cdd" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble clear whilt list addr failed,ret = %x @ble_at_gap.c(942),ERROR" ID="0xd90c1d72" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble connect whilt list addr failed,ret = %x @ble_at_gap.c(953),ERROR" ID="0xd90c1dca" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble get whilt list addr failed,ret = %x @ble_at_gap.c(964),ERROR" ID="0xd90c1e22" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble get local addr failed,ret = %x @ble_at_gap.c(987),ERROR" ID="0xd90c1eda" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set phy error @ble_at_gap.c(1008),ERROR" ID="0xd90c1f82" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set phy failed,ret = %x @ble_at_gap.c(1020),ERROR" ID="0xd90c1fe2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at data len error @ble_at_gap.c(1030),ERROR" ID="0xd90c2032" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set data length failed,ret = %x @ble_at_gap.c(1040),ERROR" ID="0xd90c2082" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set passkey tk error @ble_at_gap.c(1049),ERROR" ID="0xd90c20ca" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set passkey tk failed,ret = %x @ble_at_gap.c(1056),ERROR" ID="0xd90c2102" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at passkey entry error @ble_at_gap.c(1065),ERROR" ID="0xd90c214a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble passkey entry failed,ret = %x @ble_at_gap.c(1072),ERROR" ID="0xd90c2182" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="l2cap bth ota init failed =%x @ble_at_gap.c(1083),ERROR" ID="0xd90c21da" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set pair info available error @ble_at_gap.c(1119),ERROR" ID="0xd90c22fa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set pair info available failed,ret = %x @ble_at_gap.c(1125),ERROR" ID="0xd90c232a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at gap register at fail @ble_at_gap.c(467),ERROR" ID="0xd90c0e9a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble gap register callback at fail @ble_at_gap.c(476),ERROR" ID="0xd90c0ee2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at link common error type:%u @ble_at_gap.c(511),ERROR" ID="0xd90c0ffa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at link common addr error type:%u @ble_at_gap.c(522),ERROR" ID="0xd90c1052" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[Error] ble at link common failed,ret = %x, type = %u @ble_at_gap.c(557),ERROR" ID="0xd90c116a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble remove all pairs failed,ret = %x @ble_at_gap.c(569),ERROR" ID="0xd90c11ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at disconnect_remote_device_by_hdl error @ble_at_gap.c(588),ERROR" ID="0xd90c1262" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble disconn peer by conn handle connection node NULL! @ble_at_gap.c(594),ERROR" ID="0xd90c1292" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble disconnect remote device failed,ret = %x @ble_at_gap.c(600),ERROR" ID="0xd90c12c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gap ble get paired devices num ret:%x @ble_at_gap.c(612),INFO" ID="0xd90c1325" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at cmd gap get pair device fail, ret = %x @ble_at_gap.c(627),INFO" ID="0xd90c139d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at cmd gap get bonded device fail, ret = %x @ble_at_gap.c(646),INFO" ID="0xd90c1435" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at connect_param_update error @ble_at_gap.c(665),ERROR" ID="0xd90c14ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble connect param update failed,ret = %x @ble_at_gap.c(677),ERROR" ID="0xd90c152a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at read_remote_device_rssi error @ble_at_gap.c(686),ERROR" ID="0xd90c1572" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble pair read remote rssi failed,ret = %x @ble_at_gap.c(692),ERROR" ID="0xd90c15a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble start scan failed,ret = %x @ble_at_gap.c(705),ERROR" ID="0xd90c160a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble stop scan failed,ret = %x @ble_at_gap.c(716),ERROR" ID="0xd90c1662" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at scan_parameters error @ble_at_gap.c(725),ERROR" ID="0xd90c16aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set scan parameters failed,ret = %x @ble_at_gap.c(738),ERROR" ID="0xd90c1712" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble get local name new fail @ble_at_gap.c(762),ERROR" ID="0xd90c17d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble get local name failed,ret = %x @ble_at_gap.c(769),ERROR" ID="0xd90c180a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set_local_name error @ble_at_gap.c(781),ERROR" ID="0xd90c186a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at name len error @ble_at_gap.c(786),ERROR" ID="0xd90c1892" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set local name new fail @ble_at_gap.c(793),ERROR" ID="0xd90c18ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at cmd gap ble set local name data memcpy fail @ble_at_gap.c(799),ERROR" ID="0xd90c18fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set local name failed,ret = %x @ble_at_gap.c(807),ERROR" ID="0xd90c193a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set local_appearance error @ble_at_gap.c(818),ERROR" ID="0xd90c1992" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set local appearance failed,ret = %x @ble_at_gap.c(824),ERROR" ID="0xd90c19c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set start adv error @ble_at_gap.c(838),ERROR" ID="0xd90c1a32" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble start adv failed,ret = %x @ble_at_gap.c(843),ERROR" ID="0xd90c1a5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at sec_param error @ble_at_gap.c(852),ERROR" ID="0xd90c1aa2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set sec param failed ret = %x @ble_at_gap.c(864),ERROR" ID="0xd90c1b02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv param error @ble_at_gap.c(873),ERROR" ID="0xd90c1b4a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv param peer addr error @ble_at_gap.c(888),ERROR" ID="0xd90c1bc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv param tx_power error -127~20, 127 @ble_at_gap.c(896),ERROR" ID="0xd90c1c02" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble set adv param failed,ret = %x @ble_at_gap.c(903),ERROR" ID="0xd90c1c3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set stop adv error @ble_at_gap.c(912),ERROR" ID="0xd90c1c82" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble stop adv failed,ret = %x @ble_at_gap.c(917),ERROR" ID="0xd90c1caa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data error @ble_at_gap.c(926),ERROR" ID="0xd90c1cf2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data new adv data error @ble_at_gap.c(936),ERROR" ID="0xd90c1d42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data adv data fail @ble_at_gap.c(942),ERROR" ID="0xd90c1d72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data new scan rsp data error @ble_at_gap.c(952),ERROR" ID="0xd90c1dc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data rsp data fail @ble_at_gap.c(958),ERROR" ID="0xd90c1df2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[INFO] gap ble set adv data ret = %x @ble_at_gap.c(965),INFO" ID="0xd90c1e2d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble clear whilt list addr failed,ret = %x @ble_at_gap.c(984),ERROR" ID="0xd90c1ec2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble connect whilt list addr failed,ret = %x @ble_at_gap.c(995),ERROR" ID="0xd90c1f1a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble get whilt list addr failed,ret = %x @ble_at_gap.c(1006),ERROR" ID="0xd90c1f72" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble get local addr failed,ret = %x @ble_at_gap.c(1029),ERROR" ID="0xd90c202a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set phy error @ble_at_gap.c(1050),ERROR" ID="0xd90c20d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set phy failed,ret = %x @ble_at_gap.c(1062),ERROR" ID="0xd90c2132" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at data len error @ble_at_gap.c(1072),ERROR" ID="0xd90c2182" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set data length failed,ret = %x @ble_at_gap.c(1082),ERROR" ID="0xd90c21d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set passkey tk error @ble_at_gap.c(1091),ERROR" ID="0xd90c221a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set passkey tk failed,ret = %x @ble_at_gap.c(1098),ERROR" ID="0xd90c2252" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at passkey entry error @ble_at_gap.c(1107),ERROR" ID="0xd90c229a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble passkey entry failed,ret = %x @ble_at_gap.c(1114),ERROR" ID="0xd90c22d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="l2cap bth ota init failed =%x @ble_at_gap.c(1125),ERROR" ID="0xd90c232a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at set pair info available error @ble_at_gap.c(1161),ERROR" ID="0xd90c244a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gap ble set pair info available failed,ret = %x @ble_at_gap.c(1167),ERROR" ID="0xd90c247a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[Error] gap ble set pair req cbk enable:%d fail, ret = 0x%x @ble_at_gap.c(1182),ERROR" ID="0xd90c24f2" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gattc register at fail @ble_at_gattc.c(135),ERROR" ID="0xd90e043a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gattc register callback at fail @ble_at_gattc.c(143),ERROR" ID="0xd90e047a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at gattc register client param error @ble_at_gattc.c(153),ERROR" ID="0xd90e04ca" />
@@ -501,9 +506,9 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatts notify indicate by uuid failed,ret = %x @ble_at_gatts.c(560),ERROR" ID="0xd9101182" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at gatts set mtu size param error @ble_at_gatts.c(569),ERROR" ID="0xd91011ca" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatts set mtu size failed,ret = %x @ble_at_gatts.c(575),ERROR" ID="0xd91011fa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bth config set hci log status: [%d] @ble_conf.c(230),INFO" ID="0xddec0735" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bth config set le resolution enable:[%d] @ble_conf.c(237),INFO" ID="0xddec076d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bth config get le resolution enable:[%d] @ble_conf.c(245),INFO" ID="0xddec07ad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bth config set hci log status: [%d] @ble_conf.c(233),INFO" ID="0xddec074d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bth config set le resolution enable:[%d] @ble_conf.c(240),INFO" ID="0xddec0785" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bth config get le resolution enable:[%d] @ble_conf.c(248),INFO" ID="0xddec07c5" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] ble connect svr proc cmdid:0x%02X pay_len:%d. @ble_connect.c(71),INFO" ID="0xd804023d" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble connect svr proc no handle for command id:0x%02x. @ble_connect.c(96),INFO" ID="0xd8040305" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: get connect inst by addr, addr is NULL @ble_core.c(131),ERROR" ID="0xdcc0041a" />
@@ -1232,16 +1237,18 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="connect param update done ret:%d. @connection_manager_ble.c(343),WARNING" ID="0xd8960abb" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble connect remote device param id null @connection_manager_ble.c(355),ERROR" ID="0xd8960b1a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][INFO] addr memcpy to param fail. @connection_manager_ble.c(361),INFO" ID="0xd8960b4d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]addr memcpy fail. @connection_manager_ble.c(382),ERROR" ID="0xd8960bf2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]conn node find fail. @connection_manager_ble.c(388),ERROR" ID="0xd8960c22" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]addr memcpy fail. @connection_manager_ble.c(395),ERROR" ID="0xd8960c5a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read remote device rssi, conn_node not found. @connection_manager_ble.c(412),ERROR" ID="0xd8960ce2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read remote device rssi fail @connection_manager_ble.c(419),ERROR" ID="0xd8960d1a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle set rssi param err @connection_manager_ble.c(430),ERROR" ID="0xd8960d72" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="set connect rssi fail @connection_manager_ble.c(435),ERROR" ID="0xd8960d9a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="set smp keys memcpy fail @connection_manager_ble.c(461),ERROR" ID="0xd8960e6a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="set smp keys addr memcpy fail @connection_manager_ble.c(465),ERROR" ID="0xd8960e8a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="show ble conn list: @connection_manager_ble.c(517),INFO" ID="0xd896102d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble connect remote device async param id null @connection_manager_ble.c(376),ERROR" ID="0xd8960bc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][INFO] addr memcpy to param fail. @connection_manager_ble.c(382),INFO" ID="0xd8960bf5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]addr memcpy fail. @connection_manager_ble.c(403),ERROR" ID="0xd8960c9a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]conn node find fail. @connection_manager_ble.c(409),ERROR" ID="0xd8960cca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]addr memcpy fail. @connection_manager_ble.c(416),ERROR" ID="0xd8960d02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read remote device rssi, conn_node not found. @connection_manager_ble.c(433),ERROR" ID="0xd8960d8a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read remote device rssi fail @connection_manager_ble.c(440),ERROR" ID="0xd8960dc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle set rssi param err @connection_manager_ble.c(451),ERROR" ID="0xd8960e1a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set connect rssi fail @connection_manager_ble.c(456),ERROR" ID="0xd8960e42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set smp keys memcpy fail @connection_manager_ble.c(482),ERROR" ID="0xd8960f12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set smp keys addr memcpy fail @connection_manager_ble.c(486),ERROR" ID="0xd8960f32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="show ble conn list: @connection_manager_ble.c(538),INFO" ID="0xd89610d5" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[LOW_POWER]img download size:0x%x is not 4 byte aligned, type:%d @cpu_load.c(125),INFO" ID="0xa04e03ed" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[%d]core flash address[0x%x] translate int mcu flash. @cpu_load.c(267),INFO" ID="0xa04e085d" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[%d]core flash address[0x%x] translate int mcu flash. @cpu_load.c(283),INFO" ID="0xa04e08dd" />
@@ -1624,14 +1631,14 @@
 			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_gle_adv_pack_con_ind, clkn=0x%x, con_intv=%d, delay=%d, offset=%d @evt_task_gle_adv_isr.c(520),INFO" ID="0x89001045" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_gle_adv_evt_cbk, prog_num=%d @evt_task_gle_adv_isr.c(623),WARNING" ID="0x8900137b" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]evt_task_gle_adv_gt_nego fail, adv_capa_ind=%d, init_capa_ind=%d @evt_task_gle_adv_isr.c(825),WARNING" ID="0x890019cb" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]evt_task_gle_adv_rx_handle, pdu_type=%d, adv_mode=%d @evt_task_gle_adv_isr.c(891),INFO" ID="0x89001bdd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_adv_rx_handle:receive an unexcepted req @evt_task_gle_adv_isr.c(896),WARNING" ID="0x89001c03" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_gle_adv_rx_handle, invalid pdu_type:%d @evt_task_gle_adv_isr.c(909),WARNING" ID="0x89001c6b" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_gle_adv_rx_cbk, status=0x%x @evt_task_gle_adv_isr.c(921),INFO" ID="0x89001ccd" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_gle_adv_abnormal_cbk, timestamp=0x%x, current time=0x%x, state=%d, task_id=0x%x @evt_task_gle_adv_isr.c(935),INFO" ID="0x89001d3d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_gle_adv_abnormal_cbk, prog_num=%d @evt_task_gle_adv_isr.c(939),WARNING" ID="0x89001d5b" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_gle_adv_cancel_cbk, timestamp=0x%x, current time=0x%x, state=%d, task_id=0x%x @evt_task_gle_adv_isr.c(971),INFO" ID="0x89001e5d" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]evt_task_gle_adv_stop_cbk, timestamp=0x%x, current time=0x%x @evt_task_gle_adv_isr.c(1005),INFO" ID="0x89001f6d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]evt_task_gle_adv_rx_handle, pdu_type=%d, adv_mode=%d @evt_task_gle_adv_isr.c(921),INFO" ID="0x89001ccd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_adv_rx_handle:receive an unexcepted req @evt_task_gle_adv_isr.c(926),WARNING" ID="0x89001cf3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_gle_adv_rx_handle, invalid pdu_type:%d @evt_task_gle_adv_isr.c(939),WARNING" ID="0x89001d5b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_gle_adv_rx_cbk, status=0x%x @evt_task_gle_adv_isr.c(951),INFO" ID="0x89001dbd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_gle_adv_abnormal_cbk, timestamp=0x%x, current time=0x%x, state=%d, task_id=0x%x @evt_task_gle_adv_isr.c(965),INFO" ID="0x89001e2d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_gle_adv_abnormal_cbk, prog_num=%d @evt_task_gle_adv_isr.c(969),WARNING" ID="0x89001e4b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_gle_adv_cancel_cbk, timestamp=0x%x, current time=0x%x, state=%d, task_id=0x%x @evt_task_gle_adv_isr.c(1001),INFO" ID="0x89001f4d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]evt_task_gle_adv_stop_cbk, timestamp=0x%x, current time=0x%x @evt_task_gle_adv_isr.c(1035),INFO" ID="0x8900205d" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[gle][scan]evt_task_gle_scan_check_aux_ptr, aux_offset=%d, channel_idx=%d @evt_task_gle_adv_scan_comm.c(35),WARNING" ID="0x8908011b" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[gle][scan]AUX phy check fail, frame_format=%d, phy=%d, pilot_ratio=%d @evt_task_gle_adv_scan_comm.c(42),WARNING" ID="0x89080153" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[BGTP]evt_task_gle_set_syncword, invalid frame_format:%d @evt_task_gle_comm.c(498),WARNING" ID="0x893a0f93" />
@@ -1641,42 +1648,42 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="sample dont need, rate = %d @evt_task_gle_comm.c(574),INFO" ID="0x893a11f5" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="sample freq set, freq = %d @evt_task_gle_comm.c(591),INFO" ID="0x893a127d" />
 			<MSG STRUCTURE="diag_log_msg4" NAME="sample config, enable = %d, rate = %d, clkn:0x%x, delay:%d @evt_task_gle_comm.c(596),INFO" ID="0x893a12a5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][CS]evt_task_gle_cs_start_cbk, prog_num=%d @evt_task_gle_cs.c(116),WARNING" ID="0x897003a3" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[slem] refresh anchor point error now_timestamp_625=%d, cur_time=%d @evt_task_gle_cs.c(177),ERROR" ID="0x8970058a" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[cs_evt_cbk]timestamp error, now_time=%d, clk_off=%d, timestamp_sn=%d, count=%d @evt_task_gle_cs.c(212),ERROR" ID="0x897006a2" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[cs_evt_cbk]cbk_param-&gt;timestamp=%d, timestamp_sn=%d, env_ptr-&gt;clk_off=%d, slem_conhdl=%d @evt_task_gle_cs.c(217),INFO" ID="0x897006cd" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][CS]evt_task_gle_cs_evt_cbk, prog_num=%d @evt_task_gle_cs.c(236),INFO" ID="0x89700765" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[evt_cbk]acb_env=NULL, acb disconnect @evt_task_gle_cs.c(245),INFO" ID="0x897007ad" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[cs_abnormal_cbk !!!] @evt_task_gle_cs.c(268),INFO" ID="0x89700865" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[abnormal_cbk]acb_env=NULL, acb disconnect @evt_task_gle_cs.c(273),INFO" ID="0x8970088d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][CS]evt_task_gle_cs_abnormal_cbk, prog_num=%d @evt_task_gle_cs.c(293),INFO" ID="0x8970092d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[cs_cancel_cbk !!!] @evt_task_gle_cs.c(315),INFO" ID="0x897009dd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[cancel_cbk]acb_env=NULL, acb disconnect @evt_task_gle_cs.c(320),INFO" ID="0x89700a05" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[T refl param]anchor_point=%d, sed-&gt;sed_usoffset=%d, delay=%d, diff_slot125=%d @evt_task_gle_cs.c(393),INFO" ID="0x89700c4d" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[T]Create slem task err, now_time_625=%d, anchor_point=%d @evt_task_gle_cs.c(401),ERROR" ID="0x89700c8a" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[T] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_gle_cs.c(405),INFO" ID="0x89700cad" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[T refl param]anchor_point=%d, sed-&gt;sed_usoffset=%d, delay=%d, diff_slot125=%d @evt_task_gle_cs.c(418),INFO" ID="0x89700d15" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[T]Create slem task err, now_time_125=%d, anchor_point=%d @evt_task_gle_cs.c(425),ERROR" ID="0x89700d4a" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[T] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_gle_cs.c(429),INFO" ID="0x89700d6d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[T refl param] instant passed, instant_t=%d, now_time_125=%d, Add %d interval, diff_slot125=%d @evt_task_gle_cs.c(457),INFO" ID="0x89700e4d" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[G]Create slem task err, now_time_625=%d, anchor_point=%d @evt_task_gle_cs.c(477),ERROR" ID="0x89700eea" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[G] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_gle_cs.c(480),INFO" ID="0x89700f05" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[G]Create slem task err, now_time_125=%d, anchor_point=%d @evt_task_gle_cs.c(491),ERROR" ID="0x89700f5a" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[G] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_gle_cs.c(494),INFO" ID="0x89700f75" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[G cs param] instant passed, instant_t=%d, now_time_125=%d, Add %d interval, diff_slot125=%d @evt_task_gle_cs.c(510),INFO" ID="0x89700ff5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="evt_task_gle_slem_create cs %d exist. @evt_task_gle_cs.c(588),ERROR" ID="0x89701262" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[cs_create]cs task_type = 0x%x @evt_task_gle_cs.c(622),INFO" ID="0x89701375" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] evt_task_gle_cs_destory con_hdl 0x%x @evt_task_gle_cs.c(631),INFO" ID="0x897013bd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[gle_cs_destory]env_ptr == NULL !!! @evt_task_gle_cs.c(636),INFO" ID="0x897013e5" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[cs_offset_flag_done_set]cs_offset_num=%d, acb con_hdl=%d, cs con_hdl=%d @evt_task_gle_cs.c(667),INFO" ID="0x897014dd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[slem en parm save]env ptr is NULL !!! @evt_task_gle_cs.c(706),INFO" ID="0x89701615" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[set_cs_en]slem_hdl=%d @evt_task_gle_cs.c(714),INFO" ID="0x89701655" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[slem en]env ptr is NULL !!! @evt_task_gle_cs.c(718),INFO" ID="0x89701675" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[evt_task_gle_cs_idle_event_int] acb disconnect(%d) @evt_task_gle_cs.c(751),ERROR" ID="0x8970177a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="slem bypass buff get null !!! @evt_task_gle_cs.c(877),INFO" ID="0x89701b6d" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="slem bypass remote iq, sn:%d, tx id:%d, rx id:%d @evt_task_gle_cs.c(886),INFO" ID="0x89701bb5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="slem bypass buff get null !!! @evt_task_gle_cs.c(980),INFO" ID="0x89701ea5" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[slem] bypass remote iq, sn:%d, tx id:%d, rx id:%d @evt_task_gle_cs.c(985),INFO" ID="0x89701ecd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][CS]evt_task_gle_cs_start_cbk, prog_num=%d @evt_task_gle_cs.c(117),WARNING" ID="0x897003ab" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[slem] refresh anchor point error now_timestamp_625=%d, cur_time=%d @evt_task_gle_cs.c(178),ERROR" ID="0x89700592" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[cs_evt_cbk]timestamp error, now_time=%d, clk_off=%d, timestamp_sn=%d, count=%d @evt_task_gle_cs.c(213),ERROR" ID="0x897006aa" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[cs_evt_cbk]cbk_param-&gt;timestamp=%d, timestamp_sn=%d, env_ptr-&gt;clk_off=%d, slem_conhdl=%d @evt_task_gle_cs.c(218),INFO" ID="0x897006d5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][CS]evt_task_gle_cs_evt_cbk, prog_num=%d @evt_task_gle_cs.c(237),INFO" ID="0x8970076d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[evt_cbk]acb_env=NULL, acb disconnect @evt_task_gle_cs.c(246),INFO" ID="0x897007b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[cs_abnormal_cbk !!!] @evt_task_gle_cs.c(269),INFO" ID="0x8970086d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[abnormal_cbk]acb_env=NULL, acb disconnect @evt_task_gle_cs.c(274),INFO" ID="0x89700895" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][CS]evt_task_gle_cs_abnormal_cbk, prog_num=%d @evt_task_gle_cs.c(294),INFO" ID="0x89700935" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[cs_cancel_cbk !!!] @evt_task_gle_cs.c(316),INFO" ID="0x897009e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[cancel_cbk]acb_env=NULL, acb disconnect @evt_task_gle_cs.c(321),INFO" ID="0x89700a0d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[T refl param]anchor_point=%d, sed-&gt;sed_usoffset=%d, delay=%d, diff_slot125=%d @evt_task_gle_cs.c(394),INFO" ID="0x89700c55" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[T]Create slem task err, now_time_625=%d, anchor_point=%d @evt_task_gle_cs.c(402),ERROR" ID="0x89700c92" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[T] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_gle_cs.c(406),INFO" ID="0x89700cb5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[T refl param]anchor_point=%d, sed-&gt;sed_usoffset=%d, delay=%d, diff_slot125=%d @evt_task_gle_cs.c(419),INFO" ID="0x89700d1d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[T]Create slem task err, now_time_125=%d, anchor_point=%d @evt_task_gle_cs.c(426),ERROR" ID="0x89700d52" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[T] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_gle_cs.c(430),INFO" ID="0x89700d75" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[T refl param] instant passed, instant_t=%d, now_time_125=%d, Add %d interval, diff_slot125=%d @evt_task_gle_cs.c(458),INFO" ID="0x89700e55" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[G]Create slem task err, now_time_625=%d, anchor_point=%d @evt_task_gle_cs.c(478),ERROR" ID="0x89700ef2" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[G] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_gle_cs.c(481),INFO" ID="0x89700f0d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[G]Create slem task err, now_time_125=%d, anchor_point=%d @evt_task_gle_cs.c(492),ERROR" ID="0x89700f62" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[G] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_gle_cs.c(495),INFO" ID="0x89700f7d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[G cs param] instant passed, instant_t=%d, now_time_125=%d, Add %d interval, diff_slot125=%d @evt_task_gle_cs.c(511),INFO" ID="0x89700ffd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="evt_task_gle_slem_create cs %d exist. @evt_task_gle_cs.c(589),ERROR" ID="0x8970126a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[cs_create]cs task_type = 0x%x @evt_task_gle_cs.c(623),INFO" ID="0x8970137d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] evt_task_gle_cs_destory con_hdl 0x%x @evt_task_gle_cs.c(632),INFO" ID="0x897013c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[gle_cs_destory]env_ptr == NULL !!! @evt_task_gle_cs.c(637),INFO" ID="0x897013ed" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[cs_offset_flag_done_set]cs_offset_num=%d, acb con_hdl=%d, cs con_hdl=%d @evt_task_gle_cs.c(668),INFO" ID="0x897014e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[slem en parm save]env ptr is NULL !!! @evt_task_gle_cs.c(707),INFO" ID="0x8970161d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[set_cs_en]slem_hdl=%d @evt_task_gle_cs.c(715),INFO" ID="0x8970165d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[slem en]env ptr is NULL !!! @evt_task_gle_cs.c(719),INFO" ID="0x8970167d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[evt_task_gle_cs_idle_event_int] acb disconnect(%d) @evt_task_gle_cs.c(752),ERROR" ID="0x89701782" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="slem bypass buff get null !!! @evt_task_gle_cs.c(878),INFO" ID="0x89701b75" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="slem bypass remote iq, sn:%d, tx id:%d, rx id:%d @evt_task_gle_cs.c(887),INFO" ID="0x89701bbd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="slem bypass buff get null !!! @evt_task_gle_cs.c(981),INFO" ID="0x89701ead" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[slem] bypass remote iq, sn:%d, tx id:%d, rx id:%d @evt_task_gle_cs.c(986),INFO" ID="0x89701ed5" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[BGTP]evt_task_gle_imb_create env exist, con_hdl %d @evt_task_gle_imb.c(298),ERROR" ID="0x891c0952" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP] evt_task_gle_imb_cancel_cbk con_hdl 0x%x, ts 0x%x, es_sn %d @evt_task_gle_imb.c(553),INFO" ID="0x891c114d" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[IMB][RX]RX LEN ERR! @evt_task_gle_imb.c(928),ERROR" ID="0x891c1d02" />
@@ -1937,18 +1944,18 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="gle cs glp report status(%d) @gle_aa_glp_ui.c(46),INFO" ID="0xde840175" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="gle aa read local channel sounding caps @gle_aa_hadm_ui.c(29),INFO" ID="0xde5200ed" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa read remote channel sounding caps, conn id(%d) @gle_aa_hadm_ui.c(43),INFO" ID="0xde52015d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa set channel sounding param, conn id(%d) @gle_aa_hadm_ui.c(84),INFO" ID="0xde5202a5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa set channel sounding enable state(%d) @gle_aa_hadm_ui.c(98),INFO" ID="0xde520315" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle read local cs caps malloc fail @gle_aa_hadm_ui.c(114),INFO" ID="0xde520395" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gle read local cs caps status(%d) @gle_aa_hadm_ui.c(126),INFO" ID="0xde5203f5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle read remote cs caps malloc fail @gle_aa_hadm_ui.c(136),INFO" ID="0xde520445" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gle read remote cs caps status(%d) @gle_aa_hadm_ui.c(149),INFO" ID="0xde5204ad" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle set cs config malloc fail @gle_aa_hadm_ui.c(160),INFO" ID="0xde520505" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gle set cs config status(%d) @gle_aa_hadm_ui.c(170),INFO" ID="0xde520555" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle set cs enable malloc fail @gle_aa_hadm_ui.c(179),INFO" ID="0xde52059d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gle set cs enable status(%d) @gle_aa_hadm_ui.c(189),INFO" ID="0xde5205ed" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle cs iq report malloc fail @gle_aa_hadm_ui.c(198),INFO" ID="0xde520635" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gle cs iq report status(%d) @gle_aa_hadm_ui.c(209),INFO" ID="0xde52068d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa set channel sounding param, conn id(%d) @gle_aa_hadm_ui.c(85),INFO" ID="0xde5202ad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa set channel sounding enable state(%d) @gle_aa_hadm_ui.c(99),INFO" ID="0xde52031d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle read local cs caps malloc fail @gle_aa_hadm_ui.c(115),INFO" ID="0xde52039d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle read local cs caps status(%d) @gle_aa_hadm_ui.c(127),INFO" ID="0xde5203fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle read remote cs caps malloc fail @gle_aa_hadm_ui.c(137),INFO" ID="0xde52044d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle read remote cs caps status(%d) @gle_aa_hadm_ui.c(150),INFO" ID="0xde5204b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle set cs config malloc fail @gle_aa_hadm_ui.c(161),INFO" ID="0xde52050d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle set cs config status(%d) @gle_aa_hadm_ui.c(171),INFO" ID="0xde52055d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle set cs enable malloc fail @gle_aa_hadm_ui.c(180),INFO" ID="0xde5205a5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle set cs enable status(%d) @gle_aa_hadm_ui.c(190),INFO" ID="0xde5205f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cs iq report malloc fail @gle_aa_hadm_ui.c(199),INFO" ID="0xde52063d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle cs iq report status(%d) @gle_aa_hadm_ui.c(210),INFO" ID="0xde520695" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa reg cfm cbk cbk_cfm_type:%02x is invalid @gle_aa_manager_ui.c(26),ERROR" ID="0xde4400d2" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa get cfm cbk type:%02x, cfm_cbk not found @gle_aa_manager_ui.c(41),ERROR" ID="0xde44014a" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa get cfm cbk type:%02x, cfm_cbk not found @gle_aa_manager_ui.c(55),ERROR" ID="0xde4401ba" />
@@ -2100,28 +2107,28 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="adv_params_len = %zu new fail @gle_dev_discovery_ui.c(50),ERROR" ID="0xde3a0192" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy adv params failed @gle_dev_discovery_ui.c(58),ERROR" ID="0xde3a01d2" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy ext param failed @gle_dev_discovery_ui.c(67),ERROR" ID="0xde3a021a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy adv data failed @gle_dev_discovery_ui.c(78),ERROR" ID="0xde3a0272" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy scan rsp data failed @gle_dev_discovery_ui.c(89),ERROR" ID="0xde3a02ca" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="adv_gt_role = 0x%x @gle_dev_discovery_ui.c(95),INFO" ID="0xde3a02fd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy conn param failed @gle_dev_discovery_ui.c(103),ERROR" ID="0xde3a033a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv_params point null @gle_dev_discovery_ui.c(122),ERROR" ID="0xde3a03d2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv_params memcpy fail @gle_dev_discovery_ui.c(136),ERROR" ID="0xde3a0442" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv_enable point null @gle_dev_discovery_ui.c(156),ERROR" ID="0xde3a04e2" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="adv_handle = 0x%x, adv_enable = 0x%x @gle_dev_discovery_ui.c(160),INFO" ID="0xde3a0505" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv_enable new fail @gle_dev_discovery_ui.c(163),ERROR" ID="0xde3a051a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="adv_handle = 0x%x @gle_dev_discovery_ui.c(180),INFO" ID="0xde3a05a5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv_handle mem new failed @gle_dev_discovery_ui.c(183),ERROR" ID="0xde3a05ba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle clear advertising @gle_dev_discovery_ui.c(196),INFO" ID="0xde3a0625" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="set_scan_params pointer null @gle_dev_discovery_ui.c(209),ERROR" ID="0xde3a068a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_params new fail @gle_dev_discovery_ui.c(216),ERROR" ID="0xde3a06c2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_params memcpy fail @gle_dev_discovery_ui.c(221),ERROR" ID="0xde3a06ea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="scan_enable pointer null @gle_dev_discovery_ui.c(235),ERROR" ID="0xde3a075a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_enable new fail @gle_dev_discovery_ui.c(240),ERROR" ID="0xde3a0782" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle_set_public_addr new fail @gle_dev_discovery_ui.c(258),ERROR" ID="0xde3a0812" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle_set_public_addr memcpy fail @gle_dev_discovery_ui.c(262),ERROR" ID="0xde3a0832" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="addr pointer null @gle_dev_discovery_ui.c(276),ERROR" ID="0xde3a08a2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle get public address memcpy fail @gle_dev_discovery_ui.c(280),ERROR" ID="0xde3a08c2" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="addr:0x%02x:**:**:**:%02x:%02x @gle_dev_discovery_ui.c(284),INFO" ID="0xde3a08e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy adv data failed @gle_dev_discovery_ui.c(77),ERROR" ID="0xde3a026a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy scan rsp data failed @gle_dev_discovery_ui.c(88),ERROR" ID="0xde3a02c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv_gt_role = 0x%x @gle_dev_discovery_ui.c(94),INFO" ID="0xde3a02f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy conn param failed @gle_dev_discovery_ui.c(102),ERROR" ID="0xde3a0332" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_params point null @gle_dev_discovery_ui.c(121),ERROR" ID="0xde3a03ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_params memcpy fail @gle_dev_discovery_ui.c(135),ERROR" ID="0xde3a043a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_enable point null @gle_dev_discovery_ui.c(155),ERROR" ID="0xde3a04da" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="adv_handle = 0x%x, adv_enable = 0x%x @gle_dev_discovery_ui.c(159),INFO" ID="0xde3a04fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_enable new fail @gle_dev_discovery_ui.c(162),ERROR" ID="0xde3a0512" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv_handle = 0x%x @gle_dev_discovery_ui.c(179),INFO" ID="0xde3a059d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_handle mem new failed @gle_dev_discovery_ui.c(182),ERROR" ID="0xde3a05b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle clear advertising @gle_dev_discovery_ui.c(195),INFO" ID="0xde3a061d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set_scan_params pointer null @gle_dev_discovery_ui.c(208),ERROR" ID="0xde3a0682" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_params new fail @gle_dev_discovery_ui.c(215),ERROR" ID="0xde3a06ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_params memcpy fail @gle_dev_discovery_ui.c(220),ERROR" ID="0xde3a06e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="scan_enable pointer null @gle_dev_discovery_ui.c(234),ERROR" ID="0xde3a0752" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_enable new fail @gle_dev_discovery_ui.c(239),ERROR" ID="0xde3a077a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_set_public_addr new fail @gle_dev_discovery_ui.c(257),ERROR" ID="0xde3a080a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_set_public_addr memcpy fail @gle_dev_discovery_ui.c(261),ERROR" ID="0xde3a082a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="addr pointer null @gle_dev_discovery_ui.c(275),ERROR" ID="0xde3a089a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle get public address memcpy fail @gle_dev_discovery_ui.c(279),ERROR" ID="0xde3a08ba" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="addr:0x%02x:**:**:**:%02x:%02x @gle_dev_discovery_ui.c(283),INFO" ID="0xde3a08dd" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="gle device link add link alloc fail @gle_dm_link_ui.c(72),INFO" ID="0xde560245" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="gle device link add node-&gt;status:0x%x @gle_dm_link_ui.c(80),INFO" ID="0xde560285" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="gle device link get by status node-&gt;status:0x%x status:0x%x @gle_dm_link_ui.c(102),INFO" ID="0xde560335" />
@@ -2262,13 +2269,13 @@
 			<MSG STRUCTURE="diag_log_msg2" NAME="low latency evt cbk role:%x, enable:%x @gle_low_latency_mouse.c(182),INFO" ID="0xd82205b5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Info] unknown_mode! @gle_low_latency_mouse.c(186),INFO" ID="0xd82205d5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy low latency callback fail @gle_low_latency_mouse.c(211),ERROR" ID="0xd822069a" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[low latency] rx_counter:%d, rx total packet:%d, loss counter:%d @gle_low_latency_rx.c(46),INFO" ID="0xd8280175" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="general rx tog up callback memcpy fail @gle_low_latency_rx.c(102),ERROR" ID="0xd8280332" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="general rx tog up callback memset fail @gle_low_latency_rx.c(134),ERROR" ID="0xd8280432" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="RX BUFF malloc fail!, size:%d @gle_low_latency_rx.c(150),ERROR" ID="0xd82804b2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="general rx enable! @gle_low_latency_rx.c(152),INFO" ID="0xd82804c5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="general rx disable! @gle_low_latency_rx.c(165),INFO" ID="0xd828052d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy low latency callback fail @gle_low_latency_rx.c(173),ERROR" ID="0xd828056a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[low latency] rx_counter:%d, rx total packet:%d, loss counter:%d @gle_low_latency_rx.c(52),INFO" ID="0xd82801a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="general rx tog up callback memcpy fail @gle_low_latency_rx.c(108),ERROR" ID="0xd8280362" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="general rx tog up callback memset fail @gle_low_latency_rx.c(140),ERROR" ID="0xd8280462" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="RX BUFF malloc fail!, size:%d @gle_low_latency_rx.c(156),ERROR" ID="0xd82804e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="general rx enable! @gle_low_latency_rx.c(158),INFO" ID="0xd82804f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="general rx disable! @gle_low_latency_rx.c(171),INFO" ID="0xd828055d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy low latency callback fail @gle_low_latency_rx.c(179),ERROR" ID="0xd828059a" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[low latency] tx_counter:%d, loss counter:%d, tx_drop:%d @gle_low_latency_tx.c(44),INFO" ID="0xd8260165" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="sle_set_low_latency_data memcpy fail @gle_low_latency_tx.c(95),ERROR" ID="0xd82602fa" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="general tx tog up callback memcpy fail @gle_low_latency_tx.c(171),ERROR" ID="0xd826055a" />
@@ -2422,9 +2429,9 @@
 			<MSG STRUCTURE="diag_log_msg4" NAME="[GLE SM] algo: 0x%02x 0x%02x 0x%02x 0x%02x @gle_sm_cmd.c(278),INFO" ID="0xde1c08b5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="sm_cbks null error @gle_sm_cmd.c(308),ERROR" ID="0xde1c09a2" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE SM] enter debug mode. @gle_sm_key.c(45),INFO" ID="0xde1e016d" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE SM] get salt fail,auth method:%u,ret:%d @gle_sm_key.c(105),ERROR" ID="0xde1e034a" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE SM] dhkey calc g addr: %02x:**:**:**:%02x:%02x @gle_sm_key.c(180),INFO" ID="0xde1e05a5" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE SM] dhkey calc t addr: %02x:**:**:**:%02x:%02x @gle_sm_key.c(182),INFO" ID="0xde1e05b5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE SM] get salt fail,auth method:%u,ret:%d @gle_sm_key.c(107),ERROR" ID="0xde1e035a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE SM] dhkey calc g addr: %02x:**:**:**:%02x:%02x @gle_sm_key.c(182),INFO" ID="0xde1e05b5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE SM] dhkey calc t addr: %02x:**:**:**:%02x:%02x @gle_sm_key.c(184),INFO" ID="0xde1e05c5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE SM] new sm sdu failed @gle_sm_proc.c(109),ERROR" ID="0xde1a036a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE SM] new sm sdu failed @gle_sm_proc.c(117),ERROR" ID="0xde1a03aa" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE SM] new sm packet failed @gle_sm_proc.c(135),ERROR" ID="0xde1a043a" />
@@ -2972,11 +2979,11 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]hci link data error! @hci_core_reserv.c(498),ERROR" ID="0xddf60f92" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[HCI]le local set own addr update adv pts_mode=%d, is_le_ext_adving = %d, updated = %d @hci_core_reserv.c(522),INFO" ID="0xddf61055" />
 			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI][WHITE_LIST]TYPE=%d, ADDR=%02x:%02x:**:**:**:%02x @hci_core_reserv.c(1113),INFO" ID="0xddf622cd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] get remote feature is NULL @hci_core_reserv.c(1181),ERROR" ID="0xddf624ea" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 0-3: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_core_reserv.c(1185),INFO" ID="0xddf6250d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 4-7: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_core_reserv.c(1187),INFO" ID="0xddf6251d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] remote feature LL Privacy not support @hci_core_reserv.c(1189),INFO" ID="0xddf6252d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] do not add addr to ral. @hci_core_reserv.c(1195),INFO" ID="0xddf6255d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] get remote feature is NULL @hci_core_reserv.c(1190),ERROR" ID="0xddf62532" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 0-3: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_core_reserv.c(1194),INFO" ID="0xddf62555" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 4-7: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_core_reserv.c(1196),INFO" ID="0xddf62565" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] remote feature LL Privacy not support @hci_core_reserv.c(1199),INFO" ID="0xddf6257d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] do not add addr to ral. @hci_core_reserv.c(1205),INFO" ID="0xddf625ad" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI][QOS_BUFF_OVERFLOW_CLEAR] SLOT=%u, BUFF&gt;%u @hci_data_proc.c(137),ERROR" ID="0xdbda044a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]bth hci acl data recombination memcpy @hci_data_proc.c(282),ERROR" ID="0xdbda08d2" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]bth hci acl data recombination memcpy @hci_data_proc.c(288),ERROR" ID="0xdbda0902" />
@@ -3173,67 +3180,67 @@
 			<MSG STRUCTURE="diag_log_msg2" NAME="lm_chnl_scan_remove_map_assessment_module fsm_id(0x%x) fsm_num(%d) @lm_chnl_scan.c(82),INFO" ID="0x88a00295" />
 			<MSG STRUCTURE="diag_log_msg4" NAME="lm_gle_acb_sed_init: 0x%4x 0x%4x 0x%4x 0x%4x  @lm_gle_acb.c(218),INFO" ID="0x885206d5" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="lm_gle_acb_sed_init: 0x%4x @lm_gle_acb.c(219),INFO" ID="0x885206dd" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[BGTP]lm_gle_acb_start con_hdl 0x%x, role %d @lm_gle_acb.c(345),INFO" ID="0x88520acd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="low latency trans active, dont accept update @lm_gle_acb.c(655),INFO" ID="0x8852147d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="already start to EVT_TASK_GLE_ACB_LATENCY_RESCHED @lm_gle_acb.c(676),INFO" ID="0x88521525" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[BGTP]lm_gle_acb_start con_hdl 0x%x, role %d @lm_gle_acb.c(346),INFO" ID="0x88520ad5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="low latency trans active, dont accept update @lm_gle_acb.c(656),INFO" ID="0x88521485" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="already start to EVT_TASK_GLE_ACB_LATENCY_RESCHED @lm_gle_acb.c(677),INFO" ID="0x8852152d" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="lm_gle_acb_fsm_delete_srv srv_fsm_id(0x%x) @lm_gle_acb_fsm.c(191),INFO" ID="0x885005fd" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[CS] unknown llcp message con_hdl %d, llcp opcode 0x%x @lm_gle_acb_srv_cs.c(184),INFO" ID="0x896e05c5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[slem][parse] slem_interval=%d @lm_gle_acb_srv_cs.c(244),INFO" ID="0x896e07a5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[slem]system timeslot %d @lm_gle_acb_srv_cs.c(260),INFO" ID="0x896e0825" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[slem] slem desc malloc fail !!! @lm_gle_acb_srv_cs.c(408),INFO" ID="0x896e0cc5" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[slem_param]slem param glp_mode:%d, slem_hdl=%d @lm_gle_acb_srv_cs.c(494),INFO" ID="0x896e0f75" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[GTT]acl_role=%d, slem_param.role=%d @lm_gle_acb_srv_cs.c(500),INFO" ID="0x896e0fa5" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp] sed param %d, %d, %d, %d @lm_gle_acb_srv_cs.c(530),INFO" ID="0x896e1095" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[GTT][init_roles]acb_slem_role=%d, slem_role=%d @lm_gle_acb_srv_cs.c(567),INFO" ID="0x896e11bd" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[init_roles]acb_slem_role=%d, slem_role=%d @lm_gle_acb_srv_cs.c(590),INFO" ID="0x896e1275" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[slem][rcv]rcv_iq_rpt_ind %d, rpt_iq_ind %d @lm_gle_acb_srv_cs.c(597),INFO" ID="0x896e12ad" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp] evt_task_gle_slem_create fail @lm_gle_acb_srv_cs.c(658),ERROR" ID="0x896e1492" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[cs_interval_set]acb_interval=%d, slem_interval=%d @lm_gle_acb_srv_cs.c(727),INFO" ID="0x896e16bd" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[cs_offset_set]offset0=%d, offset1=%d @lm_gle_acb_srv_cs.c(748),INFO" ID="0x896e1765" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[cs_instant_get]offset_num overflow!!! @lm_gle_acb_srv_cs.c(769),INFO" ID="0x896e180d" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[cs_instant_get]offset_num=%d, acb_conhdl=%d @lm_gle_acb_srv_cs.c(775),INFO" ID="0x896e183d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[GTT][config ind] llcp malloc fail !!! @lm_gle_acb_srv_cs.c(798),INFO" ID="0x896e18f5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[GTT][config ind] llcp2 malloc fail !!! @lm_gle_acb_srv_cs.c(816),INFO" ID="0x896e1985" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[set_cs_config_param_act]slem_hdl:%d, slem_hdl2:%d @lm_gle_acb_srv_cs.c(857),INFO" ID="0x896e1acd" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][gtt]is_gtt=%d, is_gtt_tt_slem=%d, tx_tt_id=%d, rx_tt_id=%d @lm_gle_acb_srv_cs.c(907),INFO" ID="0x896e1c5d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][gtt]tx_pid[0]=%d, tx_pid[1]=%d, tx_tt_id=%d, rx_tt_id=%d @lm_gle_acb_srv_cs.c(943),INFO" ID="0x896e1d7d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is not ready, slem_desc is null, read param fail @lm_gle_acb_srv_cs.c(1012),WARNING" ID="0x896e1fa3" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is not ready, slem_env is null, read param fail @lm_gle_acb_srv_cs.c(1020),WARNING" ID="0x896e1fe3" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]event malloc fail, read param fail @lm_gle_acb_srv_cs.c(1030),WARNING" ID="0x896e2033" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is already enabled, do not set param again @lm_gle_acb_srv_cs.c(1053),INFO" ID="0x896e20ed" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM] link resource apply fail !!! @lm_gle_acb_srv_cs.c(1075),INFO" ID="0x896e219d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[cs adaptive freq] map info, map0:0x%x, map1:0x%x, map2:0x%x, map3:0x%x @lm_gle_acb_srv_cs.c(1143),INFO" ID="0x896e23bd" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[cs adaptive freq] map info, map4:0x%x, freq:%d @lm_gle_acb_srv_cs.c(1144),INFO" ID="0x896e23c5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is already enabled, do not set param again @lm_gle_acb_srv_cs.c(1159),INFO" ID="0x896e243d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[cs_config]con_anchor_num=%d,refresh_rate=%d,is_cs_param_chg=%d, pm_t_ip2_time=%d @lm_gle_acb_srv_cs.c(1165),INFO" ID="0x896e246d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM] link resource apply fail !!! @lm_gle_acb_srv_cs.c(1198),INFO" ID="0x896e2575" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[cs_config][remote feature]con_hdl = %d @lm_gle_acb_srv_cs.c(1216),INFO" ID="0x896e2605" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[config_param_act][refl receive]glp_mode = %d, con_hdl = %d @lm_gle_acb_srv_cs.c(1239),INFO" ID="0x896e26bd" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][slem][config rscv]config_id:0x%x, fm_freq:%d, con_hdl:%d @lm_gle_acb_srv_cs.c(1242),INFO" ID="0x896e26d5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp] refl srv_desc create fail! @lm_gle_acb_srv_cs.c(1253),ERROR" ID="0x896e272a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM][GTT] link resource apply fail !!! @lm_gle_acb_srv_cs.c(1259),INFO" ID="0x896e275d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp] refl srv_desc create fail! @lm_gle_acb_srv_cs.c(1266),ERROR" ID="0x896e2792" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM] link resource apply fail !!! @lm_gle_acb_srv_cs.c(1272),INFO" ID="0x896e27c5" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[slem_is_on]status = %d, acb_conhdl = %d @lm_gle_acb_srv_cs.c(1325),INFO" ID="0x896e296d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[cs_instant_get]carkey instant get fail !!! @lm_gle_acb_srv_cs.c(1361),INFO" ID="0x896e2a8d" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[slem][init send llcp]offset = %d, con_hdl = %d, instant_new = %d @lm_gle_acb_srv_cs.c(1376),INFO" ID="0x896e2b05" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[cs]slem_hdl:%d, slem_hdl2:%d @lm_gle_acb_srv_cs.c(1413),INFO" ID="0x896e2c2d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is disabled, must set param first @lm_gle_acb_srv_cs.c(1515),INFO" ID="0x896e2f5d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[slem][recv data]slem_info_len=%d, slem_info_type=0x%x, iq_chnl_num=0x%x, vender_data_len=%d @lm_gle_acb_srv_cs.c(1644),INFO" ID="0x896e3365" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM IQ TRANS] BT BUFF NODE == NULL @lm_gle_acb_srv_cs.c(1801),INFO" ID="0x896e384d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[slem][remote data]slem_info_len=%d, slem_info_type=0x%x, iq_chnl_num=0x%x, vender_data_len=%d @lm_gle_acb_srv_cs.c(1926),INFO" ID="0x896e3c35" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[slem]iq trans ind malloc fail !!! @lm_gle_acb_srv_cs.c(1956),INFO" ID="0x896e3d25" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[slem] llcp send total_len=%d tx_tt_id:%d, rx_tt_id:%d @lm_gle_acb_srv_cs.c(1992),INFO" ID="0x896e3e45" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SYNC FAIL] SYNC FAILED CHANNEL NUMS = %d @lm_gle_acb_srv_cs.c(2045),INFO" ID="0x896e3fed" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[slem]iq report evt malloc fail !!! @lm_gle_acb_srv_cs.c(2077),INFO" ID="0x896e40ed" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[slem][send to host]total_len=%d, chmap_length=0x%x @lm_gle_acb_srv_cs.c(2105),INFO" ID="0x896e41cd" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[slem][send to host]slem_info_type=%d, local_id=%d, remote_id=%d @lm_gle_acb_srv_cs.c(2107),INFO" ID="0x896e41dd" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][slem]local tof trans to m, tof_result_m=%d @lm_gle_acb_srv_cs.c(2122),INFO" ID="0x896e4255" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[IQ Trans] acb_slem_role= %d, slem_role=%d @lm_gle_acb_srv_cs.c(2248),INFO" ID="0x896e4645" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[ToF result===]tof_result_ns=%d, timestamp_sn=%d @lm_gle_acb_srv_cs.c(2301),INFO" ID="0x896e47ed" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[IQ report===]rssi=0x%x, freq=%d, i_data=0x%x, q_data=0x%x @lm_gle_acb_srv_cs.c(2308),INFO" ID="0x896e4825" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[IQ report===]agc=0x%x, cfo_h=0x%x, cfo_l=0x%x @lm_gle_acb_srv_cs.c(2310),INFO" ID="0x896e4835" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[CFO Report] cfo=%d, acb_conhdl=%d @lm_gle_acb_srv_cs.c(2343),INFO" ID="0x896e493d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[CS] unknown llcp message con_hdl %d, llcp opcode 0x%x @lm_gle_acb_srv_cs.c(185),INFO" ID="0x896e05cd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[slem][parse] slem_interval=%d @lm_gle_acb_srv_cs.c(245),INFO" ID="0x896e07ad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[slem]system timeslot %d @lm_gle_acb_srv_cs.c(261),INFO" ID="0x896e082d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[slem] slem desc malloc fail !!! @lm_gle_acb_srv_cs.c(422),INFO" ID="0x896e0d35" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[slem_param]slem param glp_mode:%d, slem_hdl=%d @lm_gle_acb_srv_cs.c(515),INFO" ID="0x896e101d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GTT]acl_role=%d, slem_param.role=%d @lm_gle_acb_srv_cs.c(521),INFO" ID="0x896e104d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp] sed param %d, %d, %d, %d @lm_gle_acb_srv_cs.c(559),INFO" ID="0x896e117d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GTT][init_roles]acb_slem_role=%d, slem_role=%d @lm_gle_acb_srv_cs.c(596),INFO" ID="0x896e12a5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[init_roles]acb_slem_role=%d, slem_role=%d @lm_gle_acb_srv_cs.c(619),INFO" ID="0x896e135d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[slem][rcv]rcv_iq_rpt_ind %d, rpt_iq_ind %d @lm_gle_acb_srv_cs.c(626),INFO" ID="0x896e1395" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp] evt_task_gle_slem_create fail @lm_gle_acb_srv_cs.c(689),ERROR" ID="0x896e158a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[cs_interval_set]acb_interval=%d, slem_interval=%d @lm_gle_acb_srv_cs.c(774),INFO" ID="0x896e1835" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[cs_offset_set]offset0=%d, offset1=%d @lm_gle_acb_srv_cs.c(795),INFO" ID="0x896e18dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[cs_instant_get]offset_num overflow!!! @lm_gle_acb_srv_cs.c(816),INFO" ID="0x896e1985" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[cs_instant_get]offset_num=%d, acb_conhdl=%d @lm_gle_acb_srv_cs.c(822),INFO" ID="0x896e19b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GTT][config ind] llcp malloc fail !!! @lm_gle_acb_srv_cs.c(845),INFO" ID="0x896e1a6d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GTT][config ind] llcp2 malloc fail !!! @lm_gle_acb_srv_cs.c(863),INFO" ID="0x896e1afd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[set_cs_config_param_act]slem_hdl:%d, slem_hdl2:%d @lm_gle_acb_srv_cs.c(904),INFO" ID="0x896e1c45" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][gtt]is_gtt=%d, is_gtt_tt_slem=%d, tx_tt_id=%d, rx_tt_id=%d @lm_gle_acb_srv_cs.c(958),INFO" ID="0x896e1df5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][gtt]tx_pid[0]=%d, tx_pid[1]=%d, tx_tt_id=%d, rx_tt_id=%d @lm_gle_acb_srv_cs.c(1001),INFO" ID="0x896e1f4d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is not ready, slem_desc is null, read param fail @lm_gle_acb_srv_cs.c(1070),WARNING" ID="0x896e2173" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is not ready, slem_env is null, read param fail @lm_gle_acb_srv_cs.c(1078),WARNING" ID="0x896e21b3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]event malloc fail, read param fail @lm_gle_acb_srv_cs.c(1088),WARNING" ID="0x896e2203" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is already enabled, do not set param again @lm_gle_acb_srv_cs.c(1111),INFO" ID="0x896e22bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM] link resource apply fail !!! @lm_gle_acb_srv_cs.c(1133),INFO" ID="0x896e236d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[cs adaptive freq] map info, map0:0x%x, map1:0x%x, map2:0x%x, map3:0x%x @lm_gle_acb_srv_cs.c(1201),INFO" ID="0x896e258d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[cs adaptive freq] map info, map4:0x%x, freq:%d @lm_gle_acb_srv_cs.c(1202),INFO" ID="0x896e2595" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is already enabled, do not set param again @lm_gle_acb_srv_cs.c(1217),INFO" ID="0x896e260d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[cs_config]con_anchor_num=%d,refresh_rate=%d,is_cs_param_chg=%d, pm_t_ip2_time=%d @lm_gle_acb_srv_cs.c(1223),INFO" ID="0x896e263d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM] link resource apply fail !!! @lm_gle_acb_srv_cs.c(1256),INFO" ID="0x896e2745" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[cs_config][remote feature]con_hdl = %d @lm_gle_acb_srv_cs.c(1274),INFO" ID="0x896e27d5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[config_param_act][refl receive]glp_mode = %d, con_hdl = %d @lm_gle_acb_srv_cs.c(1297),INFO" ID="0x896e288d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][slem][config rscv]config_id:0x%x, fm_freq:%d, con_hdl:%d @lm_gle_acb_srv_cs.c(1300),INFO" ID="0x896e28a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp] refl srv_desc create fail! @lm_gle_acb_srv_cs.c(1311),ERROR" ID="0x896e28fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM][GTT] link resource apply fail !!! @lm_gle_acb_srv_cs.c(1317),INFO" ID="0x896e292d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp] refl srv_desc create fail! @lm_gle_acb_srv_cs.c(1324),ERROR" ID="0x896e2962" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM] link resource apply fail !!! @lm_gle_acb_srv_cs.c(1330),INFO" ID="0x896e2995" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[slem_is_on]status = %d, acb_conhdl = %d @lm_gle_acb_srv_cs.c(1383),INFO" ID="0x896e2b3d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[cs_instant_get]carkey instant get fail !!! @lm_gle_acb_srv_cs.c(1419),INFO" ID="0x896e2c5d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[slem][init send llcp]offset = %d, con_hdl = %d, instant_new = %d @lm_gle_acb_srv_cs.c(1434),INFO" ID="0x896e2cd5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[cs]slem_hdl:%d, slem_hdl2:%d @lm_gle_acb_srv_cs.c(1471),INFO" ID="0x896e2dfd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM]slem is disabled, must set param first @lm_gle_acb_srv_cs.c(1573),INFO" ID="0x896e312d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[slem][recv data]slem_info_len=%d, slem_info_type=0x%x, iq_chnl_num=0x%x, vender_data_len=%d @lm_gle_acb_srv_cs.c(1702),INFO" ID="0x896e3535" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLEM IQ TRANS] BT BUFF NODE == NULL @lm_gle_acb_srv_cs.c(1859),INFO" ID="0x896e3a1d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[slem][remote data]slem_info_len=%d, slem_info_type=0x%x, iq_chnl_num=0x%x, vender_data_len=%d @lm_gle_acb_srv_cs.c(1984),INFO" ID="0x896e3e05" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[slem]iq trans ind malloc fail !!! @lm_gle_acb_srv_cs.c(2014),INFO" ID="0x896e3ef5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[slem] llcp send total_len=%d tx_tt_id:%d, rx_tt_id:%d @lm_gle_acb_srv_cs.c(2050),INFO" ID="0x896e4015" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SYNC FAIL] SYNC FAILED CHANNEL NUMS = %d @lm_gle_acb_srv_cs.c(2104),INFO" ID="0x896e41c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[slem]iq report evt malloc fail !!! @lm_gle_acb_srv_cs.c(2136),INFO" ID="0x896e42c5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[slem][send to host]total_len=%d, chmap_length=0x%x @lm_gle_acb_srv_cs.c(2164),INFO" ID="0x896e43a5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[slem][send to host]slem_info_type=%d, local_id=%d, remote_id=%d @lm_gle_acb_srv_cs.c(2166),INFO" ID="0x896e43b5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bqw tof][bgtp][slem]local tof trans to m, tof_result_m=%d, timestamp_sn:%d @lm_gle_acb_srv_cs.c(2181),INFO" ID="0x896e442d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[IQ Trans] acb_slem_role= %d, slem_role=%d @lm_gle_acb_srv_cs.c(2307),INFO" ID="0x896e481d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ToF result===]tof_result_ns=%d, timestamp_sn=%d @lm_gle_acb_srv_cs.c(2362),INFO" ID="0x896e49d5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[IQ report===]rssi=0x%x, freq=%d, i_data=0x%x, q_data=0x%x @lm_gle_acb_srv_cs.c(2372),INFO" ID="0x896e4a25" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[IQ report===]agc=0x%x, cfo_h=0x%x, cfo_l=0x%x @lm_gle_acb_srv_cs.c(2374),INFO" ID="0x896e4a35" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[CFO Report] cfo=%d, acb_conhdl=%d @lm_gle_acb_srv_cs.c(2407),INFO" ID="0x896e4b3d" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[BGTP]lm_gle_acb_srv_host_suggest_data_length tx_octets(%d), local_max_tx_octets(%d) @lm_gle_acb_srv_data_length.c(101),INFO" ID="0x891a032d" />
 			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]lm_gle_data_length_update_effective_value remote rx_octets(%d)rx_time(%d)tx_octets(%d)tx_time(%d) @lm_gle_acb_srv_data_length.c(169),INFO" ID="0x891a054d" />
 			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]lm_gle_data_length_update_effective_value local rx_octets(%d)rx_time(%d)tx_octets(%d)tx_time(%d) @lm_gle_acb_srv_data_length.c(173),INFO" ID="0x891a056d" />
@@ -3314,82 +3321,88 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] ble gap conn addr memcpy fail. @local_device_manager_ble.c(258),ERROR" ID="0xd8940812" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] ble gap conn state change fail. @local_device_manager_ble.c(290),ERROR" ID="0xd8940912" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] ble gap conn addr memcpy fail. @local_device_manager_ble.c(300),ERROR" ID="0xd8940962" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv id is not active, please set param first. @local_device_manager_ble.c(408),ERROR" ID="0xd8940cc2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv id is not active, please set param first. @local_device_manager_ble.c(421),ERROR" ID="0xd8940d2a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv id is not active, please set param first. @local_device_manager_ble.c(434),ERROR" ID="0xd8940d92" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][Error]gap ble set local addr memcpy fail @local_device_manager_ble.c(500),ERROR" ID="0xd8940fa2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="length: %d @local_device_manager_ble.c(527),INFO" ID="0xd894107d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][Error]bluetooth get local name param error @local_device_manager_ble.c(546),ERROR" ID="0xd8941112" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at cmd gap set local name data new fail @local_device_manager_ble.c(555),ERROR" ID="0xd894115a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at cmd gap set local name data memcpy fail @local_device_manager_ble.c(560),ERROR" ID="0xd8941182" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble already enabled! @local_device_manager_ble.c(575),ERROR" ID="0xd89411fa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] enable ble fail ! @local_device_manager_ble.c(600),ERROR" ID="0xd89412c2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble not enabl! @local_device_manager_ble.c(609),ERROR" ID="0xd894130a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] disable ble fail ! @local_device_manager_ble.c(621),ERROR" ID="0xd894136a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @local_device_manager_ble.c(685),INFO" ID="0xd894156d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] btsrv_gap_set_adv_data adv data memcpy_s fail @local_device_manager_ble.c(773),ERROR" ID="0xd894182a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] btsrv_gap_set_adv_data scan rsp data memcpy_s fail @local_device_manager_ble.c(781),ERROR" ID="0xd894186a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] btsrv_gap_set_adv_param memcpy_s fail @local_device_manager_ble.c(801),ERROR" ID="0xd894190a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] btsrv_gap_set_adv_param memcpy_s fail @local_device_manager_ble.c(807),ERROR" ID="0xd894193a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap adv set terminated cbk param error @local_device_manager_ble.c(825),ERROR" ID="0xd89419ca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap enable adv cbk param error @local_device_manager_ble.c(840),ERROR" ID="0xd8941a42" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap find adv info by adv id error @local_device_manager_ble.c(847),ERROR" ID="0xd8941a7a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap disable adv cbk param error @local_device_manager_ble.c(861),ERROR" ID="0xd8941aea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap find adv info by adv id error @local_device_manager_ble.c(868),ERROR" ID="0xd8941b22" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="set discovery data pointer is null. @local_device_manager_ble.c(883),ERROR" ID="0xd8941b9a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble set adv data disc info is NULL. @local_device_manager_ble.c(898),ERROR" ID="0xd8941c12" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="adv data alloc faild, length:%d @local_device_manager_ble.c(912),ERROR" ID="0xd8941c82" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gap_ble_set_adv_data adv data memcpy_s fail @local_device_manager_ble.c(917),ERROR" ID="0xd8941caa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="scan rsp data alloc faild, length:%d @local_device_manager_ble.c(927),ERROR" ID="0xd8941cfa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gap_ble_set_adv_data scan rsp data memcpy_s fail @local_device_manager_ble.c(932),ERROR" ID="0xd8941d22" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble adv tx_power error -127~20, 127 @local_device_manager_ble.c(973),ERROR" ID="0xd8941e6a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble set adv param disc info is NULL. @local_device_manager_ble.c(987),ERROR" ID="0xd8941eda" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gap ble set adv param memcpy_s fail @local_device_manager_ble.c(1000),ERROR" ID="0xd8941f42" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gap ble set adv param memcpy_s fail @local_device_manager_ble.c(1015),ERROR" ID="0xd8941fba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv id is not active, please set param first. @local_device_manager_ble.c(1045),ERROR" ID="0xd89420aa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="adv id(%d) is discoverying, Should have stopped first. @local_device_manager_ble.c(1050),WARNING" ID="0xd89420d3" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv param alloc fail @local_device_manager_ble.c(1058),ERROR" ID="0xd8942112" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="adv id(%d) is not invalid, please check param first. @local_device_manager_ble.c(1091),ERROR" ID="0xd894221a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="disc adv id(%d), adv_id(%d) is not match, please check param first. @local_device_manager_ble.c(1098),ERROR" ID="0xd8942252" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="adv id(%d) is not discoverying, Should have started first. @local_device_manager_ble.c(1103),WARNING" ID="0xd894227b" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="mc sdk ble stop adv atb failed  @local_device_manager_ble.c(1108),ERROR" ID="0xd89422a2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap passkey req receive param error @local_device_manager_ble.c(1122),ERROR" ID="0xd8942312" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gap set sec param error param NULL @local_device_manager_ble.c(1136),ERROR" ID="0xd8942382" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gap set sec param error param NULL @local_device_manager_ble.c(1141),ERROR" ID="0xd89423aa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble passkey enter conn id err @local_device_manager_ble.c(1205),ERROR" ID="0xd89425aa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble passkey addr memcpy err @local_device_manager_ble.c(1210),ERROR" ID="0xd89425d2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt malloc fail @local_device_manager_ble.c(1228),ERROR" ID="0xd8942662" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt memcpy fail @local_device_manager_ble.c(1233),ERROR" ID="0xd894268a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt memcpy fail @local_device_manager_ble.c(1239),ERROR" ID="0xd89426ba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt malloc fail @local_device_manager_ble.c(1261),ERROR" ID="0xd894276a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt memcpy fail @local_device_manager_ble.c(1266),ERROR" ID="0xd8942792" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble enable cbk param error @local_device_manager_ble.c(1290),ERROR" ID="0xd8942852" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble disable cbk param error @local_device_manager_ble.c(1309),ERROR" ID="0xd89428ea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble read remote rssi cbk param error @local_device_manager_ble.c(1319),ERROR" ID="0xd894293a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble read remote rssi cbk param error @local_device_manager_ble.c(1330),ERROR" ID="0xd8942992" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap conn param malloc fail @local_device_manager_ble.c(1336),ERROR" ID="0xd89429c2" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="ble data_len_change cbk maxtx:%x, maxrx:%x, status:%x @local_device_manager_ble.c(1345),INFO" ID="0xd8942a0d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble read remote rssi cbk param error @local_device_manager_ble.c(1353),ERROR" ID="0xd8942a4a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble conn param update cbk param error @local_device_manager_ble.c(1368),ERROR" ID="0xd8942ac2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap conn param malloc fail @local_device_manager_ble.c(1374),ERROR" ID="0xd8942af2" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="ble conn param update cbk interval:%x, latency:%x, timeout:%x @local_device_manager_ble.c(1382),INFO" ID="0xd8942b35" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap conn param malloc fail @local_device_manager_ble.c(1433),ERROR" ID="0xd8942cca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap conn param memcpy fail @local_device_manager_ble.c(1438),ERROR" ID="0xd8942cf2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="scanning in process, please stop first. @local_device_manager_ble.c(1591),ERROR" ID="0xd89431ba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="scanning already stopped. @local_device_manager_ble.c(1637),ERROR" ID="0xd894332a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble stop extern scan ret: %#x @local_device_manager_ble.c(1646),ERROR" ID="0xd8943372" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble set phy conn is not established @local_device_manager_ble.c(1669),ERROR" ID="0xd894342a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble set phy memcpy fail @local_device_manager_ble.c(1674),ERROR" ID="0xd8943452" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="ble general set phy hdl:%x all:%x rx:%x tx:%x. @local_device_manager_ble.c(1679),INFO" ID="0xd894347d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble set phy ret: %#x @local_device_manager_ble.c(1682),ERROR" ID="0xd8943492" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble set data length conn is not established @local_device_manager_ble.c(1702),ERROR" ID="0xd8943532" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble set data length memcpy fail @local_device_manager_ble.c(1707),ERROR" ID="0xd894355a" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="ble general set len hdl:%x maxoct:%x maxtime:%x @local_device_manager_ble.c(1712),INFO" ID="0xd8943585" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble set len ret: %#x @local_device_manager_ble.c(1715),ERROR" ID="0xd894359a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble set low latency node is NULL @local_device_manager_ble.c(1730),ERROR" ID="0xd8943612" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble set lcoal latency ret: %x @local_device_manager_ble.c(1741),ERROR" ID="0xd894366a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[INFO]:Change log level failed, message is %d @log.c(326),INFO" ID="0xa0140a35" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[INFO]:Change log level to %d @log.c(334),INFO" ID="0xa0140a75" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv id is not active, please set param first. @local_device_manager_ble.c(420),ERROR" ID="0xd8940d22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv id is not active, please set param first. @local_device_manager_ble.c(433),ERROR" ID="0xd8940d8a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv id is not active, please set param first. @local_device_manager_ble.c(446),ERROR" ID="0xd8940df2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][Error]gap ble set local addr memcpy fail @local_device_manager_ble.c(512),ERROR" ID="0xd8941002" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="length: %d @local_device_manager_ble.c(539),INFO" ID="0xd89410dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][Error]bluetooth get local name param error @local_device_manager_ble.c(558),ERROR" ID="0xd8941172" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at cmd gap set local name data new fail @local_device_manager_ble.c(567),ERROR" ID="0xd89411ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at cmd gap set local name data memcpy fail @local_device_manager_ble.c(572),ERROR" ID="0xd89411e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble already enabled! @local_device_manager_ble.c(587),ERROR" ID="0xd894125a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] enable ble fail ! @local_device_manager_ble.c(612),ERROR" ID="0xd8941322" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble not enabl! @local_device_manager_ble.c(621),ERROR" ID="0xd894136a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] disable ble fail ! @local_device_manager_ble.c(633),ERROR" ID="0xd89413ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @local_device_manager_ble.c(703),INFO" ID="0xd89415fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] btsrv_gap_set_adv_data adv data memcpy_s fail @local_device_manager_ble.c(791),ERROR" ID="0xd89418ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] btsrv_gap_set_adv_data scan rsp data memcpy_s fail @local_device_manager_ble.c(799),ERROR" ID="0xd89418fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] btsrv_gap_set_adv_param memcpy_s fail @local_device_manager_ble.c(819),ERROR" ID="0xd894199a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] btsrv_gap_set_adv_param memcpy_s fail @local_device_manager_ble.c(825),ERROR" ID="0xd89419ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap adv set terminated cbk param error @local_device_manager_ble.c(843),ERROR" ID="0xd8941a5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap enable adv cbk param error @local_device_manager_ble.c(858),ERROR" ID="0xd8941ad2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap find adv info by adv id error @local_device_manager_ble.c(865),ERROR" ID="0xd8941b0a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap disable adv cbk param error @local_device_manager_ble.c(879),ERROR" ID="0xd8941b7a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap find adv info by adv id error @local_device_manager_ble.c(886),ERROR" ID="0xd8941bb2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set discovery data pointer is null. @local_device_manager_ble.c(901),ERROR" ID="0xd8941c2a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble set adv data disc info is NULL. @local_device_manager_ble.c(916),ERROR" ID="0xd8941ca2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv data alloc faild, length:%d @local_device_manager_ble.c(930),ERROR" ID="0xd8941d12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gap_ble_set_adv_data adv data memcpy_s fail @local_device_manager_ble.c(935),ERROR" ID="0xd8941d3a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="scan rsp data alloc faild, length:%d @local_device_manager_ble.c(945),ERROR" ID="0xd8941d8a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gap_ble_set_adv_data scan rsp data memcpy_s fail @local_device_manager_ble.c(950),ERROR" ID="0xd8941db2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble adv tx_power error -127~20, 127 @local_device_manager_ble.c(991),ERROR" ID="0xd8941efa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble set adv param disc info is NULL. @local_device_manager_ble.c(1005),ERROR" ID="0xd8941f6a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gap ble set adv param memcpy_s fail @local_device_manager_ble.c(1018),ERROR" ID="0xd8941fd2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gap ble set adv param memcpy_s fail @local_device_manager_ble.c(1033),ERROR" ID="0xd894204a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv id is not active, please set param first. @local_device_manager_ble.c(1063),ERROR" ID="0xd894213a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv id(%d) is discoverying, Should have stopped first. @local_device_manager_ble.c(1068),WARNING" ID="0xd8942163" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv param alloc fail @local_device_manager_ble.c(1076),ERROR" ID="0xd89421a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv id(%d) is not invalid, please check param first. @local_device_manager_ble.c(1109),ERROR" ID="0xd89422aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="disc adv id(%d), adv_id(%d) is not match, please check param first. @local_device_manager_ble.c(1116),ERROR" ID="0xd89422e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv id(%d) is not discoverying, Should have started first. @local_device_manager_ble.c(1121),WARNING" ID="0xd894230b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mc sdk ble stop adv atb failed  @local_device_manager_ble.c(1126),ERROR" ID="0xd8942332" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap passkey req receive param error @local_device_manager_ble.c(1140),ERROR" ID="0xd89423a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble smp pair req cbk error @local_device_manager_ble.c(1152),ERROR" ID="0xd8942402" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble smp pair req cbk malloc fail @local_device_manager_ble.c(1159),ERROR" ID="0xd894243a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="pair req cbk memcpy fail. @local_device_manager_ble.c(1163),ERROR" ID="0xd894245a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap pair req ind send error @local_device_manager_ble.c(1170),ERROR" ID="0xd8942492" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap set sec param error param NULL @local_device_manager_ble.c(1183),ERROR" ID="0xd89424fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap set sec param error param NULL @local_device_manager_ble.c(1188),ERROR" ID="0xd8942522" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble set pair result, conn id err @local_device_manager_ble.c(1209),ERROR" ID="0xd89425ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble set pair result error @local_device_manager_ble.c(1216),ERROR" ID="0xd8942602" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble passkey enter conn id err @local_device_manager_ble.c(1278),ERROR" ID="0xd89427f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble passkey addr memcpy err @local_device_manager_ble.c(1283),ERROR" ID="0xd894281a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt malloc fail @local_device_manager_ble.c(1301),ERROR" ID="0xd89428aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt memcpy fail @local_device_manager_ble.c(1306),ERROR" ID="0xd89428d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt memcpy fail @local_device_manager_ble.c(1312),ERROR" ID="0xd8942902" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt malloc fail @local_device_manager_ble.c(1334),ERROR" ID="0xd89429b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap ext adv rpt memcpy fail @local_device_manager_ble.c(1339),ERROR" ID="0xd89429da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble enable cbk param error @local_device_manager_ble.c(1363),ERROR" ID="0xd8942a9a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble disable cbk param error @local_device_manager_ble.c(1382),ERROR" ID="0xd8942b32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble read remote rssi cbk param error @local_device_manager_ble.c(1392),ERROR" ID="0xd8942b82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble read remote rssi cbk param error @local_device_manager_ble.c(1403),ERROR" ID="0xd8942bda" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap conn param malloc fail @local_device_manager_ble.c(1409),ERROR" ID="0xd8942c0a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble data_len_change cbk maxtx:%x, maxrx:%x, status:%x @local_device_manager_ble.c(1418),INFO" ID="0xd8942c55" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble read remote rssi cbk param error @local_device_manager_ble.c(1426),ERROR" ID="0xd8942c92" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble conn param update cbk param error @local_device_manager_ble.c(1441),ERROR" ID="0xd8942d0a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap conn param malloc fail @local_device_manager_ble.c(1447),ERROR" ID="0xd8942d3a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble conn param update cbk interval:%x, latency:%x, timeout:%x @local_device_manager_ble.c(1455),INFO" ID="0xd8942d7d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap conn param malloc fail @local_device_manager_ble.c(1506),ERROR" ID="0xd8942f12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble gap conn param memcpy fail @local_device_manager_ble.c(1511),ERROR" ID="0xd8942f3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="scanning in process, please stop first. @local_device_manager_ble.c(1680),ERROR" ID="0xd8943482" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="scanning already stopped. @local_device_manager_ble.c(1726),ERROR" ID="0xd89435f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble stop extern scan ret: %#x @local_device_manager_ble.c(1735),ERROR" ID="0xd894363a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble set phy conn is not established @local_device_manager_ble.c(1758),ERROR" ID="0xd89436f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble set phy memcpy fail @local_device_manager_ble.c(1763),ERROR" ID="0xd894371a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="ble general set phy hdl:%x all:%x rx:%x tx:%x. @local_device_manager_ble.c(1768),INFO" ID="0xd8943745" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble set phy ret: %#x @local_device_manager_ble.c(1771),ERROR" ID="0xd894375a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble set data length conn is not established @local_device_manager_ble.c(1791),ERROR" ID="0xd89437fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble set data length memcpy fail @local_device_manager_ble.c(1796),ERROR" ID="0xd8943822" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble general set len hdl:%x maxoct:%x maxtime:%x @local_device_manager_ble.c(1801),INFO" ID="0xd894384d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble set len ret: %#x @local_device_manager_ble.c(1804),ERROR" ID="0xd8943862" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble set low latency node is NULL @local_device_manager_ble.c(1819),ERROR" ID="0xd89438da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble set lcoal latency ret: %x @local_device_manager_ble.c(1830),ERROR" ID="0xd8943932" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[INFO]:Change log level failed, message is %d @log.c(325),INFO" ID="0xa0140a2d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[INFO]:Change log level to %d @log.c(333),INFO" ID="0xa0140a6d" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[log_reader][header]length error, len = 0x%x @log_buffer_reader.c(248),ERROR" ID="0xa06607c2" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[log_reader][data]length error, len1 = 0x%x, len2 = 0x%x @log_buffer_reader.c(268),ERROR" ID="0xa0660862" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[log_reader][pointer]write_p=0x%x, read_p=0x%x, new_read_p=0x%x @log_buffer_reader.c(290),ERROR" ID="0xa0660912" />
@@ -3465,26 +3478,24 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[BTOS][MEM_NEW_S] btos new osal vmalloc mem new fail! @osdep.c(986),ERROR" ID="0xdb981ed2" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[panic]id:%d,code:0x%x,call:0x%x @panic.c(158),ERROR" ID="0xa00e04f2" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[panic]core:%d,pc:0x%x,lr:0x%x @panic.c(170),ERROR" ID="0xa00e0552" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gatt tl timeout no cbk, op:%x @patch_bth.c(563),INFO" ID="0xdd54119d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] identity addr invalid @patch_bth.c(807),INFO" ID="0xdd54193d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]smp require end reason cpy = 0x%x @patch_bth.c(999),ERROR" ID="0xdd541f3a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att read rspond memcpy error @patch_bth.c(1219),ERROR" ID="0xdd54261a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gatt_tl_trans_init TL-&gt;Trans Collision @patch_bth.c(1241),ERROR" ID="0xdd5426ca" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gatt_tl_trans_init TL-&gt;Timer:%p Collision @patch_bth.c(1249),ERROR" ID="0xdd54270a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="gaph hci command callback, operation=%x, code:%x @patch_bth.c(1287),INFO" ID="0xdd54283d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smp key distribute send memcpy error @patch_bth.c(1486),ERROR" ID="0xdd542e72" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP][LongTermKeyRequest]link-&gt;hcihdl = %u @patch_bth.c(1532),INFO" ID="0xdd542fe5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][No LESC LTK SEND] @patch_bth.c(1546),INFO" ID="0xdd543055" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][DIV mismatch, Unpaired] @patch_bth.c(1568),INFO" ID="0xdd543105" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][ECDH LTK unavailable, pair!=NULL] @patch_bth.c(1581),INFO" ID="0xdd54316d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][LTK unavailable, pair=NULL] @patch_bth.c(1594),INFO" ID="0xdd5431d5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][send Negative Reply!] @patch_bth.c(1616),INFO" ID="0xdd543285" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smpc token got memcpy error @patch_bth.c(1727),ERROR" ID="0xdd5435fa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]PAIRING_REQ_RECV remote authreq:%02x @patch_bth.c(1762),INFO" ID="0xdd543715" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]PAIRING_REQ_RECV old link hcihdl:%x @patch_bth.c(1767),INFO" ID="0xdd54373d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]PAIRING_REQ_RECV new node @patch_bth.c(1771),INFO" ID="0xdd54375d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]PAIRING_REQ_RECV node-&gt;authreq:%02x @patch_bth.c(1776),INFO" ID="0xdd543785" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="start encryption link not found handle:%d @patch_bth.c(1831),ERROR" ID="0xdd54393a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gatt tl timeout no cbk, op:%x @patch_bth.c(565),INFO" ID="0xdd5411ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] identity addr invalid @patch_bth.c(809),INFO" ID="0xdd54194d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]smp require end reason cpy = 0x%x @patch_bth.c(1001),ERROR" ID="0xdd541f4a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att read rspond memcpy error @patch_bth.c(1221),ERROR" ID="0xdd54262a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gatt_tl_trans_init TL-&gt;Trans Collision @patch_bth.c(1243),ERROR" ID="0xdd5426da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gatt_tl_trans_init TL-&gt;Timer:%p Collision @patch_bth.c(1251),ERROR" ID="0xdd54271a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gaph hci command callback, operation=%x, code:%x @patch_bth.c(1289),INFO" ID="0xdd54284d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smp key distribute send memcpy error @patch_bth.c(1488),ERROR" ID="0xdd542e82" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP][LongTermKeyRequest]link-&gt;hcihdl = %u @patch_bth.c(1534),INFO" ID="0xdd542ff5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][No LESC LTK SEND] @patch_bth.c(1548),INFO" ID="0xdd543065" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][DIV mismatch, Unpaired] @patch_bth.c(1570),INFO" ID="0xdd543115" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][ECDH LTK unavailable, pair!=NULL] @patch_bth.c(1583),INFO" ID="0xdd54317d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][LTK unavailable, pair=NULL] @patch_bth.c(1596),INFO" ID="0xdd5431e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][send Negative Reply!] @patch_bth.c(1618),INFO" ID="0xdd543295" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smpc token got memcpy error @patch_bth.c(1729),ERROR" ID="0xdd54360a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]PAIRING_REQ_RECV remote authreq:%02x @patch_bth.c(1764),INFO" ID="0xdd543725" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="start encryption link not found handle:%d @patch_bth.c(1822),ERROR" ID="0xdd5438f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alen is 0, break @patch_bth.c(1870),ERROR" ID="0xdd543a72" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="dts_malloc fail size(%d) @patch_dts_mem.c(36),ERROR" ID="0x897a0122" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="dts_hci_malloc fail size(%d) @patch_dts_mem.c(48),ERROR" ID="0x897a0182" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]ACL RX DATA MIC ERROR! @patch_evt_task_ble_acl.c(141),ERROR" ID="0x8954046a" />
@@ -3604,16 +3615,18 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ERROR] ble general set len memcpy fail. @sapi_ble_gap.c(563),ERROR" ID="0xdea0119a" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="ble general set len hdl:%x max_oct:%x max_tm:%x @sapi_ble_gap.c(567),INFO" ID="0xdea011bd" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set extern scan: %d @sapi_ble_gap.c(618),ERROR" ID="0xdea01352" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general : ble general remove smp key addr NULL @sapi_ble_gap.c(654),ERROR" ID="0xdea01472" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble general : ble general remove smp key new fail %d @sapi_ble_gap.c(661),ERROR" ID="0xdea014aa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble general : ble general remove smp key mamcpy fail, ret 0x%x @sapi_ble_gap.c(668),ERROR" ID="0xdea014e2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general get local appearance result in. @sapi_ble_gap.c(718),INFO" ID="0xdea01675" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general : ble general connect memcpy fail @sapi_ble_gap.c(730),ERROR" ID="0xdea016d2" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="ble general set sec params bondable &amp; io_capability 0x%02x%02x @sapi_ble_gap.c(753),INFO" ID="0xdea0178d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params set bondable failed @sapi_ble_gap.c(758),INFO" ID="0xdea017b5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params set io capability failed @sapi_ble_gap.c(765),INFO" ID="0xdea017ed" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params failed @sapi_ble_gap.c(778),INFO" ID="0xdea01855" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="ble general set sec params ok! g_config_smp_lesc = %u, g_config_smp_mode = %u @sapi_ble_gap.c(783),INFO" ID="0xdea0187d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble pair request result alloc fail @sapi_ble_gap.c(660),ERROR" ID="0xdea014a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general : ble general remove smp key addr NULL @sapi_ble_gap.c(675),ERROR" ID="0xdea0151a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general : ble general remove smp key new fail %d @sapi_ble_gap.c(682),ERROR" ID="0xdea01552" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general : ble general remove smp key mamcpy fail, ret 0x%x @sapi_ble_gap.c(689),ERROR" ID="0xdea0158a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general get local appearance result in. @sapi_ble_gap.c(739),INFO" ID="0xdea0171d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general : ble general connect memcpy fail @sapi_ble_gap.c(751),ERROR" ID="0xdea0177a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="asynchronus conn create connection @sapi_ble_gap.c(758),INFO" ID="0xdea017b5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general set sec params bondable &amp; io_capability 0x%02x%02x @sapi_ble_gap.c(780),INFO" ID="0xdea01865" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params set bondable failed @sapi_ble_gap.c(785),INFO" ID="0xdea0188d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params set io capability failed @sapi_ble_gap.c(792),INFO" ID="0xdea018c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params failed @sapi_ble_gap.c(805),INFO" ID="0xdea0192d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general set sec params ok! g_config_smp_lesc = %u, g_config_smp_mode = %u @sapi_ble_gap.c(810),INFO" ID="0xdea01955" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="ble general gatt start service result service_info.service_handle:%d. @sapi_ble_gatt.c(60),INFO" ID="0xdea601e5" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="gatt server call back func event_type:0x%x. @sapi_ble_gatt.c(69),INFO" ID="0xdea6022d" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="gatt server call back func ReadCharacteristicRequestEvent request_id:%d,&quot; &quot;parameter_size:%d. @sapi_ble_gatt.c(81),INFO" ID="0xdea6028d" />
@@ -3898,11 +3911,12 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[sdk_gatt_hlp]att read ind can't find server cbk by server hdl @sdk_gatt_hlp.c(2755),ERROR" ID="0xdda6561a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[sdk_gatt_hlp]write element @sdk_gatt_hlp.c(2799),INFO" ID="0xdda6577d" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[sdk_gatt_hlp]read element @sdk_gatt_hlp.c(2803),INFO" ID="0xdda6579d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="hlp link key req cbk no source addr:0x%x @sdk_hlp.c(901),INFO" ID="0xdb7a1c2d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="conn ev cbk, addr: %02x:xx:xx:xx:%02x:%02x, type: %d  @sdk_hlp.c(2074),INFO" ID="0xdb7a40d5" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="conn ev cbk, copy rmt addr: %02x:xx:xx:xx:%02x:%02x, type: %d  @sdk_hlp.c(2090),INFO" ID="0xdb7a4155" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="identity_addr_update_ev rmt node not found @sdk_hlp.c(2118),ERROR" ID="0xdb7a4232" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="identity_addr_update_ev identity addr memcpy faile ret %d  @sdk_hlp.c(2124),ERROR" ID="0xdb7a4262" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hlp link key req cbk no source addr:0x%x @sdk_hlp.c(904),INFO" ID="0xdb7a1c45" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: gap general pair req cbk para is NULL @sdk_hlp.c(2039),ERROR" ID="0xdb7a3fba" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="conn ev cbk, addr: %02x:xx:xx:xx:%02x:%02x, type: %d  @sdk_hlp.c(2096),INFO" ID="0xdb7a4185" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="conn ev cbk, copy rmt addr: %02x:xx:xx:xx:%02x:%02x, type: %d  @sdk_hlp.c(2112),INFO" ID="0xdb7a4205" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="identity_addr_update_ev rmt node not found @sdk_hlp.c(2140),ERROR" ID="0xdb7a42e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="identity_addr_update_ev identity addr memcpy faile ret %d  @sdk_hlp.c(2146),ERROR" ID="0xdb7a4312" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] sle connect remote device fail! ret = %d  @sle_at_cm.c(175),ERROR" ID="0xd916057a" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] sle create connection cancel fail! ret = %d  @sle_at_cm.c(188),ERROR" ID="0xd91605e2" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] sle disconnect remote device fail! ret = %d  @sle_at_cm.c(206),ERROR" ID="0xd9160672" />
@@ -4137,30 +4151,30 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="start device seek alloc failed, length:%d @sle_srv_dd.c(887),ERROR" ID="0xd8be1bba" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start device seek = %d failed @sle_srv_dd.c(903),ERROR" ID="0xd8be1c3a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="device is stoping seek. @sle_srv_dd.c(922),ERROR" ID="0xd8be1cd2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="device is not scaning, please start first. @sle_srv_dd.c(932),ERROR" ID="0xd8be1d22" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle stop device seek = %d failed @sle_srv_dd.c(940),ERROR" ID="0xd8be1d62" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="stop device seek. @sle_srv_dd.c(943),INFO" ID="0xd8be1d7d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery msg is null @sle_srv_dd.c(954),ERROR" ID="0xd8be1dd2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_dd.c(997),INFO" ID="0xd8be1f2d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="dev power on ret:%d. @sle_srv_dd.c(1005),INFO" ID="0xd8be1f6d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="dev enable ret:%d. @sle_srv_dd.c(1012),INFO" ID="0xd8be1fa5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="dev disable ret:%d. @sle_srv_dd.c(1018),INFO" ID="0xd8be1fd5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle host dfr enter. @sle_srv_dd.c(1024),INFO" ID="0xd8be2005" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start discovery = %d failed @sle_srv_dd.c(1037),ERROR" ID="0xd8be206a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="discovery id(%d) enable. @sle_srv_dd.c(1040),INFO" ID="0xd8be2085" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="cannot find discovery info, handle: 0x%02x. @sle_srv_dd.c(1051),ERROR" ID="0xd8be20da" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLE ADV CBK] event: %d. @sle_srv_dd.c(1054),INFO" ID="0xd8be20f5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start device seek = %d failed @sle_srv_dd.c(1103),ERROR" ID="0xd8be227a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="start device seek. @sle_srv_dd.c(1106),INFO" ID="0xd8be2295" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLE SCAN CBK] event: %d. @sle_srv_dd.c(1113),INFO" ID="0xd8be22cd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sel srv adv_report_cbk result info new memory failed. @sle_srv_dd.c(1141),ERROR" ID="0xd8be23aa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery msg is null @sle_srv_dd.c(1189),ERROR" ID="0xd8be252a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_dd.c(1206),INFO" ID="0xd8be25b5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device dev init failed. @sle_srv_dd.c(1227),ERROR" ID="0xd8be265a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery init failed. @sle_srv_dd.c(1241),ERROR" ID="0xd8be26ca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery init failed. @sle_srv_dd.c(1252),ERROR" ID="0xd8be2722" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle already enabled! @sle_srv_dd.c(1286),ERROR" ID="0xd8be2832" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle already disabled! @sle_srv_dd.c(1322),ERROR" ID="0xd8be2952" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="device is not scaning, please start first. @sle_srv_dd.c(931),ERROR" ID="0xd8be1d1a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle stop device seek = %d failed @sle_srv_dd.c(941),ERROR" ID="0xd8be1d6a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="stop device seek. @sle_srv_dd.c(944),INFO" ID="0xd8be1d85" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery msg is null @sle_srv_dd.c(955),ERROR" ID="0xd8be1dda" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_dd.c(998),INFO" ID="0xd8be1f35" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dev power on ret:%d. @sle_srv_dd.c(1006),INFO" ID="0xd8be1f75" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dev enable ret:%d. @sle_srv_dd.c(1013),INFO" ID="0xd8be1fad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dev disable ret:%d. @sle_srv_dd.c(1019),INFO" ID="0xd8be1fdd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle host dfr enter. @sle_srv_dd.c(1025),INFO" ID="0xd8be200d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start discovery = %d failed @sle_srv_dd.c(1038),ERROR" ID="0xd8be2072" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="discovery id(%d) enable. @sle_srv_dd.c(1041),INFO" ID="0xd8be208d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="cannot find discovery info, handle: 0x%02x. @sle_srv_dd.c(1052),ERROR" ID="0xd8be20e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLE ADV CBK] event: %d. @sle_srv_dd.c(1055),INFO" ID="0xd8be20fd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start device seek = %d failed @sle_srv_dd.c(1104),ERROR" ID="0xd8be2282" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="start device seek. @sle_srv_dd.c(1107),INFO" ID="0xd8be229d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLE SCAN CBK] event: %d. @sle_srv_dd.c(1114),INFO" ID="0xd8be22d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sel srv adv_report_cbk result info new memory failed. @sle_srv_dd.c(1142),ERROR" ID="0xd8be23b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery msg is null @sle_srv_dd.c(1190),ERROR" ID="0xd8be2532" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_dd.c(1207),INFO" ID="0xd8be25bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device dev init failed. @sle_srv_dd.c(1228),ERROR" ID="0xd8be2662" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery init failed. @sle_srv_dd.c(1242),ERROR" ID="0xd8be26d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery init failed. @sle_srv_dd.c(1253),ERROR" ID="0xd8be272a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle already enabled! @sle_srv_dd.c(1287),ERROR" ID="0xd8be283a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle already disabled! @sle_srv_dd.c(1323),ERROR" ID="0xd8be295a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="sle dfx config param failed. @sle_srv_dfx.c(33),ERROR" ID="0xd8cc010a" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_glp.c(57),INFO" ID="0xd90401cd" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[gle glp evt proc] param NULL. @sle_srv_glp.c(73),ERROR" ID="0xd904024a" />
@@ -4170,42 +4184,25 @@
 			<MSG STRUCTURE="diag_log_msg2" NAME="[gle glp evt proc] send bt_service fail ret %d, evt %d @sle_srv_glp.c(103),ERROR" ID="0xd904033a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy glp callback fail @sle_srv_glp.c(119),ERROR" ID="0xd90403ba" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(63),ERROR" ID="0xd8c801fa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, ret = 0x%x @sle_srv_hadm.c(101),ERROR" ID="0xd8c8032a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(128),ERROR" ID="0xd8c80402" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, ret = 0x%x @sle_srv_hadm.c(167),ERROR" ID="0xd8c8053a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(181),ERROR" ID="0xd8c805aa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, failed, ret = 0x%x @sle_srv_hadm.c(194),ERROR" ID="0xd8c80612" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(209),ERROR" ID="0xd8c8068a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, failed, ret = 0x%x @sle_srv_hadm.c(232),ERROR" ID="0xd8c80742" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read local channel sounding malloc failed @sle_srv_hadm.c(252),ERROR" ID="0xd8c807e2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="read local channel sounding failed, failed, ret = 0x%x @sle_srv_hadm.c(263),ERROR" ID="0xd8c8083a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(283),ERROR" ID="0xd8c808da" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, failed, ret = 0x%x @sle_srv_hadm.c(294),ERROR" ID="0xd8c80932" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="cs_interval %d less than 1 is an illegal value, set as the default value of 1 @sle_srv_hadm.c(318),ERROR" ID="0xd8c809f2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy hadm callback fail @sle_srv_hadm.c(505),ERROR" ID="0xd8c80fca" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id 0x%x @sle_srv_hadm.c(588),INFO" ID="0xd8c81265" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[gle hadm evt proc] param NULL. @sle_srv_hadm.c(613),ERROR" ID="0xd8c8132a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[gle hadm evt] type invalid. cmd/evt(%d) @sle_srv_hadm.c(619),ERROR" ID="0xd8c8135a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[gle hadm evt] malloc fail. cmd/evt(%d) @sle_srv_hadm.c(624),ERROR" ID="0xd8c81382" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[gle hadm evt proc] type invalid. cmd/evt(%d) @sle_srv_hadm.c(649),ERROR" ID="0xd8c8144a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[gle hadm evt proc] send bt_service fail ret %d evt(%d) @sle_srv_hadm.c(655),ERROR" ID="0xd8c8147a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota service] sle ota receive data cbk in @sle_srv_ota.c(57),INFO" ID="0xd90601cd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota service] ota receive data cbk is NULL @sle_srv_ota.c(68),ERROR" ID="0xd9060222" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ota service] ota receive data, data_len:%x @sle_srv_ota.c(72),INFO" ID="0xd9060245" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota service] ota receive data rsp fail! @sle_srv_ota.c(78),ERROR" ID="0xd9060272" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota service] ota data ack param error @sle_srv_ota.c(86),ERROR" ID="0xd90602b2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ota service] ota send data, data_len:%x @sle_srv_ota.c(95),INFO" ID="0xd90602fd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota service] ota data ack failed @sle_srv_ota.c(98),ERROR" ID="0xd9060312" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ota server] sle ota add service fail, ret:%x @sle_srv_ota.c(117),ERROR" ID="0xd90603aa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota server] sle property mem fail @sle_srv_ota.c(133),ERROR" ID="0xd906042a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota server] sle property mem cpy fail @sle_srv_ota.c(139),ERROR" ID="0xd906045a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ota server] sle ota add property fail, ret:%x @sle_srv_ota.c(144),ERROR" ID="0xd9060482" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ota server] sle ota add descriptor fail, ret:%x @sle_srv_ota.c(158),ERROR" ID="0xd90604f2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota server] sle uuid add service in @sle_srv_ota.c(170),INFO" ID="0xd9060555" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="[ota server] sle ota add service, server_id:%x, service_handle:%x, property_handle:%x @sle_srv_ota.c(181),INFO" ID="0xd90605ad" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ota server] sle ota add service fail, ret:%x @sle_srv_ota.c(184),ERROR" ID="0xd90605c2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota server] sle ota add service out @sle_srv_ota.c(187),INFO" ID="0xd90605dd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota server] init ok @sle_srv_ota.c(196),INFO" ID="0xd9060625" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, ret = 0x%x @sle_srv_hadm.c(102),ERROR" ID="0xd8c80332" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(129),ERROR" ID="0xd8c8040a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, ret = 0x%x @sle_srv_hadm.c(168),ERROR" ID="0xd8c80542" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(182),ERROR" ID="0xd8c805b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, failed, ret = 0x%x @sle_srv_hadm.c(195),ERROR" ID="0xd8c8061a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(210),ERROR" ID="0xd8c80692" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, failed, ret = 0x%x @sle_srv_hadm.c(233),ERROR" ID="0xd8c8074a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read local channel sounding malloc failed @sle_srv_hadm.c(253),ERROR" ID="0xd8c807ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="read local channel sounding failed, failed, ret = 0x%x @sle_srv_hadm.c(264),ERROR" ID="0xd8c80842" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read remote channel sounding malloc failed @sle_srv_hadm.c(284),ERROR" ID="0xd8c808e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="read remote channel sounding failed, failed, ret = 0x%x @sle_srv_hadm.c(295),ERROR" ID="0xd8c8093a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="cs_interval %d less than 1 is an illegal value, set as the default value of 1 @sle_srv_hadm.c(319),ERROR" ID="0xd8c809fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy hadm callback fail @sle_srv_hadm.c(514),ERROR" ID="0xd8c81012" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id 0x%x @sle_srv_hadm.c(598),INFO" ID="0xd8c812b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[gle hadm evt proc] param NULL. @sle_srv_hadm.c(623),ERROR" ID="0xd8c8137a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle hadm evt] type invalid. cmd/evt(%d) @sle_srv_hadm.c(629),ERROR" ID="0xd8c813aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle hadm evt] malloc fail. cmd/evt(%d) @sle_srv_hadm.c(634),ERROR" ID="0xd8c813d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle hadm evt proc] type invalid. cmd/evt(%d) @sle_srv_hadm.c(659),ERROR" ID="0xd8c8149a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[gle hadm evt proc] send bt_service fail ret %d evt(%d) @sle_srv_hadm.c(665),ERROR" ID="0xd8c814ca" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_rf.c(92),INFO" ID="0xd8ca02e5" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[gle factory evt proc] param NULL. @sle_srv_rf.c(116),ERROR" ID="0xd8ca03a2" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[gle factory evt proc] type invalid. cmd/evt(%d) @sle_srv_rf.c(123),ERROR" ID="0xd8ca03da" />
@@ -4428,41 +4425,40 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="sle send response failed, server id is invalid. @sle_srv_ssap_server.c(1199),ERROR" ID="0xd8c4257a" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="ssaps method rsp mtu check failed, param-&gt;value_len %u, mtu 0x%x @sle_srv_ssap_server.c(1206),ERROR" ID="0xd8c425b2" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="sle send response failed ret 0x%x. @sle_srv_ssap_server.c(1211),ERROR" ID="0xd8c425da" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="add property memcpy fail @sle_srv_ssap_server_cb.c(67),ERROR" ID="0xd8c6021a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="add property uapi fail @sle_srv_ssap_server_cb.c(79),ERROR" ID="0xd8c6027a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="add descriptor uapi fail @sle_srv_ssap_server_cb.c(96),ERROR" ID="0xd8c60302" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="start service uapi fail @sle_srv_ssap_server_cb.c(106),ERROR" ID="0xd8c60352" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="sle sle ssaps add descriptor(%d) @sle_srv_ssap_server_cb.c(118),INFO" ID="0xd8c603b5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="sle sle ssaps add property(%d) @sle_srv_ssap_server_cb.c(128),INFO" ID="0xd8c60405" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="sle sle ssaps start server(%d) service(%d) @sle_srv_ssap_server_cb.c(135),INFO" ID="0xd8c6043d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="no service is being adding. @sle_srv_ssap_server_cb.c(143),INFO" ID="0xd8c6047d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="no property is being adding. @sle_srv_ssap_server_cb.c(161),INFO" ID="0xd8c6050d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="no descriptor is being adding. @sle_srv_ssap_server_cb.c(171),INFO" ID="0xd8c6055d" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="sle add item(%d) result(%d) @sle_srv_ssap_server_cb.c(181),INFO" ID="0xd8c605ad" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="no service is being adding. @sle_srv_ssap_server_cb.c(269),INFO" ID="0xd8c6086d" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="sle start service(%d) out of order, result-&gt;uuid(0x%02x%02x) @sle_srv_ssap_server_cb.c(282),ERROR" ID="0xd8c608d2" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="sle start service(%d) success, begin hdl(%d) end hdl(%d) property num(%d) @sle_srv_ssap_server_cb.c(288),INFO" ID="0xd8c60905" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="sle start service(%d) failed ret 0x%x. @sle_srv_ssap_server_cb.c(305),ERROR" ID="0xd8c6098a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps write value cbk failed, length:%d @sle_srv_ssap_server_cb.c(318),ERROR" ID="0xd8c609f2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps start service cbk memcpy failed. @sle_srv_ssap_server_cb.c(322),ERROR" ID="0xd8c60a12" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ota service] sle ota cbk done @sle_srv_ssap_server_cb.c(329),INFO" ID="0xd8c60a4d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps read value cbk failed, length:%d @sle_srv_ssap_server_cb.c(345),ERROR" ID="0xd8c60aca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps sread value cbk memcpy failed. @sle_srv_ssap_server_cb.c(349),ERROR" ID="0xd8c60aea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps find hdl by uuid cbk param null @sle_srv_ssap_server_cb.c(363),ERROR" ID="0xd8c60b5a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="uuid:[0x%02x][0x%02x] @sle_srv_ssap_server_cb.c(367),INFO" ID="0xd8c60b7d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="hdl_count = %d @sle_srv_ssap_server_cb.c(368),INFO" ID="0xd8c60b85" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="handl_result[%d] = 0x%04x @sle_srv_ssap_server_cb.c(370),INFO" ID="0xd8c60b95" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps mtu value cbk failed @sle_srv_ssap_server_cb.c(378),ERROR" ID="0xd8c60bd2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps indicate cfm value cbk failed, length:%d @sle_srv_ssap_server_cb.c(395),ERROR" ID="0xd8c60c5a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps indicate cfm value cbk memcpy failed. @sle_srv_ssap_server_cb.c(399),ERROR" ID="0xd8c60c7a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps read value cbk malloc failed, length:%d @sle_srv_ssap_server_cb.c(477),ERROR" ID="0xd8c60eea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps read value cbk memcpy failed. @sle_srv_ssap_server_cb.c(481),ERROR" ID="0xd8c60f0a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="mcu change failed, conn(%d) not exit. @sle_srv_ssap_server_cb.c(566),ERROR" ID="0xd8c611b2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="sle unhandled msg id: %d @sle_srv_ssap_server_cb.c(597),INFO" ID="0xd8c612ad" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="sle unhandled msg id: %d @sle_srv_ssap_server_cb.c(629),INFO" ID="0xd8c613ad" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="sle ssap server invalid msg id:%d. @sle_srv_ssap_server_cb.c(641),ERROR" ID="0xd8c6140a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle server manager init failed. @sle_srv_ssap_server_cb.c(663),ERROR" ID="0xd8c614ba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle ssap server callback memcpy fail @sle_srv_ssap_server_cb.c(674),ERROR" ID="0xd8c61512" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="add property memcpy fail @sle_srv_ssap_server_cb.c(66),ERROR" ID="0xd8c60212" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="add property uapi fail @sle_srv_ssap_server_cb.c(78),ERROR" ID="0xd8c60272" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="add descriptor uapi fail @sle_srv_ssap_server_cb.c(95),ERROR" ID="0xd8c602fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="start service uapi fail @sle_srv_ssap_server_cb.c(105),ERROR" ID="0xd8c6034a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle sle ssaps add descriptor(%d) @sle_srv_ssap_server_cb.c(117),INFO" ID="0xd8c603ad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle sle ssaps add property(%d) @sle_srv_ssap_server_cb.c(127),INFO" ID="0xd8c603fd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sle sle ssaps start server(%d) service(%d) @sle_srv_ssap_server_cb.c(134),INFO" ID="0xd8c60435" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="no service is being adding. @sle_srv_ssap_server_cb.c(142),INFO" ID="0xd8c60475" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="no property is being adding. @sle_srv_ssap_server_cb.c(160),INFO" ID="0xd8c60505" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="no descriptor is being adding. @sle_srv_ssap_server_cb.c(170),INFO" ID="0xd8c60555" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sle add item(%d) result(%d) @sle_srv_ssap_server_cb.c(180),INFO" ID="0xd8c605a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="no service is being adding. @sle_srv_ssap_server_cb.c(268),INFO" ID="0xd8c60865" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="sle start service(%d) out of order, result-&gt;uuid(0x%02x%02x) @sle_srv_ssap_server_cb.c(281),ERROR" ID="0xd8c608ca" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="sle start service(%d) success, begin hdl(%d) end hdl(%d) property num(%d) @sle_srv_ssap_server_cb.c(287),INFO" ID="0xd8c608fd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sle start service(%d) failed ret 0x%x. @sle_srv_ssap_server_cb.c(304),ERROR" ID="0xd8c60982" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps write value cbk failed, length:%d @sle_srv_ssap_server_cb.c(317),ERROR" ID="0xd8c609ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps start service cbk memcpy failed. @sle_srv_ssap_server_cb.c(321),ERROR" ID="0xd8c60a0a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps read value cbk failed, length:%d @sle_srv_ssap_server_cb.c(337),ERROR" ID="0xd8c60a8a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps sread value cbk memcpy failed. @sle_srv_ssap_server_cb.c(341),ERROR" ID="0xd8c60aaa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps find hdl by uuid cbk param null @sle_srv_ssap_server_cb.c(355),ERROR" ID="0xd8c60b1a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="uuid:[0x%02x][0x%02x] @sle_srv_ssap_server_cb.c(359),INFO" ID="0xd8c60b3d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hdl_count = %d @sle_srv_ssap_server_cb.c(360),INFO" ID="0xd8c60b45" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="handl_result[%d] = 0x%04x @sle_srv_ssap_server_cb.c(362),INFO" ID="0xd8c60b55" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps mtu value cbk failed @sle_srv_ssap_server_cb.c(370),ERROR" ID="0xd8c60b92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps indicate cfm value cbk failed, length:%d @sle_srv_ssap_server_cb.c(387),ERROR" ID="0xd8c60c1a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps indicate cfm value cbk memcpy failed. @sle_srv_ssap_server_cb.c(391),ERROR" ID="0xd8c60c3a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps read value cbk malloc failed, length:%d @sle_srv_ssap_server_cb.c(469),ERROR" ID="0xd8c60eaa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps read value cbk memcpy failed. @sle_srv_ssap_server_cb.c(473),ERROR" ID="0xd8c60eca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="mcu change failed, conn(%d) not exit. @sle_srv_ssap_server_cb.c(558),ERROR" ID="0xd8c61172" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle unhandled msg id: %d @sle_srv_ssap_server_cb.c(589),INFO" ID="0xd8c6126d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle unhandled msg id: %d @sle_srv_ssap_server_cb.c(621),INFO" ID="0xd8c6136d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle ssap server invalid msg id:%d. @sle_srv_ssap_server_cb.c(633),ERROR" ID="0xd8c613ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle server manager init failed. @sle_srv_ssap_server_cb.c(655),ERROR" ID="0xd8c6147a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle ssap server callback memcpy fail @sle_srv_ssap_server_cb.c(666),ERROR" ID="0xd8c614d2" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="multi service cbk reg fail,param err @sle_srv_ssap_server_multi_cb.c(260),ERROR" ID="0xd8c60822" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="tm signal capability failed, conn id is invalid. @sle_srv_tm.c(42),ERROR" ID="0xd8ce0152" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="tm signal capability memcpy failed. @sle_srv_tm.c(49),ERROR" ID="0xd8ce018a" />
@@ -4497,6 +4493,7 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smpc hci operation le generate dhkey link == NULL @smp_fsm.c(3799),ERROR" ID="0xdc4676ba" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]smpc hci operation le generate dhkey in-&gt;status == %x @smp_fsm.c(3807),ERROR" ID="0xdc4676fa" />
 			<MSG STRUCTURE="diag_log_msg2" NAME="[SMP]smpc data ind event do link-&gt;wait = %x, event = %x @smp_fsm.c(3839),INFO" ID="0xdc4677fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]PAIRING_REQ mem new fail @smp_reserv.c(318),INFO" ID="0xddf409f5" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI][STREAM_TO_STRUCT] HCI_EVI_COMMAND_COMPLETE len(%u) error @stream2stru.c(34),ERROR" ID="0xddf80112" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI][STREAM_TO_STRUCT] HCI_EVI_EXTENDED_INQUIRY_RESULT plen(%u) error @stream2stru.c(69),ERROR" ID="0xddf8022a" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI][STREAM_TO_STRUCT] HCI_EVI_READ_REMOTE_VERSION_INFORMATION_COMPLETE stru_len(%u) error @stream2stru.c(87),ERROR" ID="0xddf802ba" />

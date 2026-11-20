@@ -14,9 +14,10 @@
 #include "../../timer/am_common_timer.h"
 #include "tcxo.h"
 
-#define RADAR_DEFAULT_CHANNEL_IDX 3
-
+#define RADAR_ALG_RESULT_PRINT_INFO_PERIOD 10
+#define RADAR_RAW_DATA_CNT_INIT_VALUE 0
 #ifdef CONFIG_SLP_USAGE_AIR_MOUSE_CAR
+#define RADAR_DEFAULT_CHANNEL_IDX 3
 #define RADAR_DEFAULT_TX_POWER_IDX 34
 #define RADAR_DEFAULT_RAW_DATA_START_BIN    0
 #define RADAR_DEFAULT_RAW_DATA_END_BIN      (29)
@@ -25,20 +26,8 @@
 #define RADAR_DEFAULT_LNA_CODE              (0xF)
 #define RADAR_DEFAULT_VGA_CODE              (0x1D)
 #define RADAR_DEFAULT_ANT_CH_NUM            (8)
-#define RADAR_DEFAULT_ANT_CODE_TABLE { 1, 0, 3, 2, 5, 4, 7, 6 }
+#define RADAR_DEFAULT_ANT_CODE_TABLE { 2, 3, 0, 1, 6, 7, 4, 5 }
 #define RADAR_DEFAULT_VENDOR_INFO { 0xFF, 0xFF }
-#else
-#define RADAR_DEFAULT_TX_POWER_IDX 38
-#define RADAR_DEFAULT_RAW_DATA_START_BIN    0
-#define RADAR_DEFAULT_RAW_DATA_END_BIN      (44)
-#define RADAR_DEFAULT_SUBFRAME_PERIOD       (687)
-#define RADAR_DEFAULT_ANT_SWITCH_INTERVAL   (687)
-#define RADAR_DEFAULT_LNA_CODE              (0xF)
-#define RADAR_DEFAULT_VGA_CODE              (0x01)
-#define RADAR_DEFAULT_ANT_CH_NUM            (1)
-#define RADAR_DEFAULT_ANT_CODE_TABLE { 0, 0, 0, 0, 0, 0, 0, 0 }
-#define RADAR_DEFAULT_VENDOR_INFO { 0xFF, 0xFF }
-#endif
 
 #define RADAR_DEFAULT_SPREAD_FACTOR     (8)
 #define RADAR_DEFAULT_ACC_RSHIFT_BIT    (2)
@@ -49,12 +38,14 @@
                                          1, 0, 1, -1, 0, 0, 0, 1, -1, 1, \
                                          1, 1, 0, 0, -1, 1, 0, -1, 0, 0, -1}
 
-#define RADAR_RAW_DATA_CNT_INIT_VALUE 0
 #define RADAR_RAW_DATA_PRINT_INFO_PERIOD 100
 #define RADAR_RAW_DATA_NORMAL_RPT_INTERVAL 1
 #define RADAR_DEFAULT_SW_CTRL_EN (7)
+#endif
 
 static uint16_t g_raw_data_frame_cnt = RADAR_RAW_DATA_CNT_INIT_VALUE;
+
+#ifdef CONFIG_SLP_USAGE_AIR_MOUSE_CAR
 static uint8_t g_default_ant_code[RADAR_MAX_ANT_CH_NUM] = RADAR_DEFAULT_ANT_CODE_TABLE;
 
 static void InitHardwarePara(radar_hardware_para_t *hwPara)
@@ -115,6 +106,7 @@ void uapi_radar_raw_data_cb_func(radar_raw_data_msg_t *dataMsg)
             dataMsg->data_para.end_bin, dataMsg->mode, *(uint16_t*)dataMsg->vendor_info, sysTime);
     }
 }
+#endif
 
 void radar_report_errcode_cb_func(uint32_t errorCode)
 {
@@ -122,9 +114,40 @@ void radar_report_errcode_cb_func(uint32_t errorCode)
     osal_printk("[ERR] receive Radar exception:0x%x!\r\n", errorCode);
 }
 
+#ifdef CONFIG_SLP_USAGE_AIR_MOUSE
+static void uapi_radar_alg_result_cb_func(radar_result_t *targetResult)
+{
+    if (targetResult == NULL) {
+        osal_printk("uapi_radar_alg_result_cb_func:: targetResult == NULL");
+        return;
+    }
+    static int32_t print_cnt = 0;
+    print_cnt++;
+    if (print_cnt % RADAR_ALG_RESULT_PRINT_INFO_PERIOD == 0) {
+        static uint64_t last_time = 0;
+        uint64_t current_time = uapi_tcxo_get_ms();
+        if (last_time != 0) {
+            osal_printk("[RADAR] report total cnt:%d, ave interval:%llu ms\r\n",
+                RADAR_ALG_RESULT_PRINT_INFO_PERIOD, (current_time - last_time) / RADAR_ALG_RESULT_PRINT_INFO_PERIOD);
+        }
+        last_time = current_time;
+        osal_printk("[RADAR] targetNum:%d\r\n", targetResult->target_num);
+        for (uint8_t i = 0; i < RADAR_MAX_RPT_TARGET_NUM; i++) {
+            osal_printk("t%d:: rng:%d, agl:%d, vel:%d, activity:%d, rsv:0x%x 0x%x\r\n",
+                targetResult->target_info[i].id, targetResult->target_info[i].rng, targetResult->target_info[i].agl,
+                targetResult->target_info[i].vel, targetResult->target_info[i].activity_intensity,
+                targetResult->target_info[i].reserve0, targetResult->target_info[i].reserve1);
+        }
+    } else {
+        air_mouse_radar_get_version();
+    }
+}
+#endif
+
 static errcode_radar_client_t air_mouse_radar_init(void)
 {
     errcode_radar_client_t ret = ERRCODE_RC_SUCCESS;
+#ifdef CONFIG_SLP_USAGE_AIR_MOUSE_CAR
     radar_hardware_para_t para = {0};
     InitHardwarePara(&para);
     ret = uapi_radar_set_hardware_para(&para);
@@ -138,7 +161,7 @@ static errcode_radar_client_t air_mouse_radar_init(void)
         osal_printk("uapi_radar_register_raw_data_cb Error 0x%x\r\n", ret);
         return ret;
     }
-
+#endif
     ret = uapi_radar_register_report_errcode_cb(radar_report_errcode_cb_func);
     if (ret != ERRCODE_RC_SUCCESS) {
         osal_printk("uapi_radar_register_report_errcode_cb Error 0x%x\r\n", ret);
@@ -148,6 +171,14 @@ static errcode_radar_client_t air_mouse_radar_init(void)
     slp_radar_set_uart_write_cb((radar_uart_write_cb_t)uapi_uart_write);
 #ifdef CONFIG_DRIVERS_USB_SERIAL_FUNC_INTERFACE
     slp_radar_set_usb_serial_write_cb((radar_usb_serial_write_cb_t)usb_serial_write);
+#endif
+
+#ifdef CONFIG_SLP_USAGE_AIR_MOUSE
+    ret = uapi_radar_register_result_cb((radar_result_cb_t)uapi_radar_alg_result_cb_func);
+    if (ret != ERRCODE_RC_SUCCESS) {
+        osal_printk("uapi_radar_register_result_cb Error 0x%x\r\n", ret);
+        return ret;
+    }
 #endif
     osal_printk("air_mouse_radar_init succ\r\n");
     return ret;

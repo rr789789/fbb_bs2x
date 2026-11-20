@@ -51,28 +51,28 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="start device seek alloc failed, length:%d @sle_srv_dd.c(887),ERROR" ID="0xd8be1bba" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start device seek = %d failed @sle_srv_dd.c(903),ERROR" ID="0xd8be1c3a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="device is stoping seek. @sle_srv_dd.c(922),ERROR" ID="0xd8be1cd2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="device is not scaning, please start first. @sle_srv_dd.c(932),ERROR" ID="0xd8be1d22" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle stop device seek = %d failed @sle_srv_dd.c(940),ERROR" ID="0xd8be1d62" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="stop device seek. @sle_srv_dd.c(943),INFO" ID="0xd8be1d7d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery msg is null @sle_srv_dd.c(954),ERROR" ID="0xd8be1dd2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_dd.c(997),INFO" ID="0xd8be1f2d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="dev power on ret:%d. @sle_srv_dd.c(1005),INFO" ID="0xd8be1f6d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="dev enable ret:%d. @sle_srv_dd.c(1012),INFO" ID="0xd8be1fa5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="dev disable ret:%d. @sle_srv_dd.c(1018),INFO" ID="0xd8be1fd5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle host dfr enter. @sle_srv_dd.c(1024),INFO" ID="0xd8be2005" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start discovery = %d failed @sle_srv_dd.c(1037),ERROR" ID="0xd8be206a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="discovery id(%d) enable. @sle_srv_dd.c(1040),INFO" ID="0xd8be2085" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="cannot find discovery info, handle: 0x%02x. @sle_srv_dd.c(1051),ERROR" ID="0xd8be20da" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLE ADV CBK] event: %d. @sle_srv_dd.c(1054),INFO" ID="0xd8be20f5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start device seek = %d failed @sle_srv_dd.c(1103),ERROR" ID="0xd8be227a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="start device seek. @sle_srv_dd.c(1106),INFO" ID="0xd8be2295" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLE SCAN CBK] event: %d. @sle_srv_dd.c(1113),INFO" ID="0xd8be22cd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sel srv adv_report_cbk result info new memory failed. @sle_srv_dd.c(1141),ERROR" ID="0xd8be23aa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery msg is null @sle_srv_dd.c(1189),ERROR" ID="0xd8be252a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_dd.c(1206),INFO" ID="0xd8be25b5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device dev init failed. @sle_srv_dd.c(1227),ERROR" ID="0xd8be265a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery init failed. @sle_srv_dd.c(1241),ERROR" ID="0xd8be26ca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery init failed. @sle_srv_dd.c(1252),ERROR" ID="0xd8be2722" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle already enabled! @sle_srv_dd.c(1286),ERROR" ID="0xd8be2832" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle already disabled! @sle_srv_dd.c(1322),ERROR" ID="0xd8be2952" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="device is not scaning, please start first. @sle_srv_dd.c(931),ERROR" ID="0xd8be1d1a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle stop device seek = %d failed @sle_srv_dd.c(941),ERROR" ID="0xd8be1d6a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="stop device seek. @sle_srv_dd.c(944),INFO" ID="0xd8be1d85" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery msg is null @sle_srv_dd.c(955),ERROR" ID="0xd8be1dda" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_dd.c(998),INFO" ID="0xd8be1f35" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dev power on ret:%d. @sle_srv_dd.c(1006),INFO" ID="0xd8be1f75" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dev enable ret:%d. @sle_srv_dd.c(1013),INFO" ID="0xd8be1fad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dev disable ret:%d. @sle_srv_dd.c(1019),INFO" ID="0xd8be1fdd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle host dfr enter. @sle_srv_dd.c(1025),INFO" ID="0xd8be200d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start discovery = %d failed @sle_srv_dd.c(1038),ERROR" ID="0xd8be2072" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="discovery id(%d) enable. @sle_srv_dd.c(1041),INFO" ID="0xd8be208d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="cannot find discovery info, handle: 0x%02x. @sle_srv_dd.c(1052),ERROR" ID="0xd8be20e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLE ADV CBK] event: %d. @sle_srv_dd.c(1055),INFO" ID="0xd8be20fd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="uapi sle start device seek = %d failed @sle_srv_dd.c(1104),ERROR" ID="0xd8be2282" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="start device seek. @sle_srv_dd.c(1107),INFO" ID="0xd8be229d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLE SCAN CBK] event: %d. @sle_srv_dd.c(1114),INFO" ID="0xd8be22d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sel srv adv_report_cbk result info new memory failed. @sle_srv_dd.c(1142),ERROR" ID="0xd8be23b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery msg is null @sle_srv_dd.c(1190),ERROR" ID="0xd8be2532" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_dd.c(1207),INFO" ID="0xd8be25bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device dev init failed. @sle_srv_dd.c(1228),ERROR" ID="0xd8be2662" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery init failed. @sle_srv_dd.c(1242),ERROR" ID="0xd8be26d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle device discovery init failed. @sle_srv_dd.c(1253),ERROR" ID="0xd8be272a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle already enabled! @sle_srv_dd.c(1287),ERROR" ID="0xd8be283a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle already disabled! @sle_srv_dd.c(1323),ERROR" ID="0xd8be295a" />
 			</MSG_LOG>

@@ -16,15 +16,19 @@
 #if defined(CONFIG_BT_UPG_ENABLE) && (CONFIG_BT_UPG_ENABLE == 1)
 #include "bts_def.h"
 #endif
-#if defined(CONFIG_SLE_UPG_ENABLE) && (CONFIG_SLE_UPG_ENABLE== 1)
-#include "sle_ota.h"
-#endif
 
 #define DFX_DIAG_CHANNEL DIAG_CHANNEL_ID_0
 
 #if defined(CONFIG_BT_UPG_ENABLE) && (CONFIG_BT_UPG_ENABLE == 1)
 errcode_t bth_ota_reg_cbk(void *data_report, void *status_report);
 errcode_t bth_ota_data_send(uint8_t *data_ptr, uint16_t data_len);
+#if defined(CONFIG_BT_OTA_SERVICE_ENABLE) && (CONFIG_BT_OTA_SERVICE_ENABLE == 1)
+ble_ota_service_ack g_ble_ota_service_ack_cbk = NULL;
+#endif
+#endif
+
+#if defined(CONFIG_SLE_UPG_ENABLE) && (CONFIG_SLE_UPG_ENABLE== 1)
+sle_ota_service_ack g_sle_ota_service_ack_cbk = NULL;
 #endif
 
 #if defined(CONFIG_SUPPORT_LOG_THREAD)
@@ -183,18 +187,42 @@ void uapi_diag_switch_trigger_enable(bool en)
 #endif
 
 #if defined(CONFIG_BT_UPG_ENABLE) && (CONFIG_BT_UPG_ENABLE == 1)
+#if defined(CONFIG_BT_OTA_SERVICE_ENABLE) && (CONFIG_BT_OTA_SERVICE_ENABLE == 1)
+void diag_ble_ota_service_ack_register(ble_ota_service_ack ack_data)
+{
+    g_ble_ota_service_ack_cbk = ack_data;
+}
+#endif
 static int32_t diag_channel_bt_output(void *fd, dfx_data_type_t data_type, uint8_t *data[], uint16_t len[], uint8_t cnt)
 {
     unused(fd);
     unused(data_type);
     unused(cnt);
+#if defined(CONFIG_BT_OTA_SERVICE_ENABLE) && (CONFIG_BT_OTA_SERVICE_ENABLE == 1)
+    int32_t size = len[0];
+    if (g_ble_ota_service_ack_cbk == NULL) {
+        return 0;
+    }
+    if (g_ble_ota_service_ack_cbk(len[0], (uint8_t *)data[0]) != ERRCODE_SUCC) {
+        size = 0;
+    }
+    return size;
+#else
     return (int32_t)bth_ota_data_send(data[0], len[0]);
+#endif
 }
 
 static errcode_t diag_channel_rx_bt_data(uint8_t *data, uint16_t size)
 {
     return uapi_diag_channel_rx_frame_data(DIAG_CHANNEL_ID_1, data, size);
 }
+
+#if defined(CONFIG_BT_OTA_SERVICE_ENABLE) && (CONFIG_BT_OTA_SERVICE_ENABLE == 1)
+errcode_t diag_channel_rx_bt_service_ota_data(uint8_t *data, uint16_t size)
+{
+    return uapi_diag_channel_rx_frame_data(DIAG_CHANNEL_ID_1, data, size);
+}
+#endif
 
 static void diag_channel_register_bt_callback(void)
 {
@@ -203,26 +231,29 @@ static void diag_channel_register_bt_callback(void)
 #endif
 
 #if defined(CONFIG_SLE_UPG_ENABLE) && (CONFIG_SLE_UPG_ENABLE== 1)
+void diag_sle_ota_service_ack_register(sle_ota_service_ack ack_data)
+{
+    g_sle_ota_service_ack_cbk = ack_data;
+}
+
 static int32_t diag_channel_sle_output(void *fd, dfx_data_type_t type, uint8_t *data[], uint16_t len[], uint8_t cnt)
 {
     unused(fd);
     unused(type);
     unused(cnt);
     int32_t size = len[0];
-    if (sle_ota_data_ack(len[0], (uint8_t *)data[0]) != ERRCODE_SUCC) {
+    if (g_sle_ota_service_ack_cbk == NULL) {
+        return 0;
+    }
+    if (g_sle_ota_service_ack_cbk(len[0], (uint8_t *)data[0]) != ERRCODE_SUCC) {
         size = 0;
     }
     return size;
 }
 
-static void diag_channel_rx_sle_data(const uint8_t *data, const uint16_t size)
+void diag_channel_rx_sle_data(uint8_t *data, uint16_t size)
 {
     (void)uapi_diag_channel_rx_frame_data(DIAG_CHANNEL_ID_2, (uint8_t *)data, (uint16_t)size);
-}
-
-static void diag_channel_register_sle_callback(void)
-{
-    sle_ota_reg_chan_data_report_cbk(diag_channel_rx_sle_data);
 }
 #endif
 
@@ -258,7 +289,6 @@ errcode_t diag_register_channel(void)
     if (uapi_diag_channel_set_tx_hook(DIAG_CHANNEL_ID_2, diag_channel_sle_output) != (errcode_t)ERRCODE_SUCC) {
         return ERRCODE_FAIL;
     }
-    diag_channel_register_sle_callback();
 #endif
     return ERRCODE_SUCC;
 }

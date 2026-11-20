@@ -26,14 +26,16 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="connect param update done ret:%d. @connection_manager_ble.c(343),WARNING" ID="0xd8960abb" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble connect remote device param id null @connection_manager_ble.c(355),ERROR" ID="0xd8960b1a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][INFO] addr memcpy to param fail. @connection_manager_ble.c(361),INFO" ID="0xd8960b4d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]addr memcpy fail. @connection_manager_ble.c(382),ERROR" ID="0xd8960bf2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]conn node find fail. @connection_manager_ble.c(388),ERROR" ID="0xd8960c22" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]addr memcpy fail. @connection_manager_ble.c(395),ERROR" ID="0xd8960c5a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read remote device rssi, conn_node not found. @connection_manager_ble.c(412),ERROR" ID="0xd8960ce2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="read remote device rssi fail @connection_manager_ble.c(419),ERROR" ID="0xd8960d1a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle set rssi param err @connection_manager_ble.c(430),ERROR" ID="0xd8960d72" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="set connect rssi fail @connection_manager_ble.c(435),ERROR" ID="0xd8960d9a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="set smp keys memcpy fail @connection_manager_ble.c(461),ERROR" ID="0xd8960e6a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="set smp keys addr memcpy fail @connection_manager_ble.c(465),ERROR" ID="0xd8960e8a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="show ble conn list: @connection_manager_ble.c(517),INFO" ID="0xd896102d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap ble connect remote device async param id null @connection_manager_ble.c(376),ERROR" ID="0xd8960bc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][INFO] addr memcpy to param fail. @connection_manager_ble.c(382),INFO" ID="0xd8960bf5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]addr memcpy fail. @connection_manager_ble.c(403),ERROR" ID="0xd8960c9a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]conn node find fail. @connection_manager_ble.c(409),ERROR" ID="0xd8960cca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv]addr memcpy fail. @connection_manager_ble.c(416),ERROR" ID="0xd8960d02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read remote device rssi, conn_node not found. @connection_manager_ble.c(433),ERROR" ID="0xd8960d8a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read remote device rssi fail @connection_manager_ble.c(440),ERROR" ID="0xd8960dc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle set rssi param err @connection_manager_ble.c(451),ERROR" ID="0xd8960e1a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set connect rssi fail @connection_manager_ble.c(456),ERROR" ID="0xd8960e42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set smp keys memcpy fail @connection_manager_ble.c(482),ERROR" ID="0xd8960f12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set smp keys addr memcpy fail @connection_manager_ble.c(486),ERROR" ID="0xd8960f32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="show ble conn list: @connection_manager_ble.c(538),INFO" ID="0xd89610d5" />
 			</MSG_LOG>

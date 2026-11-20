@@ -1072,29 +1072,26 @@ static void hid_mkdevdesc(uint8_t *buf)
 
 static int16_t hid_mkcfgdesc(uint8_t *buf, struct usbdev_devinfo_s *devinfo, uint8_t speed, uint8_t type)
 {
-  uint16_t total_len;
-  uint8_t *des;
-  errno_t ret;
+    uint16_t total_len;
+    uint8_t *des;
+    errno_t ret;
 
-  (void)devinfo;
+    (void)devinfo;
 
-  des = link_fhid_descriptors(&total_len);
-  des[1] = type;
-  if (des == NULL)
-    {
-      return 0;
+    des = link_fhid_descriptors(&total_len);
+    if (des == NULL) {
+        return 0;
     }
+    des[1] = type;
 
-  ret = memcpy_s(buf, USB_COMP_EP0_BUFSIZ, des, total_len);
-  if (ret != EOK)
-    {
-      usb_err("memcpy_s fail!, ret:%d\n", ret);
-      free(des);
-      return 0;
+    ret = memcpy_s(buf, USB_COMP_EP0_BUFSIZ, des, total_len);
+    if (ret != EOK) {
+        usb_err("memcpy_s fail!, ret:%d\n", ret);
+        free(des);
+        return 0;
     }
-  free(des);
-
-  return (int16_t)total_len;
+    free(des);
+    return (int16_t)total_len;
 }
 
 static int hid_mkstrdesc(uint8_t id, struct usb_strdesc_s *buf)

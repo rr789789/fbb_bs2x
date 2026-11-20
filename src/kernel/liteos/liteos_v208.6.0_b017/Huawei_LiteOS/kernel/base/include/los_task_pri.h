@@ -39,6 +39,10 @@
 #include "los_mp_pri.h"
 #endif
 
+#ifdef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+#include "los_obj_template.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -89,8 +93,13 @@ extern "C" {
 /* This Macro is used to obtain the pointer to a task control block using a corresponding parameter */
 #define OS_TCB_FROM_PENDLIST(ptr) LOS_DL_LIST_ENTRY(ptr, LosTaskCB, pendList)
 
-/* This Macro is used to obtain the pointer to a task control block that has a specified task ID */
+#ifdef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+DEFINE_OBJ_TEMPLATE_TYPE(task, LOSCFG_BASE_CORE_TSK_LIMIT);
+OBJ_TEMPLATE_DECLARE(task);
+#define OS_TCB_FROM_TID(taskId) OBJ_FROM_ID(task, taskId, LosTaskCB)
+#else
 #define OS_TCB_FROM_TID(taskId) (((LosTaskCB *)g_osTaskCBArray) + (taskId))
+#endif
 
 /* This Macro set default task stack memory pool */
 #ifndef OS_TASK_STACK_POOL

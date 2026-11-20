@@ -21,7 +21,6 @@
 #endif
 
 #define BLE_MICRO_MULTINUM_ONE 1
-#define BLE_MICRO_MULTINUM_TWO 2
 #define BLE_ADDR_INDEX0 0
 #define BLE_ADDR_INDEX1 1
 #define BLE_ADDR_INDEX2 2
@@ -59,16 +58,16 @@ static property_uuid_handle_t g_character_handle[BLE_CHARACTER_HANDLE_MAX] = {0}
 typedef struct ble_multicon_stru {
     uint8_t current_connect;
     uint8_t connected_num;
-    uint8_t is_connected[CONFIG_RCU_MULTICON_NUM];
-    uint16_t conn_id[CONFIG_RCU_MULTICON_NUM];
-    uint8_t addr[CONFIG_RCU_MULTICON_NUM][BD_ADDR_LEN];
+    uint8_t is_connected[BLE_MICRO_MULTINUM_ONE];
+    uint16_t conn_id[BLE_MICRO_MULTINUM_ONE];
+    uint8_t addr[BLE_MICRO_MULTINUM_ONE][BD_ADDR_LEN];
 } ble_multicon_stru_t;
 static ble_multicon_stru_t g_ble_multicon_param = {0};
 
 static uint8_t ble_rcu_find_unconnect_server_by_addr(uint8_t *server_addr)
 {
     uint8_t i;
-    for (i = 0; i < CONFIG_RCU_MULTICON_NUM; i++) {
+    for (i = 0; i < BLE_MICRO_MULTINUM_ONE; i++) {
         if (g_ble_multicon_param.is_connected[i] == 1) {
             continue;
         }
@@ -89,7 +88,7 @@ static uint8_t ble_rcu_find_unconnect_server_by_addr(uint8_t *server_addr)
 static uint8_t ble_rcu_find_connected_server_by_addr(const uint8_t *server_addr)
 {
     uint8_t i;
-    for (i = 0; i < CONFIG_RCU_MULTICON_NUM; i++) {
+    for (i = 0; i < BLE_MICRO_MULTINUM_ONE; i++) {
         if (g_ble_multicon_param.is_connected[i] == 0) {
             continue;
         }
@@ -272,7 +271,7 @@ static void ble_rcu_gap_ble_scan_result_callback(gap_scan_result_data_t *scan_re
 
     find_connect_server = ble_rcu_find_unconnect_server_by_addr(scan_result_data->addr.addr);
     int ret = memcmp(scan_result_data->adv_data + BLE_DEV_NAME_OFFSET + 3, arr, sizeof(arr));
-    if ((find_connect_server <= CONFIG_RCU_MULTICON_NUM) && (ret == 0)) {
+    if ((find_connect_server <= BLE_MICRO_MULTINUM_ONE) && (ret == 0)) {
         osal_printk("%s find server addr:[0x%02x:0x%02x:xx:xx:xx:0x%02x], index = %d\r\n",
             BLE_RCU_DONGLE_LOG,
             scan_result_data->addr.addr[BLE_ADDR_INDEX0],
@@ -309,7 +308,7 @@ static void ble_rcu_gap_ble_connect_state_changed_callback(uint16_t conn_id, bd_
         osal_printk("%s connect change cbk conn_id =%d \n", BLE_RCU_DONGLE_LOG, conn_id);
         g_ble_multicon_param.is_connected[g_ble_multicon_param.current_connect] = 1;
         g_ble_multicon_param.connected_num++;
-        if (g_ble_multicon_param.connected_num < CONFIG_RCU_MULTICON_NUM) {
+        if (g_ble_multicon_param.connected_num < BLE_MICRO_MULTINUM_ONE) {
             ble_rcu_start_scan();
         }
         osal_printk("%s gattc_exchange_mtu_req \n", BLE_RCU_DONGLE_LOG);
@@ -318,13 +317,13 @@ static void ble_rcu_gap_ble_connect_state_changed_callback(uint16_t conn_id, bd_
         osal_printk("%s connect change cbk conn disconnected \n", BLE_RCU_DONGLE_LOG);
         g_ble_connect_state = 0;
         uint8_t connected_server_id = ble_rcu_find_connected_server_by_addr(addr->addr);
-        if (connected_server_id <= CONFIG_RCU_MULTICON_NUM) {
+        if (connected_server_id <= BLE_MICRO_MULTINUM_ONE) {
             g_ble_multicon_param.is_connected[connected_server_id] = 0;
             g_ble_multicon_param.connected_num--;
         }
 
 #if !defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
-        if (g_ble_multicon_param.connected_num < CONFIG_RCU_MULTICON_NUM) {
+        if (g_ble_multicon_param.connected_num < BLE_MICRO_MULTINUM_ONE) {
             ble_rcu_start_scan();
         }
 #endif
@@ -536,34 +535,12 @@ static void ble_rcu_client_sample_ssapc_cbk_register(
 
 static void ble_client_tartget_server_init(void)
 {
-    switch (CONFIG_RCU_MULTICON_NUM) {
-        case BLE_MICRO_MULTINUM_ONE:
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX0] = CONFIG_BLE_MULTICON_SERVER1_ADDR0;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX1] = CONFIG_BLE_MULTICON_SERVER1_ADDR1;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX2] = CONFIG_BLE_MULTICON_SERVER1_ADDR2;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX3] = CONFIG_BLE_MULTICON_SERVER1_ADDR3;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX4] = CONFIG_BLE_MULTICON_SERVER1_ADDR4;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX5] = CONFIG_BLE_MULTICON_SERVER1_ADDR5;
-            break;
-        case BLE_MICRO_MULTINUM_TWO:
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX0] = CONFIG_BLE_MULTICON_SERVER1_ADDR0;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX1] = CONFIG_BLE_MULTICON_SERVER1_ADDR1;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX2] = CONFIG_BLE_MULTICON_SERVER1_ADDR2;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX3] = CONFIG_BLE_MULTICON_SERVER1_ADDR3;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX4] = CONFIG_BLE_MULTICON_SERVER1_ADDR4;
-            g_ble_multicon_param.addr[0][BLE_ADDR_INDEX5] = CONFIG_BLE_MULTICON_SERVER1_ADDR5;
-#if defined(CONFIG_BLE_EXSIT_TWO_MULTICON_SERVER)
-            g_ble_multicon_param.addr[1][BLE_ADDR_INDEX0] = CONFIG_BLE_MULTICON_SERVER2_ADDR0;
-            g_ble_multicon_param.addr[1][BLE_ADDR_INDEX1] = CONFIG_BLE_MULTICON_SERVER2_ADDR1;
-            g_ble_multicon_param.addr[1][BLE_ADDR_INDEX2] = CONFIG_BLE_MULTICON_SERVER2_ADDR2;
-            g_ble_multicon_param.addr[1][BLE_ADDR_INDEX3] = CONFIG_BLE_MULTICON_SERVER2_ADDR3;
-            g_ble_multicon_param.addr[1][BLE_ADDR_INDEX4] = CONFIG_BLE_MULTICON_SERVER2_ADDR4;
-            g_ble_multicon_param.addr[1][BLE_ADDR_INDEX5] = CONFIG_BLE_MULTICON_SERVER2_ADDR5;
-#endif
-            break;
-        default:
-            break;
-    }
+    g_ble_multicon_param.addr[0][BLE_ADDR_INDEX0] = CONFIG_BLE_MULTICON_SERVER1_ADDR0;
+    g_ble_multicon_param.addr[0][BLE_ADDR_INDEX1] = CONFIG_BLE_MULTICON_SERVER1_ADDR1;
+    g_ble_multicon_param.addr[0][BLE_ADDR_INDEX2] = CONFIG_BLE_MULTICON_SERVER1_ADDR2;
+    g_ble_multicon_param.addr[0][BLE_ADDR_INDEX3] = CONFIG_BLE_MULTICON_SERVER1_ADDR3;
+    g_ble_multicon_param.addr[0][BLE_ADDR_INDEX4] = CONFIG_BLE_MULTICON_SERVER1_ADDR4;
+    g_ble_multicon_param.addr[0][BLE_ADDR_INDEX5] = CONFIG_BLE_MULTICON_SERVER1_ADDR5;
 }
 
 void ble_rcu_client_init(gattc_notification_callback notification_cb, gattc_indication_callback indication_cb)

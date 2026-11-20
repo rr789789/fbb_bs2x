@@ -31,14 +31,16 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ERROR] ble general set len memcpy fail. @sapi_ble_gap.c(563),ERROR" ID="0xdeac119a" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="ble general set len hdl:%x max_oct:%x max_tm:%x @sapi_ble_gap.c(567),INFO" ID="0xdeac11bd" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set extern scan: %d @sapi_ble_gap.c(618),ERROR" ID="0xdeac1352" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general : ble general remove smp key addr NULL @sapi_ble_gap.c(654),ERROR" ID="0xdeac1472" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble general : ble general remove smp key new fail %d @sapi_ble_gap.c(661),ERROR" ID="0xdeac14aa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble general : ble general remove smp key mamcpy fail, ret 0x%x @sapi_ble_gap.c(668),ERROR" ID="0xdeac14e2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general get local appearance result in. @sapi_ble_gap.c(718),INFO" ID="0xdeac1675" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general : ble general connect memcpy fail @sapi_ble_gap.c(730),ERROR" ID="0xdeac16d2" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="ble general set sec params bondable &amp; io_capability 0x%02x%02x @sapi_ble_gap.c(753),INFO" ID="0xdeac178d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params set bondable failed @sapi_ble_gap.c(758),INFO" ID="0xdeac17b5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params set io capability failed @sapi_ble_gap.c(765),INFO" ID="0xdeac17ed" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params failed @sapi_ble_gap.c(778),INFO" ID="0xdeac1855" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="ble general set sec params ok! g_config_smp_lesc = %u, g_config_smp_mode = %u @sapi_ble_gap.c(783),INFO" ID="0xdeac187d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble pair request result alloc fail @sapi_ble_gap.c(660),ERROR" ID="0xdeac14a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general : ble general remove smp key addr NULL @sapi_ble_gap.c(675),ERROR" ID="0xdeac151a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general : ble general remove smp key new fail %d @sapi_ble_gap.c(682),ERROR" ID="0xdeac1552" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general : ble general remove smp key mamcpy fail, ret 0x%x @sapi_ble_gap.c(689),ERROR" ID="0xdeac158a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general get local appearance result in. @sapi_ble_gap.c(739),INFO" ID="0xdeac171d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general : ble general connect memcpy fail @sapi_ble_gap.c(751),ERROR" ID="0xdeac177a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="asynchronus conn create connection @sapi_ble_gap.c(758),INFO" ID="0xdeac17b5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general set sec params bondable &amp; io_capability 0x%02x%02x @sapi_ble_gap.c(780),INFO" ID="0xdeac1865" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params set bondable failed @sapi_ble_gap.c(785),INFO" ID="0xdeac188d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params set io capability failed @sapi_ble_gap.c(792),INFO" ID="0xdeac18c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general set sec params failed @sapi_ble_gap.c(805),INFO" ID="0xdeac192d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general set sec params ok! g_config_smp_lesc = %u, g_config_smp_mode = %u @sapi_ble_gap.c(810),INFO" ID="0xdeac1955" />
 			</MSG_LOG>

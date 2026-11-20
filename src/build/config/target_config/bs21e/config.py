@@ -11,7 +11,7 @@ target = {
         'pkg_chip': 'bs21e-1100e',
         'defines': [
             'SUPPORT_CFBB_UPG', 'BGLE_TASK_EXIST', 'SUPPORT_MULTI_LIBS', 'SW_UART_DEBUG', 'AT_COMMAND', 'XO_32M_CALI',
-            'SUPPORT_SET_KEYS', 'SUPPORT_SFC_IRQ_LOCK', 'CONFIG_OTA_UPDATE_SUPPORT',
+            'SUPPORT_SET_KEYS', 'SUPPORT_SFC_IRQ_LOCK', 'CONFIG_OTA_UPDATE_SUPPORT', 'GLE_CS_MODE3_SUPPORT', 'SLEM_BTC_IQ_TRANS'
         ],
         'ram_component': [
             # Application Region
@@ -64,7 +64,7 @@ target = {
         'nv_cfg': 'bs21e_nv_rcu',
     },
     'bs21e-1100e-slp': {
-        'base_target_name': 'standard-bs21e-1100e',
+        'base_target_name': 'target_bs21e_slp_template',
         'defines': ['SUPPORT_SLP_CLIENT', 'PRODUCT_AIR_MOUSE', '-:ITCM_MAX_WATERLINE=0x51010'],
         'ram_component': [
             # Middleware Region

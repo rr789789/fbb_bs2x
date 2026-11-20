@@ -31,6 +31,11 @@ config FLASHBOOT_INFO_TO_APP
     prompt "Enable Flashboot send info to Application."
     default n
 
+config UART_SUPPORT_ALL_IN_ONE
+    bool
+    prompt "support at/log/debug uart all in one to debugkits"
+    default n
+
 config BS2X_USER_PRODUCT_ID
     hex
     prompt "BS2X user product ID. The value 0 is invalid and will not be verified."

@@ -95,7 +95,8 @@
 						.text.evt_task_gle_acb_free_txdesc_from_tog .text.evt_task_gle_acb_low_latency_switch_md \
 						.text.evt_task_gle_acb_low_latency_set_intv_change_flag .text.evt_task_gle_acb_update_low_latency_param \
 						.text.evt_task_gle_acb_low_latency_update_phy .text.evt_task_gle_acb_update_low_latency_sed_info \
-						.text.lm_gle_llcp_phy_update_ind_srv_act_replace)
+						.text.lm_gle_llcp_phy_update_ind_srv_act_replace \
+						.text.lm_ble_acl_srv_host_suggest_data_length_replace)
 		*libbt_host.a:*.o* (.text.gaph_smp_cfm_cbk_replace .text.smp_key_distribute_go_replace \
 							.text.smp_tk_ask_replace .text.smp_ecdh_public_key_generate_replace \
 							.text.smp_ecdh_pairing_public_key_recv_replace .text.bth_init_replace \

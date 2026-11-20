@@ -116,4 +116,8 @@ typedef struct {
     int32_t para17;
 } slp_dongle_three_ant_cali_info_type_t;
 
+typedef struct {
+    uint8_t delay_cali;
+    uint8_t is_mfg;
+} radar_delay_cali_info_type_t;
 #endif /* COMMON_H */

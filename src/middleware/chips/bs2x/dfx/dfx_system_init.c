@@ -45,6 +45,9 @@
 #include "ota_upgrade.h"
 #endif
 #include "log_common.h"
+#if CONFIG_AT_SUPPORT_ZDIAG
+#include "at_zdiag.h"
+#endif
 
 #if defined(CONFIG_SUPPORT_LOG_THREAD)
 static const diag_cmd_reg_obj_t g_diag_default_cmd_tbl[] = {
@@ -63,6 +66,9 @@ static const diag_cmd_reg_obj_t g_diag_default_cmd_tbl[] = {
 #if (CONFIG_DFX_SUPPORT_OFFLINE_LOG_FILE == DFX_YES)
     { DIAG_CMD_SET_OFFLINE_LOG, DIAG_CMD_SET_OFFLINE_LOG, diag_cmd_set_offline_log },
 #endif /* CONFIG_DFX_SUPPORT_OFFLINE_LOG_FILE */
+#if defined(CONFIG_AT_SUPPORT_ZDIAG)
+    { DIAG_CMD_SIMULATE_AT, DIAG_CMD_SIMULATE_AT, zdiag_at_proc },
+#endif /* CONFIG_AT_SUPPORT_ZDIAG */
 };
 
 unsigned long g_dfx_osal_queue_id;
@@ -208,4 +214,12 @@ void dfx_set_log_enable(void)
         uapi_zdiag_set_offline_log_enable(false);
     }
 #endif
+}
+
+uint32_t dfx_get_cur_second(void)
+{
+    osal_timeval cur_time = { 0 };
+    cur_time.tv_sec = PASSED_SECONDS_SINCE_2023 + uapi_tcxo_get_ms() / DFX_1000MS;
+    cur_time.tv_usec = 0;
+    return cur_time.tv_sec;
 }

@@ -13,20 +13,25 @@
 #include "sle_measure_dis_server.h"
 #elif defined(CONFIG_SAMPLE_SUPPORT_SLE_MEASURE_DIS_CLIENT)
 #include "sle_measure_dis_client.h"
+#elif defined(CONFIG_SAMPLE_SUPPORT_SLE_PHONE_SERVER)
+#include "sle_phone_server.h"
+#include "sle_phone_server_dis.h"
 #endif
 
 #define TASK_PRIORITY_HADM          27
 #define STACK_SIZE_BASELINE 0x200
 #ifdef CONFIG_SAMPLE_SUPPORT_SLE_MEASURE_DIS_SERVER
 #define BTH_HADM_SERVICE_STACK_SIZE (STACK_SIZE_BASELINE * 4 + 0x1000)
-#else
+#elif defined(CONFIG_SAMPLE_SUPPORT_SLE_MEASURE_DIS_CLIENT)
 #define BTH_HADM_SERVICE_STACK_SIZE (STACK_SIZE_BASELINE * 4 + 0x200)
+#elif defined(CONFIG_SAMPLE_SUPPORT_SLE_PHONE_SERVER)
+#define BTH_HADM_SERVICE_STACK_SIZE (STACK_SIZE_BASELINE * 4 + 0x1200)
 #endif
 
 #if defined(CONFIG_SAMPLE_SUPPORT_SLE_MEASURE_DIS_SERVER)
 void sle_measure_dis_server_task(void)
 {
-    uint32_t ret;
+    uint32_t ret = ERRCODE_SUCC;
     ret = measure_dis_server_init();
     check_rc_return_rc(ret, "con sle_measure_dis_server_init");
     while (1) {
@@ -40,9 +45,20 @@ void sle_measure_dis_server_task(void)
 #elif defined(CONFIG_SAMPLE_SUPPORT_SLE_MEASURE_DIS_CLIENT)
 void sle_measure_dis_client_task(void)
 {
-    uint32_t ret;
+    uint32_t ret = ERRCODE_SUCC;
     ret = measure_dis_client_init();
-    check_rc_return_rc(ret, "con sle_measure_dis_client_init");
+    check_rc_return_rc(ret, "con sle_mouse_client_init");
+}
+#elif defined(CONFIG_SAMPLE_SUPPORT_SLE_PHONE_SERVER)
+void sle_phone_dis_server_task(void)
+{
+    sle_dev_cb_register();
+    while (1) {
+        osal_event_read(
+            &sle_phone_dis_evt, MEASURE_DIS_MSG_EVENT,
+            OSAL_WAIT_FOREVER, OSAL_WAITMODE_OR | OSAL_WAITMODE_CLR);
+        sle_server_dis_msg_proc();
+    }
 }
 #endif
 
@@ -57,6 +73,9 @@ static void measure_dis_entry(void)
 #elif defined(CONFIG_SAMPLE_SUPPORT_SLE_MEASURE_DIS_CLIENT)
     task_handle = osal_kthread_create((osal_kthread_handler)sle_measure_dis_client_task,
                                       0, "SLEMeasureDisClient", BTH_HADM_SERVICE_STACK_SIZE);
+#elif defined(CONFIG_SAMPLE_SUPPORT_SLE_PHONE_SERVER)
+    task_handle = osal_kthread_create((osal_kthread_handler)sle_phone_dis_server_task,
+                                      0, "SLEPhoneDisServer", BTH_HADM_SERVICE_STACK_SIZE);
 #endif
     if (task_handle != NULL) {
         osal_kthread_set_priority(task_handle, TASK_PRIORITY_HADM);

@@ -22,6 +22,11 @@ typedef struct {
 
 typedef struct {
     uint32_t paraMap;
+    SlpClickTremorPrevSens sens;
+} SlpAtClickTremorPrevSensPara;
+
+typedef struct {
+    uint32_t paraMap;
     screen_size_e mode;
 } SlpAtScreenSize;
 
@@ -49,15 +54,46 @@ const at_para_parse_syntax_t g_amAtSetCursorSpeedCommandSyntax[] = {
 
 static at_ret_t air_mosue_at_set_cursor_speed_req(SlpAtCursorSpeedPara *args)
 {
+    osal_printk("[AM][AT] cursor speed:%u\r\n", args->mode);
+#if CONFIG_SLP_USAGE_AIR_MOUSE // tv场景需要dongle侧收到at指令后空口发送给rcu，在rcu侧调用下发
+    sle_air_mouse_client_send_cmd(AM_CMD_DONGLE_CURSOR_SPEED, (uint8_t *)&args->mode, sizeof(SlpCursorSpeed));
+#elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR // car场景dongle侧收到后直接在dongle侧调用下发
     ErrcodeSlpClient ret = ERRCODE_SLPC_SUCCESS;
     ret = SlpSetCursorSpeedCommand(args->mode);
     if (ret != ERRCODE_SLPC_SUCCESS) {
         osal_printk("[AM][AT] slp cursor speed fail, mode:%u, ret:0x%X\r\n", args->mode, ret);
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("[AM][AT] cursor speed:%u\r\n", args->mode);
+#endif
     update_am_print_info_cursor_speed(args->mode);
+    return AT_RET_OK;
+}
 
+/* ---------------------------------------- slp_set_click_tremor_prev_sens_cmd -------------------------------------------- */
+const at_para_parse_syntax_t g_amAtSetClickTremorPrevSensCommandSyntax[] = {
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .last = true,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = SLP_CLICK_TREMOR_PREV_SENS_LOW,
+        .entry.int_range.max_val = SLP_CLICK_TREMOR_PREV_SENS_HIGH,
+        .offset = offsetof(SlpAtClickTremorPrevSensPara, sens),
+    },
+};
+
+static at_ret_t air_mosue_at_set_click_tremor_prev_sens_req(SlpAtClickTremorPrevSensPara *args)
+{
+    osal_printk("[AM][AT] click tremor prev sens:%u\r\n", args->sens);
+#if CONFIG_SLP_USAGE_AIR_MOUSE // tv场景需要dongle侧收到at指令后空口发送给rcu，在rcu侧调用下发
+    sle_air_mouse_client_send_cmd(AM_CMD_DONGLE_CLICK_TREMOR_PREV_SENS, (uint8_t *)&args->sens, sizeof(SlpClickTremorPrevSens));
+#elif CONFIG_SLP_USAGE_AIR_MOUSE_CAR // car场景dongle侧收到后直接在dongle侧调用下发
+    ErrcodeSlpClient ret = SlpSetClickTremorPrevSensCommand(args->sens);
+    if (ret != ERRCODE_SLPC_SUCCESS) {
+        osal_printk("[AM][AT] slp click tremor prev sens:%u, ret:0x%x\r\n", args->sens, ret);
+        return AT_RET_SYNTAX_ERROR;
+    }
+#endif
+    update_am_print_info_click_tremor_prev_sens(args->sens);
     return AT_RET_OK;
 }
 
@@ -255,6 +291,16 @@ static at_cmd_entry_t g_slp_client_at_table[] = {
         g_amAtSetCursorRptRateCommandSyntax,
         NULL,
         (at_set_func_t)air_mosue_at_set_cursor_rpt_rate_req,
+        NULL,
+        NULL,
+    },
+    {
+        "AMSETCLICKTREMORPREVSENS", // 设置点击防抖灵敏度
+        9,  // ID
+        0,  // Attribute
+        g_amAtSetClickTremorPrevSensCommandSyntax,
+        NULL,
+        (at_set_func_t)air_mosue_at_set_click_tremor_prev_sens_req,
         NULL,
         NULL,
     },

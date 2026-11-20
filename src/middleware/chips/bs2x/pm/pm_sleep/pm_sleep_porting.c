@@ -215,7 +215,7 @@ static uint16_t g_pm_clk_1m_div_val = 0;
 #define PM_CLK_32K_DIV_REG          0x57000064
 static uint16_t g_pm_clk_32k_div_val = 0;
 #define PM_AON_BUS_DIV_REG          0x570000A8
-static uint16_t g_pm_aon_bus_div_val = 0;
+static uint16_t g_pm_aon_bus_div_val = 0x181;
 #define PM_M_CLKSEL_REG             0x5200004C
 static uint16_t g_pm_m_clksel_val = 0;
 
@@ -233,6 +233,11 @@ static uint16_t g_b_ctl_b_crg_soft_rst_n = 0;
 #define DTCM_SHARE_MODE           0xF90
 #define SHARE_MODE_GT             12
 #define SHARE_MODE_CFG            8
+#endif
+
+#if !defined(CONFIG_XO_32K_ENABLE) && defined(PM_USE_32K_REAL_FREQ)
+// bgtp接口，封装在lib.a中不对外开放
+extern uint32_t bgtp_get_lp_clock_cali_result(void);
 #endif
 
 typedef struct reg_cfg {
@@ -331,8 +336,14 @@ static void pm_port_tickless_compensation(uint32_t ticks)
     g_exit_sleep_time = ulp_rtc_get_count();
     uint64_t actual_sleep_ms = ((g_exit_sleep_time - g_entry_sleep_time) * PM_OS_TICKS_PER_S) +
                                  g_32k_time_calibrate;
+#if !defined(CONFIG_XO_32K_ENABLE) && defined(PM_USE_32K_REAL_FREQ)
+    actual_sleep_ms += 57600; // 57600: ~1.8ms，rtc/tick启停时间、补偿耗时计算等。
+    g_32k_time_calibrate = actual_sleep_ms % (bgtp_get_lp_clock_cali_result() / 100); // 采样的32k频率是实际的100倍
+    actual_sleep_ms = actual_sleep_ms / (bgtp_get_lp_clock_cali_result() / 100); // 采样的32k频率是实际的100倍
+#else
     g_32k_time_calibrate = actual_sleep_ms & 0x7FFF;
     actual_sleep_ms = actual_sleep_ms >> 0xF;
+#endif
 
     if (actual_sleep_ms > ticks) {
         oal_ticks_restore(ticks);
@@ -450,7 +461,7 @@ void pm_port_enter_wfi(void)
     nop();
 #if defined(CONFIG_REDUCE_FREQ_DURING_WFI)
     if (allow_to_slp == 0) {
-        writew(0x570000a8, 0x182);      // AON_BUS升频
+        writew(0x570000a8, g_pm_aon_bus_div_val);      // AON_BUS升频
         writew(0x57000100, 0x1);        // 主频时钟切到1通道（恢复）
         reg16_setbit(0x52000548, 0x7);  // 打开SFC时钟
         isb();                          // 保证前面指令执行完毕
@@ -714,6 +725,7 @@ void pm_port_cpu_resume(void)
     writew(ULP_AON_CTL_MCPU_POR_RST_PC_H_REG, (uint16_t)((uint32_t)(uintptr_t)g_cpu_reset_pc >> 16)); // pc_h: pc >> 16
     writew(ULP_AON_CTL_MCPU_POR_RST_PC_L_REG, (uint16_t)((uint32_t)(uintptr_t)g_cpu_reset_pc));
 
+    g_pm_aon_bus_div_val = 0x182;
     writew(PM_M_CLDEN0_REG, g_pm_m_clken0_val);
     writew(PM_M_CLDEN1_REG, g_pm_m_clken1_val);
     writew(PM_M_SOFT_RST_N_REG, g_pm_m_soft_rst_n_val);
@@ -757,8 +769,8 @@ void pm_port_cpu_resume(void)
     writew(RF_CTL_RF_GP_REG0, 1); // 用于通知BT恢复bsoc和btsub相关配置
     pm_auto_cg_config();
     g_resume_current_count = ulp_rtc_get_count();
-    pm_port_timers_resume();
     func_patch_init();
+    pm_port_timers_resume();
     /* 配置EFUSE0为读模式。 */
     uapi_reg_write32(0x57028030, 0x5a5a);
 #endif

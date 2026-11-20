@@ -44,6 +44,13 @@
 #define _32K                            0x8000
 #define _64K                            0x10000
 #define CHIP_SIZE                       0x3ffff
+#define SPI_CMD_UNSUPPORT               {0x0, 0x0, 0x0, 0x1}
+#define FLASH_GD25LE40                  0x1360C8
+#define FLASH_GD25LE80                  0x1460C8
+#define FLASH_X155020                   0x155020
+#define FLASH_SIZE_512KB                0x80000
+#define FLASH_SIZE_1MB                  0x100000
+#define FLASH_UNKOWN                    0xFFFFFF
 
 extern flash_spi_ctrl_t g_flash_ctrl;
 extern errcode_t check_opt_param(uint32_t addr, uint32_t size);
@@ -57,23 +64,16 @@ static errcode_t do_greedy_erase(uint32_t hal_erase_size, uint32_t start_sector)
     uint32_t remain_size = hal_erase_size;
     uint32_t current_addr = start_sector;
     spi_opreation_t current_erase_opt = {0};
-    spi_opreation_t flash_erase_cmds[] = {
-        {SPI_CMD_SUPPORT, 0xC7, 0x0, CHIP_SIZE},
-        {SPI_CMD_SUPPORT, 0xD8, 0x0, _64K},
-        {SPI_CMD_SUPPORT, 0x52, 0x0, _32K},
-        {SPI_CMD_SUPPORT, 0x20, 0x0, _4K}
-    };
     while (remain_size > 0) {
-        uint8_t erase_opt_num = 4;
-        for (erase_opt_index = 1; erase_opt_index < erase_opt_num; erase_opt_index++) {
-            current_erase_opt = flash_erase_cmds[erase_opt_index];
+        for (erase_opt_index = 1; erase_opt_index < g_flash_ctrl.erase_cmd_num; erase_opt_index++) {
+            current_erase_opt = g_flash_ctrl.erase_opreation_array[erase_opt_index];
             temp_size = current_erase_opt.size;
             if ((remain_size >= temp_size) && ((current_addr & (temp_size - 1)) == 0)) {
                 break;
             }
         }
         /* Generally, the 4K erase is not configured for this branch. Check the erase array at the port layer. */
-        if (erase_opt_index == erase_opt_num) {
+        if (erase_opt_index == g_flash_ctrl.erase_cmd_num) {
             return ERRCODE_SFC_ERASE_FORM_ERROR;
         }
         ret = hal_sfc_reg_erase(current_addr, current_erase_opt, false);
@@ -206,7 +206,6 @@ errcode_t uapi_sfc_reg_write_patch(uint32_t flash_addr, uint8_t *write_data, uin
     if (unlikely(ret != ERRCODE_SUCC)) {
         return ret;
     }
-    spi_opreation_t write_opt = {SPI_CMD_SUPPORT, 0x02, 0x0, 0};
     uint32_t unaligned_size = BYTES_64 - (flash_addr & BYTES_64_MASK);
     if (write_size < unaligned_size) {
         unaligned_size = write_size;
@@ -215,7 +214,7 @@ errcode_t uapi_sfc_reg_write_patch(uint32_t flash_addr, uint8_t *write_data, uin
     uint8_t *buffer_ptr = write_data;
     /* Part 1: The start address is not aligned by 64 Byte. */
     uint32_t lock_sts = sfc_port_write_lock(flash_addr, flash_addr + write_size);
-    ret = hal_sfc_reg_write(temp_addr, buffer_ptr, unaligned_size, write_opt);
+    ret = hal_sfc_reg_write(temp_addr, buffer_ptr, unaligned_size, g_flash_ctrl.write_opreation);
     if (unlikely(ret != ERRCODE_SUCC)) {
         sfc_port_write_unlock(lock_sts);
         return ret;
@@ -227,7 +226,7 @@ errcode_t uapi_sfc_reg_write_patch(uint32_t flash_addr, uint8_t *write_data, uin
        Any flash memory larger than 64 bytes/page can be used. */
     while (remained_size > 0) {
         uint32_t current_size = remained_size <= BYTES_64 ? remained_size : BYTES_64;
-        ret = hal_sfc_reg_write(temp_addr, buffer_ptr, current_size, write_opt);
+        ret = hal_sfc_reg_write(temp_addr, buffer_ptr, current_size, g_flash_ctrl.write_opreation);
         if (unlikely(ret != ERRCODE_SUCC)) {
             sfc_port_write_unlock(lock_sts);
             return ret;
@@ -267,11 +266,77 @@ errcode_t uapi_sfc_reg_erase_chip_patch(void)
     if (unlikely(ret != ERRCODE_SUCC)) {
         return ret;
     }
-    spi_opreation_t erase_chip_opt = {SPI_CMD_SUPPORT, 0xC7, 0x0, CHIP_SIZE};
     uint32_t lock_sts = sfc_port_write_lock(0x0, FLASH_CHIP_PROTECT_END);
-    ret = hal_sfc_reg_erase(0x0, erase_chip_opt, true);
+    ret = hal_sfc_reg_erase(0x0, g_flash_ctrl.erase_opreation_array[ERASE_CHIP], true);
     sfc_port_write_unlock(lock_sts);
     return ret;
+}
+
+static flash_cmd_execute_t g_flash_gd_bus_enable[] = {
+    { FLASH_CMD_TYPE_CMD,         1, { 0x6 }},
+    { FLASH_CMD_TYPE_PROCESSING,  3, { 0x05, 0, 0x0 } },
+    { FLASH_CMD_TYPE_CMD,         3, { 0x1, 0x0, 0x2 } },
+    { FLASH_CMD_TYPE_END,         0, { 0x0 }}
+};
+
+static spi_opreation_t g_flash_common_read_cmds[] = {
+    {SPI_CMD_SUPPORT, 0x03, 0x0, 0x0},
+    {SPI_CMD_SUPPORT, 0x0B, 0x0, 0x1},
+    {SPI_CMD_SUPPORT, 0x3B, 0x1, 0x1},
+    {SPI_CMD_SUPPORT, 0xBB, 0x2, 0x1},
+    {SPI_CMD_SUPPORT, 0x6B, 0x5, 0x1},
+    {SPI_CMD_SUPPORT, 0xEB, 0x6, 0x3}
+};
+
+static spi_opreation_t g_flash_default_common_read_cmds[] = {
+    {SPI_CMD_SUPPORT, 0x03, 0x0, 0x0},
+    {SPI_CMD_SUPPORT, 0x6B, 0x5, 0x1}, // 四线命令，为了匹配rom化代码的STANDARD_READ
+    {SPI_CMD_SUPPORT, 0xEB, 0x6, 0x3}
+};
+
+static spi_opreation_t g_flash_common_write_cmds[] = {
+    {SPI_CMD_SUPPORT, 0x0, 0x0, 0},
+    {SPI_CMD_SUPPORT, 0x02, 0x0, 0},
+    SPI_CMD_UNSUPPORT,
+    SPI_CMD_UNSUPPORT,
+    {SPI_CMD_SUPPORT, 0x32, 0x5, 0},
+    SPI_CMD_UNSUPPORT,
+};
+
+static spi_opreation_t g_flash_common_erase_cmds[] = {
+    {SPI_CMD_SUPPORT, 0xC7, 0x0, CHIP_SIZE},
+    {SPI_CMD_SUPPORT, 0xD8, 0x0, _64K},
+    {SPI_CMD_SUPPORT, 0x52, 0x0, _32K},
+    {SPI_CMD_SUPPORT, 0x20, 0x0, _4K}
+};
+
+static flash_spi_info_t g_flash_spi_info_v2[] = {
+    { FLASH_GD25LE40, FLASH_SIZE_512KB, 4,
+        (spi_opreation_t *)g_flash_common_read_cmds, (spi_opreation_t *)g_flash_common_write_cmds,
+        (spi_opreation_t *)g_flash_common_erase_cmds, (flash_cmd_execute_t *)g_flash_gd_bus_enable },
+    { FLASH_GD25LE80, FLASH_SIZE_1MB, 4,
+        (spi_opreation_t *)g_flash_common_read_cmds, (spi_opreation_t *)g_flash_common_write_cmds,
+        (spi_opreation_t *)g_flash_common_erase_cmds, (flash_cmd_execute_t *)g_flash_gd_bus_enable },
+    { FLASH_X155020, FLASH_SIZE_1MB, 4,
+        (spi_opreation_t *)g_flash_common_read_cmds, (spi_opreation_t *)g_flash_common_write_cmds,
+        (spi_opreation_t *)g_flash_common_erase_cmds, (flash_cmd_execute_t *)g_flash_gd_bus_enable },
+};
+
+static flash_spi_info_t g_flash_spi_unknown_info_v2 = {
+    FLASH_UNKOWN, FLASH_SIZE_1MB, 4,
+    (spi_opreation_t *)g_flash_default_common_read_cmds, (spi_opreation_t *)g_flash_common_write_cmds,
+    (spi_opreation_t *)g_flash_common_erase_cmds, (flash_cmd_execute_t *)g_flash_gd_bus_enable
+};
+
+void sfc_set_flash_spi_infos(void)
+{
+    sfc_port_set_flash_spi_infos((flash_spi_info_t *)g_flash_spi_info_v2,
+                                 sizeof(g_flash_spi_info_v2) / sizeof(flash_spi_info_t));
+}
+
+flash_spi_info_t *sfc_port_get_unknown_flash_info_patch(void)
+{
+    return (flash_spi_info_t *)&g_flash_spi_unknown_info_v2;
 }
 
 EXPORT_HARD_PATCH(hal_sfc_execute_cmds, hal_sfc_execute_cmds_patch);
@@ -280,3 +345,4 @@ EXPORT_HARD_PATCH(uapi_sfc_reg_erase, uapi_sfc_reg_erase_patch);
 EXPORT_HARD_PATCH(uapi_sfc_reg_erase_chip, uapi_sfc_reg_erase_chip_patch);
 EXPORT_HARD_PATCH(uapi_sfc_reg_read, uapi_sfc_reg_read_patch);
 EXPORT_HARD_PATCH(uapi_sfc_reg_other_flash_opt, uapi_sfc_reg_other_flash_opt_patch);
+EXPORT_HARD_PATCH(sfc_port_get_unknown_flash_info, sfc_port_get_unknown_flash_info_patch);

@@ -10,4 +10,6 @@ choice
         bool "Enable SLE MEASURE_DIS Server sample."
     config SAMPLE_SUPPORT_SLE_MEASURE_DIS_CLIENT
         bool "Enable SLE MEASURE_DIS Client sample."
+    config SAMPLE_SUPPORT_SLE_PHONE_SERVER
+        bool "Enable SLE PHONE Server sample."
 endchoice

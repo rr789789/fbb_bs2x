@@ -12,7 +12,6 @@
 #include <stdint.h>
 #include "osal_debug.h"
 #include "errcode.h"
-#include "sle_ota.h"
 #include "sle_service_common.h"
 #include "sle_ssap_server.h"
 

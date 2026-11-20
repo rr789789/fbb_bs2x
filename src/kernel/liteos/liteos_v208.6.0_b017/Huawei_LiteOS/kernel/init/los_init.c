@@ -102,22 +102,28 @@ __attribute__((section(".data.init"))) UINTPTR g_sys_mem_addr_end;
 __attribute__((section(".data.init"))) UINTPTR g_excInteractMemSize = 0;
 #endif
 
+#ifndef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
 STATIC LosTaskCB  g_taskCBArray[LOSCFG_BASE_CORE_TSK_LIMIT + 1];
+#endif
 
 #ifdef LOSCFG_TASK_STACK_STATIC_ALLOCATION
 STATIC UINT8      g_idleTaskStack[LOSCFG_KERNEL_CORE_NUM][LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE] LITE_OS_ATTR_ALIGN(LOSCFG_STACK_POINT_ALIGN_SIZE);
 #endif
 
 #ifdef LOSCFG_BASE_IPC_QUEUE
+#ifndef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
 STATIC LosQueueCB g_allQueue[LOSCFG_BASE_IPC_QUEUE_LIMIT];
+#endif
 #endif
 
 #ifdef LOSCFG_BASE_IPC_MUX
 STATIC LosMuxCB   g_allMux[LOSCFG_BASE_IPC_MUX_LIMIT];
 #endif
 
+#ifndef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
 #ifdef LOSCFG_BASE_IPC_SEM
 STATIC LosSemCB   g_allSem[LOSCFG_BASE_IPC_SEM_LIMIT];
+#endif
 #endif
 
 #ifdef LOSCFG_BASE_IPC_RWSEM
@@ -125,7 +131,9 @@ STATIC OsRwsemCB  g_allRwsem[LOSCFG_BASE_IPC_RWSEM_LIMIT];
 #endif
 
 #ifdef LOSCFG_BASE_CORE_SWTMR
+#ifndef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
 STATIC LosSwtmrCB g_swtmrCBArray[LOSCFG_BASE_CORE_SWTMR_LIMIT];
+#endif
 LITE_OS_SEC_BSS STATIC UINTPTR g_expirybuf[LOSCFG_KERNEL_CORE_NUM][LOSCFG_BASE_CORE_SWTMR_LIMIT];
 #ifndef LOSCFG_BASE_CORE_SWTMR_IN_ISR
 #ifdef LOSCFG_TASK_STACK_STATIC_ALLOCATION
@@ -190,18 +198,24 @@ LITE_OS_SEC_TEXT_INIT STATIC UINT32 OsRegister(VOID)
 #endif
 #endif
 
+#ifndef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
     g_osTaskCBArray = g_taskCBArray;
+#endif
 
 #ifdef LOSCFG_BASE_IPC_QUEUE
+#ifndef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
     g_osAllQueue = g_allQueue;
+#endif
 #endif
 
 #ifdef LOSCFG_BASE_IPC_MUX
     g_osAllMux = g_allMux;
 #endif
 
+#ifndef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
 #ifdef LOSCFG_BASE_IPC_SEM
     g_osAllSem = g_allSem;
+#endif
 #endif
 
 #ifdef LOSCFG_BASE_IPC_RWSEM
@@ -209,8 +223,10 @@ LITE_OS_SEC_TEXT_INIT STATIC UINT32 OsRegister(VOID)
 #endif
 
 #ifdef LOSCFG_BASE_CORE_SWTMR
+#ifndef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
     g_osSwtmrCBArray = g_swtmrCBArray; /* First address in Timer memory space */
-    for (i = 0; i < LOSCFG_KERNEL_CORE_NUM; i++) {
+#endif
+    for (i=  0; i < LOSCFG_KERNEL_CORE_NUM; i++) {
         g_percpu[i].expiryList.buf = g_expirybuf[i];
     }
 #endif

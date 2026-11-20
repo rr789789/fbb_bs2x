@@ -31,6 +31,10 @@
 
 #include "los_queue.h"
 
+#ifdef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+#include "los_obj_template.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -72,7 +76,11 @@ typedef UINT32 QueueMsgHead;
 #else
 #define GET_QUEUE_INDEX(queueId) (queueId)
 #endif
+#ifdef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+#define GET_QUEUE_HANDLE(queueId) OBJ_FROM_ID(queue, queueId, LosQueueCB)
+#else
 #define GET_QUEUE_HANDLE(queueId) (((LosQueueCB *)g_osAllQueue) + GET_QUEUE_INDEX(queueId))
+#endif
 /* Obtain the head node in a queue doubly linked list. */
 #define GET_QUEUE_LIST(ptr) LOS_DL_LIST_ENTRY(ptr, LosQueueCB, readWriteList[OS_QUEUE_WRITE])
 
@@ -100,6 +108,10 @@ extern VOID *OsQueueMailAlloc(UINT32 queueId, VOID *mailPool, UINT32 timeout);
 extern UINT32 OsQueueMailFree(UINT32 queueId, VOID *mailPool, VOID *mailMem);
 extern UINT32 OsQueueInit(VOID);
 
+#ifdef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+DEFINE_OBJ_TEMPLATE_TYPE(queue, LOSCFG_BASE_IPC_QUEUE_LIMIT);
+OBJ_TEMPLATE_DECLARE(queue);
+#endif
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

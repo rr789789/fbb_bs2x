@@ -261,27 +261,56 @@ static bool check_cursor_out_of_screen(SlpCursorRslt *cursor_report)
            cursor_report->y < 0 || cursor_report->y > (screen_size->y * MM_TO_UM);   // y出边框判断
 }
 
-// 线性映射[m,n]->[lower, upper]
+// 线性映射[m,n]->[lower, upper], y = lower + (input - m) * (upper - lower) / (n - m)
 int32_t linear_map(int32_t input, int32_t m, int32_t n, int32_t lower, int32_t upper)
 {
-    // 除零保护
+    // 1. 除零保护
     if (m == n) {
-        return lower; // 如果输出范围相同, 返回lower (或upper, 因为lower == upper)
+        return lower;
     }
-    // 归一化处理
-    float normalized_value = (float)(input - m) / (n - m);
-    // 线性映射到目标范围
-    float mapped_value = lower + normalized_value * (upper - lower);
-    // 四舍五入到最近的整数
-    int32_t rounded_value = (int32_t)round(mapped_value);
-    // 确保结果在[lower, upper]范围内
-    int32_t clamped_value = (int32_t)fmax(lower, fmin(rounded_value, upper));
-    return clamped_value;
+
+    // 2. 计算输入和输出的区间跨度
+    int64_t input_range = (int64_t)n - m;
+    int64_t output_range = (int64_t)upper - lower;
+
+    // 3. 计算未偏移的分子（使用 int64_t 防止乘法溢出）
+    int64_t numerator = ((int64_t)input - m) * output_range;
+
+    // 4. 实现全整数四舍五入 (根据正负号决定加上或减去分母的一半)
+    if ((numerator >= 0 && input_range > 0) || (numerator < 0 && input_range < 0)) {
+        numerator += input_range / 2; // 2:分母的一半
+    } else {
+        numerator -= input_range / 2; // 2:分母的一半
+    }
+
+    // 5. 线性映射结果
+    int32_t mapped_value = lower + (int32_t)(numerator / input_range);
+
+    // 6. 边界裁剪
+    int32_t min_val = (lower < upper) ? lower : upper;
+    int32_t max_val = (lower < upper) ? upper : lower;
+
+    if (mapped_value < min_val)
+        return min_val;
+    if (mapped_value > max_val)
+        return max_val;
+
+    return mapped_value;
 }
 
 // 更新屏幕光标
 void usb_send_cursor_report(SlpCursorRslt *cursor_report)
 {
+    screen_size_t *screen_size = get_screen_size();
+    int32_t cursor_x_max = (int32_t)screen_size->x * MM_TO_UM;
+    int32_t cursor_y_max = (int32_t)screen_size->y * MM_TO_UM;
+#if CONFIG_SLP_USAGE_AIR_MOUSE_CAR
+    // 车载指向遥控器光标不出边框
+    cursor_report->x = (cursor_report->x > 0) ? cursor_report->x : 0;
+    cursor_report->x = (cursor_report->x < cursor_x_max) ? cursor_report->x : cursor_x_max;
+    cursor_report->y = (cursor_report->y > 0) ? cursor_report->y : 0;
+    cursor_report->y = (cursor_report->y < cursor_y_max) ? cursor_report->y : cursor_y_max;
+#endif
     static usb_hid_pen_t hid_pen_report = {0}; // 触控笔报文数组
     hid_pen_report.kind = HID_PEN_KIND;
     hid_pen_report.tipPressure = 255; // 255：触控笔按压力度
@@ -297,9 +326,8 @@ void usb_send_cursor_report(SlpCursorRslt *cursor_report)
         // 物理坐标映射至HID logical坐标
         // [0, g_screen_width] -> [MIN_X, MAX_X]
         // [0, g_screen_height] -> [MIN_Y, MAX_Y]
-        screen_size_t *screen_size = get_screen_size();
-        hid_pen_report.x = linear_map(cursor_report->x, 0, screen_size->x * MM_TO_UM, MIN_X, MAX_X);
-        hid_pen_report.y = linear_map(cursor_report->y, 0, screen_size->y * MM_TO_UM, MIN_Y, MAX_Y);
+        hid_pen_report.x = linear_map(cursor_report->x, 0, cursor_x_max, MIN_X, MAX_X);
+        hid_pen_report.y = linear_map(cursor_report->y, 0, cursor_y_max, MIN_Y, MAX_Y);
     }
     g_cursorSendNum++;
     static uint8_t count = 0;

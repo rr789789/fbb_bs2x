@@ -96,3 +96,20 @@ config XFER_TX_NODE_NUM
     depends on XFER_TX_SUPPORT_TASK
     help
         circular queue size must be power of 2.
+
+if XMIT_WITH_UART
+config XMIT_WITH_DMA
+    bool
+    prompt "Support uart_dma"
+    default n
+config XMIT_WITH_RX_DMA
+    bool
+    prompt "Support uart_rx_dma"
+    default y
+    depends on XMIT_WITH_DMA
+config XMIT_WITH_TX_DMA
+    bool
+    prompt "Support uart_tx_dma"
+    default n
+    depends on XMIT_WITH_DMA
+endif

@@ -13,6 +13,8 @@ config ENABLE_ALL_PRODUCTS_SAMPLE
     select SAMPLE_SUPPORT_BLE_SLE_TAG
     select SAMPLE_SUPPORT_BLE_UART
     select SAMPLE_SUPPORT_RCU
+    select SAMPLE_SUPPORT_BLE_OTA_SERVER
+    select SAMPLE_SUPPORT_BLE_OTA_DONGLE
     select SAMPLE_SUPPORT_SLE_OTA_DONGLE
     select SAMPLE_SUPPORT_SLE_MULTI_CONN
     select SAMPLE_SUPPORT_SLE_MEASURE_DIS
@@ -23,6 +25,7 @@ config ENABLE_ALL_PRODUCTS_SAMPLE
     select SAMPLE_SUPPORT_USB_KEYBOARD
     select SAMPLE_SUPPORT_USB_MOUSE
     select SAMPLE_SUPPORT_LOWPOWER
+    select SAMPLE_SUPPORT_HIFIND
     help
         This option means enable all the sample of product, it is just for build.
 
@@ -145,6 +148,34 @@ config SAMPLE_SUPPORT_SLE_OTA_DONGLE
 if SAMPLE_SUPPORT_SLE_OTA_DONGLE
 menu "sle ota dongle Sample Configuration"
     osource "application/samples/products/sle_ota_dongle/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_BLE_OTA_DONGLE
+    bool
+    prompt "Support ble ota dongle sample."
+    default n
+    depends on ENABLE_PRODUCTS_SAMPLE
+    help
+        This option means support ble ota dongle Sample.
+
+if SAMPLE_SUPPORT_BLE_OTA_DONGLE
+menu "ble ota dongle Sample Configuration"
+    osource "application/samples/products/ble_ota_dongle/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_BLE_OTA_SERVER
+    bool
+    prompt "Support ble ota server sample."
+    default n
+    depends on ENABLE_PRODUCTS_SAMPLE
+    help
+        This option means support ble ota dongle Sample.
+
+if SAMPLE_SUPPORT_BLE_OTA_SERVER
+menu "ble ota server Sample Configuration"
+    osource "application/samples/products/ble_ota_server/Kconfig"
 endmenu
 endif
 
@@ -319,3 +350,11 @@ config SAMPLE_SUPPORT_HILINK
     depends on ENABLE_PRODUCTS_SAMPLE
     help
         This option means support hilink Sample.
+
+config SAMPLE_SUPPORT_HIFIND
+    bool
+    prompt "Support hifind sample."
+    default n
+    depends on ENABLE_PRODUCTS_SAMPLE
+    help
+        This option means support hifind Sample.

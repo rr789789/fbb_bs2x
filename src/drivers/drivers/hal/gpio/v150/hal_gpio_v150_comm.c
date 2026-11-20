@@ -66,7 +66,8 @@ int hal_gpio_v150_irq_handler(int irq_num, const void *tmp)
 
         // 记录该寄存器值并清除该组中断值
         intr_state = hal_gpio_gpio_intr_get_data(channel, group);
-        hal_gpio_gpio_int_eoi_clr_all(channel, group);
+        // 清中断bugfix修复，按照上报的中断bit清除,防止误清除未处理中断bit，对应中断处理丢失
+        hal_gpio_gpio_int_eoi_set_bits(channel, group, intr_state);
         // 遍历本组寄存器的中断状态
 #if !defined (CONFIG_GPIO_REDECE_IRQ_TIME)
         for (group_pin = 0; group_pin < channel_info->group_list[group].pin_num; group_pin++) {

@@ -20,6 +20,11 @@
 #define PRINT_TIMER 2 // 打印光标定时器间隔，2秒一次，单位：秒
 #define RSSI_TIMER  2 // 打印rssi定时器间隔，2秒一次，单位：秒
 #define CPU_TIMER   2 // 打印cpu总占用率间隔，2秒一次，单位：秒
+
+#define DEFAULT_TV_SCREEN_LENGTH 3840
+#define DEFAULT_TV_SCREEN_HEIGHT 2160
+#define ANGLE_MULTIPHY_COEFF 100
+
 print_info_t g_print_info = {0};
 
 void rst_print_info(void)
@@ -30,9 +35,11 @@ void rst_print_info(void)
     g_print_info.air_mouse_mode = temp_info.air_mouse_mode;
     g_print_info.radar_status = temp_info.radar_status;
     g_print_info.cursor_speed = temp_info.cursor_speed;
+    g_print_info.click_tremor_prev_sens = temp_info.click_tremor_prev_sens;
     g_print_info.flags.air_mouse_mode = temp_info.flags.air_mouse_mode;
     g_print_info.flags.radar_status = temp_info.flags.radar_status;
     g_print_info.flags.cursor_speed = temp_info.flags.cursor_speed;
+    g_print_info.flags.click_tremor_prev_sens = temp_info.flags.click_tremor_prev_sens;
 }
 
 void update_am_print_info_cursor(SlpCursorRslt *cursor)
@@ -45,6 +52,12 @@ void update_am_print_info_ranging(SlpRangingRpt *ranging)
 {
     g_print_info.ranging = *ranging;
     g_print_info.flags.ranging = 1;
+}
+
+void update_am_print_info_imu_raw_data(SlpImuRawData *imu_raw_data)
+{
+    g_print_info.imu_raw_data = *imu_raw_data;
+    g_print_info.flags.imu_raw_data = 1;
 }
 
 void update_am_print_info_am_mode(bool flag)
@@ -68,37 +81,64 @@ void update_am_print_info_cursor_speed(SlpCursorSpeed cursor_speed)
     air_mouse_info_print();
 }
 
+void update_am_print_info_click_tremor_prev_sens(SlpClickTremorPrevSens click_tremor_prev_sens)
+{
+    g_print_info.click_tremor_prev_sens = click_tremor_prev_sens;
+    g_print_info.flags.click_tremor_prev_sens = 1;
+    air_mouse_info_print();
+}
+
 void update_am_print_info_rssi(int8_t rssi)
 {
     g_print_info.rssi = rssi;
     g_print_info.flags.rssi = 1;
 }
 
-// 测量值打印定时器回调
-void air_mouse_info_print(void)
+static void print_cursor_info(void)
 {
     screen_size_t *screen_size = get_screen_size();
     if (g_print_info.flags.cursor) {
         g_print_info.flags.cursor = 0;
         osal_printk("[rpt] pos:(%4d,%4d)px,(%8d,%8d)mm; ",
-            linear_map(g_print_info.cursor.x, 0, screen_size->x * MM_TO_UM, 0, 3840), // 3840:4K分辨率横向像素数
-            linear_map(g_print_info.cursor.y, 0, screen_size->y * MM_TO_UM, 0, 2160), // 2160:4K分辨率纵向像素数
+            linear_map(g_print_info.cursor.x, 0, screen_size->x * MM_TO_UM, 0, DEFAULT_TV_SCREEN_LENGTH),
+            linear_map(g_print_info.cursor.y, 0, screen_size->y * MM_TO_UM, 0, DEFAULT_TV_SCREEN_HEIGHT),
             g_print_info.cursor.x, g_print_info.cursor.y);
     } else {
         osal_printk("[rpt] pos:(----,----)px,(--------,--------)mm; ");
     }
-    osal_printk("freq:%3u Hz; ", GetCursorSendNum() / PRINT_TIMER);
-    RstCursorSendNum();
+}
+
+static void print_ranging_info(void)
+{
     if (g_print_info.flags.ranging) {
         g_print_info.flags.ranging = 0;
         osal_printk("dis:%8d mm; localazi:%3d.%02d deg,fom:%3u; peerazi:%3d.%02d deg,fom:%3u; ", g_print_info.ranging.distance,
-            g_print_info.ranging.localAoxAzi / 100, abs(g_print_info.ranging.localAoxAzi % 100), // 100:放大系数
+            g_print_info.ranging.localAoxAzi / ANGLE_MULTIPHY_COEFF, abs(g_print_info.ranging.localAoxAzi % ANGLE_MULTIPHY_COEFF),
             g_print_info.ranging.localAoxAziFom,
-            g_print_info.ranging.peerAoxAzi / 100, abs(g_print_info.ranging.peerAoxAzi % 100), // 100:放大系数
+            g_print_info.ranging.peerAoxAzi / ANGLE_MULTIPHY_COEFF, abs(g_print_info.ranging.peerAoxAzi % ANGLE_MULTIPHY_COEFF),
             g_print_info.ranging.peerAoxAziFom);
     } else {
         osal_printk("dis:-------- mm; localazi:------ deg,fom:---; peerazi:------ deg,fom:---; ");
     }
+}
+
+static void print_imu_data(void)
+{
+    if (g_print_info.flags.imu_raw_data) {
+        g_print_info.flags.imu_raw_data = 0;
+        osal_printk("acc:%5d,%5d,%5d; gyro:%5d,%5d,%5d; ",
+            g_print_info.imu_raw_data.accX, g_print_info.imu_raw_data.accY, g_print_info.imu_raw_data.accZ,
+            g_print_info.imu_raw_data.gyroX, g_print_info.imu_raw_data.gyroY, g_print_info.imu_raw_data.gyroZ);
+    }
+}
+
+void air_mouse_info_print(void)
+{
+    print_cursor_info();
+    osal_printk("freq:%3u Hz; ", GetCursorSendNum() / PRINT_TIMER);
+    RstCursorSendNum();
+    print_ranging_info();
+    print_imu_data();
 
     if (g_print_info.flags.air_mouse_mode) {
         osal_printk("m:%u; ", g_print_info.air_mouse_mode);
@@ -116,6 +156,12 @@ void air_mouse_info_print(void)
         osal_printk("s:%u; ", g_print_info.cursor_speed);
     } else {
         osal_printk("s:-; ");
+    }
+
+    if (g_print_info.flags.click_tremor_prev_sens) {
+        osal_printk("c:%u; ", g_print_info.click_tremor_prev_sens);
+    } else {
+        osal_printk("c:-; ");
     }
 
     if (g_print_info.flags.rssi) {

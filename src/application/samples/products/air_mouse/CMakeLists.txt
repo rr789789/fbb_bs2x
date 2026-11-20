@@ -25,6 +25,7 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_AIR_MOUSE)
         ${SOURCES_LIST}
         ${CMAKE_CURRENT_SOURCE_DIR}/mouse/sle_air_mouse_server/sle_air_mouse_server_adv.c
         ${CMAKE_CURRENT_SOURCE_DIR}/mouse/sle_air_mouse_server/sle_air_mouse_server.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/mouse/sle_air_mouse_server/sle_air_mouse_ota_server.c
         ${CMAKE_CURRENT_SOURCE_DIR}/mouse/at/air_mouse_rcu_at.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/vdt_codec.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../rcu/rcu/amic/vdt_pdm.c
@@ -40,7 +41,7 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_AIR_MOUSE)
 endif()
 
 if(DEFINED CONFIG_SAMPLE_SUPPORT_AIR_MOUSE)
-    if(DEFINED CONFIG_AIR_MOUSE_HR_BOARD OR DEFINED CONFIG_AIR_MOUSE_HX_BOARD)
+    if(DEFINED CONFIG_AIR_MOUSE_HR_BOARD OR DEFINED CONFIG_AIR_MOUSE_HX_BOARD OR DEFINED CONFIG_AIR_MOUSE_YF_BOARD)
         set(SOURCES_LIST
             ${SOURCES_LIST}
             ${CMAKE_CURRENT_SOURCE_DIR}/mouse/common/air_mouse_queue.c
@@ -50,6 +51,12 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_AIR_MOUSE)
             ${CMAKE_CURRENT_SOURCE_DIR}/mouse/keyscan/proc_key_event.c
             ${CMAKE_CURRENT_SOURCE_DIR}/mouse/led/air_mouse_led.c
             ${CMAKE_CURRENT_SOURCE_DIR}/mouse/rcu_main.c
+        )
+    endif()
+    if(DEFINED CONFIG_AIR_MOUSE_YF_BOARD)
+        set(SOURCES_LIST
+            ${SOURCES_LIST}
+            ${CMAKE_CURRENT_SOURCE_DIR}/i2c/air_mouse_i2c.c
         )
     endif()
 endif()

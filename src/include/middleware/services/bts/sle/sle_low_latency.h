@@ -348,16 +348,16 @@ typedef uint8_t *(*sle_low_latency_hid_data_callback)(uint8_t *length, uint16_t 
 
 /**
  * @if Eng
- * @brief Callback invoked when ble em data is set.
- * @par Callback invoked when ble em data is set.
+ * @brief Callback invoked when sle em data is set.
+ * @par Callback invoked when sle em data is set.
  * @attention 1.This function is called in SLE service context, should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
  * @param [in] co_handle  connection handle.
  * @param [in] status     error code.
  * @retval #void no return value.
  * @else
- * @brief  设置ble em数据的回调函数。
- * @par    设置ble em数据的回调函数。
+ * @brief  设置sle em数据的回调函数。
+ * @par    设置sle em数据的回调函数。
  * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
  * @param [in] co_handle  连接句柄。
@@ -369,14 +369,14 @@ typedef void (*sle_low_latency_set_em_data_callback)(uint16_t co_handle, uint8_t
 
 /**
  * @if Eng
- * @brief Struct of BLE low latency callback function.
+ * @brief Struct of SLE low latency callback function.
  * @else
- * @brief BLE low latency 管理回调函数接口定义。
+ * @brief SLE low latency 管理回调函数接口定义。
  * @endif
  */
 typedef struct {
-    sle_low_latency_hid_data_callback hid_data_cb;              /*!< @if Eng BLE low latency get data callback.
-                                                                     @else   BLE低时延数据获取回调函数。 @endif */
+    sle_low_latency_hid_data_callback hid_data_cb;              /*!< @if Eng SLE low latency get data callback.
+                                                                     @else   SLE低时延数据获取回调函数。 @endif */
     sle_low_latency_set_em_data_callback sle_set_em_data_cb;    /*!< @if Eng Set em data callback.
                                                                      @else   设置em数据回调函数。 @endif */
 } sle_low_latency_callbacks_t;

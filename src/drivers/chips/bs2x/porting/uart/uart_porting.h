@@ -197,6 +197,11 @@ void uart_porting_switch_serial_mode(uart_mode_t mode);
 void print_hso_log_by_usb_serial(const void *buf, uint32_t len);
 #endif
 #endif
+
+#if defined(CONFIG_UART_SUPPORT_ALL_IN_ONE)
+void uart_all_in_one_enable(uint16_t enable);
+#endif
+
 #ifdef __cplusplus
 #if __cplusplus
 }

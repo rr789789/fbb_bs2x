@@ -356,6 +356,17 @@ static inline void hal_gpio_gpio_int_eoi_set_bit(uint32_t channel, uint32_t grou
 }
 
 /**
+ * @brief  Set the value of @ref gpio_info_regs.gpio_int_eoi.
+ * @param  [in]  channel The channel id of gpio.
+ * @param  [in]  group The group id of gpio.
+ * @param  [in]  val The value of @ref gpio_info_regs.gpio_int_eoi.
+ */
+static inline void hal_gpio_gpio_int_eoi_set_bits(uint32_t channel, uint32_t group, uint32_t val)
+{
+    gpios_v150_regs(channel)->gpio_group_cfg[group].gpio_int_eoi = val;
+}
+
+/**
  * @brief  Clean all interrupt status of target GPIO channel and group.
  * @param  [in]  channel The channel id of gpio.
  * @param  [in]  group The group id of gpio.

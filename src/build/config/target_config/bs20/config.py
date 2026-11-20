@@ -2,7 +2,7 @@
 # encoding=utf-8
 # ============================================================================
 # @brief    Target Definitions File
-# Copyright HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2026. All rights reserved.
 # ============================================================================
 
 target = {
@@ -105,7 +105,7 @@ target = {
         'flashboot_cfg': 'flashboot-bs20-n1200-usb-with-ota',
         'sector_cfg': 'bs20-turnkey-dongle',
         'nv_cfg': 'bs20_nv_turnkey_dongle',
-    },
+    }
 }
 
 # custom copy rules, put it in target_group below and it takes effect.

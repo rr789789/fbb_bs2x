@@ -1,0 +1,24 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+
+config MIDDLEWARE_SUPPORT_UPDATE
+        bool
+        prompt "Update Config"
+        default n
+        config BT_UPG_ENABLE
+            bool
+            prompt "ENABLE BLE OTA."
+            default n
+            depends on MIDDLEWARE_SUPPORT_UPDATE
+
+config MIDDLEWARE_SUPPORT_OTA_SERVICE
+        bool
+        prompt "OTA Service Config"
+        default y
+        config BT_OTA_SERVICE_ENABLE
+            bool
+            prompt "ENABLE BLE OTA SERVICE."
+            default y
+            depends on MIDDLEWARE_SUPPORT_OTA_SERVICE

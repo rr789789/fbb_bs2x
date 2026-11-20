@@ -61,6 +61,7 @@ enum {
     RCU_MODE_OTA_UPGRADE = 0x40,
 
     RCU_MODE_TEST_NO_SLEPP = 0x80,
+    RCU_MODE_MASS_PRODUCTION_TEST = 0x100,
 };
 
 enum {
@@ -126,7 +127,7 @@ uint8_t get_active_con_id(void);
 uint16_t app_control_get_specific_con_type(uint8_t device_target);
 #endif
 uint16_t app_control_get_con_type(void);
-void set_rcu_mode(uint8_t mode);
+void set_rcu_mode(uint16_t mode);
 void clear_rcu_mode(void);
 uint8_t get_rcu_mode(void);
 void app_conn_info_init(void);

@@ -36,6 +36,11 @@ static const combine_key_t g_combine_key[COMBINE_KEY_NUM] = {
     {RCU_KEY_S5, RCU_KEY_S15, COMBINE_KEY_PAIR  },
     {RCU_KEY_S5, RCU_KEY_S1,  COMBINE_KEY_UNPAIR},
 };
+#elif CONFIG_AIR_MOUSE_YF_BOARD
+static const combine_key_t g_combine_key[COMBINE_KEY_NUM] = {
+    {RCU_KEY_S7, RCU_KEY_S1, COMBINE_KEY_PAIR  },
+    {RCU_KEY_S7, RCU_KEY_S3, COMBINE_KEY_UNPAIR},
+};
 #endif /* 组合键 */
 
 typedef struct {
@@ -233,6 +238,31 @@ static void one_key_process(uint8_t key)
             break;
     }
 }
+#elif CONFIG_AIR_MOUSE_YF_BOARD
+static void one_key_process(uint8_t key)
+{
+    // 配对、解配对过程中按其他按键仍保持闪烁
+    if (get_led_status() != LED_STATUS_PAIRING && get_led_status() != LED_STATUS_UNPAIRING) {
+        set_led_status(LED_STATUS_ONE_KEY_DOWN);
+    }
+    switch (key) {
+        case RCU_KEY_S7:  // 切换光标速度
+            g_key_press_flag.combine_key_first = 1;
+            break;
+        case RCU_KEY_S8:  // 鼠标左键
+            g_key_press_flag.left_key = 1;
+            confirm_key_press(key);
+            break;
+        case RCU_KEY_S4:  // slp开关
+            sle_air_mouse_server_send_cmd(AM_CMD_SET_FACTORY_TEST_NONE, NULL, 0); // 设置为指向业务
+            slp_key_proc();
+            break;
+        default: // 键盘
+            g_key_press_flag.keyboard = 1;
+            sle_hid_mouse_server_send_keyboard_report(get_key_value(key));
+            break;
+    }
+}
 #endif /* 单键操作 */
 
 // 判断键值是否在组合键中
@@ -279,7 +309,8 @@ static void key_up_process(void)
         sle_hid_mouse_server_send_keyboard_report(get_key_value(RCU_KEY_S10));
         sle_air_mouse_server_send_cmd(AM_CMD_KEYBOARD_UP, NULL, 0);
 #elif CONFIG_AIR_MOUSE_HX_BOARD
-        switch_to_next_cursor_speed();
+        sle_hid_mouse_server_send_keyboard_report(get_key_value(RCU_KEY_S5));
+        sle_air_mouse_server_send_cmd(AM_CMD_KEYBOARD_UP, NULL, 0);
 #endif
     }
     if (g_key_press_flag.left_key == 1) {

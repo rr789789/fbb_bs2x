@@ -562,20 +562,20 @@ errcode_t uapi_spi_set_dma_mode(spi_bus_t bus, bool en, const spi_dma_config_t *
     if (en) {
         data.dma_tx_level = spi_port_tx_data_level_get(bus);
         data.dma_rx_level = spi_port_rx_data_level_get(bus);
+        if (dma_cfg != NULL) {
 #if defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
-        g_spi_dma_rx_callback[bus] = dma_cfg->rx_callback;
-        g_spi_dma_tx_callback[bus] = dma_cfg->tx_callback;
+            g_spi_dma_rx_callback[bus] = dma_cfg->rx_callback;
+            g_spi_dma_tx_callback[bus] = dma_cfg->tx_callback;
 #endif  /* CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR */
 #if !defined(CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH)
-        if (dma_cfg != NULL) {
             g_dma_cfg[bus].src_width = dma_cfg->src_width;
             g_dma_cfg[bus].dest_width = dma_cfg->dest_width;
             g_dma_cfg[bus].burst_length = dma_cfg->burst_length;
             g_dma_cfg[bus].priority = dma_cfg->priority;
-        }
 #else
-        unused(dma_cfg);
+            unused(dma_cfg);
 #endif  /* NOT CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH */
+        }
     } else {
         data.dma_tx_level = 0;
         data.dma_rx_level = 0;
@@ -614,7 +614,7 @@ static void spi_dma_isr(uint8_t int_type, uint8_t ch, uintptr_t arg)
             dma_trans[bus].trans_succ = true;
         }
 #if defined(CONFIG_SPI_SUPPORT_TRANSFER_IN_DMA_ISR)
-        if ((uint32_t)arg == 0) {
+        if (trans_status == 0) {
             if (g_spi_dma_tx_callback[bus] != NULL) {
                 g_spi_dma_tx_callback[bus](ch);
             }

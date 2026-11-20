@@ -17,7 +17,7 @@
 static app_globle_status_t g_app_cur_status;
 static connect_device_info_t g_device_info;
 static app_sys_status_t g_app_sys_status;
-static uint8_t g_rcu_mode;
+static uint16_t g_rcu_mode;
 static uint8_t g_current_control_obj = NONE_DEVICE;
 
 uint8_t get_current_control_obj(void)
@@ -156,7 +156,7 @@ uint16_t sle_control_get_specific_con_state(uint8_t device_target)
 }
 #endif
 
-void set_rcu_mode(uint8_t mode)
+void set_rcu_mode(uint16_t mode)
 {
     g_rcu_mode = mode;
     app_print("[SYS]set: 0x%x, now: 0x%x\r\n", mode, g_rcu_mode);

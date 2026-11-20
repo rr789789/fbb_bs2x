@@ -58,8 +58,13 @@ static errcode_t ota_upgrade_cmd_receiver(uint8_t cmd_id, uint8_t *cmd_param, ui
     for (i = 0; i < sizeof(g_upgrade_cmd_id_tbl) / sizeof(g_upgrade_cmd_id_tbl[0]); i++) {
         upgrade_cmd_ind_item_t *item = &g_upgrade_cmd_id_tbl[i];
         if (item->cmd_id == cmd_id && item->handler != NULL) {
-            errcode_t ret = item->handler(cmd_id, cmd_param, cmd_param_size, dst);
-            ota_upgrade_timeout_process(cmd_id, ret);
+            if ((cmd_id == OTA_UPGRADE_REQUEST) || (cmd_id == OTA_UPGRADE_START)) {
+                ota_upgrade_timeout_process(cmd_id, ERRCODE_SUCC);
+                item->handler(cmd_id, cmd_param, cmd_param_size, dst);
+            } else {
+                errcode_t ret = item->handler(cmd_id, cmd_param, cmd_param_size, dst);
+                ota_upgrade_timeout_process(cmd_id, ret);
+            }
             return ERRCODE_SUCC;
         }
     }

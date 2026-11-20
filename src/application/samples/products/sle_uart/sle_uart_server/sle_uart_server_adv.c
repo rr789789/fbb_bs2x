@@ -26,9 +26,9 @@
 #define SLE_CONN_INTV_MIN_DEFAULT                 0x64
 /* 连接调度间隔12.5ms，单位125us */
 #define SLE_CONN_INTV_MAX_DEFAULT                 0x64
-/* 连接调度间隔25ms，单位125us */
+/* 广播间隔25ms，单位125us */
 #define SLE_ADV_INTERVAL_MIN_DEFAULT              0xC8
-/* 连接调度间隔25ms，单位125us */
+/* 广播间隔25ms，单位125us */
 #define SLE_ADV_INTERVAL_MAX_DEFAULT              0xC8
 /* 超时时间5000ms，单位10ms */
 #define SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT      0x1F4
@@ -59,8 +59,8 @@ static uint16_t sle_set_adv_local_name(uint8_t *adv_data, uint16_t max_len)
         sample_at_log_print("0x%02x ", local_name[i]);
     }
     sample_at_log_print("\r\n");
-    adv_data[index++] = local_name_len + 1;
     adv_data[index++] = SLE_ADV_DATA_TYPE_COMPLETE_LOCAL_NAME;
+    adv_data[index++] = local_name_len;
     ret = memcpy_s(&adv_data[index], max_len - index, local_name, local_name_len);
     if (ret != EOK) {
         sample_at_log_print("%s memcpy fail\r\n", SLE_UART_SERVER_LOG);
@@ -90,9 +90,9 @@ static uint16_t sle_set_adv_data(uint8_t *adv_data)
 
     len = sizeof(struct sle_adv_common_value);
     struct sle_adv_common_value adv_access_mode = {
-        .length = len - 2,
-        .type = SLE_ADV_DATA_TYPE_ACCESS_MODE,
-        .value = 0,
+        .length = 2,
+        .type = SLE_ADV_DATA_TYPE_COMPLETE_LIST_OF_16BIT_SERVICE_UUIDS,
+        .value = 0xB,
     };
     ret = memcpy_s(&adv_data[idx], SLE_ADV_DATA_LEN_MAX - idx, &adv_access_mode, len);
     if (ret != EOK) {
@@ -100,7 +100,8 @@ static uint16_t sle_set_adv_data(uint8_t *adv_data)
         return 0;
     }
     idx += len;
-
+    adv_data[idx] = 0x6;
+    idx++;
     return idx;
 }
 
@@ -111,7 +112,7 @@ static uint16_t sle_set_scan_response_data(uint8_t *scan_rsp_data)
     size_t scan_rsp_data_len = sizeof(struct sle_adv_common_value);
 
     struct sle_adv_common_value tx_power_level = {
-        .length = scan_rsp_data_len - 1,
+        .length = scan_rsp_data_len - 2,
         .type = SLE_ADV_DATA_TYPE_TX_POWER_LEVEL,
         .value = SLE_ADV_TX_POWER,
     };

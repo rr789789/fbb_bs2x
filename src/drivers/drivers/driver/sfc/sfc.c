@@ -88,7 +88,12 @@ STATIC errcode_t build_cmds(uint32_t flash_id, sfc_read_if_t read_type, sfc_writ
         }
     }
     flash_spi_infos = sfc_port_get_unknown_flash_info();
+#ifdef CONFIG_SFC_CUSTOMER_DEFAULT_MODE
+    errcode_t ret = build_flash_ctrl(&flash_spi_infos[0], CONFIG_SFC_CUSTOMER_DEFAULT_READ_TYPE,
+                                     CONFIG_SFC_CUSTOMER_DEFAULT_WRITE_TYPE);
+#else
     errcode_t ret = build_flash_ctrl(&flash_spi_infos[0], STANDARD_READ, PAGE_PROGRAM);
+#endif
     if (ret == ERRCODE_SUCC) {
         g_sfc_unknown_flash = true;
     }

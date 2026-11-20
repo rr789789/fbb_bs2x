@@ -2,7 +2,7 @@ STRING( REGEX REPLACE ".*/(.*)" "\\1" CURRENT_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}
 set(MODULE_NAME ${CURRENT_FOLDER})
 
 # add global include, compile macro and options to public target #
-set(MODULE_INCLUDE_PUB)
+set(MODULE_INCLUDE_PUB ${LITEOSTOPDIR}/kernel/extended/include)
 set(MODULE_CXXINCLUDE_PUB)
 set(MODULE_COPTS_PUB)
 set(MODULE_ASOPTS_PUB)

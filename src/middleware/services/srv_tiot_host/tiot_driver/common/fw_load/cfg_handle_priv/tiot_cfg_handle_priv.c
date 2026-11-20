@@ -18,6 +18,7 @@
 #define TIOT_FW_PRIV_CMD_OK     'G'
 
 #define TIOT_FW_PRIV_ACK_MAX    128
+#define READ_TIMEOUT_MS         1000
 
 typedef enum {
     TIOT_FW_EXTCMD_ACK = 0x0,
@@ -44,7 +45,7 @@ static int32_t tiot_fw_ack_handle_priv(tiot_fw *fw, const uint8_t *cmd, uint16_t
     if ((len == (sizeof(quit_cmd) - 1)) && (memcmp(quit_cmd, cmd, len) == 0)) {
         return 0;
     }
-    ret = tiot_firmware_read(fw, &ack, sizeof(uint8_t));
+    ret = tiot_firmware_read(fw, &ack, sizeof(uint8_t), READ_TIMEOUT_MS);
     if (ret != sizeof(uint8_t)) {
         return -1;
     }
@@ -63,7 +64,7 @@ static int32_t tiot_fw_ack_ext_handle_priv(tiot_fw *fw, const uint8_t *cmd, uint
     tiot_unused(len);
     int32_t ret = 0;
     uint8_t ack_buff[TIOT_FW_PRIV_ACK_MAX] = { 0 };
-    ret = tiot_firmware_read(fw, ack_buff, sizeof(ack_buff));
+    ret = tiot_firmware_read(fw, ack_buff, sizeof(ack_buff), READ_TIMEOUT_MS);
     if ((ret <= 0) || ((uint32_t)ret > sizeof(ack_buff))) {
         return TIOT_FW_LOAD_RET_ERR;
     }

@@ -68,7 +68,7 @@ void rcu_mp_test_rcu_to_dongle_key_value(uint8_t key_nums, uint8_t *key_values)
     param.value_len = PRIVATE_FRAME_INFO_LEN;
     (void)memcpy_s(param.value + PRIVATE_FRAME_TLV_DATA_BYTE, PRIVATE_FRAME_INFO_LEN - PRIVATE_FRAME_TLV_DATA_BYTE,
         key_values, key_nums);
-    ssaps_notify_indicate(rcu_get_server_id(), get_g_connid(), &param);
+    ssaps_notify_indicate(rcu_get_server_id(), sle_control_get_con_id(), &param);
 }
 
 void rcu_mp_test_get_version_handler(void)
@@ -84,7 +84,7 @@ void rcu_mp_test_get_version_handler(void)
     (void)memcpy_s(param.value + PRIVATE_FRAME_TLV_DATA_BYTE, PRIVATE_FRAME_INFO_LEN - PRIVATE_FRAME_TLV_DATA_BYTE,
         APPLICATION_VERSION_STRING, strlen(APPLICATION_VERSION_STRING));
 
-    ssaps_notify_indicate(rcu_get_server_id(), get_g_connid(), &param);
+    ssaps_notify_indicate(rcu_get_server_id(), sle_control_get_con_id(), &param);
 }
 
 void rcu_mp_test_get_mac_addr_handler(void)
@@ -104,8 +104,8 @@ void rcu_mp_test_get_mac_addr_handler(void)
     (void)memcpy_s(param.value + PRIVATE_FRAME_TLV_DATA_BYTE, PRIVATE_FRAME_INFO_LEN - PRIVATE_FRAME_TLV_DATA_BYTE,
         own_addr.addr, SLE_ADDR_LEN);
     osal_printk("server_id value: %d \r\n", rcu_get_server_id());
-    osal_printk("g_connid value: %d \r\n", get_g_connid());
-    ssaps_notify_indicate(rcu_get_server_id(), get_g_connid(), &param);
+    osal_printk("g_connid value: %d \r\n", sle_control_get_con_id());
+    ssaps_notify_indicate(rcu_get_server_id(), sle_control_get_con_id(), &param);
 }
 
 void rcu_mp_test_set_work_station(uint8_t combine_key_flag)
