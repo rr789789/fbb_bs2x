@@ -1,3 +1,7 @@
+---
+docs-build.title: DFX 软件开发指南
+---
+
 # 前言<a name="ZH-CN_TOPIC_0000001790807036"></a>
 
 **概述<a name="section141mcpsimp"></a>**
@@ -309,7 +313,7 @@ int main()
     }
     ```
 
-4.  在build/config/target\_config/bx2x/hdb\_config/database\_template/acore/system/hdbcfg/mss\_cmd\_db.xm中定义命令。代码示例如下：
+4.  <a name="li159212322136"></a>在build/config/target\_config/bx2x/hdb\_config/database\_template/acore/system/hdbcfg/mss\_cmd\_db.xm中定义命令。代码示例如下：
 
     ```
     <DebugKits>

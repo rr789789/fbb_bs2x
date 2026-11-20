@@ -1,3 +1,7 @@
+---
+docs-build.title: SDK 接口变更说明书
+---
+
 # 前言<a name="ZH-CN_TOPIC_0000001926760082"></a>
 
 **概述<a name="section669mcpsimp"></a>**

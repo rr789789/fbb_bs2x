@@ -1,0 +1,28 @@
+# 项目名称
+project: BS2X 开发者中心
+# 查看源码：正文右上角跳转到仓库内对应的 md 文件
+view_source: true
+# 生成离线包：页头「下载HTML」按钮下载的整站压缩包
+offline_package: true
+
+# 顶级导航：构建期在内容根临时生成影子根 home.md，不要手动创建
+root_toctree:
+  - 概览: index
+  - 软件开发指南: software/index
+  - 调试与维测: debug/index
+
+# 屏蔽的文件：追加到框架默认之后
+exclude_patterns:
+  - '**/*.rst'
+
+html_context:
+  # 「下载HTML」按钮
+  download:
+    href: fbb_bs2x-master.zip
+    tooltip: 下载HTML
+  # 问题反馈入口
+  feedback_url: https://gitcode.com/HiSpark/fbb_bs2x/issues
+  # 项目/版本下拉框
+  version_selector:
+    repo_path: fbb_bs2x
+    version: master
