@@ -202,9 +202,8 @@ void log_event(const uint8_t *buffer, uint16_t length)
     bool was_empty = false;
     log_buffer_header_t lb_header;
 
-#if CORE != APPS
     if (log_memory_is_init() != true) { return; }
-#endif
+
     if (buffer == NULL || length == 0) { return; }
 
 #if CHIP_SW39

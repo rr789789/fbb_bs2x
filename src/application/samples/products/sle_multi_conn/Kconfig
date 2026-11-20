@@ -21,6 +21,15 @@ config SLE_MTU_LENGTH
     help
         This option means the length of mtu.
 
+config SLE_MTU_LENGTH
+    int
+    prompt "Set the length of mtu."
+    range 251 520
+    default 300
+    depends on SAMPLE_SUPPORT_SLE_MULTI_CONN_SERVER
+    help
+        This option means the length of mtu.
+
 config SLE_MULTI_CONN_NUM
     int
     prompt "Set the count of device in sle multi_conn."

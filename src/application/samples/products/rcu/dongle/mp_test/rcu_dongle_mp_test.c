@@ -12,7 +12,7 @@
 #include "osal_debug.h"
 #include "sle_errcode.h"
 #include "sle_common.h"
-#include "../sle_rcu_client.h"
+#include "sle_rcu_client.h"
 #include "sle_connection_manager.h"
 #include "sle_device_discovery.h"
 #include "gadget/f_hid.h"
@@ -193,8 +193,8 @@ void *rcu_dongle_mp_test_task(const char *arg)
                     break;
                 default:
                     break;
+            }
         }
-    }
     }
     return NULL;
 }

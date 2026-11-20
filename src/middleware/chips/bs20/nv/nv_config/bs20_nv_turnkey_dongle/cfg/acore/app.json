@@ -157,43 +157,26 @@
             "value": [0,16384,16,14848,[32896,32896,32896,32896,32896],14649,527,0,0,0,0,0,0]
         },
 
-        "mouse_pair_info":{
+        "mouse_mac":{
             "key_id": "0x11",
             "key_status": "alive",
-            "structure_type": "mouse_pair_info_t",
+            "structure_type": "sle_mac_addr_t",
             "attributions": 1,
-            "value": [
-                [11, 12, 13, 14, 15, 16],
-                [21, 22, 23, 24, 25, 26],
-                0, 4, 4,
-                [
-                    [
-                        [0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0],
-                        0, 0, 0, 0, 0
-                    ],
-                    [
-                        [0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0],
-                        0, 0, 0, 0, 0
-                    ],
-                    [
-                        [0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0],
-                        [0, 0, 0, 0, 0, 0],
-                        0, 0, 0, 0, 0
-                    ]
-                ]
+            "value":[
+                255,
+                [255, 255, 255, 255, 255, 255]
             ]
         },
-        "sle_dongle_report_rate":{
+
+        "dongle_mac":{
             "key_id": "0x12",
             "key_status": "alive",
-            "structure_type": "uint16_t",
+            "structure_type": "sle_mac_addr_t",
             "attributions": 1,
-            "value": 1000
+            "value":[
+                255,
+                [255, 255, 255, 255, 255, 255]
+            ]
         }
     }
 }

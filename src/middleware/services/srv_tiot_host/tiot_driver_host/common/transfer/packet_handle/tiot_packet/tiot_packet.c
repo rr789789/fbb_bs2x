@@ -184,6 +184,10 @@ int32_t tiot_packet_init(tiot_packet_context *ctx, tiot_xfer_manager *xfer, cons
     ctx->flags = param->flags;
     ctx->xfer = xfer;
     /* 调用tiot_xfer_install_packet后才注册到xfer内. */
+#ifdef CONFIG_XMIT_WITH_RX_DMA
+    /* 配置包头dma、使能rx_dma */
+    ctx->xfer->xmit_ops->read(&(ctx->xfer->xmit), NULL, TIOT_PKT_HEAD_SIZE);
+#endif
     return 0;
 }
 
@@ -358,6 +362,9 @@ static void tiot_packet_head_done(tiot_packet_context *ctx)
     /* 系统消息不分包特殊处理，避免申请内存. */
     if (head->subsys_code == SYS_MSG) {
         ctx->frame_need_read = sizeof(uint8_t);
+#ifdef CONFIG_XMIT_WITH_RX_DMA
+        ctx->frame_need_read++; /* msg + tail */
+#endif
         ctx->pos = &ctx->sys_msg;
         ctx->current_frame = TIOT_PKT_FRAME_PAYLOAD;
         return;
@@ -387,6 +394,9 @@ static void tiot_packet_head_done(tiot_packet_context *ctx)
     }
 #endif
     ctx->frame_need_read = payload_len;
+#ifdef CONFIG_XMIT_WITH_RX_DMA
+    ctx->frame_need_read++; /* payload + tail */
+#endif
     ctx->frame_cnt++;
     ctx->current_frame = TIOT_PKT_FRAME_PAYLOAD;
     return;
@@ -395,7 +405,26 @@ discard:
     tiot_cur_packet_discard(ctx);
     ctx->current_frame = TIOT_PKT_FRAME_IDLE;
 }
+#if defined(CONFIG_XMIT_WITH_RX_DMA)
+static void tiot_packet_payload_done(tiot_packet_context *ctx)
+{
+    uint8_t tail = ctx->tail;
+    uint8_t subsys_code;
+    if (tail != TIOT_PKT_TAIL) {
+        tiot_cur_packet_discard(ctx);
+        ctx->current_frame = TIOT_PKT_FRAME_IDLE;
+        ctx->frame_error = 0;
+        return;
+    }
 
+    /* 在head done内已经确保subsys_code正确 */
+    subsys_code = ctx->head.subsys_code;
+    if (g_tiot_pkt_msg_handle[subsys_code] != NULL) {
+        g_tiot_pkt_msg_handle[subsys_code](ctx);
+    }
+    ctx->current_frame = TIOT_PKT_FRAME_IDLE;
+}
+#else
 static void tiot_packet_payload_done(tiot_packet_context *ctx)
 {
     ctx->current_frame = TIOT_PKT_FRAME_TAIL;
@@ -421,35 +450,43 @@ static void tiot_packet_tail_done(tiot_packet_context *ctx)
     }
     ctx->current_frame = TIOT_PKT_FRAME_IDLE;
 }
+#endif
 
+static void packet_handle_data(tiot_packet_context *ctx, uint8_t *data, uint16_t len)
+{
+#ifndef CONFIG_BOARD_DYNAMIC_ALLOC
+    /* Copy non-sys payload. */
+    if ((ctx->current_frame == TIOT_PKT_FRAME_PAYLOAD) &&
+        (ctx->head.subsys_code != SYS_MSG)) {
+        if (circ_buf_query_free(&(ctx->rx_buff.buf)) > len) {
+            circ_buf_write(&(ctx->rx_buff.buf), data, len);
+        }
+        return;
+    }
+#endif
+    /* Copy head, tail, and payload if dynamic alloc, else sys payload. */
+    if (ctx->pos != NULL) {
+#if defined(CONFIG_XMIT_WITH_RX_DMA)
+        if (ctx->current_frame == TIOT_PKT_FRAME_PAYLOAD) {
+            len--;
+            ctx->tail = data[len];
+        }
+#endif
+        (void)memcpy_s(ctx->pos, len, data, len);
+        ctx->pos += len;
+    } else {
+        tiot_print_dbg("[TIoT][rx]pkt ctx pos is NULL.\n");
+    }
+}
+
+#if !defined(CONFIG_XMIT_WITH_DMA)
 uint32_t tiot_packet_handle(tiot_packet_context *ctx, uint8_t *data, uint32_t data_len)
 {
     uint16_t packet_len = (uint16_t)(data_len & 0xFFFF);  /* 取低16位，包格式只需要16位大小. */
     uint32_t handle_len = packet_len < ctx->frame_need_read ? packet_len : ctx->frame_need_read;
     ctx->frame_need_read -= handle_len;
 
-#ifdef CONFIG_BOARD_DYNAMIC_ALLOC
-    if (ctx->pos != NULL) {
-        (void)memcpy_s(ctx->pos, handle_len, data, handle_len);
-        ctx->pos += handle_len;
-    } else {
-        tiot_print_dbg("[TIoT][rx]packet buff pos is NULL.\n");
-    }
-#else
-    /* 系统消息直接拷贝；buffer放不下时丢包处理，使用frame_error标识. */
-    if ((ctx->current_frame == TIOT_PKT_FRAME_PAYLOAD) &&
-        (ctx->head.subsys_code != SYS_MSG)) {
-        circ_buf_write_data(&(ctx->rx_buff.buf), data, handle_len, ctx->rx_buff.buff_write);
-        circ_buf_update_write_pos(&(ctx->rx_buff.buf), handle_len);
-    } else {
-        if (ctx->pos != NULL) {
-            (void)memcpy_s(ctx->pos, handle_len, data, handle_len);
-            ctx->pos += handle_len;
-        } else {
-            tiot_print_dbg("[TIoT][rx]packet buff pos is NULL.\n");
-        }
-    }
-#endif
+    packet_handle_data(ctx, data, handle_len);
 
     if (ctx->frame_need_read != 0) {
         return handle_len;
@@ -472,6 +509,44 @@ uint32_t tiot_packet_handle(tiot_packet_context *ctx, uint8_t *data, uint32_t da
     }
     return handle_len;
 }
+#else
+uint16_t tiot_packet_handle(tiot_packet_context *ctx, uint8_t *data, uint32_t data_len)
+{
+    uint16_t packet_len = (uint16_t)(data_len & 0xFFFF);  /* 取低16位，包格式只需要16位大小. */
+    uint16_t handle_len = packet_len < ctx->frame_need_read ? packet_len : ctx->frame_need_read;
+    uint16_t next_read_len = 0;
+
+    ctx->frame_need_read -= handle_len;
+
+    packet_handle_data(ctx, data, handle_len);
+
+    if (ctx->frame_need_read != 0) {
+        ctx->xfer->xmit_ops->read(&(ctx->xfer->xmit), NULL, ctx->frame_need_read);
+        return handle_len;
+    }
+
+    /* 完成一帧数据 */
+    switch (ctx->current_frame) {
+        case TIOT_PKT_FRAME_HEAD:
+            tiot_packet_head_done(ctx);
+            if (ctx->current_frame != TIOT_PKT_FRAME_PAYLOAD) {
+                next_read_len = TIOT_PKT_HEAD_SIZE;
+                break;
+            }
+            next_read_len = ctx->frame_need_read;
+            break;
+        case TIOT_PKT_FRAME_PAYLOAD:
+            tiot_packet_payload_done(ctx);
+            next_read_len = TIOT_PKT_HEAD_SIZE;
+            break;
+        default:
+            tiot_print_dbg("[TIoT][rx]err frame: %u\n", ctx->current_frame);
+            return handle_len;
+    }
+    ctx->xfer->xmit_ops->read(&(ctx->xfer->xmit), NULL, next_read_len);
+    return handle_len;
+}
+#endif
 
 #ifdef CONFIG_BOARD_DYNAMIC_ALLOC
 static inline void tiot_packet_ascii_line_store(tiot_packet_context *ctx, uint8_t *line_start, uint32_t line_len)

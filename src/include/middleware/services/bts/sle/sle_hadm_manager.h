@@ -61,6 +61,8 @@ typedef struct {
                                 @else 算法频率 @endif */
     uint8_t  glp_mode;     /*!< @if Eng glp mode.
                                 @else 2.4GHz 模式 @endif */
+    uint8_t report_type;  /*!< @if Eng report type.
+                                @else 是否phone_server @endif */
 } sle_set_channel_sounding_param_ex_t;
 
 /**

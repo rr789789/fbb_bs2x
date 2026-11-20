@@ -74,25 +74,9 @@ typedef struct {
     uint8_t flag;
 } bt_nv_cali_info_type_t;
 
-#define CHANNEL_MAX_NUM     3
 typedef struct {
-    uint8_t ble_mac[BD_ADDR_LEN];
-    uint8_t sle_mac[BD_ADDR_LEN];
-    uint8_t peer_mac[BD_ADDR_LEN];
-    uint8_t central_type;
-    uint8_t adv_flag;       // mouse_adv_flag
-    uint8_t connect_flag;   // mouse_conn_flag
-    uint8_t pair_flag;
-    uint8_t mode;
-} mouse_channel_info_t;
-
-typedef struct {
-    uint8_t ble_mac[BD_ADDR_LEN];
-    uint8_t sle_mac[BD_ADDR_LEN];
-    uint8_t mouse_channel;
-    uint8_t ble_loop_mac;
-    uint8_t sle_loop_mac;
-    mouse_channel_info_t channel_info[CHANNEL_MAX_NUM];
-} mouse_pair_info_t;
+    uint8_t type;
+    uint8_t addr[BD_ADDR_LEN];
+} sle_mac_addr_t;
 
 #endif /* COMMON_H */

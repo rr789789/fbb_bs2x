@@ -1,8 +1,17 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] SlpRadarOnCommand Error 0x%x @slp_radar_service.c(20),ERROR" ID="0xd7aa00a2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] SlpRadarOffCommand Error 0x%x @slp_radar_service.c(26),ERROR" ID="0xd7aa00d2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SLP_RADAR][ERR] SlpRadarSetHardwarePara para is NULL @slp_radar_service.c(39),ERROR" ID="0xd7aa013a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateRfPara Error 0x%x @slp_radar_service.c(47),ERROR" ID="0xd7aa017a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateFramePara Error 0x%x @slp_radar_service.c(54),ERROR" ID="0xd7aa01b2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateRawDataPara Error 0x%x @slp_radar_service.c(61),ERROR" ID="0xd7aa01ea" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateWavePara Error 0x%x @slp_radar_service.c(68),ERROR" ID="0xd7aa0222" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] SlpRadarOnCommand Error 0x%x @slp_radar_service.c(20),ERROR" ID="0xd7ac00a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] SlpRadarOffCommand Error 0x%x @slp_radar_service.c(26),ERROR" ID="0xd7ac00d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLP_RADAR][ERR] SlpRadarSetHardwarePara para is NULL @slp_radar_service.c(39),ERROR" ID="0xd7ac013a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLP_RADAR][ERR] uapi_radar_set_hardware_para is not effective for TV @slp_radar_service.c(44),ERROR" ID="0xd7ac0162" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateRfPara Error 0x%x @slp_radar_service.c(51),ERROR" ID="0xd7ac019a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateFramePara Error 0x%x @slp_radar_service.c(58),ERROR" ID="0xd7ac01d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateRawDataPara Error 0x%x @slp_radar_service.c(65),ERROR" ID="0xd7ac020a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateWavePara Error 0x%x @slp_radar_service.c(72),ERROR" ID="0xd7ac0242" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLP_RADAR][ERR] para is NULL. @slp_radar_service.c(84),ERROR" ID="0xd7ac02a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLP_RADAR][ERR] uapi_radar_set_alg_para is not support to write nv now. @slp_radar_service.c(89),ERROR" ID="0xd7ac02ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateAlgBasePara Error 0x%x @slp_radar_service.c(97),ERROR" ID="0xd7ac030a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateAlgSensitivityPara Error 0x%x @slp_radar_service.c(102),ERROR" ID="0xd7ac0332" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SLP_RADAR][ERR] ValidateAlgExtraPara Error 0x%x @slp_radar_service.c(107),ERROR" ID="0xd7ac035a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLP_RADAR][ERR] uapi_radar_register_raw_data_cb is not effective for TV @slp_radar_service.c(138),ERROR" ID="0xd7ac0452" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLP_RADAR][ERR] uapi_radar_get_result is not effective for TV @slp_radar_service.c(151),ERROR" ID="0xd7ac04ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SLP_RADAR][ERR] uapi_radar_register_set_power_status_cb is not effective for TV @slp_radar_service.c(164),ERROR" ID="0xd7ac0522" />
 			</MSG_LOG>

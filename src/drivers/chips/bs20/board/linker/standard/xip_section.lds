@@ -49,7 +49,7 @@
 	    *libc.a:*intscan* (.text .text* .rodata .rodata* .srodata .srodata*)
 	    /* *libsegger.a:*.o*(.text .text* .rodata .rodata* .srodata .srodata*) */
 	    *libgcc.a:*.o*(.rodata .rodata* .srodata .srodata*)
-	    *libbase.a:*.o* (.text.LOS_EventInit .text.LOS_EventDestroy \
+	    *libbase.a:*.o* (.text.LOS_EventInit .text.LOS_EventDestroy .text.OsObjAlloc\
 	                     .text.OsHwiInit .text.OsHwiDel* .text.LOS_HwiCreate .text.LOS_HwiDelete .text.LOS_HwiSetPriority \
 			     .text.LOS_HwiEnable .text.LOS_HwiDisable \
 	                     .text.OsMuxInit .text.LOS_MuxCreate .text.LOS_MuxDelete \
@@ -68,7 +68,10 @@
 			     .text.OsMemstatTaskClear .text.OsMemTaskClear .text.OsMemTaskUsage .text.LOS_TaskMemInfoShow .text.OsMemTaskUsageShow \
 	                     .text.OsSimpleStatUpdate .text.LOS_GetSimpleResStats \
 			     .rodata.OsIdleTaskCreate.str1.1 .rodata.ErrorMsg.str1.1 .rodata.OsVprintf.str1.1 .rodata.OsHeapAlloc.str1.1 .rodata.OsHeapFree.str1.1 \
-			     .rodata.LOS_MemFree.str1.1 .rodata.LOS_MemPoolInit.str1.1 .rodata.OsSwtmrInit.str1.1)
+			     .rodata.LOS_MemFree.str1.1 .rodata.LOS_MemPoolInit.str1.1 .rodata.OsSwtmrInit.str1.1
+			     .text.LOS_MemboxInit .text.LOS_MemboxAlloc .text.LOS_MemboxFree .text.LOS_MemboxStatisticsGet \
+			     .text.LOS_BitmapSet .text.LOS_BitmapClr .text.LOS_HighBitGet .text.LOS_LowBitGet .text.LOS_FirstZeroGet \
+			     .text.obj_template_swtmr_free .text.obj_template_task_free)
 	     *libinterrupt.a:*.o* (.text.HalIrqVersion .rodata.HalIrqVersion.* .text.HalIrqInit .rodata.g_plicOps* .text.HalIrqSetPrio \
 	                           .text.HalIrqMask .text.HalIrqUnmask)
 	     *libriscv.a:*.o* ( .text.ArchExcInit  .text.ArchSetExcHook  .text.ArchSetNMIHook \
@@ -95,7 +98,8 @@
 						.text.evt_task_gle_acb_free_txdesc_from_tog .text.evt_task_gle_acb_low_latency_switch_md \
 						.text.evt_task_gle_acb_low_latency_set_intv_change_flag .text.evt_task_gle_acb_update_low_latency_param \
 						.text.evt_task_gle_acb_low_latency_update_phy .text.evt_task_gle_acb_update_low_latency_sed_info \
-						.text.ble_errorint_isr_ram .text.lm_gle_llcp_phy_update_ind_srv_act_replace)
+						.text.ble_errorint_isr_ram .text.lm_gle_llcp_phy_update_ind_srv_act_replace \
+						.text.lm_ble_acl_srv_host_suggest_data_length_replace)
 		*libbt_host.a:*.o* (.text.gaph_smp_cfm_cbk_replace .text.smp_key_distribute_go_replace \
 							.text.smp_tk_ask_replace .text.smp_ecdh_public_key_generate_replace \
 							.text.smp_ecdh_pairing_public_key_recv_replace .text.bth_init_replace \
@@ -113,6 +117,8 @@
 							.text.bt_init_stack_replace \
 							.text.smp_pairing_request_recv_replace \
 							.text.smp_le_link_start_encryption_replace \
+							.text.att_read_by_type_cfm_replace \
+							.text.gaph_acl_link_ev_cbk_replace \
 							)
 	    . = ALIGN(8);
 	} > FLASH_PROGRAM

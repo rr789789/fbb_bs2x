@@ -191,6 +191,20 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief Enum of ble pair request confirm result.
+ * @else
+ * @brief BLE配对请求确认结果。
+ * @endif
+ */
+typedef enum {
+    GAP_BLE_PAIR_REQUEST_CONFIRM_REJECT  = 0x00, /*!< @if Eng reject pairing request
+                                                       @else   拒绝配对请求 @endif */
+    GAP_BLE_PAIR_REQUEST_CONFIRM_ACCEPT  = 0x01, /*!< @if Eng accept pairing request
+                                                       @else   同意配对请求 @endif */
+} gap_ble_pair_request_state_t;
+
+/**
+ * @if Eng
  * @brief Enum of ble set key switch.
  * @else
  * @brief 秘钥用户设置开关
@@ -898,7 +912,7 @@ typedef void (*gap_ble_set_scan_param_callback)(errcode_t status);
  * @attention 2. The memories of devices are requested and freed by the bts automatically.
  * @param  [in]  conn_id connection ID.
  * @param  [in]  conn_state the connection state.
- * @param  [in]  pair_status the pair state.
+ * @param  [in]  pair_status the pair state (Only reports GAP_BLE_PAIR_NONE during connecting).
  * @param  [in]  disc_reason the reason of disconnect.
  * @par Dependency:
  * @li  bts_def.h
@@ -910,7 +924,7 @@ typedef void (*gap_ble_set_scan_param_callback)(errcode_t status);
  * @attention  2. devices由bts申请内存，也由bts释放，回调中不应释放。
  * @param  [in]  conn_id 连接ID。
  * @param  [in]  conn_state 连接状态。
- * @param  [in]  pair_status 配对状态。
+ * @param  [in]  pair_status 配对状态（连接过程中只上报GAP_BLE_PAIR_NONE）。
  * @param  [in]  disc_reason 断链原因。
  * @par 依赖:
  * @li  bts_def.h
@@ -1221,6 +1235,33 @@ typedef void (*gap_ble_get_white_list_callback)(uint8_t count, bd_addr_t *addr_l
 
 /**
  * @if Eng
+ * @brief Callback invoked when pairing request.
+ * @par Callback invoked when pairing request.
+ * @attention 1.This function is called in BLE service context,should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the BLE service automatically.
+ * @param [in] conn_id connection ID.
+ * @param [in] addr    address.
+ * @retval #void no return value.
+ * @par Dependency:
+ * @li  ble_common.h
+ * @see gap_ble_callbacks_t
+ * @else
+ * @brief  配对请求的回调函数。
+ * @par    配对请求的回调函数。
+ * @attention  1. 该回调函数运行于BLE service线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由BLE service申请内存，也由BLE service释放，回调中不应释放。
+ * @param [in] conn_id 连接 ID。
+ * @param [in] addr    地址。
+ * @retval 无返回值。
+ * @par 依赖:
+ * @li  ble_common.h
+ * @see gap_ble_callbacks_t
+ * @endif
+ */
+typedef void (*gap_ble_pair_request_callback)(uint16_t conn_id, const bd_addr_t *addr);
+
+/**
+ * @if Eng
  * @brief Struct of GAP BLE callback function.
  * @else
  * @brief GAP BLE回调函数接口定义。
@@ -1241,8 +1282,10 @@ typedef struct {
                                                                       @else   扫描结果回调函数 @endif */
     gap_ble_connect_state_changed_callback conn_state_change_cb; /*!< @if Eng Connect state changed callback
                                                                       @else   连接状态改变回调函数 @endif */
+    gap_ble_pair_request_callback pair_request_cb;               /*!< @if Eng Pairing request callback.
+                                                                      @else   配对请求回调函数。 @endif */
     gap_ble_paired_complete_callback pair_result_cb;             /*!< @if Eng pair complete callback
-                                                                      @else   连接状态改变回调函数 @endif */
+                                                                      @else   配对事件完成回调函数 @endif */
     gap_ble_read_rssi_callback read_rssi_cb;                     /*!< @if Eng Read rssi callback.
                                                                       @else   读取rssi回调函数。 @endif */
     gap_ble_terminate_adv_callback terminate_adv_cb;             /*!< @if Eng terminate adv callback
@@ -1571,7 +1614,7 @@ errcode_t gap_ble_set_data_length(gap_le_set_data_length_t *param);
 /**
  * @if Eng
  * @brief Use this funtion to start pairing.
- * @par   Use this funtion to start pairing.
+ * @par   Use this funtion to start pairing. Initial connection: bonding + encryption; reconnection: encryption only.
  * @param  [out] addr   the list of paired devices address.
  * @retval ERRCODE_SUCC Success.
  * @retval Other        Failure. For details, see @ref errcode_t
@@ -1579,7 +1622,7 @@ errcode_t gap_ble_set_data_length(gap_le_set_data_length_t *param);
  * @li  bts_def.h
  * @else
  * @brief  启动配对。
- * @par    启动配对。
+ * @par    启动配对，首次连接执行绑定、加密操作，回连只加密。
  * @param  [out] addr   配对设备地址链表。
  * @retval ERRCODE_SUCC 成功。
  * @retval Other        失败。参考 @ref errcode_t
@@ -1840,6 +1883,27 @@ errcode_t gap_ble_connect_remote_device(const bd_addr_t *addr);
 
 /**
  * @if Eng
+ * @brief Use this funtion to connect to a remote device(async).
+ * @par   Use this funtion to establish an ACL connection with a remote device(async).
+ * @attention NULL
+ * @param  [in] addr address of the remote device.
+ * @retval error code, the connect status will be returned at { @ref gap_ble_connect_state_changed_callback }.
+ * @par Dependency:
+ * @li  bts_def.h
+ * @else
+ * @brief  与设备建立连接（异步）。
+ * @par    与设备建立ACL连接（异步）。
+ * @attention 无
+ * @param  [in] addr 待连接的设备地址。
+ * @retval 执行结果错误码，连接状态将在{ @ref gap_ble_connect_state_changed_callback }中返回。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @endif
+ */
+errcode_t gap_ble_connect_remote_device_async(const bd_addr_t *addr);
+
+/**
+ * @if Eng
  * @brief Use this funtion to disconnect from a remote device.
  * @par   Use this funtion to disconnect all profiles from a remote device.
  * @param  [in]  addr address of the remote device.
@@ -2004,6 +2068,27 @@ errcode_t gap_ble_set_save_smp_keys_mode(uint8_t is_available);
 
 /**
  * @if Eng
+ * @brief Use this funtion to set whether to report pairing requests.
+ * @par   Use this funtion to set whether to report pairing requests.
+ * @attention NULL
+ * @param  [in] flag, true：enable，false：disable
+ * @retval errcode_t { @ref errcode_bt_t }
+ * @par Dependency:
+ * @li  bts_def.h
+ * @else
+ * @brief  设置配对请求是否上报。
+ * @par    设置配对请求是否上报.
+ * @attention 无
+ * @param  [in] flag  配对请求是否上报控制标志 true：打开 false：关闭
+ * @retval 执行结果错误码。 { @ref errcode_bt_t }
+ * @par 依赖:
+ * @li  bts_def.h
+ * @endif
+ */
+errcode_t gap_ble_set_pair_req_report_enable(uint8_t flag);
+
+/**
+ * @if Eng
  * @brief Use this funtion to set smp pair info available
  * @par   Use this funtion to set smp pair info available
  * @attention NULL
@@ -2019,6 +2104,26 @@ errcode_t gap_ble_set_save_smp_keys_mode(uint8_t is_available);
  */
 errcode_t gap_ble_set_pair_info_available(uint8_t is_available);
 
+/**
+ * @if Eng
+ * @brief  Set pairing request confirm result.
+ * @par Description: Set pairing request confirm result.
+ * @param [in] conn_id connection ID.
+ * @param [in] user_confirm ble pariring request confirm result, { @ref gap_ble_pair_request_state_t }
+ * @retval error code.
+ * @par Depends:
+ * @li bts_def.h
+ * @else
+ * @brief  设置配对请求结果。
+ * @par Description: 设置配对请求结果。
+ * @param [in] conn_id 连接 ID.
+ * @param [in] user_confirm 配对请求确认结果，{ @ref gap_ble_pair_request_state_t }
+ * @retval 执行结果错误码。
+ * @par 依赖：
+ * @li bts_def.h
+ * @endif
+ */
+errcode_t gap_ble_set_pair_request_result(uint16_t conn_id, uint8_t user_confirm);
 
 /**
  * @if Eng

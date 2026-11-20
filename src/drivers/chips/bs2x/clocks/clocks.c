@@ -92,8 +92,8 @@ static const clocks_clk_cfg_t g_system_clocks_cfg[CLOCKS_CCRG_MODULE_MAX] = {
 #define HAL_CALIBRATION_EFUSE_ULP_SEL0         (ULP_AON_CTL_RB_ADDR + 0x1000)
 #define HAL_CALIBRATION_RC32K_RES_TRIM_SEL     11
 
-// 32K时钟周期数，0x40即2ms
-#define PM_CLK_32K_DET_VAL                     0x40
+// 32K时钟周期数，0x80即4ms
+#define PM_CLK_32K_DET_VAL                     0x80
 #define PM_RC32K_MAX_TRIM_VAL                  0x3F
 #define PM_RC32K_MIN_CALI_FREQ                 3104000
 #define PM_RC32K_MAX_CALI_FREQ                 3296000
@@ -108,12 +108,6 @@ static void clocks_rc32k_calibration(void)
     volatile uint16_t trim_val_record = reg16_getbits(HAL_CALIBRATION_PMU_TRIM_CTL2, HAL_CALIBRATION_PMU_RC32_RES_TRIM,
                                                       HAL_CALIBRATION_PMU_RC32_RES_TRIM_LEN);
 
-    reg16_setbit(HAL_CALIBRATION_PMU_VOLT_TEST, HAL_CALIBRATION_PMU_VOLT_EN); // PMU电源电压测试MUX通路选择使能
-    reg16_setbits(HAL_CALIBRATION_PMU_VOLT_TEST, HAL_CALIBRATION_PMU_VOLT_SEL, HAL_CALIBRATION_PMU_VOLT_SEL_LEN,
-                  HAL_CALIBRATION_PMU_VOLT_FRQ0_SEL); // PMU电源电压测试MUX通路选择
-    reg16_clrbit(HAL_CALIBRATION_PMU2_CFG0, HAL_CALIBRATION_VOLT_TEST_BUF_EN); // 仅trim电流时关闭buffer
-    reg16_setbits(HAL_CALIBRATION_PMU_VOLT_TEST, HAL_CALIBRATION_PMU_VOLT_SEL, HAL_CALIBRATION_PMU_VOLT_SEL_LEN,
-                  HAL_CALIBRATION_PMU_VOLT_FRQ1_SEL); // PMU电源电压测试MUX通路选择
     reg16_setbit(HAL_CALIBRATION_EFUSE_ULP_SEL0, HAL_CALIBRATION_RC32K_RES_TRIM_SEL); // PMU1基准trim配置成manual模式
     do { // 手动校准
         reg16_setbits(HAL_CALIBRATION_PMU_TRIM_CTL2, HAL_CALIBRATION_PMU_RC32_RES_TRIM,
@@ -127,7 +121,6 @@ static void clocks_rc32k_calibration(void)
     // 没找到正确校准值
     reg16_setbits(HAL_CALIBRATION_PMU_TRIM_CTL2, HAL_CALIBRATION_PMU_RC32_RES_TRIM,
                   HAL_CALIBRATION_PMU_RC32_RES_TRIM_LEN, trim_val_record);
-    writew(HAL_CALIBRATION_PMU_VOLT_TEST, 0);
 }
 #endif
 

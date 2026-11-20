@@ -495,7 +495,7 @@ typedef struct {
  * @param  [in]  conn_id    connection ID.
  * @param  [in]  addr       address.
  * @param  [in]  conn_state connection state { @ref sle_acb_state_t }.
- * @param  [in]  pair_state pairing state { @ref sle_pair_state_t }.
+ * @param  [in]  pair_state pairing state (Only reports SLE_PAIR_NONE during connecting.) { @ref sle_pair_state_t }.
  * @param  [in]  disc_reason the reason of disconnect { @ref sle_disc_reason_t }.
  * @par Dependency:
  * @li  sle_common.h
@@ -508,7 +508,7 @@ typedef struct {
  * @param  [in]  conn_id    连接 ID。
  * @param  [in]  addr       地址。
  * @param  [in]  conn_state 连接状态 { @ref sle_acb_state_t }。
- * @param  [in]  pair_state 配对状态 { @ref sle_pair_state_t }。
+ * @param  [in]  pair_state 配对状态（连接过程中只上报SLE_PAIR_NONE） { @ref sle_pair_state_t }。
  * @param  [in]  disc_reason 断链原因 { @ref sle_disc_reason_t }。
  * @par 依赖:
  * @li  sle_common.h
@@ -982,6 +982,7 @@ errcode_t sle_update_connect_param(sle_connection_param_update_t *params);
  * @if Eng
  * @brief  Send pairing request to remote device.
  * @par Description: Send pairing request to remote device.
+ *                   Initial connection: bonding + encryption; reconnection: encryption only.
  * @param  [in]  addr address.
  * @retval ERRCODE_SUCC Success.
  * @retval Other        Failure. For details, see @ref errcode_t
@@ -989,7 +990,7 @@ errcode_t sle_update_connect_param(sle_connection_param_update_t *params);
  * @li sle_common.h
  * @else
  * @brief  发送配对请求。
- * @par Description: 发送配对请求。
+ * @par Description: 发送配对请求，首次连接执行绑定、加密操作，回连只加密。
  * @param  [in]  addr 地址。
  * @retval ERRCODE_SUCC 成功。
  * @retval Other        失败。参考 @ref errcode_t

@@ -781,8 +781,13 @@ static void key_hold_process(void)
         case COMBINE_KEY_FLAG_TEST_STATION_06:
             /* 关闭广播。 */
             stop_all_adv();
+            set_rcu_mode(RCU_MODE_MASS_PRODUCTION_TEST);
             /* 删除所有配对信息。 */
             sle_remove_all_pairs();
+            set_current_control_obj(TV);
+#if defined(CONFIG_SAMPLE_SUPPORT_SLE_RCU_SERVER)
+            sle_set_current_control_obj(TV);
+#endif
             rcu_mp_test_set_work_station(combine_key_flag);
             break;
 #endif

@@ -129,6 +129,9 @@ VOID OsMemTaskUsageShow(VOID *memPool, UINT32 taskId,  VOID (*print)(const char 
     Memstat *stat = NULL;
     TaskMemUsedInfo *taskMemInfo = NULL;
     LosTaskCB *taskCB = OS_TCB_FROM_TID(taskId);
+    if (taskCB == NULL) {
+        return;
+    }
     CHAR *name = NULL;
 
     pool = (LosMemPoolInfo *)memPool;

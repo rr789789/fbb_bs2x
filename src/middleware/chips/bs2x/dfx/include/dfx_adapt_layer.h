@@ -72,14 +72,6 @@ static inline void dfx_free(uint32_t id, void *addr)
     osal_vfree(addr);
 }
 
-static inline uint32_t dfx_get_cur_second(void)
-{
-    osal_timeval cur_time = { 0 };
-    cur_time.tv_sec = PASSED_SECONDS_SINCE_2023 + uapi_tcxo_get_ms() / DFX_1000MS;
-    cur_time.tv_usec = 0;
-    return cur_time.tv_sec;
-}
-
 /* Event 接口 */
 static inline errcode_t dfx_event_write(dfx_event_id_t event_id)
 {

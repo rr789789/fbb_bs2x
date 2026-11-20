@@ -345,7 +345,7 @@ static int sle_set_test_announce_data(void)
     return ERRCODE_SLE_SUCCESS;
 }
 
-static int rcu_mp_test_set_test_announce_param(sle_addr_t *local_addr, sle_addr_t *peer_addr)
+static int rcu_mp_test_set_test_announce_param(const sle_addr_t *local_addr, const sle_addr_t *peer_addr)
 {
     sle_announce_param_t param = { 0 };
     param.announce_mode = SLE_ANNOUNCE_MODE_CONNECTABLE_DIRECTED;

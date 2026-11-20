@@ -25,6 +25,8 @@
 #include "../../timer/am_common_timer.h"
 #include "../radar/air_mouse_radar.h"
 
+#define UNUSED(x) ((void)(x))
+
 #define UUID_16BIT_LEN                      2
 #define UUID_128BIT_LEN                     16
 
@@ -795,6 +797,9 @@ static void rpt_errcode_cbk(ErrcodeSlpClient errcode)
         case ERRCODE_SLPC_QUEUE_WRITE_FAILED: // 队列写入失败
             osal_printk("[ERROR] send slpc msg fail\r\n");
             break;
+        case ERRCODE_SLPC_NB_CFO_LOSS: // 首轮任务NB CFO 丢失
+            osal_printk("[ERROR] first task nb cfo loss\r\n");
+            break;
         default:
             osal_printk("slp errcode: 0x%08x\r\n", errcode);
             break;
@@ -909,9 +914,9 @@ void check_into_sleep(int32_t x, int32_t y, int32_t threshhold)
     }
 }
 
-void cursor_report_cbk(SlpCursorRslt *cursor_rslt)
+void cursor_report_cbk(SlpCursorRslt *cursor_rslt, SlpImuRawData *imuRawData)
 {
-    update_am_print_info_cursor(cursor_rslt);
+    UNUSED(imuRawData);
     // 如果需要遥控器睡眠，此处调用
     if (CONFIG_LOW_POWER_MODE == 1) {
         check_into_sleep(cursor_rslt->x, cursor_rslt->y, 2500); // 车机睡眠检测，上下左右放宽2500um的缓冲区波动范围
@@ -925,6 +930,7 @@ void cursor_report_cbk(SlpCursorRslt *cursor_rslt)
 #if CONFIG_AIR_MOUSE_USB
     usb_send_cursor_report(cursor_rslt);
 #endif
+    update_am_print_info_cursor(cursor_rslt);
 #endif
     if (g_record_fisrt_rpt_cursor_time_flag) {
         g_record_fisrt_rpt_cursor_time_flag = false;
@@ -992,10 +998,15 @@ void set_slp_local_att(void)
     // 设置Slp本机属性
     SlpLocalAtt att = {0};
     att.screenParam.cursorSpeed = get_slp_cursor_speed();
+    att.screenParam.clickTremorPrevSens = get_slp_click_tremor_prev_sens();
     att.screenParam.width = screen_size->x;
     att.screenParam.height = screen_size->y;
-    osal_printk("set slp local att, speed:%u, size:%ux%u\r\n", att.screenParam.cursorSpeed, att.screenParam.width,
-        att.screenParam.height);
+    att.screenParam.dongleAntPoseOffset = 0; // 左负右正，单位：mm
+    att.screenParam.cursorVerOffset = 0; // 上负下正，单位：mm, 注意：车载指向遥控配置此值无效
+    osal_printk("set slp local att, speed:%u, clickSens:%u, size:%ux%u, antOffset:%d, cursorVerOffset:%d\r\n",
+        att.screenParam.cursorSpeed, att.screenParam.clickTremorPrevSens,
+        att.screenParam.width, att.screenParam.height,
+        att.screenParam.dongleAntPoseOffset, att.screenParam.cursorVerOffset);
     set_ant_sw_param(&att.rfSwParam);
     (void)memcpy_s(&att.localAddr, sizeof(SlpDeviceAddr), get_slp_air_mouse_dongle_addr(), sizeof(SlpDeviceAddr));
     ErrcodeSlpClient ret = SlpSetLocalAttCommand(&att);
@@ -1006,12 +1017,12 @@ void set_slp_local_att(void)
 
 void sle_air_mouse_client_init(void)
 {
+#if CONFIG_SLP_USAGE_AIR_MOUSE_CAR
+    extern uint32_t g_prevent_sleep_reasons;
+    g_prevent_sleep_reasons = 0xFFFF;  // 0xFFFF:关闭SLE低功耗
+#endif
     init_recv_sequence_no();
     sle_air_mouse_client_seek_cbk_register();
-    while (g_sle_enable == false) {
-        osal_msleep(SLE_UART_TASK_DELAY_MS);
-        enable_sle();
-    }
     sle_air_mouse_client_connect_cbk_register();
     sle_air_mouse_ssapc_cbk_register();
     sle_remove_all_pairs();
@@ -1024,4 +1035,10 @@ void sle_air_mouse_client_init(void)
     }
     osal_printk("\r\n");
 #endif
+
+    while (g_sle_enable == false) {
+        osal_printk("enable_sle\r\n");
+        enable_sle();
+        osal_msleep(SLE_UART_TASK_DELAY_MS);
+    }
 }

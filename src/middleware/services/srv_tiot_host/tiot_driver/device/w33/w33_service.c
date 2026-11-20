@@ -88,11 +88,14 @@ static void w33_device_wakeup_host_cb(uint32_t pin)
                                            pin, W33_PIN_DEVICE_WAKEUP_HOST);
     if (cur_ctrl != NULL) {
         tiot_pm_set_event(&cur_ctrl->pm, TIOT_PM_EVENT_WAKEUP_ACK);
+#ifdef CONFIG_XMIT_WITH_RX_DMA
+        /* 配置包头dma、使能rx_dma */
+        cur_ctrl->transfer.xmit_ops->read(&(cur_ctrl->transfer.xmit), NULL, TIOT_PKT_HEAD_SIZE);
+#endif
     }
 #ifdef CONFIG_W33_SPI
     osal_wait_wakeup_interruptible(&(cur_ctrl->transfer.rx_wait));
 #endif
-
     (void)tiot_board_pin_enable_int(pin, TIOT_PIN_INT_ENABLE);
 }
 
@@ -239,6 +242,16 @@ static int32_t w33_service_open(tiot_controller *ctrl, void *param)
     if (w33_get_dev_id(ctrl, &dev_id) != 0) {
         return -1;
     }
+    /* 先上电, 后调用tiot_xfer_open
+     * 防止VBAT上电在UART初始化后时(即先调用tiot_xfer_open, 后上电)，w33在uart rx管脚存在倒灌的情况
+     */
+    ret = tiot_pm_set_event(&ctrl->pm, TIOT_PM_EVENT_POWERON);
+    if (ret != 0) {
+        /* 上电失败 */
+        tiot_print_err("[TIoT]Power on fail\n");
+        goto power_on_fail;
+    }
+
     w33_set_open_param(&xfer_open_param, param);
     /* 传输启动 */
     if (tiot_xfer_open(&ctrl->transfer, &xfer_open_param) != 0) {
@@ -250,12 +263,6 @@ static int32_t w33_service_open(tiot_controller *ctrl, void *param)
     dev_wkup_host_pin = ctrl->pm.pm_info[TIOT_PIN_DEVICE_WAKEUP_HOST];
     tiot_pin_int_request(dev_wkup_host_pin, w33_device_wakeup_host_cb);
 #endif
-    /* 上电 */
-    if (tiot_pm_set_event(&ctrl->pm, TIOT_PM_EVENT_POWERON) != 0) {
-        /* 上电失败 */
-        tiot_print_err("[TIoT]Power on fail\n");
-        goto power_on_fail;
-    }
     /* 加载固件 */
     ret = w33_firmware_load(&ctrl->firmware);
     if (ret != 0) {
@@ -290,13 +297,13 @@ pkt_init_fail:
     tiot_pin_int_release(dev_wkup_host_pin);
 #endif
 fw_load_fail:
-    (void)tiot_pm_set_event(&ctrl->pm, TIOT_PM_EVENT_POWEROFF);
-power_on_fail:
 #ifdef CONFIG_W33_SPI
     tiot_pin_int_release(dev_wkup_host_pin);
 #endif
     tiot_xfer_close(&ctrl->transfer);
 xfer_open_fail:
+    (void)tiot_pm_set_event(&ctrl->pm, TIOT_PM_EVENT_POWEROFF);
+power_on_fail:
     return ret;
 }
 

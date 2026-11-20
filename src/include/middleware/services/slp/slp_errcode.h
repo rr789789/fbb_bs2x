@@ -126,6 +126,8 @@ typedef enum {
                                                                  @else   slp uart缓冲区过小错误码 @endif */
     ERRCODE_SLPC_UART_SEND_FAIL,                            /*!< @if Eng error code of slp send uart fail
                                                                  @else   slp uart发送失败 @endif */
+    ERRCODE_SLPC_NB_CFO_LOSS,                               /*!< @if Eng error code of slp nb cfo loss
+                                                                 @else   slp 窄带cfo丢失 @endif */
     ERRCODE_SLPC_MAX = ERRCODE_SLPC_END                     /*!< @if Eng maximum of SLP error code
                                                                  @else   SLPC 错误码最大值 @endif */
 } ErrcodeSlpClient;

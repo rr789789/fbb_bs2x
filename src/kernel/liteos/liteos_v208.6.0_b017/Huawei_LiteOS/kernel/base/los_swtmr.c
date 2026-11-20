@@ -37,12 +37,42 @@ LITE_OS_SEC_BSS LosSwtmrCB *g_osSwtmrCBArray = NULL;        /* First address in 
 #ifndef LOSCFG_BASE_CORE_SWTMR_IN_ISR
 LITE_OS_SEC_BSS UINT8 *g_osSwtmrTaskStack[LOSCFG_KERNEL_CORE_NUM];
 #endif
+#ifndef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
 LITE_OS_SEC_BSS LOS_DL_LIST     g_swtmrFreeList;            /* Free list of Software Timer */
+#endif
 
 /* spinlock for swtmr module, only available on SMP mode */
 LITE_OS_SEC_BSS  SPIN_LOCK_INIT(g_swtmrSpin);
 #define SWTMR_LOCK(state)       LOS_SpinLockSave(&g_swtmrSpin, &(state))
 #define SWTMR_UNLOCK(state)     LOS_SpinUnlockRestore(&g_swtmrSpin, (state))
+#ifndef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
+LosSwtmrCB g_swtmrCBArray[LOSCFG_BASE_CORE_SWTMR_LIMIT] = {0};
+LOS_DL_LIST g_losFreeSwtmr;
+#endif
+
+#ifdef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
+DEFINE_OBJ_TEMPLATE(OS_OBJ_TYPE_SWTMR, swtmr,
+                    LOSCFG_BASE_CORE_SWTMR_LIMIT,
+                    LOSCFG_SWTMR_CB_BASE_NUM,
+                    sizeof(LosSwtmrCB));
+STATIC INLINE LosSwtmrCB *OsGetSwtmrCB(VOID)
+{
+    UINT32 swtmrId;
+    LosSwtmrCB *swtmrCb = (LosSwtmrCB *)ALLOC_OBJ(swtmr, &swtmrId);
+    if (swtmrCb != NULL) {
+        swtmrCb->timerId = swtmrId;
+        swtmrCb->state = OS_SWTMR_STATUS_UNUSED;
+    }
+    return swtmrCb;
+}
+
+STATIC INLINE VOID OsReleaseSwtmrCB(LosSwtmrCB *swtmrCb)
+{
+    if (swtmrCb != NULL) {
+        FREE_OBJ(swtmr, swtmrCb, swtmrCb->timerId);
+    }
+}
+#endif
 
 /*
  * Description: Start Software Timer
@@ -76,9 +106,13 @@ STATIC INLINE VOID OsSwtmrDelete(LosSwtmrCB *swtmr)
         swtmr->timerId %= KERNEL_SWTMR_LIMIT;
     }
 #endif
+#ifdef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
+    OsReleaseSwtmrCB(swtmr);
+#else
     /* insert to free list */
     LOS_ListTailInsert(&g_swtmrFreeList, &swtmr->sortList.sortLinkNode);
     swtmr->state = OS_SWTMR_STATUS_UNUSED;
+#endif
 }
 
 STATIC INLINE VOID OsSwtmrUpdate(LosSwtmrCB *swtmr)
@@ -190,14 +224,18 @@ LITE_OS_SEC_TEXT_INIT STATIC UINT32 OsSwtmrTaskCreate(VOID)
 LITE_OS_SEC_BSS STATIC LOS_DL_LIST g_swtmrSortlink[LOSCFG_KERNEL_CORE_NUM][OS_TSK_SORTLINK_LEN];
 LITE_OS_SEC_TEXT_INIT UINT32 OsSwtmrInit(VOID)
 {
+#ifndef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
     UINT16 index;
+#endif
     UINT32 cpuid = ArchCurrCpuid();
     if (cpuid == 0) {
+#ifndef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
         LOS_ListInit(&g_swtmrFreeList);
         for (index = 0; index < KERNEL_SWTMR_LIMIT; index++) {
             g_osSwtmrCBArray[index].timerId = index;
             LOS_ListTailInsert(&g_swtmrFreeList, &g_osSwtmrCBArray[index].sortList.sortLinkNode);
         }
+#endif
     }
 
 #ifndef LOSCFG_BASE_CORE_SWTMR_IN_ISR
@@ -344,7 +382,9 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_SwtmrCreate(UINT32 interval,
 {
     LosSwtmrCB *swtmr = NULL;
     UINT32 intSave;
+#ifndef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
     SortLinkList *sortList = NULL;
+#endif
 
     if (interval == 0) {
         return LOS_ERRNO_SWTMR_INTERVAL_NOT_SUITED;
@@ -364,6 +404,13 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_SwtmrCreate(UINT32 interval,
     }
 
     SWTMR_LOCK(intSave);
+#ifdef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
+    swtmr = OsGetSwtmrCB();
+    if (swtmr == NULL) {
+        SWTMR_UNLOCK(intSave);
+        return LOS_ERRNO_SWTMR_NO_MEMORY;
+    }
+#else
     if (LOS_ListEmpty(&g_swtmrFreeList)) {
         SWTMR_UNLOCK(intSave);
         return LOS_ERRNO_SWTMR_MAXSIZE;
@@ -372,6 +419,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_SwtmrCreate(UINT32 interval,
     sortList = LOS_DL_LIST_ENTRY(g_swtmrFreeList.pstNext, SortLinkList, sortLinkNode);
     swtmr = LOS_DL_LIST_ENTRY(sortList, LosSwtmrCB, sortList);
     LOS_ListDelete(LOS_DL_LIST_FIRST(&g_swtmrFreeList));
+#endif
     SWTMR_UNLOCK(intSave);
 
     swtmr->handler = handler;

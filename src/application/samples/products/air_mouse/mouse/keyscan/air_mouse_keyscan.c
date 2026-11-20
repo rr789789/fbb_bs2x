@@ -36,6 +36,9 @@
 #define CONSUMER_HID_CODE_POWER    0x30 // 电源
 #define CONSUMER_HID_VOLUME_UP     0xE9 // 音量+
 #define CONSUMER_HID_VOLUME_DOWN   0xEA // 音量-
+#define CONSUMER_HID_VOLUME_MUTE   0xE2 // 静音
+#define CONSUMER_HID_BRIGH_INCRE   0x6F // 亮度+
+#define CONSUMER_HID_BRIGH_DECRE   0x70 // 亮度-
 
 #if CONFIG_AIR_MOUSE_HR_BOARD
 static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
@@ -85,6 +88,30 @@ static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
     {RCU_KEY_S19, 0,                        0                },
     {RCU_KEY_S20, CONSUMER_HID_VOLUME_DOWN, HID_CONSUMER_KIND},
 };
+#elif CONFIG_AIR_MOUSE_YF_BOARD
+static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
+    {RCU_KEY_S0,  0,                        0                },
+    {RCU_KEY_S1,  CONSUMER_HID_VOLUME_UP,   HID_CONSUMER_KIND},
+    {RCU_KEY_S2,  KEYBOARD_HID_CODE_MENU,   HID_KEYBOARD_KIND},
+    {RCU_KEY_S3,  CONSUMER_HID_VOLUME_DOWN, HID_CONSUMER_KIND},
+    {RCU_KEY_S4,  0,                        0                },
+    {RCU_KEY_S5,  KEYBOARD_HID_CODE_HOME,   HID_KEYBOARD_KIND},
+    {RCU_KEY_S6,  CONSUMER_HID_VOLUME_MUTE, HID_CONSUMER_KIND},
+    {RCU_KEY_S7,  0,                        0                },
+    {RCU_KEY_S8,  KEYBOARD_HID_CODE_ENTER,  HID_KEYBOARD_KIND},
+    {RCU_KEY_S9,  KEYBOARD_HID_CODE_BACK,   HID_KEYBOARD_KIND},
+    {RCU_KEY_S10, 0,                        0                },
+    {RCU_KEY_S11, 0,                        0                },
+    {RCU_KEY_S12, 0,                        0                },
+    {RCU_KEY_S13, 0,                        0                },
+    {RCU_KEY_S14, 0,                        0                },
+    {RCU_KEY_S15, 0,                        0                },
+    {RCU_KEY_S16, 0,                        0                },
+    {RCU_KEY_S17, 0,                        0                },
+    {RCU_KEY_S18, 0,                        0                },
+    {RCU_KEY_S19, 0,                        0                },
+    {RCU_KEY_S20, 0,                        0                },
+};
 #endif
 
 #if CONFIG_AIR_MOUSE_HR_BOARD
@@ -97,6 +124,7 @@ static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
 #define GPIO_ROW_2                  23  // ROW2 gpio管脚号
 #define GPIO_ROW_3                  22  // ROW3 gpio管脚号
 #define GPIO_ROW_4                  2   // ROW3 gpio管脚号
+
 #elif CONFIG_AIR_MOUSE_HX_BOARD
 #define GPIO_MAP_NUM                9   // keyscan使用的gpio管脚数量
 #define GPIO_COL_1                  16  // COL1 gpio管脚号
@@ -108,6 +136,16 @@ static const key_config_t g_menu_key_map[RCU_KEY_NUM] = {
 #define GPIO_ROW_2                  23  // ROW2 gpio管脚号
 #define GPIO_ROW_3                  22  // ROW3 gpio管脚号
 #define GPIO_ROW_4                  5   // ROW4 gpio管脚号
+
+#elif CONFIG_AIR_MOUSE_YF_BOARD
+#define GPIO_MAP_NUM                6   // keyscan使用的gpio管脚数量
+#define GPIO_COL_1                  16  // COL1 gpio管脚号
+#define GPIO_COL_2                  21  // COL2 gpio管脚号
+#define GPIO_COL_3                  6   // COL3 gpio管脚号
+#define GPIO_ROW_1                  24  // ROW1 gpio管脚号
+#define GPIO_ROW_2                  23  // ROW2 gpio管脚号
+#define GPIO_ROW_3                  22  // ROW3 gpio管脚号
+
 #endif
 
 #if CONFIG_AIR_MOUSE_HR_BOARD
@@ -138,6 +176,20 @@ static const uint8_t g_key_map[CONFIG_KEYSCAN_ENABLE_ROW][CONFIG_KEYSCAN_ENABLE_
     {RCU_KEY_S6,  RCU_KEY_S7,  RCU_KEY_S8,  RCU_KEY_S9,  RCU_KEY_S10},
     {RCU_KEY_S11, RCU_KEY_S12, RCU_KEY_S13, RCU_KEY_S14, RCU_KEY_S15},
     {RCU_KEY_S16, RCU_KEY_S17, RCU_KEY_S18, RCU_KEY_S19, RCU_KEY_S20},
+};
+
+#elif CONFIG_AIR_MOUSE_YF_BOARD
+// Keyscan的gpio矩阵，ROW在前，COL在后
+static const uint8_t user_gpio_map[GPIO_MAP_NUM] = {
+    GPIO_ROW_1, GPIO_ROW_2, GPIO_ROW_3,
+    GPIO_COL_1, GPIO_COL_2, GPIO_COL_3,
+};
+
+// Keyscan的键值矩阵
+static const uint8_t g_key_map[CONFIG_KEYSCAN_ENABLE_ROW][CONFIG_KEYSCAN_ENABLE_COL] = {
+    {RCU_KEY_S1, RCU_KEY_S2, RCU_KEY_S3},
+    {RCU_KEY_S4, RCU_KEY_S5, RCU_KEY_S6},
+    {RCU_KEY_S7, RCU_KEY_S8, RCU_KEY_S9},
 };
 #endif
 

@@ -344,6 +344,9 @@ void pm_aon_gpio_suspend(void)
                                   readw(ULP_AON_CTL_PAD_OUT_OEH_REG);
     uint16_t ulp_gpio_out_l = (g_aon_gpio_out_level_val & ULP_AON_CTL_MASK_BITS_FULL) |
                                readw(ULP_AON_CTL_PAD_OUT_L_REG);
+#ifdef CONFIG_XO_32K_ENABLE
+    ulp_gpio_out_l |= 0x3; // gpio0/1 out配置1，规避pad切换时xo32k问题
+#endif
     uint16_t ulp_gpio_out_h = (g_aon_gpio_out_level_val >> ULP_AON_CTL_PAD_REG_LEN) |
                                readw(ULP_AON_CTL_PAD_OUT_H_REG);
     writew(ULP_AON_CTL_PAD_OUT_OEL_REG, ulp_gpio_out_en_l);
@@ -354,8 +357,14 @@ void pm_aon_gpio_suspend(void)
 
 void pm_aon_gpio_resume(void)
 {
+#ifdef CONFIG_XO_32K_ENABLE
+    writel(AON_GPIO_OUTPUT_EN_SET_REG, ((~g_aon_gpio_out_en_val) & 0xFFFFFFFC));
+    writel(AON_GPIO_OUTPUT_LEVEL_SET_REG, (g_aon_gpio_out_level_val & AON_GPIO_OUTPUT_LEVEL_MASK_BITS_FULL &
+                                           0xFFFFFFFC));   // gpio0/1 out配置0，规避pad切换时xo32k问题
+#else
     writel(AON_GPIO_OUTPUT_EN_SET_REG, (~g_aon_gpio_out_en_val));
     writel(AON_GPIO_OUTPUT_LEVEL_SET_REG, g_aon_gpio_out_level_val & AON_GPIO_OUTPUT_LEVEL_MASK_BITS_FULL);
+#endif
 }
 
 void pm_clr_ulp_gpio(void)

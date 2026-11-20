@@ -82,13 +82,21 @@
 #ifdef OS_DFX_SUPPORT
 #define APP_STACK_SIZE                      0x800
 #else
+#ifdef GLE_CS_MODE3_SUPPORT
+#define APP_STACK_SIZE                      0x600
+#else
 #define APP_STACK_SIZE                      0x500
+#endif
 #endif
 #ifndef CONFIG_CODE_MINIATURE_ENABLE
 #define LOG_STACK_SIZE                      0x600
 #define AT_STACK_SIZE                       0x700
 #endif
+#ifdef GLE_CS_MODE3_SUPPORT
+#define BT_STACK_SIZE                       0xB00
+#else
 #define BT_STACK_SIZE                       0xA00
+#endif
 /* host schedule task stack. */
 #define BTH_SCHEDULE_STACK_SIZE             0xC00
 /* host service task stack. */

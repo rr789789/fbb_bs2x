@@ -53,7 +53,11 @@ static int32_t firmware_send_cmd(tiot_fw *fw, uint16_t ext_cmd, uint16_t cmd_len
     uint8_t cmd[FW_LEN_PER_SEND] = { 0 };
     int32_t ret = 0;
     uint16_t remain_len = cmd_len;
-
+#ifdef CONFIG_XMIT_WITH_RX_DMA
+    /* 配置固件加载时rx_dma, ack长度为1 */
+    tiot_controller *controller = tiot_container_of(fw, tiot_controller, firmware);
+    controller->transfer.xmit_ops->read(&controller->transfer.xmit, NULL, 1);
+#endif
     // 一个完整的命令分多次发送，每次发送FW_LEN_PER_SEND字节
     do {
         // 1, Get cmd data from file, maximum of 64 bytes each time.

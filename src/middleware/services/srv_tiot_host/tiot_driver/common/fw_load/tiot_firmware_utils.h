@@ -31,18 +31,13 @@ static inline int32_t tiot_firmware_write(tiot_fw *fw, const uint8_t *data, uint
     return tiot_xfer_send(&controller->transfer, data, len, NULL);
 }
 
-static inline int32_t tiot_firmware_read_timeout(tiot_fw *fw, uint8_t *data, uint32_t len, uint32_t timeout_ms)
+static inline int32_t tiot_firmware_read(tiot_fw *fw, uint8_t *data, uint32_t len, uint32_t timeout_ms)
 {
     tiot_xfer_rx_param rx_param = { 0 };
     tiot_controller *controller = tiot_container_of(fw, tiot_controller, firmware);
     rx_param.timeout = timeout_ms;
     rx_param.subsys  = 0;
     return tiot_xfer_recv(&controller->transfer, data, len, &rx_param);
-}
-
-static inline int32_t tiot_firmware_read(tiot_fw *fw, uint8_t *data, uint32_t len)
-{
-    return tiot_firmware_read_timeout(fw, data, len, TIOT_XFER_RECV_WAIT_FOREVER);
 }
 
 /**

@@ -29,10 +29,13 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc remove extern adv err! len = %d @ble_ahib_gap.c(360),ERROR" ID="0xdeaa0b42" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc passkey response: %d @ble_ahib_gap.c(372),ERROR" ID="0xdeaa0ba2" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc passkey response err! len = %d @ble_ahib_gap.c(375),ERROR" ID="0xdeaa0bba" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi: %d @ble_ahib_gap.c(403),ERROR" ID="0xdeaa0c9a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi err! len = %d @ble_ahib_gap.c(406),ERROR" ID="0xdeaa0cb2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set local addr = %d @ble_ahib_gap.c(414),ERROR" ID="0xdeaa0cf2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_gap.c(795),WARNING" ID="0xdeaa18db" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_gap.c(804),WARNING" ID="0xdeaa1923" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gap.c(847),ERROR" ID="0xdeaa1a7a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set pair req rpt err! len = %d @ble_ahib_gap.c(387),ERROR" ID="0xdeaa0c1a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc pair req result response: %d @ble_ahib_gap.c(399),ERROR" ID="0xdeaa0c7a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc pair req result response err! len = %d @ble_ahib_gap.c(402),ERROR" ID="0xdeaa0c92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi: %d @ble_ahib_gap.c(431),ERROR" ID="0xdeaa0d7a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi err! len = %d @ble_ahib_gap.c(434),ERROR" ID="0xdeaa0d92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set local addr = %d @ble_ahib_gap.c(442),ERROR" ID="0xdeaa0dd2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_gap.c(840),WARNING" ID="0xdeaa1a43" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_gap.c(849),WARNING" ID="0xdeaa1a8b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gap.c(895),ERROR" ID="0xdeaa1bfa" />
 			</MSG_LOG>

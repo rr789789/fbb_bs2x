@@ -14,9 +14,9 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]hci link data error! @hci_core_reserv.c(498),ERROR" ID="0xddf60f92" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="[HCI]le local set own addr update adv pts_mode=%d, is_le_ext_adving = %d, updated = %d @hci_core_reserv.c(522),INFO" ID="0xddf61055" />
 			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI][WHITE_LIST]TYPE=%d, ADDR=%02x:%02x:**:**:**:%02x @hci_core_reserv.c(1113),INFO" ID="0xddf622cd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] get remote feature is NULL @hci_core_reserv.c(1181),ERROR" ID="0xddf624ea" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 0-3: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_core_reserv.c(1185),INFO" ID="0xddf6250d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 4-7: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_core_reserv.c(1187),INFO" ID="0xddf6251d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] remote feature LL Privacy not support @hci_core_reserv.c(1189),INFO" ID="0xddf6252d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] do not add addr to ral. @hci_core_reserv.c(1195),INFO" ID="0xddf6255d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] get remote feature is NULL @hci_core_reserv.c(1190),ERROR" ID="0xddf62532" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 0-3: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_core_reserv.c(1194),INFO" ID="0xddf62555" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 4-7: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_core_reserv.c(1196),INFO" ID="0xddf62565" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] remote feature LL Privacy not support @hci_core_reserv.c(1199),INFO" ID="0xddf6257d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] do not add addr to ral. @hci_core_reserv.c(1205),INFO" ID="0xddf625ad" />
 			</MSG_LOG>

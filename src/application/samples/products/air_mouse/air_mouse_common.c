@@ -15,7 +15,7 @@
 
 #define SLP_IMU_TYPE_NUM (SLP_IMU_TYPE_ASM330 + 1)
 
-#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD
+#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD || CONFIG_AIR_MOUSE_YF_BOARD
 #if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE
 // 参考设计板RCU
 SlpTransformParam g_slpTransformParamArr[SLP_IMU_TYPE_NUM] = {
@@ -74,7 +74,7 @@ SlpTransformParam g_slpTransformParamArr[SLP_IMU_TYPE_NUM] = {
     {},                                                                 // SLP_IMU_TYPE_ICM46288
     {},                                                                 // SLP_IMU_TYPE_ICM42670
     {},                                                                 // SLP_IMU_TYPE_BMI325
-    {},                                                                 // SLP_IMU_TYPE_SMI230
+    {{SLP_IMU_AXIS_Z, +1}, {SLP_IMU_AXIS_Y, -1}, {SLP_IMU_AXIS_X, +1}}, // SLP_IMU_TYPE_SMI230
     {{SLP_IMU_AXIS_Z, +1}, {SLP_IMU_AXIS_X, -1}, {SLP_IMU_AXIS_Y, -1}}, // SLP_IMU_TYPE_ASM330
 };
 #endif
@@ -87,7 +87,7 @@ SlpTransformParam g_slpTransformParamArr[SLP_IMU_TYPE_NUM] = {0};
 #endif
 #endif
 
-#if CONFIG_AIR_MOUSE_HX_BOARD // CONFIG_AIR_MOUSE_HX_BOARD
+#if CONFIG_AIR_MOUSE_HX_BOARD || CONFIG_AIR_MOUSE_YF_BOARD
 
 #if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE
 static const uint8_t g_ant_sw_param[] = {true, 0b000011, 0b000010, 0b000001, 0x0, 0b000000, 0x0, 0x0}; // RCU
@@ -100,7 +100,7 @@ static const uint8_t g_ant_sw_param[] = {true, 0b000001, 0b000000, 0b000001, 0x0
 static const uint8_t g_ant_sw_param[] = {false, 0b111, 0b000011, 0b000100, 0x0, 0b101, 0x0, 0b111}; // RCU & Dongle
 
 #elif CONFIG_AIR_MOUSE_RADAR_2T4R_BOARD /* Radar 2T4R */
-static const uint8_t g_ant_sw_param[] = {false, 0b111, 0b100, 0b011, 0x0, 0b010, 0x0, 0x0}; // Dongle TX1-RX2-RX3
+static const uint8_t g_ant_sw_param[] = {false, 0b111, 0b100, 0b001, 0x0, 0b000, 0x0, 0x0}; // Dongle TX1-RX3-RX2
 
 #elif CONFIG_AIR_MOUSE_HR_BOARD /* TVRCREF */ /* HR */
 #if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE
@@ -122,6 +122,7 @@ static const uint8_t g_ant_sw_param[] = {true, 0b111, 0b010, 0b101, 0, 0b000, 0,
 #endif
 
 static screen_size_t g_screen_size_arr[SCREEN_SIZE_ARR_NUM] = {
+    {2162, 1217}, // SCREEN_SIZE_16X9_98_INCH
     {1887, 1092}, // SCREEN_SIZE_16X9_85_INCH
     {670,  340 }, // SCREEN_SIZE_16X9_32_INCH
     {382,  215 }, // SCREEN_SIZE_16X9_17P3_INCH
@@ -155,6 +156,7 @@ screen_size_t *set_screen_size(screen_size_e mode)
 }
 
 SlpCursorSpeed g_slp_cursor_speed = SLP_CURSOR_SPEED_MEDIUM;  // slp光标速度
+SlpClickTremorPrevSens g_slp_click_tremor_prev_sens = SLP_CLICK_TREMOR_PREV_SENS_MEDIUM;  // slp点击防抖灵敏度
 
 void set_slp_uart_buffer(void)
 {
@@ -251,4 +253,15 @@ void set_slp_cursor_speed(SlpCursorSpeed mode)
 {
     g_slp_cursor_speed = mode;
     update_am_print_info_cursor_speed(mode);
+}
+
+SlpClickTremorPrevSens get_slp_click_tremor_prev_sens(void)
+{
+    return g_slp_click_tremor_prev_sens;
+}
+
+void set_slp_click_tremor_prev_sens(SlpClickTremorPrevSens sens)
+{
+    g_slp_click_tremor_prev_sens = sens;
+    update_am_print_info_click_tremor_prev_sens(sens);
 }

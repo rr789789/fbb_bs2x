@@ -27,6 +27,10 @@
 #ifdef CONFIG_DRIVERS_USB_SERIAL_FUNC_INTERFACE
 #include "gadget/usbd_acm.h"
 #endif
+#if defined(CONFIG_UART_SUPPORT_ALL_IN_ONE) && (CONFIG_DFX_SUPPORT_DIAG_VRTTUAL_SHELL == DFX_YES)
+#include "diag_mocked_shell.h"
+#include "diag_filter.h"
+#endif
 
 #define UART_BUS_0_BASE_ADDR UART0_BASE
 #define UART_BUS_1_BASE_ADDR UART1_BASE
@@ -362,6 +366,35 @@ uart_bus_t g_sw_debug_uart = SW_DEBUG_UART_BUS;
 static bool g_sw_debug_uart_enabled = false;
 uint8_t g_uart_rx_buffer[DEBUG_UART_RX_BUFFER_SIZE];
 
+#if defined(CONFIG_UART_SUPPORT_ALL_IN_ONE)
+static uint16_t g_uart_all_in_one;
+void uart_all_in_one_enable(uint16_t enable)
+{
+    g_uart_all_in_one = enable;
+    return;
+}
+#endif
+
+errcode_t uartputs_hso(const char *s, uint32_t len)
+{
+#if defined(CONFIG_UART_SUPPORT_ALL_IN_ONE)
+    if (g_uart_all_in_one == 0) {
+        return ERRCODE_FAIL;
+    }
+    if (zdiag_is_enable() == false) {
+        return ERRCODE_FAIL;
+    }
+    if ((uint32_t)(zdiag_mocked_shell_uart_puts((unsigned char *)s, len)) != len) {
+        return ERRCODE_FAIL;
+    }
+    return ERRCODE_SUCC;
+#else
+    unused(s);
+    unused(len);
+    return ERRCODE_FAIL;
+#endif
+}
+
 static void uart_rx_callback(const void *buf, uint16_t buf_len, bool remaining);
 
 void sw_debug_uart_deinit(void)
@@ -433,9 +466,13 @@ void print_str(const char *str, ...)
 #endif
 #ifdef USE_CMSIS_OS
 #ifdef CONFIG_UART_LOG_WRITE_WITH_NOLOCK
-    uapi_uart_write_nolock(g_sw_debug_uart, (const void *)str, strlen(str), wait_forever);
+    if (uartputs_hso(str, strlen(str)) != ERRCODE_SUCC) {
+        uapi_uart_write_nolock(g_sw_debug_uart, (const void *)str, strlen(str), wait_forever);
+    }
 #else
-    uapi_uart_write(g_sw_debug_uart, (const void *)str, strlen(str), wait_forever);
+    if (uartputs_hso(str, strlen(str)) != ERRCODE_SUCC) {
+        uapi_uart_write(g_sw_debug_uart, (const void *)str, strlen(str), wait_forever);
+    }
 #endif
 #else
     static uint8_t s[UART_TRANS_LEN_MAX];  // This needs to be large enough to store the string TODO Change magic number
@@ -454,7 +491,9 @@ void print_str(const char *str, ...)
     if (str_len < 0) {
         return;  //lint !e527  unreachable code
     }
-    uapi_uart_write(g_sw_debug_uart, (const void *)s, str_len, wait_forever);
+    if (uartputs_hso(str, strlen(str)) != ERRCODE_SUCC) {
+        uapi_uart_write(g_sw_debug_uart, (const void *)s, str_len, wait_forever);
+    }
 #endif
 }
 #endif

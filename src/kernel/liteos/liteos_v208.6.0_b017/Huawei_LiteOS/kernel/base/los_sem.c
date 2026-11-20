@@ -19,7 +19,7 @@
  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS,
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
@@ -36,16 +36,47 @@
 #include "los_trace.h"
 
 LITE_OS_SEC_BSS LosSemCB *g_osAllSem = NULL;
+#ifndef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
 LITE_OS_SEC_BSS STATIC LOS_DL_LIST g_unusedSemList;
+#endif
+#ifdef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
+DEFINE_OBJ_TEMPLATE(OS_OBJ_TYPE_SEMCB, sem,
+                    LOSCFG_BASE_IPC_SEM_LIMIT,
+                    LOSCFG_SEM_CB_BASE_NUM,
+                    sizeof(LosSemCB));
+ 
+STATIC INLINE LosSemCB *OsGetSemCB(VOID)
+{
+    UINT32 semId = 0;
+    LosSemCB *semCb = (LosSemCB *)ALLOC_OBJ(sem, &semId);
+    if (semCb != NULL) {
+        semCb->semId = semId;
+        semCb->semStat = LOS_UNUSED;
+    }
+    return semCb;
+}
+ 
+STATIC INLINE VOID OsReleaseSemCB(LosSemCB *semCb)
+{
+    if (semCb != NULL) {
+        FREE_OBJ(sem, semCb, semCb->semId);
+    }
+}
+#endif
 
 STATIC INLINE VOID OsSemNodeRecycle(LosSemCB *semNode)
 {
     semNode->semStat = LOS_UNUSED;
+#ifdef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
+    OsReleaseSemCB(semNode);
+#else
     LOS_ListTailInsert(&g_unusedSemList, &semNode->semList);
+#endif
 }
 
 LITE_OS_SEC_TEXT_INIT UINT32 OsSemInit(VOID)
 {
+#ifndef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
     LosSemCB *semNode = NULL;
     UINT32 index;
 
@@ -56,7 +87,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 OsSemInit(VOID)
         semNode->semId = index;
         OsSemNodeRecycle(semNode);
     }
-
+#endif
     if (OsSemDbgInitHook() != LOS_OK) {
         return LOS_ERRNO_SEM_NO_MEMORY;
     }
@@ -67,14 +98,23 @@ LITE_OS_SEC_TEXT_INIT STATIC UINT32 OsSemCreate(UINT16 count, UINT8 type, UINT32
 {
     UINT32 intSave;
     LosSemCB *semCreated = NULL;
+#ifndef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
     LOS_DL_LIST *unusedSem = NULL;
+#endif
 
     if (semHandle == NULL) {
         return LOS_ERRNO_SEM_PTR_NULL;
     }
 
     SCHEDULER_LOCK(intSave);
-
+     
+#ifdef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
+    semCreated = OsGetSemCB();
+    if (semCreated == NULL) {
+        SCHEDULER_UNLOCK(intSave);
+        return LOS_ERRNO_SEM_NO_MEMORY;
+    }
+#else
     if (LOS_ListEmpty(&g_unusedSemList)) {
         SCHEDULER_UNLOCK(intSave);
         OsSemInfoGetFullDataHook();
@@ -84,6 +124,7 @@ LITE_OS_SEC_TEXT_INIT STATIC UINT32 OsSemCreate(UINT16 count, UINT8 type, UINT32
     unusedSem = LOS_DL_LIST_FIRST(&g_unusedSemList);
     LOS_ListDelete(unusedSem);
     semCreated = GET_SEM_LIST(unusedSem);
+#endif
     semCreated->semStat = LOS_USED;
     semCreated->semType = type;
     semCreated->semCount = count;
@@ -156,7 +197,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_SemDelete(UINT32 semHandle)
     }
 
     semDeleted = GET_SEM(semHandle);
-
+   
     SCHEDULER_LOCK(intSave);
 
     ret = OsSemStateVerify(semHandle, semDeleted);

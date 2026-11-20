@@ -1,21 +1,19 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="gatt tl timeout no cbk, op:%x @patch_bth.c(563),INFO" ID="0xdd54119d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] identity addr invalid @patch_bth.c(807),INFO" ID="0xdd54193d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]smp require end reason cpy = 0x%x @patch_bth.c(999),ERROR" ID="0xdd541f3a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att read rspond memcpy error @patch_bth.c(1219),ERROR" ID="0xdd54261a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gatt_tl_trans_init TL-&gt;Trans Collision @patch_bth.c(1241),ERROR" ID="0xdd5426ca" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="gatt_tl_trans_init TL-&gt;Timer:%p Collision @patch_bth.c(1249),ERROR" ID="0xdd54270a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="gaph hci command callback, operation=%x, code:%x @patch_bth.c(1287),INFO" ID="0xdd54283d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smp key distribute send memcpy error @patch_bth.c(1486),ERROR" ID="0xdd542e72" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP][LongTermKeyRequest]link-&gt;hcihdl = %u @patch_bth.c(1532),INFO" ID="0xdd542fe5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][No LESC LTK SEND] @patch_bth.c(1546),INFO" ID="0xdd543055" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][DIV mismatch, Unpaired] @patch_bth.c(1568),INFO" ID="0xdd543105" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][ECDH LTK unavailable, pair!=NULL] @patch_bth.c(1581),INFO" ID="0xdd54316d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][LTK unavailable, pair=NULL] @patch_bth.c(1594),INFO" ID="0xdd5431d5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][send Negative Reply!] @patch_bth.c(1616),INFO" ID="0xdd543285" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smpc token got memcpy error @patch_bth.c(1727),ERROR" ID="0xdd5435fa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]PAIRING_REQ_RECV remote authreq:%02x @patch_bth.c(1762),INFO" ID="0xdd543715" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]PAIRING_REQ_RECV old link hcihdl:%x @patch_bth.c(1767),INFO" ID="0xdd54373d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]PAIRING_REQ_RECV new node @patch_bth.c(1771),INFO" ID="0xdd54375d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]PAIRING_REQ_RECV node-&gt;authreq:%02x @patch_bth.c(1776),INFO" ID="0xdd543785" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="start encryption link not found handle:%d @patch_bth.c(1831),ERROR" ID="0xdd54393a" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="gatt tl timeout no cbk, op:%x @patch_bth.c(565),INFO" ID="0xdd5411ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] identity addr invalid @patch_bth.c(809),INFO" ID="0xdd54194d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]smp require end reason cpy = 0x%x @patch_bth.c(1001),ERROR" ID="0xdd541f4a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att read rspond memcpy error @patch_bth.c(1221),ERROR" ID="0xdd54262a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gatt_tl_trans_init TL-&gt;Trans Collision @patch_bth.c(1243),ERROR" ID="0xdd5426da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gatt_tl_trans_init TL-&gt;Timer:%p Collision @patch_bth.c(1251),ERROR" ID="0xdd54271a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gaph hci command callback, operation=%x, code:%x @patch_bth.c(1289),INFO" ID="0xdd54284d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smp key distribute send memcpy error @patch_bth.c(1488),ERROR" ID="0xdd542e82" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP][LongTermKeyRequest]link-&gt;hcihdl = %u @patch_bth.c(1534),INFO" ID="0xdd542ff5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][No LESC LTK SEND] @patch_bth.c(1548),INFO" ID="0xdd543065" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][DIV mismatch, Unpaired] @patch_bth.c(1570),INFO" ID="0xdd543115" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][ECDH LTK unavailable, pair!=NULL] @patch_bth.c(1583),INFO" ID="0xdd54317d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][LTK unavailable, pair=NULL] @patch_bth.c(1596),INFO" ID="0xdd5431e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP][LongTermKeyRequest][send Negative Reply!] @patch_bth.c(1618),INFO" ID="0xdd543295" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SMP]smpc token got memcpy error @patch_bth.c(1729),ERROR" ID="0xdd54360a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SMP]PAIRING_REQ_RECV remote authreq:%02x @patch_bth.c(1764),INFO" ID="0xdd543725" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="start encryption link not found handle:%d @patch_bth.c(1822),ERROR" ID="0xdd5438f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alen is 0, break @patch_bth.c(1870),ERROR" ID="0xdd543a72" />
 			</MSG_LOG>

@@ -20,6 +20,7 @@
 #include "tiot_board_log.h"
 #include "tiot_controller.h"
 #include "tiot_sys_msg_handle.h"
+#include "tiot_controller_helper.h"
 
 #define W33_TXCO_FREQ            ((uint32_t)CONFIG_W33_TCXO_FREQ)
 
@@ -80,10 +81,8 @@ static void w33_firmware_before_load(tiot_fw *fw)
 {
 #ifdef CONFIG_W33_UART
     /* 加载前设置为固件加载默认波特率 */
-    tiot_uart_config w33_firmware_load_config = {
-        .baudrate = W33_UART_FW_LOAD_BAUDRATE,
-        .attr = W33_UART_ATTR
-    };
+    tiot_uart_config w33_firmware_load_config = def_uart_cfg(W33_UART_FW_LOAD_BAUDRATE,
+                                                             W33_UART_ATTR_FLOW_CTRL);
     tiot_controller *ctrl = tiot_container_of(fw, tiot_controller, firmware);
     tiot_xfer_manager *xfer = &ctrl->transfer;
     if (tiot_xfer_set_config(xfer, &w33_firmware_load_config) != 0) {
@@ -105,10 +104,8 @@ static void w33_firmware_after_load(tiot_fw *fw)
 {
 #ifdef CONFIG_W33_UART
     /* 加载过程中可能切换波特率，加载后设置为业务默认波特率 */
-    tiot_uart_config w33_transfer_config = {
-        .baudrate = W33_UART_DEFAULT_BAUDRATE,
-        .attr = W33_UART_ATTR
-    };
+    tiot_uart_config w33_transfer_config = def_uart_cfg(W33_UART_DEFAULT_BAUDRATE,
+                                                        W33_UART_ATTR_FLOW_CTRL);
     tiot_controller *ctrl = tiot_container_of(fw, tiot_controller, firmware);
     tiot_xfer_manager *xfer = &ctrl->transfer;
     if (tiot_xfer_set_config(xfer, &w33_transfer_config) != 0) {

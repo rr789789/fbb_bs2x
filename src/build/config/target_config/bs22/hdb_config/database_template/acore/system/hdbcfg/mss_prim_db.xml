@@ -24,6 +24,14 @@
         <USERPLANE_LOG>
         </USERPLANE_LOG>
     </SUBSYSTEM>
+    <SUBSYSTEM NAME="closed_comp" DATA_STRUCT_FILE="..\diag\prot_core_hso_msg_struct_def.txt" DESCRIPTION="" MULTIMODE="closed_comp">
+        <MSG_LOG>
+        </MSG_LOG>
+        <LAYER_LOG>
+        </LAYER_LOG>
+        <USERPLANE_LOG>
+        </USERPLANE_LOG>
+    </SUBSYSTEM>
     <SUBSYSTEM NAME="dsp_core" DATA_STRUCT_FILE="..\diag\prot_core_hso_msg_struct_def.txt" DESCRIPTION="" MULTIMODE="dsp_core">
         <MSG_LOG>
         </MSG_LOG>

@@ -20,6 +20,12 @@ config SAMPLE_SUPPORT_SLE_RCU_SERVER
     help
         This option means the SLE type of rcu to select.
 
+config SLE_UPG_ENABLE
+    bool
+    prompt "ENABLE SLE OTA."
+    default y
+    depends on SAMPLE_SUPPORT_SLE_RCU_SERVER
+
 config SAMPLE_SUPPORT_BLE_RCU_SERVER
     bool
     prompt "Enable BLE RCU Server sample."
@@ -61,6 +67,7 @@ config RCU_MULTICON_NUM
     prompt "Set the num of rcu multicon."
     range 1 2
     default 1
+    depends on SAMPLE_SUPPORT_RCU_SERVER
     help
         This option means the num of rcu multicon.
 
@@ -73,7 +80,6 @@ config SAMPLE_SUPPORT_IR
     help
         This option means the IR type of rcu to select.
 
-if RCU_MULTICON_NUM > 0
     config SLE_MULTICON_SERVER1_ADDR0
         hex
         default 0x0A
@@ -159,95 +165,6 @@ if RCU_MULTICON_NUM > 0
         depends on SAMPLE_SUPPORT_BLE_CLIENT
         help
             This option means the addr of tartget server wanting to connect.
-endif
-
-if RCU_MULTICON_NUM > 1
-    config SLE_MULTICON_SERVER2_ADDR0
-        hex
-        default 0x0A
-        prompt "Set the target sle server2 addr[0] of wanting to connect."
-        depends on SAMPLE_SUPPORT_SLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config SLE_MULTICON_SERVER2_ADDR1
-        hex
-        default 0x0B
-        prompt "Set the target sle server2 addr[1] of wanting to connect."
-        depends on SAMPLE_SUPPORT_SLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config SLE_MULTICON_SERVER2_ADDR2
-        hex
-        default 0x02
-        prompt "Set the target sle server2 addr[2] of wanting to connect."
-        depends on SAMPLE_SUPPORT_SLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config SLE_MULTICON_SERVER2_ADDR3
-        hex
-        default 0x03
-        prompt "Set the target sle server2 addr[3] of wanting to connect."
-        depends on SAMPLE_SUPPORT_SLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config SLE_MULTICON_SERVER2_ADDR4
-        hex
-        default 0x04
-        prompt "Set the target sle server2 addr[4] of wanting to connect."
-        depends on SAMPLE_SUPPORT_SLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config SLE_MULTICON_SERVER2_ADDR5
-        hex
-        default 0x05
-        prompt "Set the target sle server2 addr[5] of wanting to connect."
-        depends on SAMPLE_SUPPORT_SLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-
-    config BLE_MULTICON_SERVER2_ADDR0
-        hex
-        default 0x0B
-        prompt "Set the target ble server2 addr[0] of wanting to connect."
-        depends on SAMPLE_SUPPORT_BLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config BLE_MULTICON_SERVER2_ADDR1
-        hex
-        default 0x0B
-        prompt "Set the target ble server2 addr[1] of wanting to connect."
-        depends on SAMPLE_SUPPORT_BLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config BLE_MULTICON_SERVER2_ADDR2
-        hex
-        default 0x02
-        prompt "Set the target ble server2 addr[2] of wanting to connect."
-        depends on SAMPLE_SUPPORT_BLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config BLE_MULTICON_SERVER2_ADDR3
-        hex
-        default 0x03
-        prompt "Set the target ble server2 addr[3] of wanting to connect."
-        depends on SAMPLE_SUPPORT_BLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config BLE_MULTICON_SERVER2_ADDR4
-        hex
-        default 0x04
-        prompt "Set the target ble server2 addr[4] of wanting to connect."
-        depends on SAMPLE_SUPPORT_BLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-    config BLE_MULTICON_SERVER2_ADDR5
-        hex
-        default 0x05
-        prompt "Set the target ble server2 addr[5] of wanting to connect."
-        depends on SAMPLE_SUPPORT_BLE_CLIENT
-        help
-            This option means the addr of tartget server wanting to connect.
-endif
 
 config SLE_MULTICON_SERVER_ADDR0
     hex
@@ -444,7 +361,6 @@ config RCU_MASS_PRODUCTION_TEST
     default n
     help
         This option means the support RCU mass prodution test.
-    depends on SAMPLE_SUPPORT_RCU_SERVER
 
 config RCU_IS_SLEEP_DISCONNECT
     bool

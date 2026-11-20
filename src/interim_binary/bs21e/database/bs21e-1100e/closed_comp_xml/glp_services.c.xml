@@ -72,26 +72,18 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="[ERR] Ranging ctrl msg is abnormal! %u @glp_services.c(947),ERROR" ID="0xd72e1d9a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX] RangingService! @glp_services.c(957),INFO" ID="0xd72e1ded" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[ERR] StartRangingControl fail! ret:0x%08X @glp_services.c(997),ERROR" ID="0xd72e1f2a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX] CfgLocalAttMsg! @glp_services.c(1029),INFO" ID="0xd72e202d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ERR] CfgLocalAttMsg is abnormal! msg-&gt;dataPtr NULL @glp_services.c(1032),ERROR" ID="0xd72e2042" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ERR] CfgLocalAttMsg is abnormal! %u @glp_services.c(1038),ERROR" ID="0xd72e2072" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX] SetNbSessionKeyService! @glp_services.c(1056),INFO" ID="0xd72e2105" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ERR] invalid SetNbSessionKeyService msg! @glp_services.c(1060),ERROR" ID="0xd72e2122" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ERR] invalid SetNbSessionKeyService msg! %u @glp_services.c(1064),ERROR" ID="0xd72e2142" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX] CfgLocalAttMsg! @glp_services.c(1036),INFO" ID="0xd72e2065" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ERR] CfgLocalAttMsg is abnormal! msg-&gt;dataPtr NULL @glp_services.c(1039),ERROR" ID="0xd72e207a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ERR] CfgLocalAttMsg is abnormal! %u @glp_services.c(1045),ERROR" ID="0xd72e20aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX] SetNbSessionKeyService! @glp_services.c(1063),INFO" ID="0xd72e213d" />
 			<MSG STRUCTURE="diag_log_msg8" NAME="[API][RX] nb session key[0-7] is [ 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x ] @glp_services.c(1082),DBG" ID="0xd72e21d6" />
 			<MSG STRUCTURE="diag_log_msg8" NAME="[API][RX] nb session key[8-15] is [ 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x ] @glp_services.c(1089),DBG" ID="0xd72e220e" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ERR] invalid SetNbCfoService msg! @glp_services.c(1100),ERROR" ID="0xd72e2262" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ERR] invalid SetNbCfoService msg! %u @glp_services.c(1104),ERROR" ID="0xd72e2282" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[API][RX] SetNbCfoService, cfo is [%d]! @glp_services.c(1113),INFO" ID="0xd72e22cd" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="GlpRecvCfo %d @glp_services.c(1127),INFO" ID="0xd72e233d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[GlpRecvCfo] nb cfo is 0, do not send Ts Msg to Glp! @glp_services.c(1137),WARNING" ID="0xd72e238b" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[MEMALLOC-ERR] can not allocate heap to measMsg! @glp_services.c(1144),ERROR" ID="0xd72e23c2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX][FAC] read phase cali para from onb msg! @glp_services.c(1190),INFO" ID="0xd72e2535" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ERR] invalid write phase cali para to onb msg! @glp_services.c(1199),ERROR" ID="0xd72e257a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ERR] invalid write phase cali para to onb msg! %u @glp_services.c(1203),ERROR" ID="0xd72e259a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX][FAC] write phase cali para to onb msg! @glp_services.c(1213),INFO" ID="0xd72e25ed" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX][FAC] read trx delay from onb msg! @glp_services.c(1221),INFO" ID="0xd72e262d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ERR] invalid write trx delay to onb msg! @glp_services.c(1230),ERROR" ID="0xd72e2672" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ERR] invalid write trx delay to onb msg! %u @glp_services.c(1234),ERROR" ID="0xd72e2692" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX][FAC] write trx delay to onb msg! @glp_services.c(1244),INFO" ID="0xd72e26e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[API][RX] SetNbCfoService, cfo is [%d]! @glp_services.c(1107),INFO" ID="0xd72e229d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="GlpRecvCfo %d @glp_services.c(1121),INFO" ID="0xd72e230d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GlpRecvCfo] nb cfo is 0, do not send Ts Msg to Glp! @glp_services.c(1130),WARNING" ID="0xd72e2353" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[MEMALLOC-ERR] can not allocate heap to measMsg! @glp_services.c(1138),ERROR" ID="0xd72e2392" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX][FAC] read phase cali para from onb msg! @glp_services.c(1184),INFO" ID="0xd72e2505" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX][FAC] write phase cali para to onb msg! @glp_services.c(1200),INFO" ID="0xd72e2585" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX][FAC] read trx delay from onb msg! @glp_services.c(1208),INFO" ID="0xd72e25c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[API][RX][FAC] write trx delay to onb msg! @glp_services.c(1224),INFO" ID="0xd72e2645" />
 			</MSG_LOG>

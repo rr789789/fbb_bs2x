@@ -62,10 +62,18 @@ typedef struct {
 #elif defined(LOSCFG_KERNEL_MEM_BESTFIT_LITTLE)
 
 typedef struct LosHeapManager {
+#if LOSCFG_HEAP_NODE_SIZE_OPT == 1
+    union LosHeapNode *head;
+    union LosHeapNode *tail;
+#else
     struct LosHeapNode *head;
     struct LosHeapNode *tail;
+#endif
     UINT32 size;
 
+#if LOSCFG_HEAP_NODE_SIZE_OPT == 1
+    UINTPTR heapBaseAddr;
+#endif
 #ifdef LOSCFG_MEM_TASK_STAT
     Memstat stat;
 #endif

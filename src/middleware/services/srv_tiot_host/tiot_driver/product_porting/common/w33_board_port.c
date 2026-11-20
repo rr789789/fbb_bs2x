@@ -25,7 +25,7 @@ static void w33_board_set_power_enable(void)
     if (W33_PIN_POWER_EN == TIOT_PIN_NONE) {
         return;
     }
-#ifdef CONFIG_AIR_MOUSE_HX_BOARD
+#if defined(CONFIG_AIR_MOUSE_HX_BOARD) || defined(CONFIG_AIR_MOUSE_YF_BOARD)
     (void)uapi_gpio_set_dir((pin_t)W33_PIN_POWER_EN, GPIO_DIRECTION_OUTPUT);
     (void)uapi_gpio_set_val((pin_t)W33_PIN_POWER_EN, GPIO_LEVEL_LOW);
 #else
@@ -42,7 +42,7 @@ static void w33_board_set_power_disable(void)
     if (W33_PIN_POWER_EN == TIOT_PIN_NONE) {
         return;
     }
-#ifdef CONFIG_AIR_MOUSE_HX_BOARD
+#if defined(CONFIG_AIR_MOUSE_HX_BOARD) || defined(CONFIG_AIR_MOUSE_YF_BOARD)
     (void)uapi_gpio_set_dir((pin_t)W33_PIN_POWER_EN, GPIO_DIRECTION_INPUT);
     (void)uapi_pin_set_pull((pin_t)W33_PIN_POWER_EN, PIN_PULL_UP);
 #else

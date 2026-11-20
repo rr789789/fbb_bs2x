@@ -17,6 +17,16 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
+#define def_uart_cfg(baud, flow_en)                 \
+{                                                   \
+    .baudrate = (baud),                             \
+    .attr = {                                       \
+        .data_bits = TIOT_UART_ATTR_DATABIT_8,      \
+        .parity    = TIOT_UART_ATTR_PARITY_NONE,    \
+        .stop_bits = TIOT_UART_ATTR_STOPBIT_1,      \
+        .flow_ctrl = (flow_en)                      \
+    }                                               \
+}
 /**
  * @defgroup tiot_common_controller_helper Controller Helper
  * @ingroup  tiot_common_controllrt

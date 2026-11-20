@@ -39,7 +39,7 @@
 
 #define RCU_DONGLE_TASK_STACK_SIZE          0x1000
 #define RCU_DONGLE_TASK_PRIO                24
-#define RCU_MP_TEST_TASK_STACK_SIZE         0x400
+#define RCU_MP_TEST_TASK_STACK_SIZE         0x800
 #define RCU_MP_TEST_TASK_PRIO               25
 #define RCU_DONGLE_TASK_DELAY_MS            2000
 #define USB_RCU_KEYBOARD_REPORTER_LEN       8
@@ -76,7 +76,7 @@ static void rcu_keyboard_dongle_send_data(usb_hid_rcu_keyboard_report_t *rpt)
     }
 #if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
     if (rpt->key[0] != 0x00) {
-        uint8_t test_send[MP_TEST_INFO_LEN] = {PRIVATE_FRAME_FLAG, 0x00, 0x00, 0x00, 0x00, 0x01,
+        uint8_t test_send[MP_TEST_INFO_LEN] = {PRIVATE_SLE_FRAME_FLAG, 0x00, 0x00, 0x00, 0x00, 0x01,
             MP_TEST_GET_KEY_CMD, 0x08, 0x00, 0x01, 0x01, 0x00, 0x00, 0x02};
         test_send[MP_TEST_TLV_LEN_BIT] = USB_HID_RCU_MAX_KEY_LENTH;
         for (int i = 0; i < USB_HID_RCU_MAX_KEY_LENTH; i++) {
@@ -179,7 +179,7 @@ static int32_t vdt_usb_uac_send_data(const uint8_t *buf, int len, uint32_t uac_b
     if (!get_send_voice()) {
         return 0;
     }
-    uint8_t test_send[MP_TEST_INFO_LEN] = {PRIVATE_FRAME_FLAG, 0x00, 0x00, 0x00, 0x00, 0x01,
+    uint8_t test_send[MP_TEST_INFO_LEN] = {PRIVATE_SLE_FRAME_FLAG, 0x00, 0x00, 0x00, 0x00, 0x01,
         MP_TEST_GET_VOICE_CMD, 0x2b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x02};
     int send_len = len;
     int send_times = 0;
@@ -275,6 +275,7 @@ static void sle_rcu_notification_cb(uint8_t client_id, uint16_t conn_id, ssapc_h
         return;
     }
 #if defined(CONFIG_RCU_MASS_PRODUCTION_TEST)
+    osal_printk("sle_rcu_notification_cb\r\n");
     rcu_dongle_mp_test_submit(data);
     return;
 #endif

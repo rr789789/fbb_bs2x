@@ -22,6 +22,9 @@
 #include "los_task_pri.h"
 #include "los_hwi_pri.h"
 #endif
+#if defined(CONFIG_UART_SUPPORT_ALL_IN_ONE)
+#include "uart_porting.h"
+#endif
 
 #ifdef REG_OPERATION
 #define ADDR_OFFSET 4
@@ -134,6 +137,25 @@ static at_ret_t plt_os_dfx_print(void);
 #endif
 #if defined(LOSCFG_KERNEL_CPUP)
 at_ret_t plt_cpup_stats(void);
+#endif
+#if defined(CONFIG_UART_SUPPORT_ALL_IN_ONE)
+typedef struct {
+    uint32_t                para_map;
+    uint16_t                enable;
+} uart_in_one_args_t;
+
+at_ret_t at_uart_all_in_one(const uart_in_one_args_t *args);
+
+const at_para_parse_syntax_t uart_in_one_syntax[] = {
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .last = true,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 1,
+        .offset = offsetof(uart_in_one_args_t, enable)
+    },
+};
 #endif
 
 const at_cmd_entry_t at_plt_parse_table[] = {
@@ -295,7 +317,27 @@ const at_cmd_entry_t at_plt_parse_table[] = {
         NULL,
     },
 #endif
+#if defined(CONFIG_UART_SUPPORT_ALL_IN_ONE)
+    {
+        "UARTINONE",
+        12,
+        0,
+        uart_in_one_syntax,
+        NULL,
+        (at_set_func_t)at_uart_all_in_one,
+        NULL,
+        NULL,
+    },
+#endif
 };
+
+#if defined(CONFIG_UART_SUPPORT_ALL_IN_ONE)
+at_ret_t at_uart_all_in_one(const uart_in_one_args_t *args)
+{
+    uart_all_in_one_enable(args->enable);
+    return AT_RET_OK;
+}
+#endif
 
 #if (ENABLE_LOW_POWER == YES)
 static at_ret_t plt_at_set_vote_sleep(at_set_sleep_args_t *vote)

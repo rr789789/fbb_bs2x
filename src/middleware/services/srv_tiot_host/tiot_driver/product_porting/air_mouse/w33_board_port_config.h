@@ -26,7 +26,7 @@ extern "C" {
 #define W33_PWEN_TON_WAIT_MS                        0     /* Wait ms for power_en to turn on. */
 #define W33_PWO_TOFF_WAIT_MS                        0     /* Wait ms for power_on to turn off. */
 #define W33_PWEN_TOFF_WAIT_MS                       0     /* Wait ms for power_en to turn off. */
-#elif defined CONFIG_AIR_MOUSE_HX_BOARD
+#elif defined(CONFIG_AIR_MOUSE_HX_BOARD) || defined(CONFIG_AIR_MOUSE_YF_BOARD)
 #define W33_PIN_POWER_EN                            CONFIG_AIR_MOUSE_POWER_CTRL_PIN
 #define CONFIG_AIR_MOUSE_HOSE_WAKEUP_DEV_PIN        TIOT_PIN_NONE
 #define W33_PWEN_TON_WAIT_MS                        30    /* Wait ms for power_en to turn on. */
@@ -41,7 +41,7 @@ extern "C" {
 #define W33_PWO_TOFF_WAIT_MS                        1     /* Wait ms for power_on to turn off. */
 #endif
 
-#if defined(CONFIG_AIR_MOUSE_HX_BOARD) && defined(CONFIG_SAMPLE_SUPPORT_AIR_MOUSE)
+#if CONFIG_SAMPLE_SUPPORT_AIR_MOUSE && (defined(CONFIG_AIR_MOUSE_HX_BOARD) || defined(CONFIG_AIR_MOUSE_YF_BOARD))
 static w33_board_hw_info g_w33_board_hw_info = {
     UART_BUS_1,
     { TIOT_PIN_NONE, CONFIG_AIR_MOUSE_HOSE_WAKEUP_DEV_PIN, CONFIG_AIR_MOUSE_DEV_WAKEUP_HOST_PIN }

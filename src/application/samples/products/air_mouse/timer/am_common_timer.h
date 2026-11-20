@@ -28,18 +28,21 @@ typedef enum {
 typedef struct {
     SlpCursorRslt cursor;
     SlpRangingRpt ranging;
-    bool air_mouse_mode;         // 指向/空鼠模式切换
-    bool radar_status;           // 雷达状态, 0:, 1:开
-    SlpCursorSpeed cursor_speed; // 当前灵敏度档位
+    SlpImuRawData imu_raw_data;
+    bool air_mouse_mode;                           // 指向/空鼠模式切换
+    bool radar_status;                             // 雷达状态, 0:, 1:开
+    SlpCursorSpeed cursor_speed;                   // 当前灵敏度档位
+    SlpClickTremorPrevSens click_tremor_prev_sens; // 点击防抖灵敏度档位
     int8_t rssi;
     struct {
         uint8_t cursor : 1;
         uint8_t ranging : 1;
+        uint8_t imu_raw_data : 1;
         uint8_t air_mouse_mode : 1;
         uint8_t radar_status : 1;
         uint8_t cursor_speed : 1;
+        uint8_t click_tremor_prev_sens : 1;
         uint8_t rssi : 1;
-        uint8_t reserved : 2;
     } flags;    // 标志数据是否打印过
 } print_info_t; // 记录上报值用于周期性打印
 
@@ -47,9 +50,11 @@ void rst_print_info(void);
 void air_mouse_info_print(void);
 void update_am_print_info_cursor(SlpCursorRslt *cursor);
 void update_am_print_info_ranging(SlpRangingRpt *ranging);
+void update_am_print_info_imu_raw_data(SlpImuRawData *imu_raw_data);
 void update_am_print_info_am_mode(bool flag);
 void update_am_print_info_radar_status(bool flag);
 void update_am_print_info_cursor_speed(SlpCursorSpeed cursor_speed);
+void update_am_print_info_click_tremor_prev_sens(SlpClickTremorPrevSens click_tremor_prev_sens);
 void update_am_print_info_rssi(int8_t rssi);
 void air_mouse_timer_start(air_mouse_timer_type_e type);
 void air_mouse_timer_stop(air_mouse_timer_type_e type);

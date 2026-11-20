@@ -1,11 +1,12 @@
 <MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp passkey number atb. @ble_ahia_gap.c(49),INFO" ID="0xd86c018d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp passkey entry does not support. @ble_ahia_gap.c(60),INFO" ID="0xd86c01e5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble remove adv by handle atb. @ble_ahia_gap.c(67),INFO" ID="0xd86c021d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp pair remote device atb. @ble_ahia_gap.c(185),INFO" ID="0xd86c05cd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp remove pair info atb. @ble_ahia_gap.c(227),INFO" ID="0xd86c071d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble add white list atb. @ble_ahia_gap.c(234),INFO" ID="0xd86c0755" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble rmv white list atb. @ble_ahia_gap.c(241),INFO" ID="0xd86c078d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble conn white list atb. @ble_ahia_gap.c(252),INFO" ID="0xd86c07e5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble get white list atb. @ble_ahia_gap.c(263),INFO" ID="0xd86c083d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp set key from btc atb. @ble_ahia_gap.c(293),INFO" ID="0xd86c092d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp pair req result atb. @ble_ahia_gap.c(66),INFO" ID="0xd86c0215" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp passkey entry does not support. @ble_ahia_gap.c(78),INFO" ID="0xd86c0275" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble remove adv by handle atb. @ble_ahia_gap.c(85),INFO" ID="0xd86c02ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp pair remote device atb. @ble_ahia_gap.c(203),INFO" ID="0xd86c065d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp remove pair info atb. @ble_ahia_gap.c(246),INFO" ID="0xd86c07b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble add white list atb. @ble_ahia_gap.c(253),INFO" ID="0xd86c07ed" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble rmv white list atb. @ble_ahia_gap.c(260),INFO" ID="0xd86c0825" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble conn white list atb. @ble_ahia_gap.c(271),INFO" ID="0xd86c087d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble get white list atb. @ble_ahia_gap.c(282),INFO" ID="0xd86c08d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble smp set key from btc atb. @ble_ahia_gap.c(312),INFO" ID="0xd86c09c5" />
 			</MSG_LOG>

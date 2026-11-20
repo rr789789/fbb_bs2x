@@ -220,7 +220,7 @@ VOID *LOS_MemRealloc(VOID *pool, VOID *ptr, UINT32 size)
     VOID *retPtr = NULL;
     VOID *freePtr = NULL;
     UINT32 intSave;
-    struct LosHeapNode *node = NULL;
+    LosHeapNode *node = NULL;
     UINT32 cpySize;
     UINT32 gapSize;
     errno_t rc;
@@ -250,8 +250,16 @@ VOID *LOS_MemRealloc(VOID *pool, VOID *ptr, UINT32 size)
                 return NULL;
             }
 
-            node = ((struct LosHeapNode *)ptr) - 1;
-            cpySize = (size > (node->size)) ? (node->size) : size;
+#ifdef LOSCFG_HEAP_NODE_SIZE_OPT
+            struct LosHeapManager *heapMan = (struct LosHeapManager *)pool;
+            node = (LosHeapNode *)((UINT8 *)ptr - sizeof(struct LosHeapNodeSmall));
+            if (!OsHeapNodeValid(heapMan, node)) {
+                node = (LosHeapNode *)((UINT8 *)ptr - sizeof(struct LosHeapNodeLarge));
+            }
+#else
+            node = ((LosHeapNode *)ptr) - 1;
+#endif
+            cpySize = (size > (NODE_SIZE(node))) ? (NODE_SIZE(node)) : size;
         }
 
         MEM_UNLOCK(intSave);

@@ -126,6 +126,7 @@ UINT16 LOS_LowBitGet(UINT32 bitmap);
  */
 UINT16 LOS_HighBitGet(UINT32 bitmap);
 
+UINT16 LOS_FirstZeroGet(UINT32 bitmap);
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

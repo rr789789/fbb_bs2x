@@ -20,6 +20,13 @@ config LOSCFG_KERNEL_MEM_BESTFIT_LITTLE
       This option will change mem type as bestfit little
 endchoice
 
+config LOSCFG_HEAP_NODE_SIZE_OPT
+    bool "heap node size optimization"
+    default n
+    depends on LOSCFG_KERNEL_MEM_BESTFIT_LITTLE
+    help
+      This option will optimize heap node
+
 config LOSCFG_KERNEL_MEM_SLAB_EXTENTION
     bool "Enable Mem SLAB Extension"
     default n

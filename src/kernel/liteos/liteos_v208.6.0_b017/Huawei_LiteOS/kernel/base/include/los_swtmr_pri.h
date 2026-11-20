@@ -19,7 +19,7 @@
  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS,
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
@@ -32,6 +32,21 @@
 #include "los_swtmr.h"
 #include "los_spinlock.h"
 #include "los_sortlink_pri.h"
+
+#ifdef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
+#include "los_obj_template.h"
+DEFINE_OBJ_TEMPLATE_TYPE(swtmr, LOSCFG_BASE_CORE_SWTMR_LIMIT);
+OBJ_TEMPLATE_DECLARE(swtmr);
+#define OS_SWT_FROM_SWTID(swtmrId) OBJ_FROM_ID(swtmr, swtmrId, LosSwtmrCB)
+#else
+#ifdef LOSCFG_BASE_CORE_SWTMR
+#ifdef LOSCFG_BASE_CORE_SYS_RES_CHECK
+#define OS_SWT_FROM_SWTID(swtmrId) ((LosSwtmrCB *)g_osSwtmrCBArray + ((swtmrId) % KERNEL_SWTMR_LIMIT))
+#else
+#define OS_SWT_FROM_SWTID(swtmrId) ((LosSwtmrCB *)g_osSwtmrCBArray + swtmrId)
+#endif
+#endif
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -78,12 +93,6 @@ extern UINT8 *g_osSwtmrTaskStack[LOSCFG_KERNEL_CORE_NUM];
 
 /* The software timer count list */
 extern SortLinkAttribute g_swtmrSortLink;
-
-#ifdef LOSCFG_BASE_CORE_SYS_RES_CHECK
-#define OS_SWT_FROM_SWTID(swtmrId) ((LosSwtmrCB *)g_osSwtmrCBArray + ((swtmrId) % KERNEL_SWTMR_LIMIT))
-#else
-#define OS_SWT_FROM_SWTID(swtmrId) ((LosSwtmrCB *)g_osSwtmrCBArray + swtmrId)
-#endif
 
 /* This API is used to scan a software timer when a Tick interrupt occurs and determine whether
  * the software timer expires. */

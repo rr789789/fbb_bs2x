@@ -461,7 +461,7 @@ static void pm_pmu_regs_config_for_slp(void)
     writew(0x520003e4, 0x0);
     writew(0x57000060, 0x0);    // CLK_1M_DIV
     writew(0x57000064, 0x0);    // CLK_32K_DIV
-    writew(0x570000a8, 0x182);  // AON_BUS_DIV
+    writew(0x570000a8, 0x181);  // AON_BUS_DIV
 #ifdef CONFIG_POWER_SUPPLY_BY_LDO
     // micldo硬件控，以保证睡眠时可关闭
     writew(0x5702C204, 0x7000);

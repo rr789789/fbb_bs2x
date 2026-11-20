@@ -56,6 +56,13 @@ static void sle_enable_cbk(uint8_t status)
     unused(status);
     errcode_t ret = 0;
     sle_remove_all_pairs();
+    ssap_exchange_info_t info = {0};
+    info.mtu_size = CONFIG_SLE_MTU_LENGTH;
+    if (ssaps_set_info(0, &info) != ERRCODE_SLE_SUCCESS) {
+        osal_printk("%s sle_rcu_server_init,ssaps_set_info fail\r\n", SLE_MULTI_CONN_SERVER_LOG);
+        return;
+    }
+    
     ret = sle_multi_conn_server_add();
     osal_printk("%s sle_enable_cbk,sle_multi_conn_server_add,err_code: [0x%x]\r\n",
                 SLE_MULTI_CONN_SERVER_LOG, ret);

@@ -92,6 +92,7 @@ extern "C" {
  */
 typedef enum {
     AT_UART_PORT                = 0x00,
+    AT_ZDIAG_PORT               = 0x00, // diag和uart共用一个通道0
     AT_MAX_PORT_NUMBER
 } at_channel_id_t;
 

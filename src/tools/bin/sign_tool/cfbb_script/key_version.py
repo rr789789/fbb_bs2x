@@ -7,6 +7,7 @@ def is_bs2x(target_name):
     keywords = {
         'bs21a': 0xE0,
         'bs21e': 0xD0,
+        'bs20h': 0xB0,
         'bs20': 0xE,
         'bs21': 0xD,
         'bs22': 0xB,

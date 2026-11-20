@@ -13,6 +13,7 @@
 #include "platform_types.h"
 #include "platform_core.h"
 #include "arch_port.h"
+#include "arch_barrier.h"
 #include "ulp_gpio.h"
 #include "gpio_porting.h"
 
@@ -85,6 +86,7 @@ void gpio_ulp_int_en(bool on)
     } else {
         ulp_gpio_deinit();
     }
+    isb();
 }
 
 void gpio_select_core(pin_t pin, cores_t core)

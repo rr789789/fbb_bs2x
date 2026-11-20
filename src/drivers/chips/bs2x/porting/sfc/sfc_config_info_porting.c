@@ -52,9 +52,9 @@ static const flash_spi_info_t g_flash_spi_infos[] = {
 #endif
 
 static const flash_spi_info_t g_flash_spi_unknown_info = {
-    FLASH_UNKOWN, FLASH_SIZE_512KB, 3,
-    (spi_opreation_t *)g_default_read_cmds, (spi_opreation_t *)g_default_write_cmds,
-    (spi_opreation_t *)g_default_erase_cmds, (flash_cmd_execute_t *)g_default_quad_enable
+    FLASH_UNKOWN, FLASH_SIZE_1MB, 4,
+    (spi_opreation_t *)g_flash_common_read_cmds, (spi_opreation_t *)g_flash_common_write_cmds,
+    (spi_opreation_t *)g_flash_common_erase_cmds, (flash_cmd_execute_t *)g_flash_gd_bus_enable
 };
 
 flash_spi_info_t *sfc_port_get_flash_spi_infos(void)

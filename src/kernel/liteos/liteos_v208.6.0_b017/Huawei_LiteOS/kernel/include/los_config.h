@@ -323,6 +323,47 @@ extern UINTPTR g_excInteractMemSize;
 #define HW_LITEOS_KERNEL_VERSION_STRING         HW_LITEOS_OPEN_VERSION_STRING
 #endif
 
+#ifdef LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC
+#ifndef LOSCFG_TASK_CB_BASE_NUM
+#define LOSCFG_TASK_CB_BASE_NUM 8
+#endif
+#endif
+
+#ifdef LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC
+#ifndef LOSCFG_SWTMR_CB_BASE_NUM
+#define LOSCFG_SWTMR_CB_BASE_NUM 1
+#endif
+#endif
+
+#ifdef LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC
+#ifndef LOSCFG_QUEUE_CB_BASE_NUM
+#define LOSCFG_QUEUE_CB_BASE_NUM 4
+#endif
+#endif
+
+#ifndef LOSCFG_MUX_CB_BASE_NUM
+#define LOSCFG_MUX_CB_BASE_NUM 3
+#endif
+
+#ifndef LOSCFG_HWI_CB_BASE_NUM
+#define LOSCFG_HWI_CB_BASE_NUM 14
+#endif
+
+#ifdef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
+#ifndef LOSCFG_SEM_CB_BASE_NUM
+#define LOSCFG_SEM_CB_BASE_NUM 4
+#endif
+#endif
+
+#if defined(LOSCFG_KERNEL_OBJ_DYNAMIC_ALLOC) && ( \
+    defined(LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC) || \
+    defined(LOSCFG_KERNEL_QUEUE_DYNAMIC_ALLOC) || \
+    defined(LOSCFG_KERNEL_SWTMR_DYNAMIC_ALLOC) || \
+    defined(LOSCFG_KERNEL_TASK_DYNAMIC_ALLOC))
+#define OS_OBJ_DYNAMIC_META_SIZE 4
+#endif
+#define DEBUG_INT 0
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

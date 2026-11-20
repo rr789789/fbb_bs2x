@@ -24,9 +24,12 @@
 #include "mouse/sle_air_mouse_server/sle_air_mouse_server_adv.h"
 #include "mouse/sle_air_mouse_server/sle_air_mouse_server.h"
 #include "mouse/at/air_mouse_rcu_at.h"
-#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD
+#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD || CONFIG_AIR_MOUSE_YF_BOARD
 #include "mouse/keyscan/air_mouse_keyscan.h"
 #include "mouse/led/air_mouse_led.h"
+#endif
+#if CONFIG_AIR_MOUSE_YF_BOARD
+#include "i2c/air_mouse_i2c.h"
 #endif
 #elif defined(CONFIG_SAMPLE_SUPPORT_AIR_MOUSE_DONGLE)
 #include "dongle/sle_air_mouse_client/sle_air_mouse_client.h"
@@ -54,7 +57,7 @@ static void *slp_task(const char *arg)
     osal_printk("input slp_task\r\n");
     unused(arg);
 
-#ifdef CONFIG_AIR_MOUSE_HX_BOARD
+#if CONFIG_AIR_MOUSE_HX_BOARD || CONFIG_AIR_MOUSE_YF_BOARD
     (void)uapi_pin_set_mode((pin_t)CONFIG_AIR_MOUSE_POWER_CTRL_PIN, (pin_mode_t)HAL_PIO_FUNC_GPIO);
     (void)uapi_gpio_set_dir((pin_t)CONFIG_AIR_MOUSE_POWER_CTRL_PIN, GPIO_DIRECTION_INPUT);
     (void)uapi_pin_set_pull((pin_t)CONFIG_AIR_MOUSE_POWER_CTRL_PIN, PIN_PULL_UP);
@@ -75,7 +78,7 @@ static void *sle_air_mouse_task(const char *arg)
 #if CONFIG_AIR_MOUSE_USB
     air_mouse_usb_init(); // USB初始化
 #endif
-#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD
+#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD || CONFIG_AIR_MOUSE_YF_BOARD
     /* 按键功能初始化 */
     air_mouse_keyscan_init();
     /* LED控制初始化 */
@@ -93,13 +96,17 @@ static void *sle_air_mouse_task(const char *arg)
 #else
     set_transform_param(SLP_IMU_TYPE_BMI270);
 #endif
-    set_screen_size(SCREEN_SIZE_16X9_85_INCH);
+    set_screen_size(SCREEN_SIZE_16X9_98_INCH);
     set_slp_local_att();
+
+#if CONFIG_AIR_MOUSE_YF_BOARD
+    i2c_disable_watchdog(); // 关闭电源watchdog
+#endif
 
     // SLE广播
     sle_air_mouse_server_init();
 
-#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD
+#if CONFIG_AIR_MOUSE_HR_BOARD || CONFIG_AIR_MOUSE_HX_BOARD || CONFIG_AIR_MOUSE_YF_BOARD
     led_stop_timer(LED_GREEN);
     rcu_task(NULL);  // 消息队列
 #endif
@@ -122,18 +129,22 @@ static void *sle_air_mouse_dongle_task(const char *arg)
     set_slp_uart_buffer(); // 设置slp uart buffer
     // Dongle IMU转换参数设置，需根据当前使用IMU型号配置，没有IMU则无需配置
 #if CONFIG_AIR_MOUSE_RADAR_2T4R_BOARD
-    set_transform_param(SLP_IMU_TYPE_ASM330);
+    set_transform_param(SLP_IMU_TYPE_SMI230);
 #else
     set_transform_param(SLP_IMU_TYPE_BMI270);
 #endif
-    set_screen_size(SCREEN_SIZE_16X9_85_INCH);
+    set_screen_size(SCREEN_SIZE_16X9_98_INCH);
     set_slp_local_att();
 
+#if CONFIG_AIR_MOUSE_YF_BOARD
+    i2c_disable_watchdog(); // 关闭电源watchdog
+#endif
+
     SlpInstParam param = {
-        .downtilt = 40, // dongle下倾角40°
-        .verDisToCarSeat = 500, // 座椅在dongle下方500mm
+        .downtilt = 30, // dongle下倾角30°
+        .verDisToCarSeat = 450, // 座椅在dongle下方450mm
         .verDisToSreenTop = 0, // 屏幕顶部与dongle垂直距离0mm
-        .horDisToSreen = 0, // 屏幕与dongle水平距离0mm
+        .horDisToSreen = -850, // 屏幕在dongle后方850mm
     };
     ErrcodeSlpClient ret = SlpSetInstParam(&param); // 设置安装参数
     if (ret != ERRCODE_SLPC_SUCCESS) {
@@ -170,6 +181,7 @@ static void *sle_air_mouse_dongle_task(const char *arg)
 static void sle_air_mouse_with_dongle_entry(void)
 {
     set_slp_cursor_speed(SLP_CURSOR_SPEED_MEDIUM);
+    set_slp_click_tremor_prev_sens(SLP_CLICK_TREMOR_PREV_SENS_MEDIUM); // 设置点击防抖灵敏度
     air_mouse_timer_init(); // 定时器初始化
     writew(0x5702c288, 0x3A00); //  slp 32M时钟驱动调制最大
     osal_printk("input sle_air_mouse_with_dongle_entry\r\n");

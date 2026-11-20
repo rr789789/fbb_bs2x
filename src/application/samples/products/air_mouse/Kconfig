@@ -28,6 +28,8 @@ choice
         bool "HR Board."
     config AIR_MOUSE_HX_BOARD
         bool "HX Board."
+    config AIR_MOUSE_YF_BOARD
+        bool "YF Board."
     config AIR_MOUSE_EVB4_BOARD
         bool "EVB4 Board."
     config AIR_MOUSE_RADAR_2T4R_BOARD
@@ -81,6 +83,12 @@ config SAMPLE_SUPPORT_AIR_MOUSE_OTA
     depends on SAMPLE_SUPPORT_AIR_MOUSE
     help
         This option means support SLE OTA service.
+
+config SLE_UPG_ENABLE
+    bool
+    prompt "ENABLE SLE OTA."
+    default y
+    depends on SAMPLE_SUPPORT_AIR_MOUSE
 
 config SAMPLE_SUPPORT_AIR_MOUSE_CIR_PRINT
     bool
@@ -185,6 +193,7 @@ config AIR_MOUSE_UART_TX_PIN
     int
     range 26 26 if AIR_MOUSE_HR_BOARD
     range 26 26 if AIR_MOUSE_HX_BOARD
+    range 26 26 if AIR_MOUSE_YF_BOARD
     range 30 30 if AIR_MOUSE_SELF_BOARD
     range 30 30 if AIR_MOUSE_EVB4_BOARD
     range 30 30 if AIR_MOUSE_RADAR_2T4R_BOARD
@@ -194,6 +203,7 @@ config AIR_MOUSE_UART_RX_PIN
     int
     range 27 27 if AIR_MOUSE_HR_BOARD
     range 27 27 if AIR_MOUSE_HX_BOARD
+    range 27 27 if AIR_MOUSE_YF_BOARD
     range 31 31 if AIR_MOUSE_SELF_BOARD
     range 31 31 if AIR_MOUSE_EVB4_BOARD
     range 31 31 if AIR_MOUSE_RADAR_2T4R_BOARD
@@ -203,6 +213,7 @@ config AIR_MOUSE_UART_CTS_PIN
     int
     range 28 28 if AIR_MOUSE_HR_BOARD
     range 28 28 if AIR_MOUSE_HX_BOARD
+    range 28 28 if AIR_MOUSE_YF_BOARD
     range 3 3 if AIR_MOUSE_SELF_BOARD
     range 3 3 if AIR_MOUSE_EVB4_BOARD
     range 3 3 if AIR_MOUSE_RADAR_2T4R_BOARD
@@ -212,6 +223,7 @@ config AIR_MOUSE_UART_RTS_PIN
     int
     range 29 29 if AIR_MOUSE_HR_BOARD
     range 29 29 if AIR_MOUSE_HX_BOARD
+    range 29 29 if AIR_MOUSE_YF_BOARD
     range 4 4 if AIR_MOUSE_SELF_BOARD
     range 4 4 if AIR_MOUSE_EVB4_BOARD
     range 4 4 if AIR_MOUSE_RADAR_2T4R_BOARD
@@ -221,6 +233,7 @@ config AIR_MOUSE_POWER_ON_PIN
     int
     range 12 12 if AIR_MOUSE_HR_BOARD
     range 12 12 if AIR_MOUSE_HX_BOARD
+    range 12 12 if AIR_MOUSE_YF_BOARD
     range 26 26 if AIR_MOUSE_SELF_BOARD
     range 26 26 if AIR_MOUSE_EVB4_BOARD
     range 26 26 if AIR_MOUSE_RADAR_2T4R_BOARD
@@ -230,6 +243,7 @@ config AIR_MOUSE_POWER_CTRL_PIN
     int
     range 13 13 if AIR_MOUSE_HR_BOARD
     range 13 13 if AIR_MOUSE_HX_BOARD
+    range 13 13 if AIR_MOUSE_YF_BOARD
     range 32 32 if AIR_MOUSE_SELF_BOARD
     range 2 2 if AIR_MOUSE_EVB4_BOARD
     range 2 2 if AIR_MOUSE_RADAR_2T4R_BOARD
@@ -239,6 +253,7 @@ config AIR_MOUSE_DEV_WAKEUP_HOST_PIN
     int
     range 15 15 if AIR_MOUSE_HR_BOARD
     range 15 15 if AIR_MOUSE_HX_BOARD
+    range 15 15 if AIR_MOUSE_YF_BOARD
     range 29 29 if AIR_MOUSE_SELF_BOARD
     range 29 29 if AIR_MOUSE_EVB4_BOARD
     range 29 29 if AIR_MOUSE_RADAR_2T4R_BOARD
@@ -248,6 +263,7 @@ config AIR_MOUSE_SYNC_PIN
     int
     range 10 10 if AIR_MOUSE_HR_BOARD
     range 10 10 if AIR_MOUSE_HX_BOARD
+    range 10 10 if AIR_MOUSE_YF_BOARD
     range 5 5 if AIR_MOUSE_SELF_BOARD
     range 5 5 if AIR_MOUSE_EVB4_BOARD
     range 5 5 if AIR_MOUSE_RADAR_2T4R_BOARD
@@ -257,6 +273,7 @@ config AIR_MOUSE_IMU_INT2_PIN
     int
     range 14 14 if AIR_MOUSE_HR_BOARD
     range 14 14 if AIR_MOUSE_HX_BOARD
+    range 14 14 if AIR_MOUSE_YF_BOARD
     range 32 32 if AIR_MOUSE_SELF_BOARD
     range 28 28 if AIR_MOUSE_EVB4_BOARD
     range 28 28 if AIR_MOUSE_RADAR_2T4R_BOARD

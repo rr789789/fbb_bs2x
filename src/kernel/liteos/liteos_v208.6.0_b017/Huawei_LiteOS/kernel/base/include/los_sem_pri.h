@@ -31,6 +31,10 @@
 
 #include "los_sem.h"
 
+#ifdef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
+#include "los_obj_template.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -68,9 +72,17 @@ extern LosSemCB *g_osAllSem;
 #define GET_SEM_INDEX(semId)                (semId)
 #endif
 
+#ifdef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
+#define GET_SEM(semId)                      OBJ_FROM_ID(sem, semId, LosSemCB)
+#else
 #define GET_SEM(semId)                      (((LosSemCB *)g_osAllSem) + GET_SEM_INDEX(semId))
+#endif
 
 extern UINT32 OsSemInit(VOID);
+#ifdef LOSCFG_KERNEL_SEM_DYNAMIC_ALLOC
+DEFINE_OBJ_TEMPLATE_TYPE(sem, LOSCFG_BASE_IPC_SEM_LIMIT);
+OBJ_TEMPLATE_DECLARE(sem);
+#endif
 
 #ifdef __cplusplus
 }

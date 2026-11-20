@@ -18,6 +18,7 @@
 #ifdef CONFIG_PM_WAKEUP_BY_UART
 #include "tiot_board_uart_port.h"
 #endif
+#include "tiot_controller_helper.h"
 
 tiot_pm_retcode tiot_pm_default_power_off(tiot_pm *pm)
 {
@@ -86,7 +87,6 @@ int32_t tiot_pm_check_sleeped(uint32_t wakein_pin, uint8_t check_times)
     tiot_print_warning("[TIoT:pm]wakein pin level high after check (%d) times.\n", sleep_check);
     return -1;
 }
-
 #ifdef CONFIG_PM_WAKEUP_BY_UART
 tiot_pm_retcode tiot_pm_default_wakeup_device_by_uart(tiot_pm *pm)
 {
@@ -103,9 +103,7 @@ tiot_pm_retcode tiot_pm_default_wakeup_device_by_uart(tiot_pm *pm)
     }
 
     tiot_uart_config old_config = { 0 };
-    tiot_uart_config wakeup_config = { wakeup_baudrate,
-        { .data_bits = TIOT_UART_ATTR_DATABIT_8, .parity = TIOT_UART_ATTR_PARITY_NONE,
-          .stop_bits = TIOT_UART_ATTR_STOPBIT_1, .flow_ctrl = TIOT_UART_ATTR_FLOW_CTRL_DISABLE } };
+    tiot_uart_config wakeup_config = def_uart_cfg(wakeup_baudrate, TIOT_UART_ATTR_FLOW_CTRL_DISABLE);
     (void)tiot_xfer_get_config(xfer, &old_config);
     (void)tiot_xfer_set_config(xfer, &wakeup_config);
     ret = tiot_xfer_direct_send(xfer, &wakeup_cmd, sizeof(uint8_t));

@@ -1,0 +1,15 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[RADAR][FRAME_CNT:%u][RADAR_KEY_DBG_PARAM_HAL_TRX_ISO][0] ch:%u, peak_val:%u @parse_key_dbg_param_msg.c(49),WARNING" ID="0xd7ae018b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[RADAR][FRAME_CNT:%u][RADAR_KEY_DBG_PARAM_HAL_TRX_ISO][1] rx_gain:%d, iso:%d @parse_key_dbg_param_msg.c(51),WARNING" ID="0xd7ae019b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[RADAR][FRAME_CNT:%u][RADAR_KEY_DBG_PARAM_HAL_OPT_AGC_CODE] opt agc has been set 0x%x @parse_key_dbg_param_msg.c(59),WARNING" ID="0xd7ae01db" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[RADAR][FRAME_CNT:%u][RADAR_KEY_DBG_PARAM_HAL_FINAL_DELAY_CALI] final trx delay cali val is %u @parse_key_dbg_param_msg.c(66),WARNING" ID="0xd7ae0213" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[RADAR][FRAME_CNT:%u][RADAR_KEY_DBG_PARAM_HAL_TRX_DELAY_CALI][0] max id:%u, peak_val:%lld @parse_key_dbg_param_msg.c(73),WARNING" ID="0xd7ae024b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[RADAR][FRAME_CNT:%u][RADAR_KEY_DBG_PARAM_HAL_TRX_DELAY_CALI][1] peak idx:%u, rf_stable_time_delay:%u @parse_key_dbg_param_msg.c(75),WARNING" ID="0xd7ae025b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR] wide_band version major or minor val is too big @parse_key_dbg_param_msg.c(83),ERROR" ID="0xd7ae029a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR] narrow_band version major or minor val is too big @parse_key_dbg_param_msg.c(94),ERROR" ID="0xd7ae02f2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[RADAR][FRAME_CNT:%u][PRINT_VERSION] NB:0x%X, WB:0x%X @parse_key_dbg_param_msg.c(112),WARNING" ID="0xd7ae0383" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR] frame_cnt is too big @parse_key_dbg_param_msg.c(156),ERROR" ID="0xd7ae04e2" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[RADAR][FRAME_CNT:%u][RADAR_KEY_DBG_PARAM_ALG_PARAM][0] val1:0x%X, val2:0x%X, val3:0x%X @parse_key_dbg_param_msg.c(160),WARNING" ID="0xd7ae0503" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[RADAR][FRAME_CNT:%u][RADAR_KEY_DBG_PARAM_ALG_PARAM][1] val4:0x%X, val5:0x%X, val6:0x%X @parse_key_dbg_param_msg.c(162),WARNING" ID="0xd7ae0513" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR] handler is NULL: 0x%X @parse_key_dbg_param_msg.c(185),WARNING" ID="0xd7ae05cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR] No handler found for key dbg param id: 0x%X @parse_key_dbg_param_msg.c(191),WARNING" ID="0xd7ae05fb" />
+			</MSG_LOG>

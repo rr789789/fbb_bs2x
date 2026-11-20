@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[GLP_CLIENT][ASSEM] Click Tremor Prev Msg, No, %u @assemble_click_tremor_prev_msg.c(17),INFO" ID="0xd79c008d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[MEMALLOC-ERR] can not allocate heap to clickTremorPrevMsg! @assemble_click_tremor_prev_msg.c(21),ERROR" ID="0xd79c00aa" />
+			</MSG_LOG>

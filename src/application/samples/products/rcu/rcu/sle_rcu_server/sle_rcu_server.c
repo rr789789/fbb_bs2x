@@ -14,7 +14,6 @@
 #include "sle_device_discovery.h"
 #include "rcu.h"
 #include "sle_rcu_server_adv.h"
-#include "sle_ota.h"
 #include "vdt_codec.h"
 #include "sle_service_hids.h"
 #include "sle_service_dis.h"
@@ -24,6 +23,7 @@
 #include "app_status.h"
 #include "amic_voice.h"
 #include "sle_rcu_server_control.h"
+#include "sle_rcu_ota_server.h"
 #include "sle_rcu_server.h"
 
 #define BT_INDEX_4                      4
@@ -210,18 +210,6 @@ static errcode_t sle_rcu_services_add(void)
     return ERRCODE_SLE_SUCCESS;
 }
 
-static void sle_is_need_to_reconnect(void)
-{
-    sle_addr_t addr[RCU_TARGET_ADDR_NUM];
-    uint16_t number = 1;
-
-    sle_get_bonded_devices(addr, &number);
-    if (number > 0) {
-        sle_rcu_server_directed_adv_init(addr);
-    }
-    return;
-}
-
 static void sle_enable_cbk(uint8_t status)
 {
     unused(status);
@@ -236,7 +224,6 @@ static void sle_enable_cbk(uint8_t status)
         osal_printk("%s sle_rcu_server_init,sle_rcu_services_add fail\r\n", SLE_RCU_SERVER_LOG);
         return;
     }
-    sle_is_need_to_reconnect();
     app_print("%s sle enable callback status:0x%x\r\n", SLE_RCU_SERVER_LOG, status);
     g_sle_enable = true;
 }

@@ -37,6 +37,11 @@
 
 #define ULP_GPIO_INT_EN_BIT                     0
 
+#if !defined(CONFIG_XO_32K_ENABLE) && defined(PM_USE_32K_REAL_FREQ)
+// bgtp接口，封装在lib.a中不对外开放
+extern uint32_t bgtp_get_lp_clock_cali_result(void);
+#endif
+
 static uint32_t ulp_rtc_get_mr_count(void)
 {
     uint32_t current_count = 0;
@@ -75,7 +80,12 @@ void ulp_rtc_deinit(void)
 
 void ulp_rtc_start(uint32_t time_ms)
 {
+#if !defined(CONFIG_XO_32K_ENABLE) && defined(PM_USE_32K_REAL_FREQ)
+    // 32000 * 100 / 4分频 = 800000
+    uint32_t count = (uint32_t)((uint64_t)time_ms * bgtp_get_lp_clock_cali_result() / 800000);
+#else
     uint32_t count = (uint32_t)((uint64_t)time_ms << 0xE) / 1000 / 4; // 1s == 1000ms, rtc freq:32768.
+#endif
     writew(PMU_D_CORE_RTCLR0, 0x0);
     writew(PMU_D_CORE_RTCLR1, 0x0);
     writew(PMU_D_CORE_RTCLR2, 0x0);
