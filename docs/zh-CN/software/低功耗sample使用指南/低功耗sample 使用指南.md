@@ -1,3 +1,7 @@
+---
+docs-build.title: 低功耗 Sample 使用指南
+---
+
 # 前言<a name="ZH-CN_TOPIC_0000001800390676"></a>
 
 **概述<a name="section4537382116410"></a>**

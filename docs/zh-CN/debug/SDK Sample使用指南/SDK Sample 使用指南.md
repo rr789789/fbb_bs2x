@@ -1,3 +1,7 @@
+---
+docs-build.title: SDK Sample 使用指南
+---
+
 # 前言<a name="ZH-CN_TOPIC_0000001790806532"></a>
 
 **概述<a name="section669mcpsimp"></a>**

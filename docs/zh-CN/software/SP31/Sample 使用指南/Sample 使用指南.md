@@ -1,3 +1,7 @@
+---
+docs-build.title: Sample 使用指南
+---
+
 # 前言<a name="ZH-CN_TOPIC_0000002219311933"></a>
 
 **概述<a name="section4537382116410"></a>**
@@ -142,7 +146,7 @@
 1.  Initiator侧和Responder侧各自烧录对应版本。
 2.  Initiator侧和Responder侧重新上电。Initiator侧上电后SLE启动广播。Responder侧通过USB连接主机设备，上电后SLE启动扫描、USB初始化和枚举设备等操作，主机设备会识别到HID设备。
 3.  等待SLE建链。
-4.  待SLE连接配对成功后，两端会自动加载SLP固件，加载成功后会上报SLP版本号信息（可检查版本是否正确），之后会自动启动SLP业务，若业务流程正常则在Responder侧的串口日志中周期性打印测距、测角等上报信息，主机屏幕上会显示光标。两端日志如下图所示，启动流程可参考“[启动流程](#ZH-CN_TOPIC_0000002511270377)”。
+4.  待SLE连接配对成功后，两端会自动加载SLP固件，加载成功后会上报SLP版本号信息（可检查版本是否正确），之后会自动启动SLP业务，若业务流程正常则在Responder侧的串口日志中周期性打印测距、测角等上报信息，主机屏幕上会显示光标。两端日志如下图所示，启动流程可参考“[启动流程](#ZH-CN_TOPIC_0000002183826164)”。
 
     **图 1**  指向遥控器RCU、Dongle串口日志<a name="fig12411235387"></a>  
     ![](figures/指向遥控器RCU-Dongle串口日志-5.png "指向遥控器RCU-Dongle串口日志-5")
@@ -1610,9 +1614,6 @@ SLP AT命令汇总表如下。
 </tr>
 </tbody>
 </table>
-
-**图 1**  Dongle安装参数示意图<a name="fig5815183514553"></a>  
-![](figures/Dongle安装参数示意图.png "Dongle安装参数示意图")
 
 ## SLP设置按键状态<a name="ZH-CN_TOPIC_0000002453803022"></a>
 
