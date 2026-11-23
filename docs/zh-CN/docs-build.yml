@@ -21,7 +21,7 @@ html_context:
     href: fbb_bs2x-master.zip
     tooltip: 下载HTML
   # 问题反馈入口
-  feedback_url: https://gitcode.com/HiSpark/fbb_bs2x/issues
+  feedback_url: https://atomgit.com/HiSpark/fbb_bs2x/issues
   # 项目/版本下拉框
   version_selector:
     repo_path: fbb_bs2x
